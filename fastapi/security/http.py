@@ -141,13 +141,13 @@ class HTTPBasic(HTTPBase):
             ),
         ] = None,
         realm: Annotated[
-            Optional[str],
+            str,
             Doc(
                 """
-                HTTP Basic authentication realm.
+                HTTP Basic authentication realm. Required by RFC 7617.
                 """
             ),
-        ] = None,
+        ] = "api",
         description: Annotated[
             Optional[str],
             Doc(
@@ -189,10 +189,7 @@ class HTTPBasic(HTTPBase):
     ) -> Optional[HTTPBasicCredentials]:
         authorization = request.headers.get("Authorization")
         scheme, param = get_authorization_scheme_param(authorization)
-        if self.realm:
-            unauthorized_headers = {"WWW-Authenticate": f'Basic realm="{self.realm}"'}
-        else:
-            unauthorized_headers = {"WWW-Authenticate": "Basic"}
+        unauthorized_headers = {"WWW-Authenticate": f'Basic realm="{self.realm}"'}
         if not authorization or scheme.lower() != "basic":
             if self.auto_error:
                 raise HTTPException(
