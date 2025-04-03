@@ -11,7 +11,6 @@ from ...utils import needs_py39, needs_py310
     name="client",
     params=[
         "tutorial003",
-        "tutorial003_01",
         pytest.param("tutorial003_py310", marks=needs_py310),
     ],
 )
