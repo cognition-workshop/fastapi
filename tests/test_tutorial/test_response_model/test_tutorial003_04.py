@@ -1,9 +1,19 @@
+import importlib
+
 import pytest
 from fastapi.exceptions import FastAPIError
 
+from ...utils import needs_py310
 
-def test_invalid_response_model():
+
+@pytest.mark.parametrize(
+    "module_name",
+    [
+        "tutorial003_04",
+        pytest.param("tutorial003_04_py310", marks=needs_py310),
+    ],
+)
+def test_invalid_response_model(module_name):
     with pytest.raises(FastAPIError):
-        from docs_src.response_model.tutorial003_04 import app
-
-        assert app  # pragma: no cover
+        mod = importlib.import_module(f"docs_src.response_model.{module_name}")
+        assert mod.app  # pragma: no cover
