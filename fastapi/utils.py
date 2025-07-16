@@ -133,31 +133,45 @@ def create_cloned_field(
                     f, cloned_types=cloned_types
                 )
     new_field = create_model_field(name=field.name, type_=use_type)
-    new_field.has_alias = field.has_alias  # type: ignore[attr-defined]
-    new_field.alias = field.alias  # type: ignore[misc]
-    new_field.class_validators = field.class_validators  # type: ignore[attr-defined]
-    new_field.default = field.default  # type: ignore[misc]
-    new_field.required = field.required  # type: ignore[misc]
-    new_field.model_config = field.model_config  # type: ignore[attr-defined]
+    if hasattr(field, 'has_alias'):
+        new_field.has_alias = field.has_alias
+    if hasattr(field, 'alias'):
+        new_field.alias = field.alias
+    if hasattr(field, 'class_validators'):
+        new_field.class_validators = field.class_validators
+    if hasattr(field, 'default'):
+        new_field.default = field.default
+    if hasattr(field, 'required'):
+        new_field.required = field.required
+    if hasattr(field, 'model_config'):
+        new_field.model_config = field.model_config
     new_field.field_info = field.field_info
-    new_field.allow_none = field.allow_none  # type: ignore[attr-defined]
-    new_field.validate_always = field.validate_always  # type: ignore[attr-defined]
-    if field.sub_fields:  # type: ignore[attr-defined]
-        new_field.sub_fields = [  # type: ignore[attr-defined]
+    if hasattr(field, 'allow_none'):
+        new_field.allow_none = field.allow_none
+    if hasattr(field, 'validate_always'):
+        new_field.validate_always = field.validate_always
+    if hasattr(field, 'sub_fields') and field.sub_fields:
+        new_field.sub_fields = [
             create_cloned_field(sub_field, cloned_types=cloned_types)
-            for sub_field in field.sub_fields  # type: ignore[attr-defined]
+            for sub_field in field.sub_fields
         ]
-    if field.key_field:  # type: ignore[attr-defined]
-        new_field.key_field = create_cloned_field(  # type: ignore[attr-defined]
-            field.key_field,  # type: ignore[attr-defined]
+    if hasattr(field, 'key_field') and field.key_field:
+        new_field.key_field = create_cloned_field(
+            field.key_field,
             cloned_types=cloned_types,
         )
-    new_field.validators = field.validators  # type: ignore[attr-defined]
-    new_field.pre_validators = field.pre_validators  # type: ignore[attr-defined]
-    new_field.post_validators = field.post_validators  # type: ignore[attr-defined]
-    new_field.parse_json = field.parse_json  # type: ignore[attr-defined]
-    new_field.shape = field.shape  # type: ignore[attr-defined]
-    new_field.populate_validators()  # type: ignore[attr-defined]
+    if hasattr(field, 'validators'):
+        new_field.validators = field.validators
+    if hasattr(field, 'pre_validators'):
+        new_field.pre_validators = field.pre_validators
+    if hasattr(field, 'post_validators'):
+        new_field.post_validators = field.post_validators
+    if hasattr(field, 'parse_json'):
+        new_field.parse_json = field.parse_json
+    if hasattr(field, 'shape'):
+        new_field.shape = field.shape
+    if hasattr(field, 'populate_validators'):
+        new_field.populate_validators()
     return new_field
 
 
