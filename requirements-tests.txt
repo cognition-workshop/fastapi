@@ -11,6 +11,15 @@ PyJWT==2.8.0
 pyyaml >=5.3.1,<7.0.0
 passlib[bcrypt] >=1.7.2,<2.0.0
 inline-snapshot==0.19.3
+# Security scanning tools
+bandit[toml]==1.7.5
+safety==3.2.7
+pip-audit==2.6.1
+# Performance testing
+locust==2.17.0
+# Advanced static analysis
+radon==6.0.1
+vulture==2.11
 # types
 types-ujson ==5.10.0.20240515
 types-orjson ==3.6.2

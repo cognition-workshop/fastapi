@@ -1,0 +1,6 @@
++ mypy fastapi
+Success: no issues found in 44 source files
++ ruff check fastapi tests docs_src scripts
+All checks passed!
++ ruff format fastapi tests --check
+432 files already formatted

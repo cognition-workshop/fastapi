@@ -1,0 +1,143 @@
+name: Quality Automation
+
+on:
+  push:
+    branches:
+      - master
+      - devin/*
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+env:
+  UV_SYSTEM_PYTHON: 1
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.4.15"
+          enable-cache: true
+          cache-dependency-glob: |
+            requirements**.txt
+            pyproject.toml
+      - name: Install Dependencies
+        run: uv pip install -r requirements-tests.txt
+      - name: Security Scan
+        run: bash scripts/security.sh
+      - name: Upload Security Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            security-report.json
+            safety-report.json
+            pip-audit-report.json
+
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.4.15"
+          enable-cache: true
+          cache-dependency-glob: |
+            requirements**.txt
+            pyproject.toml
+      - name: Install Dependencies
+        run: uv pip install -r requirements-tests.txt
+      - name: Static Analysis
+        run: bash scripts/analysis.sh
+      - name: Upload Analysis Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: analysis-reports
+          path: |
+            complexity-report.json
+            maintainability-report.json
+            vulture-report.json
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.4.15"
+          enable-cache: true
+          cache-dependency-glob: |
+            requirements**.txt
+            pyproject.toml
+      - name: Install Dependencies
+        run: uv pip install -r requirements-tests.txt
+      - name: Install Pydantic v2
+        run: uv pip install --upgrade "pydantic>=2.0.2,<3.0.0"
+      - name: Run Integration Tests
+        run: python -m pytest tests/integration/ -v
+      - name: Run Performance Benchmarks
+        run: python tests/performance/api_performance.py
+
+  quality-gate:
+    runs-on: ubuntu-latest
+    needs: [security, static-analysis, integration-tests]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.4.15"
+          enable-cache: true
+          cache-dependency-glob: |
+            requirements**.txt
+            pyproject.toml
+      - name: Install Dependencies
+        run: uv pip install -r requirements-tests.txt
+      - name: Install Pydantic v2
+        run: uv pip install --upgrade "pydantic>=2.0.2,<3.0.0"
+      - name: Generate Quality Report
+        run: bash scripts/generate-quality-report.sh
+      - name: Upload Quality Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-reports
+          path: quality-reports/
+      - name: Quality Gate Check
+        run: |
+          echo "Quality Gate: Checking all jobs passed..."
+          if [[ "${{ needs.security.result }}" == "success" && "${{ needs.static-analysis.result }}" == "success" && "${{ needs.integration-tests.result }}" == "success" ]]; then
+            echo "✅ All quality checks passed!"
+          else
+            echo "❌ Quality gate failed - some checks did not pass"
+            echo "Security: ${{ needs.security.result }}"
+            echo "Static Analysis: ${{ needs.static-analysis.result }}"
+            echo "Integration Tests: ${{ needs.integration-tests.result }}"
+            exit 1
+          fi

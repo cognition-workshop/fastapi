@@ -1,0 +1,16 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.8, pytest-8.4.1, pluggy-1.6.0 -- /home/ubuntu/.pyenv/versions/3.12.8/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ubuntu/repos/fastapi
+configfile: pyproject.toml
+plugins: Faker-24.8.0, anyio-4.10.0, inline-snapshot-0.19.3
+collecting ... collected 5 items
+
+tests/integration/test_api_integration.py::TestAPIIntegration::test_api_health_and_root PASSED [ 20%]
+tests/integration/test_api_integration.py::TestAPIIntegration::test_item_crud_workflow PASSED [ 40%]
+tests/integration/test_api_integration.py::TestAPIIntegration::test_api_error_handling PASSED [ 60%]
+tests/integration/test_api_integration.py::TestAPIIntegration::test_api_pagination PASSED [ 80%]
+tests/integration/test_api_integration.py::TestAPIIntegration::test_openapi_documentation PASSED [100%]
+=============================== inline snapshot ================================
+
+============================== 5 passed in 0.70s ===============================

@@ -1,0 +1,585 @@
++ echo 'Running security scans...'
+Running security scans...
++ echo '=== Bandit Security Scan ==='
+=== Bandit Security Scan ===
++ bandit -r fastapi -f json -o security-report.json
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[json]	INFO	JSON output written to file: security-report.json
++ true
++ bandit -r fastapi
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.12.8
+Run started:2025-08-25 10:32:46.005472
+
+Test results:
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/_compat.py:267:8
+266	        )
+267	        assert issubclass(origin_type, sequence_types)  # type: ignore[arg-type]
+268	        return sequence_annotation_to_type[origin_type](value)  # type: ignore[no-any-return]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/applications.py:875:12
+874	        if self.openapi_url:
+875	            assert self.title, "A title must be provided for OpenAPI, e.g.: 'My API'"
+876	            assert self.version, "A version must be provided for OpenAPI, e.g.: '2.1.0'"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/applications.py:876:12
+875	            assert self.title, "A title must be provided for OpenAPI, e.g.: 'My API'"
+876	            assert self.version, "A version must be provided for OpenAPI, e.g.: '2.1.0'"
+877	        # TODO: remove when discarding the openapi_prefix parameter
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:96:8
+95	        # Import an attribute that can be mocked/deleted in testing
+96	        assert __version__ > "0.0.12"
+97	    except (ImportError, AssertionError):
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:102:12
+101	
+102	            assert __version__
+103	            try:
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:109:16
+108	
+109	                assert parse_options_header
+110	            except ImportError:
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:125:4
+124	) -> Dependant:
+125	    assert depends.dependency
+126	    return get_sub_dependant(
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:136:4
+135	def get_parameterless_sub_dependant(*, depends: params.Depends, path: str) -> Dependant:
+136	    assert callable(depends.dependency), (
+137	        "A parameter-less dependency must have a callable dependency"
+138	    )
+139	    return get_sub_dependant(depends=depends, dependency=depends.dependency, path=path)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:305:12
+304	        ):
+305	            assert param_details.field is None, (
+306	                f"Cannot specify multiple FastAPI annotations for {param_name!r}"
+307	            )
+308	            continue
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:309:8
+308	            continue
+309	        assert param_details.field is not None
+310	        if isinstance(param_details.field.field_info, params.Body):
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:388:12
+387	            )
+388	            assert (
+389	                field_info.default is Undefined or field_info.default is RequiredParam
+390	            ), (
+391	                f"`{field_info.__class__.__name__}` default value cannot be set in"
+392	                f" `Annotated` for {param_name!r}. Set the default value with `=` instead."
+393	            )
+394	            if value is not inspect.Signature.empty:
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:395:16
+394	            if value is not inspect.Signature.empty:
+395	                assert not is_path_param, "Path parameters cannot have default values"
+396	                field_info.default = value
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:404:8
+403	    if isinstance(value, params.Depends):
+404	        assert depends is None, (
+405	            "Cannot specify `Depends` in `Annotated` and default value"
+406	            f" together for {param_name!r}"
+407	        )
+408	        assert field_info is None, (
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:408:8
+407	        )
+408	        assert field_info is None, (
+409	            "Cannot specify a FastAPI annotation in `Annotated` and `Depends` as a"
+410	            f" default value together for {param_name!r}"
+411	        )
+412	        depends = value
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:415:8
+414	    elif isinstance(value, FieldInfo):
+415	        assert field_info is None, (
+416	            "Cannot specify FastAPI annotations in `Annotated` and default value"
+417	            f" together for {param_name!r}"
+418	        )
+419	        field_info = value
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:441:8
+440	    ):
+441	        assert depends is None, f"Cannot specify `Depends` for type {type_annotation!r}"
+442	        assert field_info is None, (
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:442:8
+441	        assert depends is None, f"Cannot specify `Depends` for type {type_annotation!r}"
+442	        assert field_info is None, (
+443	            f"Cannot specify FastAPI annotation for type {type_annotation!r}"
+444	        )
+445	    # Handle default assignations, neither field_info nor depends was not found in Annotated nor default value
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:467:12
+466	        if is_path_param:
+467	            assert isinstance(field_info, params.Path), (
+468	                f"Cannot use `{field_info.__class__.__name__}` for path param"
+469	                f" {param_name!r}"
+470	            )
+471	        elif (
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:497:12
+496	        if is_path_param:
+497	            assert is_scalar_field(field=field), (
+498	                "Path params must be of one of the supported types"
+499	            )
+500	        elif isinstance(field_info, params.Query):
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:501:12
+500	        elif isinstance(field_info, params.Query):
+501	            assert (
+502	                is_scalar_field(field)
+503	                or is_scalar_sequence_field(field)
+504	                or (
+505	                    lenient_issubclass(field.type_, BaseModel)
+506	                    # For Pydantic v1
+507	                    and getattr(field, "shape", 1) == 1
+508	                )
+509	            )
+510	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:524:8
+523	    else:
+524	        assert field_info_in == params.ParamTypes.cookie, (
+525	            f"non-body parameters must be in path, query, header or cookie: {field.name}"
+526	        )
+527	        dependant.cookie_params.append(field)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:793:8
+792	        field_info = first_field.field_info
+793	        assert isinstance(field_info, params.Param), (
+794	            "Params must be subclasses of Param"
+795	        )
+796	        loc: Tuple[str, ...] = (field_info.in_.value,)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:805:8
+804	        field_info = field.field_info
+805	        assert isinstance(field_info, params.Param), (
+806	            "Params must be subclasses of Param"
+807	        )
+808	        loc = (field_info.in_.value, field.alias)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:863:12
+862	            # For types
+863	            assert isinstance(value, sequence_types)  # type: ignore[arg-type]
+864	            results: List[Union[bytes, str]] = []
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/dependencies/utils.py:891:4
+890	    errors: List[Dict[str, Any]] = []
+891	    assert body_fields, "request_body_to_args() should be called with fields"
+892	    single_not_embedded_field = len(body_fields) == 1 and not embed_body_fields
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/openapi/models.py:20:4
+19	
+20	    assert email_validator  # make autoflake ignore the unused import
+21	    from pydantic import EmailStr
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/openapi/utils.py:182:4
+181	        return None
+182	    assert isinstance(body_field, ModelField)
+183	    body_schema = get_schema_from_model_field(
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/openapi/utils.py:268:4
+267	    definitions: Dict[str, Any] = {}
+268	    assert route.methods is not None, "Methods must be a list"
+269	    if isinstance(route.response_class, DefaultPlaceholder):
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/openapi/utils.py:273:4
+272	        current_response_class = route.response_class
+273	    assert current_response_class, "A response class is needed to generate OpenAPI"
+274	    route_response_media_type: Optional[str] = current_response_class.media_type
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/openapi/utils.py:388:20
+387	                    )
+388	                    assert isinstance(process_response, dict), (
+389	                        "An additional response must be a dict"
+390	                    )
+391	                    field = route.response_fields.get(additional_status_code)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/openapi/utils.py:458:16
+457	            if route.body_field:
+458	                assert isinstance(route.body_field, ModelField), (
+459	                    "A request body must be a Pydantic Field"
+460	                )
+461	                body_fields_from_routes.append(route.body_field)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/params.py:189:8
+188	    ):
+189	        assert default is ..., "Path parameters cannot have a default value"
+190	        self.in_ = self.in_
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/responses.py:32:8
+31	    def render(self, content: Any) -> bytes:
+32	        assert ujson is not None, "ujson must be installed to use UJSONResponse"
+33	        return ujson.dumps(content, ensure_ascii=False).encode("utf-8")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/responses.py:45:8
+44	    def render(self, content: Any) -> bytes:
+45	        assert orjson is not None, "orjson must be installed to use ORJSONResponse"
+46	        return orjson.dumps(
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:209:4
+208	    # facilitate profiling endpoints, since inner functions are harder to profile.
+209	    assert dependant.call is not None, "dependant.call must be a function"
+210	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:232:4
+231	) -> Callable[[Request], Coroutine[Any, Any, Response]]:
+232	    assert dependant.call is not None, "dependant.call must be a function"
+233	    is_coroutine = asyncio.iscoroutinefunction(dependant.call)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:382:12
+381	                )
+382	            assert dependant.call is not None, "dependant.call must be a function"
+383	            await dependant.call(**solved_result.values)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:507:12
+506	        if self.response_model:
+507	            assert is_body_allowed_for_status_code(status_code), (
+508	                f"Status code {status_code} must not have a response body"
+509	            )
+510	            response_name = "Response_" + self.unique_id
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:537:12
+536	        for additional_status_code, response in self.responses.items():
+537	            assert isinstance(response, dict), "An additional response must be a dict"
+538	            model = response.get("model")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:540:16
+539	            if model:
+540	                assert is_body_allowed_for_status_code(additional_status_code), (
+541	                    f"Status code {additional_status_code} must not have a response body"
+542	                )
+543	                response_name = f"Response_{additional_status_code}_{self.unique_id}"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:553:8
+552	
+553	        assert callable(endpoint), "An endpoint must be a callable"
+554	        self.dependant = get_dependant(path=self.path_format, call=self.endpoint)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:846:12
+845	        if prefix:
+846	            assert prefix.startswith("/"), "A path prefix must start with '/'"
+847	            assert not prefix.endswith("/"), (
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:847:12
+846	            assert prefix.startswith("/"), "A path prefix must start with '/'"
+847	            assert not prefix.endswith("/"), (
+848	                "A path prefix must not end with '/', as the routes will start with '/'"
+849	            )
+850	        self.prefix = prefix
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:1258:12
+1257	        if prefix:
+1258	            assert prefix.startswith("/"), "A path prefix must start with '/'"
+1259	            assert not prefix.endswith("/"), (
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/routing.py:1259:12
+1258	            assert prefix.startswith("/"), "A path prefix must start with '/'"
+1259	            assert not prefix.endswith("/"), (
+1260	                "A path prefix must not end with '/', as the routes will start with '/'"
+1261	            )
+1262	        else:
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b101_assert_used.html
+   Location: fastapi/utils.py:182:4
+181	    operation_id = re.sub(r"\W", "_", operation_id)
+182	    assert route.methods
+183	    operation_id = f"{operation_id}_{list(route.methods)[0].lower()}"
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 15650
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 46
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 46
+Files skipped (0):
++ true
++ echo '=== Safety Dependency Scan ==='
+=== Safety Dependency Scan ===
++ safety check --json --output safety-report.json
+Usage: safety check [OPTIONS]
+Try 'safety check --help' for help.
+
+Error: Invalid value for '--output' / '-o': 'safety-report.json' is not one of 'screen', 'text', 'json', 'bare', 'html'.
++ true
++ safety check
+/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages/safety/safety.py:1584: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[31mUnhandled exception happened: post_dump() got an unexpected keyword argument 'pass_many'[0m
++ true
++ echo '=== Pip-Audit Supply Chain Scan ==='
+=== Pip-Audit Supply Chain Scan ===
++ pip-audit --format=json --output=pip-audit-report.json
+Found 10 known vulnerabilities in 7 packages
++ true
++ pip-audit
+Found 10 known vulnerabilities in 7 packages
+Name       Version  ID                  Fix Versions
+---------- -------- ------------------- -------------
+aiohttp    3.11.14  GHSA-9548-qrrj-x5pj 3.12.14
+certifi    2024.2.2 PYSEC-2024-230      2024.7.4
+idna       3.6      PYSEC-2024-60       3.7
+requests   2.31.0   GHSA-9wx4-h78v-vm56 2.32.0
+requests   2.31.0   GHSA-9hjg-9r4m-mvj7 2.32.4
+starlette  0.46.2   GHSA-2c2j-9gv5-cj73 0.47.2
+urllib3    2.2.1    GHSA-34jh-p97f-mpxf 1.26.19,2.2.2
+urllib3    2.2.1    GHSA-48p4-8xcf-vxj5 2.5.0
+urllib3    2.2.1    GHSA-pq67-6m6q-mj2v 2.5.0
+virtualenv 20.25.1  PYSEC-2024-187      20.26.6
++ true
++ echo 'Security scans completed.'
+Security scans completed.

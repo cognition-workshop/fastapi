@@ -1,0 +1,555 @@
++ echo 'Running advanced static analysis...'
+Running advanced static analysis...
++ echo '=== Code Complexity Analysis ==='
+=== Code Complexity Analysis ===
++ radon cc fastapi --json
++ radon cc fastapi
+fastapi/background.py
+    C 9:0 BackgroundTasks - A
+    M 38:4 BackgroundTasks.add_task - A
+fastapi/concurrency.py
+    F 16:0 contextmanager_in_threadpool - A
+fastapi/datastructures.py
+    C 30:0 UploadFile - A
+    M 146:4 UploadFile.validate - A
+    M 152:4 UploadFile._validate - A
+    C 176:0 DefaultPlaceholder - A
+    M 190:4 DefaultPlaceholder.__eq__ - A
+    F 197:0 Default - A
+    M 75:4 UploadFile.write - A
+    M 95:4 UploadFile.read - A
+    M 113:4 UploadFile.seek - A
+    M 133:4 UploadFile.close - A
+    M 142:4 UploadFile.__get_validators__ - A
+    M 160:8 UploadFile.__modify_schema__ - A
+    M 164:4 UploadFile.__get_pydantic_json_schema__ - A
+    M 170:4 UploadFile.__get_pydantic_core_schema__ - A
+    M 184:4 DefaultPlaceholder.__init__ - A
+    M 187:4 DefaultPlaceholder.__bool__ - A
+fastapi/params.py
+    M 28:4 Param.__init__ - C
+    M 480:4 Body.__init__ - C
+    C 25:0 Param - B
+    C 479:0 Body - B
+    C 139:0 Path - A
+    C 764:0 Depends - A
+    C 777:0 Security - A
+    M 142:4 Path.__init__ - A
+    C 225:0 Query - A
+    C 309:0 Header - A
+    C 395:0 Cookie - A
+    C 596:0 Form - A
+    C 680:0 File - A
+    M 771:4 Depends.__repr__ - A
+    M 778:4 Security.__init__ - A
+    C 18:0 ParamTypes - A
+    M 135:4 Param.__repr__ - A
+    M 228:4 Query.__init__ - A
+    M 312:4 Header.__init__ - A
+    M 398:4 Cookie.__init__ - A
+    M 592:4 Body.__repr__ - A
+    M 597:4 Form.__init__ - A
+    M 681:4 File.__init__ - A
+    M 765:4 Depends.__init__ - A
+fastapi/responses.py
+    C 23:0 UJSONResponse - A
+    C 36:0 ORJSONResponse - A
+    M 31:4 UJSONResponse.render - A
+    M 44:4 ORJSONResponse.render - A
+fastapi/param_functions.py
+    F 11:0 Path - A
+    F 339:0 Query - A
+    F 643:0 Header - A
+    F 959:0 Cookie - A
+    F 1263:0 Body - A
+    F 1592:0 Form - A
+    F 1906:0 File - A
+    F 2220:0 Depends - A
+    F 2280:0 Security - A
+fastapi/routing.py
+    M 1122:4 APIRouter.include_router - D
+    M 429:4 APIRoute.__init__ - D
+    C 428:0 APIRoute - B
+    F 79:0 _prepare_response_content - B
+    F 143:0 serialize_response - B
+    M 622:4 APIRouter.__init__ - B
+    M 881:4 APIRouter.add_api_route - B
+    F 217:0 get_request_handler - A
+    C 388:0 APIWebSocketRoute - A
+    M 389:4 APIWebSocketRoute.__init__ - A
+    C 595:0 APIRouter - A
+    F 204:0 run_endpoint_function - A
+    M 421:4 APIWebSocketRoute.matches - A
+    M 588:4 APIRoute.matches - A
+    M 1025:4 APIRouter.add_api_websocket_route - A
+    F 126:0 _merge_lifespan_context - A
+    F 360:0 get_websocket_app - A
+    M 571:4 APIRoute.get_route_handler - A
+    M 862:4 APIRouter.route - A
+    M 963:4 APIRouter.api_route - A
+    M 1046:4 APIRouter.websocket - A
+    M 1113:4 APIRouter.websocket_route - A
+    M 1366:4 APIRouter.get - A
+    M 1743:4 APIRouter.put - A
+    M 2125:4 APIRouter.post - A
+    M 2507:4 APIRouter.delete - A
+    M 2884:4 APIRouter.options - A
+    M 3261:4 APIRouter.head - A
+    M 3643:4 APIRouter.patch - A
+    M 4025:4 APIRouter.trace - A
+    M 4415:4 APIRouter.on_event - A
+fastapi/exception_handlers.py
+    F 11:0 http_exception_handler - A
+    F 20:0 request_validation_exception_handler - A
+    F 29:0 websocket_request_validation_exception_handler - A
+fastapi/encoders.py
+    F 102:0 jsonable_encoder - E
+    F 37:0 decimal_encoder - A
+    F 88:0 generate_encoders_by_class_tuples - A
+    F 31:0 isoformat - A
+fastapi/cli.py
+    F 8:0 main - A
+fastapi/exceptions.py
+    C 167:0 ResponseValidationError - A
+    C 9:0 HTTPException - A
+    C 68:0 WebSocketException - A
+    C 149:0 ValidationException - A
+    C 157:0 RequestValidationError - A
+    M 172:4 ResponseValidationError.__str__ - A
+    M 37:4 HTTPException.__init__ - A
+    M 110:4 WebSocketException.__init__ - A
+    C 143:0 FastAPIError - A
+    M 150:4 ValidationException.__init__ - A
+    M 153:4 ValidationException.errors - A
+    M 158:4 RequestValidationError.__init__ - A
+    C 163:0 WebSocketRequestValidationError - A
+    M 168:4 ResponseValidationError.__init__ - A
+fastapi/applications.py
+    M 64:4 FastAPI.__init__ - B
+    M 998:4 FastAPI.setup - B
+    C 48:0 FastAPI - A
+    M 966:4 FastAPI.openapi - A
+    M 1051:4 FastAPI.__call__ - A
+    M 1056:4 FastAPI.add_api_route - A
+    M 1115:4 FastAPI.api_route - A
+    M 1175:4 FastAPI.add_api_websocket_route - A
+    M 1190:4 FastAPI.websocket - A
+    M 1255:4 FastAPI.include_router - A
+    M 1460:4 FastAPI.get - A
+    M 1833:4 FastAPI.put - A
+    M 2211:4 FastAPI.post - A
+    M 2589:4 FastAPI.delete - A
+    M 2962:4 FastAPI.options - A
+    M 3335:4 FastAPI.head - A
+    M 3708:4 FastAPI.patch - A
+    M 4086:4 FastAPI.trace - A
+    M 4459:4 FastAPI.websocket_route - A
+    M 4476:4 FastAPI.on_event - A
+    M 4497:4 FastAPI.middleware - A
+    M 4540:4 FastAPI.exception_handler - A
+fastapi/_compat.py
+    F 396:4 is_pv1_scalar_field - B
+    F 588:0 field_annotation_is_scalar_sequence - B
+    F 417:4 is_pv1_scalar_sequence_field - B
+    F 570:0 field_annotation_is_complex - B
+    F 627:0 is_bytes_sequence_annotation - B
+    F 642:0 is_uploadfile_sequence_annotation - B
+    F 546:0 field_annotation_is_sequence - B
+    F 605:0 is_bytes_or_nonable_bytes_annotation - B
+    F 616:0 is_uploadfile_or_nonable_uploadfile_annotation - B
+    F 186:4 get_schema_from_model_field - A
+    F 212:4 get_definitions - A
+    F 430:4 _normalize_errors - A
+    F 263:4 serialize_sequence_value - A
+    F 379:4 get_model_definitions - A
+    F 562:0 _annotation_is_complex - A
+    F 236:4 is_scalar_field - A
+    F 277:4 create_body_model - A
+    F 284:4 get_model_fields - A
+    F 494:4 is_sequence_field - A
+    F 503:4 is_bytes_sequence_field - A
+    F 517:4 create_body_model - A
+    F 529:0 _regenerate_error_with_loc - A
+    F 540:0 _annotation_is_sequence - A
+    F 558:0 value_is_sequence - A
+    F 583:0 field_annotation_is_scalar - A
+    C 88:4 ModelField - A
+    M 94:8 ModelField.alias - A
+    M 115:8 ModelField.get_default - A
+    M 120:8 ModelField.validate - A
+    F 167:4 get_annotation_from_field_info - A
+    F 172:4 _normalize_errors - A
+    F 175:4 _model_rebuild - A
+    F 178:4 _model_dump - A
+    F 183:4 _get_model_config - A
+    F 209:4 get_compat_model_name_map - A
+    F 243:4 is_sequence_field - A
+    F 246:4 is_scalar_sequence_field - A
+    F 249:4 is_bytes_field - A
+    F 252:4 is_bytes_sequence_field - A
+    F 255:4 copy_field_info - A
+    F 270:4 get_missing_field_error - A
+    F 370:4 with_info_plain_validator_function - A
+    F 444:4 _model_rebuild - A
+    F 447:4 _model_dump - A
+    F 452:4 _get_model_config - A
+    F 455:4 get_schema_from_model_field - A
+    F 470:4 get_compat_model_name_map - A
+    F 474:4 get_definitions - A
+    F 491:4 is_scalar_field - A
+    F 497:4 is_scalar_sequence_field - A
+    F 500:4 is_bytes_field - A
+    F 506:4 copy_field_info - A
+    F 509:4 serialize_sequence_value - A
+    F 512:4 get_missing_field_error - A
+    F 525:4 get_model_fields - A
+    F 658:0 get_cached_model_fields - A
+    C 81:4 BaseConfig - A
+    C 84:4 ErrorWrapper - A
+    M 99:8 ModelField.required - A
+    M 103:8 ModelField.default - A
+    M 107:8 ModelField.type_ - A
+    M 110:8 ModelField.__post_init__ - A
+    M 137:8 ModelField.serialize - A
+    M 162:8 ModelField.__hash__ - A
+    C 364:4 GenerateJsonSchema - A
+    C 367:4 PydanticSchemaGenerationError - A
+fastapi/utils.py
+    F 109:0 create_cloned_field - C
+    F 187:0 deep_dict_update - B
+    F 63:0 create_model_field - B
+    F 42:0 is_body_allowed_for_status_code - A
+    F 205:0 get_value_or_default - A
+    F 179:0 generate_unique_id - A
+    F 59:0 get_path_param_names - A
+    F 164:0 generate_operation_id_for_path - A
+fastapi/dependencies/models.py
+    C 15:0 Dependant - A
+    M 36:4 Dependant.__post_init__ - A
+    C 9:0 SecurityRequirement - A
+fastapi/dependencies/utils.py
+    F 348:0 analyze_param - F
+    F 572:0 solve_dependencies - D
+    F 740:0 request_params_to_args - C
+    F 841:0 _extract_form_body - C
+    F 930:0 get_body_field - C
+    F 716:0 _get_multidict_value - C
+    F 884:0 request_body_to_args - C
+    F 91:0 ensure_multipart_is_installed - B
+    F 265:0 get_dependant - B
+    F 317:0 add_non_field_param_to_dependency - B
+    F 819:0 _should_embed_body_fields - B
+    F 142:0 get_sub_dependant - B
+    F 177:0 get_flat_dependant - A
+    F 514:0 add_param_to_fields - A
+    F 698:0 _validate_value_with_model_field - A
+    F 212:0 _get_flat_fields_from_params - A
+    F 530:0 is_coroutine_callable - A
+    F 553:0 solve_generator - A
+    F 118:0 get_param_sub_dependant - A
+    F 135:0 get_parameterless_sub_dependant - A
+    F 231:0 get_typed_signature - A
+    F 247:0 get_typed_annotation - A
+    F 254:0 get_typed_return_annotation - A
+    F 539:0 is_async_gen_callable - A
+    F 546:0 is_gen_callable - A
+    F 222:0 get_flat_params - A
+    C 342:0 ParamDetails - A
+    C 564:0 SolvedDependency - A
+fastapi/security/oauth2.py
+    C 308:0 OAuth2 - A
+    C 391:0 OAuth2PasswordBearer - A
+    M 473:4 OAuth2PasswordBearer.__call__ - A
+    C 488:0 OAuth2AuthorizationCodeBearer - A
+    M 583:4 OAuth2AuthorizationCodeBearer.__call__ - A
+    M 379:4 OAuth2.__call__ - A
+    C 598:0 SecurityScopes - A
+    C 16:0 OAuth2PasswordRequestForm - A
+    C 152:0 OAuth2PasswordRequestFormStrict - A
+    M 321:4 OAuth2.__init__ - A
+    M 400:4 OAuth2PasswordBearer.__init__ - A
+    M 494:4 OAuth2AuthorizationCodeBearer.__init__ - A
+    M 611:4 SecurityScopes.__init__ - A
+    M 61:4 OAuth2PasswordRequestForm.__init__ - A
+    M 216:4 OAuth2PasswordRequestFormStrict.__init__ - A
+fastapi/security/http.py
+    M 187:4 HTTPBasic.__call__ - B
+    M 301:4 HTTPBearer.__call__ - B
+    M 403:4 HTTPDigest.__call__ - B
+    C 97:0 HTTPBasic - B
+    C 220:0 HTTPBearer - B
+    C 324:0 HTTPDigest - B
+    C 69:0 HTTPBase - A
+    M 82:4 HTTPBase.__call__ - A
+    M 70:4 HTTPBase.__init__ - A
+    M 130:4 HTTPBasic.__init__ - A
+    M 252:4 HTTPBearer.__init__ - A
+    M 356:4 HTTPDigest.__init__ - A
+    C 16:0 HTTPBasicCredentials - A
+    C 29:0 HTTPAuthorizationCredentials - A
+fastapi/security/base.py
+    C 4:0 SecurityBase - A
+fastapi/security/api_key.py
+    C 11:0 APIKeyBase - A
+    M 13:4 APIKeyBase.check_api_key - A
+    C 23:0 APIKeyQuery - A
+    C 115:0 APIKeyHeader - A
+    C 203:0 APIKeyCookie - A
+    M 55:4 APIKeyQuery.__init__ - A
+    M 147:4 APIKeyHeader.__init__ - A
+    M 235:4 APIKeyCookie.__init__ - A
+    M 110:4 APIKeyQuery.__call__ - A
+    M 198:4 APIKeyHeader.__call__ - A
+    M 286:4 APIKeyCookie.__call__ - A
+fastapi/security/open_id_connect_url.py
+    C 11:0 OpenIdConnect - A
+    M 75:4 OpenIdConnect.__call__ - A
+    M 17:4 OpenIdConnect.__init__ - A
+fastapi/security/utils.py
+    F 4:0 get_authorization_scheme_param - A
+fastapi/openapi/docs.py
+    F 26:0 get_swagger_ui_html - A
+    F 161:0 get_redoc_html - A
+    F 256:0 get_swagger_ui_oauth2_redirect_html - A
+fastapi/openapi/models.py
+    C 24:4 EmailStr - A
+    C 58:0 BaseModelWithConfig - A
+    C 216:0 Example - A
+    M 26:8 EmailStr.__get_validators__ - A
+    M 30:8 EmailStr.validate - A
+    M 38:8 EmailStr._validate - A
+    M 46:8 EmailStr.__get_pydantic_json_schema__ - A
+    M 52:8 EmailStr.__get_pydantic_core_schema__ - A
+    C 68:0 Contact - A
+    C 74:0 License - A
+    C 80:0 Info - A
+    C 90:0 ServerVariable - A
+    C 96:0 Server - A
+    C 102:0 Reference - A
+    C 106:0 Discriminator - A
+    C 111:0 XML - A
+    C 119:0 ExternalDocumentation - A
+    C 124:0 Schema - A
+    C 231:0 ParameterInType - A
+    C 238:0 Encoding - A
+    C 246:0 MediaType - A
+    C 253:0 ParameterBase - A
+    C 268:0 Parameter - A
+    C 273:0 Header - A
+    C 277:0 RequestBody - A
+    C 283:0 Link - A
+    C 292:0 Response - A
+    C 299:0 Operation - A
+    C 315:0 PathItem - A
+    C 331:0 SecuritySchemeType - A
+    C 338:0 SecurityBase - A
+    C 343:0 APIKeyIn - A
+    C 349:0 APIKey - A
+    C 355:0 HTTPBase - A
+    C 360:0 HTTPBearer - A
+    C 365:0 OAuthFlow - A
+    C 370:0 OAuthFlowImplicit - A
+    C 374:0 OAuthFlowPassword - A
+    C 378:0 OAuthFlowClientCredentials - A
+    C 382:0 OAuthFlowAuthorizationCode - A
+    C 387:0 OAuthFlows - A
+    C 394:0 OAuth2 - A
+    C 399:0 OpenIdConnect - A
+    C 409:0 Components - A
+    C 423:0 Tag - A
+    C 429:0 OpenAPI - A
+fastapi/openapi/utils.py
+    F 254:0 get_openapi_path - E
+    F 477:0 get_openapi - D
+    F 95:0 _get_openapi_operation_parameters - C
+    F 446:0 get_fields_from_routes - B
+    F 228:0 get_openapi_operation_metadata - B
+    F 170:0 get_openapi_operation_request_body - B
+    F 78:0 get_openapi_security_definitions - A
+    F 207:0 generate_operation_id - A
+    F 222:0 generate_operation_summary - A
++ echo '=== Maintainability Index ==='
+=== Maintainability Index ===
++ radon mi fastapi --json
++ radon mi fastapi
+fastapi/websockets.py - A
+fastapi/background.py - A
+fastapi/concurrency.py - A
+fastapi/staticfiles.py - A
+fastapi/datastructures.py - A
+fastapi/params.py - A
+fastapi/responses.py - A
+fastapi/__init__.py - A
+fastapi/param_functions.py - A
+fastapi/routing.py - A
+fastapi/exception_handlers.py - A
+fastapi/encoders.py - A
+fastapi/templating.py - A
+fastapi/testclient.py - A
+fastapi/cli.py - A
+fastapi/types.py - A
+fastapi/logger.py - A
+fastapi/exceptions.py - A
+fastapi/requests.py - A
+fastapi/__main__.py - A
+fastapi/applications.py - A
+fastapi/_compat.py - A
+fastapi/utils.py - A
+fastapi/middleware/gzip.py - A
+fastapi/middleware/trustedhost.py - A
+fastapi/middleware/__init__.py - A
+fastapi/middleware/httpsredirect.py - A
+fastapi/middleware/wsgi.py - A
+fastapi/middleware/cors.py - A
+fastapi/dependencies/__init__.py - A
+fastapi/dependencies/models.py - A
+fastapi/dependencies/utils.py - C
+fastapi/security/oauth2.py - A
+fastapi/security/__init__.py - A
+fastapi/security/http.py - A
+fastapi/security/base.py - A
+fastapi/security/api_key.py - A
+fastapi/security/open_id_connect_url.py - A
+fastapi/security/utils.py - A
+fastapi/openapi/docs.py - A
+fastapi/openapi/__init__.py - A
+fastapi/openapi/constants.py - A
+fastapi/openapi/models.py - A
+fastapi/openapi/utils.py - A
++ echo '=== Dead Code Detection ==='
+=== Dead Code Detection ===
++ vulture fastapi --json
+usage: vulture [options] [PATH ...]
+vulture: error: unrecognized arguments: --json
++ true
++ vulture fastapi
+fastapi/_compat.py:168: unused variable 'field_name' (100% confidence)
+fastapi/_compat.py:365: unused variable 'ref_template' (60% confidence)
+fastapi/_compat.py:371: unused variable 'function' (100% confidence)
+fastapi/_compat.py:373: unused variable 'ref' (100% confidence)
+fastapi/_compat.py:375: unused variable 'serialization' (100% confidence)
+fastapi/_compat.py:386: unused variable 'm_nested_models' (60% confidence)
+fastapi/applications.py:898: unused attribute 'state' (60% confidence)
+fastapi/applications.py:960: unused attribute 'user_middleware' (60% confidence)
+fastapi/applications.py:963: unused attribute 'middleware_stack' (60% confidence)
+fastapi/applications.py:4459: unused method 'websocket_route' (60% confidence)
+fastapi/applications.py:4499: unused variable 'middleware_type' (100% confidence)
+fastapi/applications.py:4540: unused method 'exception_handler' (60% confidence)
+fastapi/datastructures.py:64: unused variable 'file' (60% confidence)
+fastapi/datastructures.py:68: unused variable 'filename' (60% confidence)
+fastapi/datastructures.py:71: unused variable 'content_type' (60% confidence)
+fastapi/datastructures.py:171: unused variable 'source' (100% confidence)
+fastapi/exceptions.py:140: unused variable 'WebSocketErrorModel' (60% confidence)
+fastapi/openapi/models.py:53: unused variable 'source' (100% confidence)
+fastapi/openapi/models.py:64: unused class 'Config' (60% confidence)
+fastapi/openapi/models.py:76: unused variable 'identifier' (60% confidence)
+fastapi/openapi/models.py:84: unused variable 'termsOfService' (60% confidence)
+fastapi/openapi/models.py:86: unused variable 'license' (60% confidence)
+fastapi/openapi/models.py:91: unused variable 'enum' (60% confidence)
+fastapi/openapi/models.py:99: unused variable 'variables' (60% confidence)
+fastapi/openapi/models.py:103: unused variable 'ref' (60% confidence)
+fastapi/openapi/models.py:107: unused variable 'propertyName' (60% confidence)
+fastapi/openapi/models.py:108: unused variable 'mapping' (60% confidence)
+fastapi/openapi/models.py:113: unused variable 'namespace' (60% confidence)
+fastapi/openapi/models.py:115: unused variable 'attribute' (60% confidence)
+fastapi/openapi/models.py:116: unused variable 'wrapped' (60% confidence)
+fastapi/openapi/models.py:127: unused variable 'schema_' (60% confidence)
+fastapi/openapi/models.py:128: unused variable 'vocabulary' (60% confidence)
+fastapi/openapi/models.py:130: unused variable 'anchor' (60% confidence)
+fastapi/openapi/models.py:131: unused variable 'dynamicAnchor' (60% confidence)
+fastapi/openapi/models.py:132: unused variable 'ref' (60% confidence)
+fastapi/openapi/models.py:133: unused variable 'dynamicRef' (60% confidence)
+fastapi/openapi/models.py:134: unused variable 'defs' (60% confidence)
+fastapi/openapi/models.py:135: unused variable 'comment' (60% confidence)
+fastapi/openapi/models.py:138: unused variable 'allOf' (60% confidence)
+fastapi/openapi/models.py:139: unused variable 'anyOf' (60% confidence)
+fastapi/openapi/models.py:140: unused variable 'oneOf' (60% confidence)
+fastapi/openapi/models.py:141: unused variable 'not_' (60% confidence)
+fastapi/openapi/models.py:142: unused variable 'if_' (60% confidence)
+fastapi/openapi/models.py:143: unused variable 'then' (60% confidence)
+fastapi/openapi/models.py:144: unused variable 'else_' (60% confidence)
+fastapi/openapi/models.py:145: unused variable 'dependentSchemas' (60% confidence)
+fastapi/openapi/models.py:146: unused variable 'prefixItems' (60% confidence)
+fastapi/openapi/models.py:151: unused variable 'contains' (60% confidence)
+fastapi/openapi/models.py:152: unused variable 'properties' (60% confidence)
+fastapi/openapi/models.py:153: unused variable 'patternProperties' (60% confidence)
+fastapi/openapi/models.py:154: unused variable 'additionalProperties' (60% confidence)
+fastapi/openapi/models.py:155: unused variable 'propertyNames' (60% confidence)
+fastapi/openapi/models.py:156: unused variable 'unevaluatedItems' (60% confidence)
+fastapi/openapi/models.py:157: unused variable 'unevaluatedProperties' (60% confidence)
+fastapi/openapi/models.py:161: unused variable 'enum' (60% confidence)
+fastapi/openapi/models.py:162: unused variable 'const' (60% confidence)
+fastapi/openapi/models.py:163: unused variable 'multipleOf' (60% confidence)
+fastapi/openapi/models.py:164: unused variable 'maximum' (60% confidence)
+fastapi/openapi/models.py:165: unused variable 'exclusiveMaximum' (60% confidence)
+fastapi/openapi/models.py:166: unused variable 'minimum' (60% confidence)
+fastapi/openapi/models.py:167: unused variable 'exclusiveMinimum' (60% confidence)
+fastapi/openapi/models.py:168: unused variable 'maxLength' (60% confidence)
+fastapi/openapi/models.py:169: unused variable 'minLength' (60% confidence)
+fastapi/openapi/models.py:171: unused variable 'maxItems' (60% confidence)
+fastapi/openapi/models.py:172: unused variable 'minItems' (60% confidence)
+fastapi/openapi/models.py:173: unused variable 'uniqueItems' (60% confidence)
+fastapi/openapi/models.py:174: unused variable 'maxContains' (60% confidence)
+fastapi/openapi/models.py:175: unused variable 'minContains' (60% confidence)
+fastapi/openapi/models.py:176: unused variable 'maxProperties' (60% confidence)
+fastapi/openapi/models.py:177: unused variable 'minProperties' (60% confidence)
+fastapi/openapi/models.py:179: unused variable 'dependentRequired' (60% confidence)
+fastapi/openapi/models.py:182: unused variable 'format' (60% confidence)
+fastapi/openapi/models.py:185: unused variable 'contentEncoding' (60% confidence)
+fastapi/openapi/models.py:186: unused variable 'contentMediaType' (60% confidence)
+fastapi/openapi/models.py:187: unused variable 'contentSchema' (60% confidence)
+fastapi/openapi/models.py:194: unused variable 'readOnly' (60% confidence)
+fastapi/openapi/models.py:195: unused variable 'writeOnly' (60% confidence)
+fastapi/openapi/models.py:200: unused variable 'xml' (60% confidence)
+fastapi/openapi/models.py:201: unused variable 'externalDocs' (60% confidence)
+fastapi/openapi/models.py:213: unused variable 'SchemaOrBool' (60% confidence)
+fastapi/openapi/models.py:220: unused variable 'externalValue' (60% confidence)
+fastapi/openapi/models.py:227: unused class 'Config' (60% confidence)
+fastapi/openapi/models.py:239: unused variable 'contentType' (60% confidence)
+fastapi/openapi/models.py:241: unused variable 'style' (60% confidence)
+fastapi/openapi/models.py:242: unused variable 'explode' (60% confidence)
+fastapi/openapi/models.py:243: unused variable 'allowReserved' (60% confidence)
+fastapi/openapi/models.py:247: unused variable 'schema_' (60% confidence)
+fastapi/openapi/models.py:250: unused variable 'encoding' (60% confidence)
+fastapi/openapi/models.py:258: unused variable 'style' (60% confidence)
+fastapi/openapi/models.py:259: unused variable 'explode' (60% confidence)
+fastapi/openapi/models.py:260: unused variable 'allowReserved' (60% confidence)
+fastapi/openapi/models.py:261: unused variable 'schema_' (60% confidence)
+fastapi/openapi/models.py:284: unused variable 'operationRef' (60% confidence)
+fastapi/openapi/models.py:285: unused variable 'operationId' (60% confidence)
+fastapi/openapi/models.py:287: unused variable 'requestBody' (60% confidence)
+fastapi/openapi/models.py:289: unused variable 'server' (60% confidence)
+fastapi/openapi/models.py:296: unused variable 'links' (60% confidence)
+fastapi/openapi/models.py:303: unused variable 'externalDocs' (60% confidence)
+fastapi/openapi/models.py:304: unused variable 'operationId' (60% confidence)
+fastapi/openapi/models.py:306: unused variable 'requestBody' (60% confidence)
+fastapi/openapi/models.py:311: unused variable 'security' (60% confidence)
+fastapi/openapi/models.py:316: unused variable 'ref' (60% confidence)
+fastapi/openapi/models.py:388: unused variable 'implicit' (60% confidence)
+fastapi/openapi/models.py:390: unused variable 'clientCredentials' (60% confidence)
+fastapi/openapi/models.py:391: unused variable 'authorizationCode' (60% confidence)
+fastapi/openapi/models.py:410: unused variable 'schemas' (60% confidence)
+fastapi/openapi/models.py:414: unused variable 'requestBodies' (60% confidence)
+fastapi/openapi/models.py:416: unused variable 'securitySchemes' (60% confidence)
+fastapi/openapi/models.py:417: unused variable 'links' (60% confidence)
+fastapi/openapi/models.py:420: unused variable 'pathItems' (60% confidence)
+fastapi/openapi/models.py:426: unused variable 'externalDocs' (60% confidence)
+fastapi/openapi/models.py:432: unused variable 'jsonSchemaDialect' (60% confidence)
+fastapi/openapi/models.py:438: unused variable 'security' (60% confidence)
+fastapi/openapi/models.py:440: unused variable 'externalDocs' (60% confidence)
+fastapi/openapi/utils.py:207: unused function 'generate_operation_id' (60% confidence)
+fastapi/openapi/utils.py:326: unused variable 'cb_security_schemes' (60% confidence)
+fastapi/openapi/utils.py:327: unused variable 'cb_definitions' (60% confidence)
+fastapi/responses.py:23: unused class 'UJSONResponse' (60% confidence)
+fastapi/responses.py:31: unused method 'render' (60% confidence)
+fastapi/responses.py:36: unused class 'ORJSONResponse' (60% confidence)
+fastapi/responses.py:44: unused method 'render' (60% confidence)
+fastapi/routing.py:402: unused attribute 'param_convertors' (60% confidence)
+fastapi/routing.py:402: unused attribute 'path_regex' (60% confidence)
+fastapi/routing.py:491: unused attribute 'param_convertors' (60% confidence)
+fastapi/routing.py:491: unused attribute 'path_regex' (60% confidence)
+fastapi/routing.py:1113: unused method 'websocket_route' (60% confidence)
+fastapi/security/oauth2.py:630: unused attribute 'scope_str' (60% confidence)
++ true
++ echo 'Advanced static analysis completed.'
+Advanced static analysis completed.

@@ -1,0 +1,43 @@
+Running API performance benchmarks...
+✓ GET /: 2.51ms avg
+✓ GET /items/1: 2.65ms avg
+✓ GET /items/1?q=test: 2.79ms avg
+✓ POST /items/: 2.94ms avg
+
+=== Performance Benchmark Results ===
+
+Endpoint: GET /
+Iterations: 100
+Average Response Time: 2.51ms
+Min Response Time: 2.12ms
+Max Response Time: 9.23ms
+Median Response Time: 2.42ms
+95th Percentile: 2.75ms
+        
+
+Endpoint: GET /items/1
+Iterations: 100
+Average Response Time: 2.65ms
+Min Response Time: 2.2ms
+Max Response Time: 3.33ms
+Median Response Time: 2.63ms
+95th Percentile: 3.0ms
+        
+
+Endpoint: GET /items/1?q=test
+Iterations: 100
+Average Response Time: 2.79ms
+Min Response Time: 2.32ms
+Max Response Time: 3.66ms
+Median Response Time: 2.76ms
+95th Percentile: 3.23ms
+        
+
+Endpoint: POST /items/
+Iterations: 100
+Average Response Time: 2.94ms
+Min Response Time: 2.33ms
+Max Response Time: 4.13ms
+Median Response Time: 2.94ms
+95th Percentile: 3.41ms
+        

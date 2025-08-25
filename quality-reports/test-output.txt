@@ -1,0 +1,393 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.8, pytest-8.4.1, pluggy-1.6.0
+rootdir: /home/ubuntu/repos/fastapi
+configfile: pyproject.toml
+plugins: Faker-24.8.0, anyio-4.10.0, inline-snapshot-0.19.3
+collected 2473 items
+
+tests/e2e/test_fastapi_e2e.py ssss                                       [  0%]
+tests/integration/test_api_integration.py .....                          [  0%]
+tests/test_additional_properties.py ..                                   [  0%]
+tests/test_additional_properties_bool.py ...                             [  0%]
+tests/test_additional_response_extra.py ..                               [  0%]
+tests/test_additional_responses_bad.py .                                 [  0%]
+tests/test_additional_responses_custom_model_in_callback.py .            [  0%]
+tests/test_additional_responses_custom_validationerror.py .              [  0%]
+tests/test_additional_responses_default_validationerror.py .             [  0%]
+tests/test_additional_responses_response_class.py .                      [  0%]
+tests/test_additional_responses_router.py .....                          [  1%]
+tests/test_allow_inf_nan_in_enforcing.py ........................        [  2%]
+tests/test_ambiguous_params.py ..                                        [  2%]
+tests/test_annotated.py .............                                    [  2%]
+tests/test_application.py ........                                       [  2%]
+tests/test_callable_endpoint.py .                                        [  2%]
+tests/test_compat.py .ss......                                           [  3%]
+tests/test_computed_fields.py ...                                        [  3%]
+tests/test_custom_middleware_exception.py ..                             [  3%]
+tests/test_custom_route_class.py .....                                   [  3%]
+tests/test_custom_schema_fields.py ..                                    [  3%]
+tests/test_custom_swagger_ui_redirect.py ...                             [  3%]
+tests/test_datastructures.py .......                                     [  4%]
+tests/test_datetime_custom_encoder.py .s                                 [  4%]
+tests/test_default_response_class.py ..............                      [  4%]
+tests/test_default_response_class_router.py ..............               [  5%]
+tests/test_dependency_cache.py ....                                      [  5%]
+tests/test_dependency_class.py ........                                  [  5%]
+tests/test_dependency_contextmanager.py ......................           [  6%]
+tests/test_dependency_contextvars.py .                                   [  6%]
+tests/test_dependency_duplicates.py .....                                [  7%]
+tests/test_dependency_normal_exceptions.py ..                            [  7%]
+tests/test_dependency_overrides.py ................................      [  8%]
+tests/test_dependency_security_overrides.py ...                          [  8%]
+tests/test_deprecated_openapi_prefix.py ..                               [  8%]
+tests/test_duplicate_models_openapi.py ..                                [  8%]
+tests/test_empty_router.py ..                                            [  8%]
+tests/test_enforce_once_required_parameter.py ...                        [  8%]
+tests/test_exception_handlers.py .....                                   [  9%]
+tests/test_extra_routes.py ........                                      [  9%]
+tests/test_fastapi_cli.py ..                                             [  9%]
+tests/test_filter_pydantic_sub_model/test_filter_pydantic_sub_model_pv1.py s [  9%]
+ss                                                                       [  9%]
+tests/test_filter_pydantic_sub_model_pv2.py ...                          [  9%]
+tests/test_forms_from_non_typing_sequences.py ...                        [  9%]
+tests/test_forms_single_model.py ....                                    [ 10%]
+tests/test_forms_single_param.py ..                                      [ 10%]
+tests/test_generate_unique_id_function.py ........                       [ 10%]
+tests/test_generic_parameterless_depends.py ..                           [ 10%]
+tests/test_get_request_body.py ..                                        [ 10%]
+tests/test_http_connection_injection.py ..                               [ 10%]
+tests/test_include_route.py .                                            [ 10%]
+tests/test_include_router_defaults_overrides.py ........................ [ 11%]
+...................                                                      [ 12%]
+tests/test_infer_param_optionality.py .........                          [ 12%]
+tests/test_inherited_custom_class.py .s                                  [ 12%]
+tests/test_invalid_path_param.py .......                                 [ 13%]
+tests/test_invalid_sequence_param.py ....                                [ 13%]
+tests/test_jsonable_encoder.py ......s....s....s....                     [ 14%]
+tests/test_local_docs.py .....                                           [ 14%]
+tests/test_modules_same_name_body/test_main.py .........                 [ 14%]
+tests/test_multi_body_errors.py ....                                     [ 14%]
+tests/test_multi_query_errors.py ...                                     [ 15%]
+tests/test_multipart_installation.py ...........                         [ 15%]
+tests/test_no_swagger_ui_redirect.py ...                                 [ 15%]
+tests/test_openapi_examples.py ..                                        [ 15%]
+tests/test_openapi_query_parameter_extension.py ..                       [ 15%]
+tests/test_openapi_route_extensions.py ..                                [ 15%]
+tests/test_openapi_separate_input_output_schemas.py ......               [ 16%]
+tests/test_openapi_servers.py ..                                         [ 16%]
+tests/test_operations_signatures.py .                                    [ 16%]
+tests/test_orjson_response_class.py .                                    [ 16%]
+tests/test_param_class.py ..                                             [ 16%]
+tests/test_param_in_path_and_dependency.py ..                            [ 16%]
+tests/test_param_include_in_schema.py ........                           [ 16%]
+tests/test_params_repr.py ...........................                    [ 17%]
+tests/test_path.py ..................................................... [ 20%]
+......................                                                   [ 20%]
+tests/test_put_no_body.py ...                                            [ 21%]
+tests/test_query.py .............................                        [ 22%]
+tests/test_read_with_orm_mode.py .s                                      [ 22%]
+tests/test_regex_deprecated_body.py ....                                 [ 22%]
+tests/test_regex_deprecated_params.py ....                               [ 22%]
+tests/test_repeated_cookie_headers.py .                                  [ 22%]
+tests/test_repeated_dependency_schema.py ..                              [ 22%]
+tests/test_repeated_parameter_alias.py ..                                [ 22%]
+tests/test_reponse_set_reponse_code_empty.py ..                          [ 22%]
+tests/test_request_body_parameters_media_type.py .                       [ 22%]
+tests/test_required_noneable.py .......                                  [ 23%]
+tests/test_response_by_alias.py ..........                               [ 23%]
+tests/test_response_change_status_code.py .                              [ 23%]
+tests/test_response_class_no_mediatype.py .                              [ 23%]
+tests/test_response_code_no_body.py ..                                   [ 23%]
+tests/test_response_model_as_return_annotation.py ...................... [ 24%]
+................                                                         [ 25%]
+tests/test_response_model_data_filter.py ...                             [ 25%]
+tests/test_response_model_data_filter_no_inheritance.py ...              [ 25%]
+tests/test_response_model_include_exclude.py ......                      [ 25%]
+tests/test_response_model_invalid.py ....                                [ 25%]
+tests/test_response_model_sub_types.py ..                                [ 26%]
+tests/test_route_scope.py .....                                          [ 26%]
+tests/test_router_events.py ......                                       [ 26%]
+tests/test_router_prefix_with_template.py .                              [ 26%]
+tests/test_router_redirect_slashes.py ..                                 [ 26%]
+tests/test_schema_extra_examples.py ..                                   [ 26%]
+tests/test_security_api_key_cookie.py ...                                [ 26%]
+tests/test_security_api_key_cookie_description.py ...                    [ 26%]
+tests/test_security_api_key_cookie_optional.py ...                       [ 27%]
+tests/test_security_api_key_header.py ...                                [ 27%]
+tests/test_security_api_key_header_description.py ...                    [ 27%]
+tests/test_security_api_key_header_optional.py ...                       [ 27%]
+tests/test_security_api_key_query.py ...                                 [ 27%]
+tests/test_security_api_key_query_description.py ...                     [ 27%]
+tests/test_security_api_key_query_optional.py ...                        [ 27%]
+tests/test_security_http_base.py ...                                     [ 27%]
+tests/test_security_http_base_description.py ...                         [ 28%]
+tests/test_security_http_base_optional.py ...                            [ 28%]
+tests/test_security_http_basic_optional.py .....                         [ 28%]
+tests/test_security_http_basic_realm.py .....                            [ 28%]
+tests/test_security_http_basic_realm_description.py .....                [ 28%]
+tests/test_security_http_bearer.py ....                                  [ 28%]
+tests/test_security_http_bearer_description.py ....                      [ 29%]
+tests/test_security_http_bearer_optional.py ....                         [ 29%]
+tests/test_security_http_digest.py ....                                  [ 29%]
+tests/test_security_http_digest_description.py ....                      [ 29%]
+tests/test_security_http_digest_optional.py ....                         [ 29%]
+tests/test_security_oauth2.py ..........                                 [ 30%]
+tests/test_security_oauth2_authorization_code_bearer.py ....             [ 30%]
+tests/test_security_oauth2_authorization_code_bearer_description.py .... [ 30%]
+                                                                         [ 30%]
+tests/test_security_oauth2_optional.py ..........                        [ 30%]
+tests/test_security_oauth2_optional_description.py ..........            [ 31%]
+tests/test_security_oauth2_password_bearer_optional.py ....              [ 31%]
+tests/test_security_oauth2_password_bearer_optional_description.py ....  [ 31%]
+tests/test_security_openid_connect.py ....                               [ 31%]
+tests/test_security_openid_connect_description.py ....                   [ 31%]
+tests/test_security_openid_connect_optional.py ....                      [ 32%]
+tests/test_serialize_response.py ...                                     [ 32%]
+tests/test_serialize_response_dataclass.py .......                       [ 32%]
+tests/test_serialize_response_model.py ........                          [ 32%]
+tests/test_skip_defaults.py .....                                        [ 32%]
+tests/test_starlette_exception.py .......                                [ 33%]
+tests/test_starlette_urlconvertors.py .....                              [ 33%]
+tests/test_sub_callbacks.py ..                                           [ 33%]
+tests/test_swagger_ui_init_oauth.py ..                                   [ 33%]
+tests/test_tuples.py .......                                             [ 33%]
+tests/test_tutorial/test_additional_responses/test_tutorial001.py ...    [ 34%]
+tests/test_tutorial/test_additional_responses/test_tutorial002.py ...    [ 34%]
+tests/test_tutorial/test_additional_responses/test_tutorial003.py ...    [ 34%]
+tests/test_tutorial/test_additional_responses/test_tutorial004.py ...    [ 34%]
+tests/test_tutorial/test_additional_status_codes/test_tutorial001.py ... [ 34%]
+.......                                                                  [ 34%]
+tests/test_tutorial/test_advanced_middleware/test_tutorial001.py .       [ 34%]
+tests/test_tutorial/test_advanced_middleware/test_tutorial002.py .       [ 34%]
+tests/test_tutorial/test_advanced_middleware/test_tutorial003.py .       [ 34%]
+tests/test_tutorial/test_async_tests/test_main.py ....                   [ 35%]
+tests/test_tutorial/test_background_tasks/test_tutorial001.py .          [ 35%]
+tests/test_tutorial/test_background_tasks/test_tutorial002.py .....      [ 35%]
+tests/test_tutorial/test_behind_a_proxy/test_tutorial001.py ..           [ 35%]
+tests/test_tutorial/test_behind_a_proxy/test_tutorial002.py ..           [ 35%]
+tests/test_tutorial/test_behind_a_proxy/test_tutorial003.py ..           [ 35%]
+tests/test_tutorial/test_behind_a_proxy/test_tutorial004.py ..           [ 35%]
+tests/test_tutorial/test_bigger_applications/test_main.py .............. [ 36%]
+.............................................................            [ 38%]
+tests/test_tutorial/test_body/test_tutorial001.py ...................... [ 39%]
+..........                                                               [ 39%]
+tests/test_tutorial/test_body_fields/test_tutorial001.py ............... [ 40%]
+.....                                                                    [ 40%]
+tests/test_tutorial/test_body_multiple_params/test_tutorial001.py ...... [ 41%]
+...................                                                      [ 41%]
+tests/test_tutorial/test_body_multiple_params/test_tutorial003.py ...... [ 42%]
+..............                                                           [ 42%]
+tests/test_tutorial/test_body_nested_models/test_tutorial009.py ......   [ 42%]
+tests/test_tutorial/test_body_updates/test_tutorial001.py .........sss   [ 43%]
+tests/test_tutorial/test_conditional_openapi/test_tutorial001.py ...     [ 43%]
+tests/test_tutorial/test_configure_swagger_ui/test_tutorial001.py ..     [ 43%]
+tests/test_tutorial/test_configure_swagger_ui/test_tutorial002.py ..     [ 43%]
+tests/test_tutorial/test_configure_swagger_ui/test_tutorial003.py ..     [ 43%]
+tests/test_tutorial/test_cookie_param_models/test_tutorial001.py ....... [ 43%]
+..................                                                       [ 44%]
+tests/test_tutorial/test_cookie_param_models/test_tutorial002.py .....ss [ 45%]
+sss.....sssss.....sssss.....sssss.....sssss                              [ 46%]
+tests/test_tutorial/test_cookie_params/test_tutorial001.py ............. [ 47%]
+............                                                             [ 47%]
+tests/test_tutorial/test_cors/test_tutorial001.py .                      [ 47%]
+tests/test_tutorial/test_custom_docs_ui/test_tutorial001.py ....         [ 47%]
+tests/test_tutorial/test_custom_docs_ui/test_tutorial002.py ....         [ 48%]
+tests/test_tutorial/test_custom_request_and_route/test_tutorial001.py .. [ 48%]
+.                                                                        [ 48%]
+tests/test_tutorial/test_custom_request_and_route/test_tutorial002.py .. [ 48%]
+                                                                         [ 48%]
+tests/test_tutorial/test_custom_request_and_route/test_tutorial003.py .. [ 48%]
+                                                                         [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial001.py ..          [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial001b.py ..         [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial004.py ..          [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial005.py ..          [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial006.py ..          [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial006b.py ..         [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial006c.py ..         [ 48%]
+tests/test_tutorial/test_custom_response/test_tutorial007.py .           [ 49%]
+tests/test_tutorial/test_custom_response/test_tutorial008.py .           [ 49%]
+tests/test_tutorial/test_custom_response/test_tutorial009.py .           [ 49%]
+tests/test_tutorial/test_custom_response/test_tutorial009b.py .          [ 49%]
+tests/test_tutorial/test_custom_response/test_tutorial009c.py .          [ 49%]
+tests/test_tutorial/test_dataclasses/test_tutorial001.py ...             [ 49%]
+tests/test_tutorial/test_dataclasses/test_tutorial002.py ..              [ 49%]
+tests/test_tutorial/test_dataclasses/test_tutorial003.py ...s            [ 49%]
+tests/test_tutorial/test_dependencies/test_tutorial001.py .............. [ 50%]
+................                                                         [ 50%]
+tests/test_tutorial/test_dependencies/test_tutorial004.py .............. [ 51%]
+.....................                                                    [ 52%]
+tests/test_tutorial/test_dependencies/test_tutorial006.py .............. [ 52%]
+.                                                                        [ 52%]
+tests/test_tutorial/test_dependencies/test_tutorial008b.py .........     [ 53%]
+tests/test_tutorial/test_dependencies/test_tutorial008c.py ............  [ 53%]
+tests/test_tutorial/test_dependencies/test_tutorial008d.py ............  [ 54%]
+tests/test_tutorial/test_dependencies/test_tutorial012.py .............. [ 54%]
+.............                                                            [ 55%]
+tests/test_tutorial/test_events/test_tutorial001.py ..                   [ 55%]
+tests/test_tutorial/test_events/test_tutorial002.py ..                   [ 55%]
+tests/test_tutorial/test_events/test_tutorial003.py ..                   [ 55%]
+tests/test_tutorial/test_extending_openapi/test_tutorial001.py ..        [ 55%]
+tests/test_tutorial/test_extra_data_types/test_tutorial001.py .......... [ 55%]
+                                                                         [ 55%]
+tests/test_tutorial/test_extra_models/test_tutorial003.py ......         [ 56%]
+tests/test_tutorial/test_extra_models/test_tutorial004.py ....           [ 56%]
+tests/test_tutorial/test_extra_models/test_tutorial005.py ....           [ 56%]
+tests/test_tutorial/test_first_steps/test_tutorial001.py ...             [ 56%]
+tests/test_tutorial/test_generate_clients/test_tutorial003.py ....       [ 56%]
+tests/test_tutorial/test_handling_errors/test_tutorial001.py ...         [ 56%]
+tests/test_tutorial/test_handling_errors/test_tutorial002.py ...         [ 57%]
+tests/test_tutorial/test_handling_errors/test_tutorial003.py ...         [ 57%]
+tests/test_tutorial/test_handling_errors/test_tutorial004.py ....        [ 57%]
+tests/test_tutorial/test_handling_errors/test_tutorial005.py ...         [ 57%]
+tests/test_tutorial/test_handling_errors/test_tutorial006.py ....        [ 57%]
+tests/test_tutorial/test_header_param_models/test_tutorial001.py ....... [ 57%]
+.....FEFEFE
+
+==================================== ERRORS ====================================
+______ ERROR at teardown of test_header_param_model_invalid[tutorial001] _______
+some snapshots in this test have incorrect values.
+____ ERROR at teardown of test_header_param_model_invalid[tutorial001_py39] ____
+some snapshots in this test have incorrect values.
+___ ERROR at teardown of test_header_param_model_invalid[tutorial001_py310] ____
+some snapshots in this test have incorrect values.
+=================================== FAILURES ===================================
+_________________ test_header_param_model_invalid[tutorial001] _________________
+
+client = <starlette.testclient.TestClient object at 0x7f3a4e6151c0>
+
+    def test_header_param_model_invalid(client: TestClient):
+        response = client.get("/items/")
+        assert response.status_code == 422
+>       assert response.json() == snapshot(
+            {
+                "detail": [
+                    IsDict(
+                        {
+                            "type": "missing",
+                            "loc": ["header", "save_data"],
+                            "msg": "Field required",
+                            "input": {
+                                "x_tag": [],
+                                "host": "testserver",
+                                "accept": "*/*",
+                                "accept-encoding": "gzip, deflate",
+                                "connection": "keep-alive",
+                                "user-agent": "testclient",
+                            },
+                        }
+                    )
+                    | IsDict(
+                        # TODO: remove when deprecating Pydantic v1
+                        {
+                            "type": "value_error.missing",
+                            "loc": ["header", "save_data"],
+                            "msg": "field required",
+                        }
+                    )
+                ]
+            }
+        )
+E       AssertionError: assert {'detail': [{...: 'missing'}]} == {'detail': [I...d required')]}
+E         
+E         Differing items:
+E         {'detail': [{'input': {'accept': '*/*', 'accept-encoding': 'gzip, deflate, br', 'connection': 'keep-alive', 'host': 'testserver', ...}, 'loc': ['header', 'save_data'], 'msg': 'Field required', 'type': 'missing'}]} != {'detail': [IsDict(type='missing', loc=['header', 'save_data'], msg='Field required', input={'x_tag': [], 'host': 'tes... 'user-agent': 'testclient'}) | IsDict(type='value_error.missing', loc=['header', 'save_data'], msg='field required')]}
+E         Use -v to get more diff
+
+tests/test_tutorial/test_header_param_models/test_tutorial001.py:65: AssertionError
+______________ test_header_param_model_invalid[tutorial001_py39] _______________
+
+client = <starlette.testclient.TestClient object at 0x7f3a4e7fb530>
+
+    def test_header_param_model_invalid(client: TestClient):
+        response = client.get("/items/")
+        assert response.status_code == 422
+>       assert response.json() == snapshot(
+            {
+                "detail": [
+                    IsDict(
+                        {
+                            "type": "missing",
+                            "loc": ["header", "save_data"],
+                            "msg": "Field required",
+                            "input": {
+                                "x_tag": [],
+                                "host": "testserver",
+                                "accept": "*/*",
+                                "accept-encoding": "gzip, deflate",
+                                "connection": "keep-alive",
+                                "user-agent": "testclient",
+                            },
+                        }
+                    )
+                    | IsDict(
+                        # TODO: remove when deprecating Pydantic v1
+                        {
+                            "type": "value_error.missing",
+                            "loc": ["header", "save_data"],
+                            "msg": "field required",
+                        }
+                    )
+                ]
+            }
+        )
+E       AssertionError: assert {'detail': [{...: 'missing'}]} == {'detail': [I...d required')]}
+E         
+E         Differing items:
+E         {'detail': [{'input': {'accept': '*/*', 'accept-encoding': 'gzip, deflate, br', 'connection': 'keep-alive', 'host': 'testserver', ...}, 'loc': ['header', 'save_data'], 'msg': 'Field required', 'type': 'missing'}]} != {'detail': [IsDict(type='missing', loc=['header', 'save_data'], msg='Field required', input={'x_tag': [], 'host': 'tes... 'user-agent': 'testclient'}) | IsDict(type='value_error.missing', loc=['header', 'save_data'], msg='field required')]}
+E         Use -v to get more diff
+
+tests/test_tutorial/test_header_param_models/test_tutorial001.py:65: AssertionError
+______________ test_header_param_model_invalid[tutorial001_py310] ______________
+
+client = <starlette.testclient.TestClient object at 0x7f3a4e7f9a60>
+
+    def test_header_param_model_invalid(client: TestClient):
+        response = client.get("/items/")
+        assert response.status_code == 422
+>       assert response.json() == snapshot(
+            {
+                "detail": [
+                    IsDict(
+                        {
+                            "type": "missing",
+                            "loc": ["header", "save_data"],
+                            "msg": "Field required",
+                            "input": {
+                                "x_tag": [],
+                                "host": "testserver",
+                                "accept": "*/*",
+                                "accept-encoding": "gzip, deflate",
+                                "connection": "keep-alive",
+                                "user-agent": "testclient",
+                            },
+                        }
+                    )
+                    | IsDict(
+                        # TODO: remove when deprecating Pydantic v1
+                        {
+                            "type": "value_error.missing",
+                            "loc": ["header", "save_data"],
+                            "msg": "field required",
+                        }
+                    )
+                ]
+            }
+        )
+E       AssertionError: assert {'detail': [{...: 'missing'}]} == {'detail': [I...d required')]}
+E         
+E         Differing items:
+E         {'detail': [{'input': {'accept': '*/*', 'accept-encoding': 'gzip, deflate, br', 'connection': 'keep-alive', 'host': 'testserver', ...}, 'loc': ['header', 'save_data'], 'msg': 'Field required', 'type': 'missing'}]} != {'detail': [IsDict(type='missing', loc=['header', 'save_data'], msg='Field required', input={'x_tag': [], 'host': 'tes... 'user-agent': 'testclient'}) | IsDict(type='value_error.missing', loc=['header', 'save_data'], msg='field required')]}
+E         Use -v to get more diff
+
+tests/test_tutorial/test_header_param_models/test_tutorial001.py:65: AssertionError
+=============================== inline snapshot ================================
+=========================== short test summary info ============================
+FAILED tests/test_tutorial/test_header_param_models/test_tutorial001.py::test_header_param_model_invalid[tutorial001]
+FAILED tests/test_tutorial/test_header_param_models/test_tutorial001.py::test_header_param_model_invalid[tutorial001_py39]
+FAILED tests/test_tutorial/test_header_param_models/test_tutorial001.py::test_header_param_model_invalid[tutorial001_py310]
+ERROR tests/test_tutorial/test_header_param_models/test_tutorial001.py::test_header_param_model_invalid[tutorial001]
+ERROR tests/test_tutorial/test_header_param_models/test_tutorial001.py::test_header_param_model_invalid[tutorial001_py39]
+ERROR tests/test_tutorial/test_header_param_models/test_tutorial001.py::test_header_param_model_invalid[tutorial001_py310]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 6 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+============ 3 failed, 1392 passed, 44 skipped, 3 errors in 56.86s =============
