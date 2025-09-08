@@ -4,3 +4,14 @@
 pre-commit >=2.17.0,<5.0.0
 # For generating screenshots
 playwright
+
+# Security-focused dependency updates to fix identified vulnerabilities
+aiohttp >=3.12.14  # Fix CVE-2025-53643 (HTTP Request Smuggling)
+certifi >=2024.7.4  # Fix CVE-2024-39689 (Certificate Validation)
+idna >=3.7  # Fix CVE-2024-3651 (DoS Vulnerability)
+requests >=2.32.4  # Fix multiple HTTP client security issues
+urllib3 >=2.5.0  # Fix multiple URL handling security issues
+setuptools >=78.1.1  # Fix build system security vulnerability
+virtualenv >=20.26.6  # Fix virtual environment security vulnerability
+starlette >=0.47.2  # Fix CVE-2025-54121 (File upload blocking issue)
+pip >=25.0  # Fix malicious wheel file vulnerability
