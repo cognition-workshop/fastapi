@@ -1,0 +1,26 @@
+# Security-focused dependency updates for FastAPI
+# This file contains the updated versions to fix all identified vulnerabilities
+
+# HTTP Request Smuggling Fix (CVE-2025-53643)
+aiohttp>=3.12.14
+
+# Certificate Validation Fix (CVE-2024-39689)  
+certifi>=2024.7.4
+
+# DoS Vulnerability Fix (CVE-2024-3651)
+idna>=3.7
+
+# HTTP Client Security Fixes (Multiple CVEs)
+requests>=2.32.4
+
+# URL Handling Security Fixes (Multiple CVEs)
+urllib3>=2.5.0
+
+# Build System Security Fix
+setuptools>=78.1.1
+
+# Virtual Environment Security Fix
+virtualenv>=20.26.6
+
+# Additional security-focused packages for comprehensive protection
+pip>=25.0  # Fix for malicious wheel file vulnerability

@@ -1,4 +1,3 @@
-from typing import List
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -17,7 +16,7 @@ def valid1():
     pass
 
 
-@app.get("/valid2", responses={"500": {"model": List[int]}})
+@app.get("/valid2", responses={"500": {"model": list[int]}})
 def valid2():
     pass
 
@@ -27,7 +26,7 @@ def valid3():
     pass
 
 
-@app.get("/valid4", responses={"500": {"model": List[Model]}})
+@app.get("/valid4", responses={"500": {"model": list[Model]}})
 def valid4():
     pass
 

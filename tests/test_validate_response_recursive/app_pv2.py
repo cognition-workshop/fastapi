@@ -1,4 +1,3 @@
-from typing import List
 
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -7,7 +6,7 @@ app = FastAPI()
 
 
 class RecursiveItem(BaseModel):
-    sub_items: List["RecursiveItem"] = []
+    sub_items: list["RecursiveItem"] = []
     name: str
 
 
@@ -15,12 +14,12 @@ RecursiveItem.model_rebuild()
 
 
 class RecursiveSubitemInSubmodel(BaseModel):
-    sub_items2: List["RecursiveItemViaSubmodel"] = []
+    sub_items2: list["RecursiveItemViaSubmodel"] = []
     name: str
 
 
 class RecursiveItemViaSubmodel(BaseModel):
-    sub_items1: List[RecursiveSubitemInSubmodel] = []
+    sub_items1: list[RecursiveSubitemInSubmodel] = []
     name: str
 
 

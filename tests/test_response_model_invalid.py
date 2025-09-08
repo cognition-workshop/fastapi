@@ -1,4 +1,3 @@
-from typing import List
 
 import pytest
 from fastapi import FastAPI
@@ -22,7 +21,7 @@ def test_invalid_response_model_sub_type_raises():
     with pytest.raises(FastAPIError):
         app = FastAPI()
 
-        @app.get("/", response_model=List[NonPydanticModel])
+        @app.get("/", response_model=list[NonPydanticModel])
         def read_root():
             pass  # pragma: nocover
 
@@ -40,6 +39,6 @@ def test_invalid_response_model_sub_type_in_responses_raises():
     with pytest.raises(FastAPIError):
         app = FastAPI()
 
-        @app.get("/", responses={"500": {"model": List[NonPydanticModel]}})
+        @app.get("/", responses={"500": {"model": list[NonPydanticModel]}})
         def read_root():
             pass  # pragma: nocover

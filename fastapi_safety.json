@@ -1,0 +1,3888 @@
+
+
++===========================================================================================================================================================================================+
+
+
+DEPRECATED: this command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.
+
+
+We highly encourage switching to the new `scan` command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.
+
+
++===========================================================================================================================================================================================+
+
+
+{
+    "report_meta": {
+        "scan_target": "environment",
+        "scanned": [
+            "/home/ubuntu/.pyenv/versions/3.12.8/bin",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python312.zip",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/lib-dynload",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages",
+            "/home/ubuntu/.local/lib/python3.12/site-packages",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12"
+        ],
+        "scanned_full_path": [
+            "/home/ubuntu/.pyenv/versions/3.12.8/bin",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python312.zip",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/lib-dynload",
+            "/home/ubuntu/.local/lib/python3.12/site-packages",
+            "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+        ],
+        "target_languages": [
+            "python"
+        ],
+        "policy_file": null,
+        "policy_file_source": "local",
+        "audit_and_monitor": false,
+        "api_key": false,
+        "account": "",
+        "local_database_path": null,
+        "safety_version": "3.6.1",
+        "timestamp": "2025-09-08 10:24:43",
+        "packages_found": 90,
+        "vulnerabilities_found": 12,
+        "vulnerabilities_ignored": 0,
+        "remediations_recommended": 0,
+        "telemetry": {
+            "safety_options": {
+                "json": {
+                    "--json": 1
+                }
+            },
+            "safety_version": "3.6.1",
+            "safety_source": "cli",
+            "os_type": "Linux",
+            "os_release": "5.10.223",
+            "os_description": "Linux-5.10.223-x86_64-with-glibc2.35",
+            "python_version": "3.12.8",
+            "safety_command": "check"
+        },
+        "git": {
+            "branch": "devin/1757327080-security-vulnerability-remediation",
+            "tag": "",
+            "commit": "8032e21418bfa9addfd2e3c14c5b2b7ed6677455",
+            "dirty": "False",
+            "origin": "https://git-manager.devin.ai/proxy/github.com/cognition-workshop/fastapi.git"
+        },
+        "project": null,
+        "json_version": "1.1",
+        "remediations_attempted": 0,
+        "remediations_completed": 0,
+        "remediation_mode": "NON_INTERACTIVE"
+    },
+    "scanned_packages": {
+        "cfgv": {
+            "name": "cfgv",
+            "version": "3.4.0",
+            "requirements": [
+                {
+                    "raw": "cfgv==3.4.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cfgv",
+                    "specifier": "==3.4.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.local/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "faker": {
+            "name": "faker",
+            "version": "24.8.0",
+            "requirements": [
+                {
+                    "raw": "faker==24.8.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "faker",
+                    "specifier": "==24.8.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "markupsafe": {
+            "name": "markupsafe",
+            "version": "3.0.2",
+            "requirements": [
+                {
+                    "raw": "markupsafe==3.0.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "markupsafe",
+                    "specifier": "==3.0.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pyyaml": {
+            "name": "pyyaml",
+            "version": "6.0.1",
+            "requirements": [
+                {
+                    "raw": "pyyaml==6.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyyaml",
+                    "specifier": "==6.0.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "aiohappyeyeballs": {
+            "name": "aiohappyeyeballs",
+            "version": "2.6.1",
+            "requirements": [
+                {
+                    "raw": "aiohappyeyeballs==2.6.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aiohappyeyeballs",
+                    "specifier": "==2.6.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "aiohttp": {
+            "name": "aiohttp",
+            "version": "3.11.14",
+            "requirements": [
+                {
+                    "raw": "aiohttp==3.11.14",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aiohttp",
+                    "specifier": "==3.11.14",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "aiosignal": {
+            "name": "aiosignal",
+            "version": "1.3.2",
+            "requirements": [
+                {
+                    "raw": "aiosignal==1.3.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aiosignal",
+                    "specifier": "==1.3.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "annotated-types": {
+            "name": "annotated-types",
+            "version": "0.7.0",
+            "requirements": [
+                {
+                    "raw": "annotated-types==0.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "annotated-types",
+                    "specifier": "==0.7.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "anyio": {
+            "name": "anyio",
+            "version": "4.10.0",
+            "requirements": [
+                {
+                    "raw": "anyio==4.10.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "anyio",
+                    "specifier": "==4.10.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "attrs": {
+            "name": "attrs",
+            "version": "25.3.0",
+            "requirements": [
+                {
+                    "raw": "attrs==25.3.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "attrs",
+                    "specifier": "==25.3.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "authlib": {
+            "name": "authlib",
+            "version": "1.6.3",
+            "requirements": [
+                {
+                    "raw": "authlib==1.6.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "authlib",
+                    "specifier": "==1.6.3",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "awscli-local": {
+            "name": "awscli-local",
+            "version": "0.22.2",
+            "requirements": [
+                {
+                    "raw": "awscli-local==0.22.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "awscli-local",
+                    "specifier": "==0.22.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "bandit": {
+            "name": "bandit",
+            "version": "1.8.6",
+            "requirements": [
+                {
+                    "raw": "bandit==1.8.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "bandit",
+                    "specifier": "==1.8.6",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "boolean-py": {
+            "name": "boolean-py",
+            "version": "5.0",
+            "requirements": [
+                {
+                    "raw": "boolean-py==5.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "boolean-py",
+                    "specifier": "==5.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "boto3": {
+            "name": "boto3",
+            "version": "1.40.23",
+            "requirements": [
+                {
+                    "raw": "boto3==1.40.23",
+                    "extras": [],
+                    "marker": null,
+                    "name": "boto3",
+                    "specifier": "==1.40.23",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "botocore": {
+            "name": "botocore",
+            "version": "1.40.23",
+            "requirements": [
+                {
+                    "raw": "botocore==1.40.23",
+                    "extras": [],
+                    "marker": null,
+                    "name": "botocore",
+                    "specifier": "==1.40.23",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "cachecontrol": {
+            "name": "cachecontrol",
+            "version": "0.14.3",
+            "requirements": [
+                {
+                    "raw": "cachecontrol==0.14.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cachecontrol",
+                    "specifier": "==0.14.3",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "certifi": {
+            "name": "certifi",
+            "version": "2024.2.2",
+            "requirements": [
+                {
+                    "raw": "certifi==2024.2.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "certifi",
+                    "specifier": "==2024.2.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "cffi": {
+            "name": "cffi",
+            "version": "1.17.1",
+            "requirements": [
+                {
+                    "raw": "cffi==1.17.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cffi",
+                    "specifier": "==1.17.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "charset-normalizer": {
+            "name": "charset-normalizer",
+            "version": "3.3.2",
+            "requirements": [
+                {
+                    "raw": "charset-normalizer==3.3.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "charset-normalizer",
+                    "specifier": "==3.3.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "click": {
+            "name": "click",
+            "version": "8.1.7",
+            "requirements": [
+                {
+                    "raw": "click==8.1.7",
+                    "extras": [],
+                    "marker": null,
+                    "name": "click",
+                    "specifier": "==8.1.7",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "cryptography": {
+            "name": "cryptography",
+            "version": "45.0.7",
+            "requirements": [
+                {
+                    "raw": "cryptography==45.0.7",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cryptography",
+                    "specifier": "==45.0.7",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "cyclonedx-python-lib": {
+            "name": "cyclonedx-python-lib",
+            "version": "9.1.0",
+            "requirements": [
+                {
+                    "raw": "cyclonedx-python-lib==9.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "cyclonedx-python-lib",
+                    "specifier": "==9.1.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "defusedxml": {
+            "name": "defusedxml",
+            "version": "0.7.1",
+            "requirements": [
+                {
+                    "raw": "defusedxml==0.7.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "defusedxml",
+                    "specifier": "==0.7.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "distlib": {
+            "name": "distlib",
+            "version": "0.3.8",
+            "requirements": [
+                {
+                    "raw": "distlib==0.3.8",
+                    "extras": [],
+                    "marker": null,
+                    "name": "distlib",
+                    "specifier": "==0.3.8",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "dparse": {
+            "name": "dparse",
+            "version": "0.6.4",
+            "requirements": [
+                {
+                    "raw": "dparse==0.6.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "dparse",
+                    "specifier": "==0.6.4",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "filelock": {
+            "name": "filelock",
+            "version": "3.19.1",
+            "requirements": [
+                {
+                    "raw": "filelock==3.19.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "filelock",
+                    "specifier": "==3.19.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "frozenlist": {
+            "name": "frozenlist",
+            "version": "1.5.0",
+            "requirements": [
+                {
+                    "raw": "frozenlist==1.5.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "frozenlist",
+                    "specifier": "==1.5.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "greenlet": {
+            "name": "greenlet",
+            "version": "3.0.3",
+            "requirements": [
+                {
+                    "raw": "greenlet==3.0.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "greenlet",
+                    "specifier": "==3.0.3",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "h11": {
+            "name": "h11",
+            "version": "0.16.0",
+            "requirements": [
+                {
+                    "raw": "h11==0.16.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "h11",
+                    "specifier": "==0.16.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "httpcore": {
+            "name": "httpcore",
+            "version": "1.0.9",
+            "requirements": [
+                {
+                    "raw": "httpcore==1.0.9",
+                    "extras": [],
+                    "marker": null,
+                    "name": "httpcore",
+                    "specifier": "==1.0.9",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "httpx": {
+            "name": "httpx",
+            "version": "0.28.1",
+            "requirements": [
+                {
+                    "raw": "httpx==0.28.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "httpx",
+                    "specifier": "==0.28.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "identify": {
+            "name": "identify",
+            "version": "2.5.35",
+            "requirements": [
+                {
+                    "raw": "identify==2.5.35",
+                    "extras": [],
+                    "marker": null,
+                    "name": "identify",
+                    "specifier": "==2.5.35",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "idna": {
+            "name": "idna",
+            "version": "3.6",
+            "requirements": [
+                {
+                    "raw": "idna==3.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "idna",
+                    "specifier": "==3.6",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "jafgen": {
+            "name": "jafgen",
+            "version": "0.4.12",
+            "requirements": [
+                {
+                    "raw": "jafgen==0.4.12",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jafgen",
+                    "specifier": "==0.4.12",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "jinja2": {
+            "name": "jinja2",
+            "version": "3.1.6",
+            "requirements": [
+                {
+                    "raw": "jinja2==3.1.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jinja2",
+                    "specifier": "==3.1.6",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "jmespath": {
+            "name": "jmespath",
+            "version": "1.0.1",
+            "requirements": [
+                {
+                    "raw": "jmespath==1.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "jmespath",
+                    "specifier": "==1.0.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "joblib": {
+            "name": "joblib",
+            "version": "1.5.2",
+            "requirements": [
+                {
+                    "raw": "joblib==1.5.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "joblib",
+                    "specifier": "==1.5.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "license-expression": {
+            "name": "license-expression",
+            "version": "30.4.4",
+            "requirements": [
+                {
+                    "raw": "license-expression==30.4.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "license-expression",
+                    "specifier": "==30.4.4",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "localstack-client": {
+            "name": "localstack-client",
+            "version": "2.10",
+            "requirements": [
+                {
+                    "raw": "localstack-client==2.10",
+                    "extras": [],
+                    "marker": null,
+                    "name": "localstack-client",
+                    "specifier": "==2.10",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "markdown-it-py": {
+            "name": "markdown-it-py",
+            "version": "3.0.0",
+            "requirements": [
+                {
+                    "raw": "markdown-it-py==3.0.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "markdown-it-py",
+                    "specifier": "==3.0.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "marshmallow": {
+            "name": "marshmallow",
+            "version": "4.0.1",
+            "requirements": [
+                {
+                    "raw": "marshmallow==4.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "marshmallow",
+                    "specifier": "==4.0.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "mdurl": {
+            "name": "mdurl",
+            "version": "0.1.2",
+            "requirements": [
+                {
+                    "raw": "mdurl==0.1.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "mdurl",
+                    "specifier": "==0.1.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "msgpack": {
+            "name": "msgpack",
+            "version": "1.1.1",
+            "requirements": [
+                {
+                    "raw": "msgpack==1.1.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "msgpack",
+                    "specifier": "==1.1.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "multidict": {
+            "name": "multidict",
+            "version": "6.2.0",
+            "requirements": [
+                {
+                    "raw": "multidict==6.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "multidict",
+                    "specifier": "==6.2.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "nltk": {
+            "name": "nltk",
+            "version": "3.9.1",
+            "requirements": [
+                {
+                    "raw": "nltk==3.9.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "nltk",
+                    "specifier": "==3.9.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "nodeenv": {
+            "name": "nodeenv",
+            "version": "1.8.0",
+            "requirements": [
+                {
+                    "raw": "nodeenv==1.8.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "nodeenv",
+                    "specifier": "==1.8.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "numpy": {
+            "name": "numpy",
+            "version": "1.26.4",
+            "requirements": [
+                {
+                    "raw": "numpy==1.26.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "numpy",
+                    "specifier": "==1.26.4",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "packageurl-python": {
+            "name": "packageurl-python",
+            "version": "0.17.5",
+            "requirements": [
+                {
+                    "raw": "packageurl-python==0.17.5",
+                    "extras": [],
+                    "marker": null,
+                    "name": "packageurl-python",
+                    "specifier": "==0.17.5",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "packaging": {
+            "name": "packaging",
+            "version": "25.0",
+            "requirements": [
+                {
+                    "raw": "packaging==25.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "packaging",
+                    "specifier": "==25.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pip": {
+            "name": "pip",
+            "version": "24.3.1",
+            "requirements": [
+                {
+                    "raw": "pip==24.3.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pip",
+                    "specifier": "==24.3.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pip-api": {
+            "name": "pip-api",
+            "version": "0.0.34",
+            "requirements": [
+                {
+                    "raw": "pip-api==0.0.34",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pip-api",
+                    "specifier": "==0.0.34",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pip-audit": {
+            "name": "pip-audit",
+            "version": "2.9.0",
+            "requirements": [
+                {
+                    "raw": "pip-audit==2.9.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pip-audit",
+                    "specifier": "==2.9.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pip-requirements-parser": {
+            "name": "pip-requirements-parser",
+            "version": "32.0.1",
+            "requirements": [
+                {
+                    "raw": "pip-requirements-parser==32.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pip-requirements-parser",
+                    "specifier": "==32.0.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "platformdirs": {
+            "name": "platformdirs",
+            "version": "4.2.0",
+            "requirements": [
+                {
+                    "raw": "platformdirs==4.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "platformdirs",
+                    "specifier": "==4.2.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "playwright": {
+            "name": "playwright",
+            "version": "1.41.1",
+            "requirements": [
+                {
+                    "raw": "playwright==1.41.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "playwright",
+                    "specifier": "==1.41.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pre-commit": {
+            "name": "pre-commit",
+            "version": "3.7.0",
+            "requirements": [
+                {
+                    "raw": "pre-commit==3.7.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pre-commit",
+                    "specifier": "==3.7.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "propcache": {
+            "name": "propcache",
+            "version": "0.3.1",
+            "requirements": [
+                {
+                    "raw": "propcache==0.3.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "propcache",
+                    "specifier": "==0.3.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "psutil": {
+            "name": "psutil",
+            "version": "7.0.0",
+            "requirements": [
+                {
+                    "raw": "psutil==7.0.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "psutil",
+                    "specifier": "==7.0.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "py-serializable": {
+            "name": "py-serializable",
+            "version": "2.1.0",
+            "requirements": [
+                {
+                    "raw": "py-serializable==2.1.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "py-serializable",
+                    "specifier": "==2.1.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pycparser": {
+            "name": "pycparser",
+            "version": "2.22",
+            "requirements": [
+                {
+                    "raw": "pycparser==2.22",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pycparser",
+                    "specifier": "==2.22",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pydantic": {
+            "name": "pydantic",
+            "version": "2.9.2",
+            "requirements": [
+                {
+                    "raw": "pydantic==2.9.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pydantic",
+                    "specifier": "==2.9.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pydantic-core": {
+            "name": "pydantic-core",
+            "version": "2.23.4",
+            "requirements": [
+                {
+                    "raw": "pydantic-core==2.23.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pydantic-core",
+                    "specifier": "==2.23.4",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pyee": {
+            "name": "pyee",
+            "version": "11.0.1",
+            "requirements": [
+                {
+                    "raw": "pyee==11.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyee",
+                    "specifier": "==11.0.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pygments": {
+            "name": "pygments",
+            "version": "2.17.2",
+            "requirements": [
+                {
+                    "raw": "pygments==2.17.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pygments",
+                    "specifier": "==2.17.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "pyparsing": {
+            "name": "pyparsing",
+            "version": "3.2.3",
+            "requirements": [
+                {
+                    "raw": "pyparsing==3.2.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pyparsing",
+                    "specifier": "==3.2.3",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "python-dateutil": {
+            "name": "python-dateutil",
+            "version": "2.9.0.post0",
+            "requirements": [
+                {
+                    "raw": "python-dateutil==2.9.0.post0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "python-dateutil",
+                    "specifier": "==2.9.0.post0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "regex": {
+            "name": "regex",
+            "version": "2025.9.1",
+            "requirements": [
+                {
+                    "raw": "regex==2025.9.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "regex",
+                    "specifier": "==2025.9.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "requests": {
+            "name": "requests",
+            "version": "2.31.0",
+            "requirements": [
+                {
+                    "raw": "requests==2.31.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "requests",
+                    "specifier": "==2.31.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "rich": {
+            "name": "rich",
+            "version": "13.7.1",
+            "requirements": [
+                {
+                    "raw": "rich==13.7.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "rich",
+                    "specifier": "==13.7.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "ruamel.yaml": {
+            "name": "ruamel.yaml",
+            "version": "0.18.15",
+            "requirements": [
+                {
+                    "raw": "ruamel.yaml==0.18.15",
+                    "extras": [],
+                    "marker": null,
+                    "name": "ruamel.yaml",
+                    "specifier": "==0.18.15",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "ruamel.yaml.clib": {
+            "name": "ruamel.yaml.clib",
+            "version": "0.2.12",
+            "requirements": [
+                {
+                    "raw": "ruamel.yaml.clib==0.2.12",
+                    "extras": [],
+                    "marker": null,
+                    "name": "ruamel.yaml.clib",
+                    "specifier": "==0.2.12",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "s3transfer": {
+            "name": "s3transfer",
+            "version": "0.13.1",
+            "requirements": [
+                {
+                    "raw": "s3transfer==0.13.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "s3transfer",
+                    "specifier": "==0.13.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "safety": {
+            "name": "safety",
+            "version": "3.6.1",
+            "requirements": [
+                {
+                    "raw": "safety==3.6.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "safety",
+                    "specifier": "==3.6.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "safety-schemas": {
+            "name": "safety-schemas",
+            "version": "0.0.14",
+            "requirements": [
+                {
+                    "raw": "safety-schemas==0.0.14",
+                    "extras": [],
+                    "marker": null,
+                    "name": "safety-schemas",
+                    "specifier": "==0.0.14",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "setuptools": {
+            "name": "setuptools",
+            "version": "69.2.0",
+            "requirements": [
+                {
+                    "raw": "setuptools==69.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "setuptools",
+                    "specifier": "==69.2.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "shellingham": {
+            "name": "shellingham",
+            "version": "1.5.4",
+            "requirements": [
+                {
+                    "raw": "shellingham==1.5.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "shellingham",
+                    "specifier": "==1.5.4",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "six": {
+            "name": "six",
+            "version": "1.16.0",
+            "requirements": [
+                {
+                    "raw": "six==1.16.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "six",
+                    "specifier": "==1.16.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "sniffio": {
+            "name": "sniffio",
+            "version": "1.3.1",
+            "requirements": [
+                {
+                    "raw": "sniffio==1.3.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "sniffio",
+                    "specifier": "==1.3.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "sortedcontainers": {
+            "name": "sortedcontainers",
+            "version": "2.4.0",
+            "requirements": [
+                {
+                    "raw": "sortedcontainers==2.4.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "sortedcontainers",
+                    "specifier": "==2.4.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "stevedore": {
+            "name": "stevedore",
+            "version": "5.5.0",
+            "requirements": [
+                {
+                    "raw": "stevedore==5.5.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "stevedore",
+                    "specifier": "==5.5.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "tenacity": {
+            "name": "tenacity",
+            "version": "9.1.2",
+            "requirements": [
+                {
+                    "raw": "tenacity==9.1.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tenacity",
+                    "specifier": "==9.1.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "toml": {
+            "name": "toml",
+            "version": "0.10.2",
+            "requirements": [
+                {
+                    "raw": "toml==0.10.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "toml",
+                    "specifier": "==0.10.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "tomlkit": {
+            "name": "tomlkit",
+            "version": "0.13.3",
+            "requirements": [
+                {
+                    "raw": "tomlkit==0.13.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tomlkit",
+                    "specifier": "==0.13.3",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "tqdm": {
+            "name": "tqdm",
+            "version": "4.67.1",
+            "requirements": [
+                {
+                    "raw": "tqdm==4.67.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "tqdm",
+                    "specifier": "==4.67.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "typer": {
+            "name": "typer",
+            "version": "0.17.4",
+            "requirements": [
+                {
+                    "raw": "typer==0.17.4",
+                    "extras": [],
+                    "marker": null,
+                    "name": "typer",
+                    "specifier": "==0.17.4",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "typing-extensions": {
+            "name": "typing-extensions",
+            "version": "4.11.0",
+            "requirements": [
+                {
+                    "raw": "typing-extensions==4.11.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "typing-extensions",
+                    "specifier": "==4.11.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "urllib3": {
+            "name": "urllib3",
+            "version": "2.2.1",
+            "requirements": [
+                {
+                    "raw": "urllib3==2.2.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "urllib3",
+                    "specifier": "==2.2.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "virtualenv": {
+            "name": "virtualenv",
+            "version": "20.25.1",
+            "requirements": [
+                {
+                    "raw": "virtualenv==20.25.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "virtualenv",
+                    "specifier": "==20.25.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        },
+        "yarl": {
+            "name": "yarl",
+            "version": "1.18.3",
+            "requirements": [
+                {
+                    "raw": "yarl==1.18.3",
+                    "extras": [],
+                    "marker": null,
+                    "name": "yarl",
+                    "specifier": "==1.18.3",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ]
+        }
+    },
+    "affected_packages": {
+        "virtualenv": {
+            "name": "virtualenv",
+            "version": "20.25.1",
+            "requirements": [
+                {
+                    "raw": "virtualenv==20.25.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "virtualenv",
+                    "specifier": "==20.25.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.8",
+                "0.8.1",
+                "0.8.2",
+                "0.8.3",
+                "0.8.4",
+                "0.9",
+                "0.9.1",
+                "0.9.2",
+                "1.0",
+                "1.1",
+                "1.10",
+                "1.10.1",
+                "1.11",
+                "1.11.1",
+                "1.11.2",
+                "1.11.3",
+                "1.11.4",
+                "1.11.5",
+                "1.11.6",
+                "1.2",
+                "12.0",
+                "12.0.1",
+                "12.0.2",
+                "12.0.4",
+                "12.0.5",
+                "12.0.6",
+                "12.0.7",
+                "12.1.0",
+                "12.1.1",
+                "1.3",
+                "13.0.0",
+                "13.0.1",
+                "13.0.2",
+                "13.0.3",
+                "1.3.1",
+                "13.1.0",
+                "13.1.1",
+                "13.1.2",
+                "1.3.2",
+                "1.3.3",
+                "1.3.4",
+                "1.4",
+                "14.0.0",
+                "14.0.1",
+                "14.0.2",
+                "14.0.3",
+                "14.0.4",
+                "14.0.5",
+                "14.0.6",
+                "1.4.1",
+                "1.4.2",
+                "1.4.3",
+                "1.4.4",
+                "1.4.5",
+                "1.4.6",
+                "1.4.7",
+                "1.4.8",
+                "1.4.9",
+                "1.4rc1",
+                "1.5",
+                "15.0.0",
+                "15.0.1",
+                "15.0.2",
+                "15.0.3",
+                "1.5.1",
+                "15.1.0",
+                "1.5.2",
+                "15.2.0",
+                "1.6",
+                "16.0.0",
+                "1.6.1",
+                "16.1.0",
+                "1.6.2",
+                "16.2.0",
+                "1.6.3",
+                "16.3.0",
+                "16.3.1.dev0",
+                "1.6.4",
+                "16.4.0",
+                "16.4.1",
+                "16.4.3",
+                "16.4.4.dev0",
+                "16.5.0",
+                "16.6.0",
+                "16.6.1",
+                "16.6.2",
+                "16.7.0",
+                "16.7.1",
+                "16.7.10",
+                "16.7.11",
+                "16.7.12",
+                "16.7.2",
+                "16.7.3",
+                "16.7.4",
+                "16.7.5",
+                "16.7.6",
+                "16.7.7",
+                "16.7.8",
+                "16.7.9",
+                "1.7",
+                "1.7.1",
+                "1.7.1.1",
+                "1.7.1.2",
+                "1.7.2",
+                "1.8",
+                "1.8.1",
+                "1.8.2",
+                "1.8.3",
+                "1.8.4",
+                "1.9",
+                "1.9.1",
+                "20.0.0",
+                "20.0.0b1",
+                "20.0.0b2",
+                "20.0.1",
+                "20.0.10",
+                "20.0.11",
+                "20.0.12",
+                "20.0.13",
+                "20.0.14",
+                "20.0.15",
+                "20.0.16",
+                "20.0.17",
+                "20.0.18",
+                "20.0.19",
+                "20.0.2",
+                "20.0.20",
+                "20.0.21",
+                "20.0.22",
+                "20.0.23",
+                "20.0.24",
+                "20.0.25",
+                "20.0.26",
+                "20.0.27",
+                "20.0.28",
+                "20.0.29",
+                "20.0.3",
+                "20.0.30",
+                "20.0.31",
+                "20.0.32",
+                "20.0.33",
+                "20.0.34",
+                "20.0.35",
+                "20.0.4",
+                "20.0.5",
+                "20.0.6",
+                "20.0.7",
+                "20.0.8",
+                "20.0.9",
+                "20.1.0",
+                "20.10.0",
+                "20.11.0",
+                "20.11.1",
+                "20.11.2",
+                "20.12.0",
+                "20.12.1",
+                "20.13.0",
+                "20.13.1",
+                "20.13.2",
+                "20.13.3",
+                "20.13.4",
+                "20.14.0",
+                "20.14.1",
+                "20.15.0",
+                "20.15.1",
+                "20.16.0",
+                "20.16.1",
+                "20.16.2",
+                "20.16.3",
+                "20.16.4",
+                "20.16.5",
+                "20.16.6",
+                "20.16.7",
+                "20.17.0",
+                "20.17.1",
+                "20.18.0",
+                "20.19.0",
+                "20.2.0",
+                "20.20.0",
+                "20.2.1",
+                "20.21.0",
+                "20.21.1",
+                "20.2.2",
+                "20.22.0",
+                "20.23.0",
+                "20.23.1",
+                "20.24.0",
+                "20.24.1",
+                "20.24.2",
+                "20.24.3",
+                "20.24.4",
+                "20.24.5",
+                "20.24.6",
+                "20.24.7",
+                "20.25.0",
+                "20.25.1",
+                "20.25.2",
+                "20.25.3",
+                "20.26.0",
+                "20.26.1",
+                "20.26.2",
+                "20.26.3",
+                "20.26.4",
+                "20.26.5",
+                "20.3.0",
+                "20.3.1",
+                "20.4.0",
+                "20.4.1",
+                "20.4.2",
+                "20.4.3",
+                "20.4.4",
+                "20.4.5",
+                "20.4.6",
+                "20.4.7",
+                "20.5.0",
+                "20.6.0",
+                "20.7.0",
+                "20.7.1",
+                "20.7.2",
+                "20.8.0",
+                "20.8.1",
+                "20.9.0"
+            ],
+            "secure_versions": [
+                "20.34.0",
+                "20.33.1",
+                "20.33.0",
+                "20.32.0",
+                "20.31.2",
+                "20.31.1",
+                "20.31.0",
+                "20.30.0",
+                "20.29.3",
+                "20.29.2",
+                "20.29.1",
+                "20.29.0",
+                "20.28.1",
+                "20.28.0",
+                "20.27.1",
+                "20.27.0",
+                "20.26.6"
+            ],
+            "latest_version_without_known_vulnerabilities": "20.34.0",
+            "latest_version": "20.34.0",
+            "more_info_url": "https://data.safetycli.com/p/pypi/virtualenv/97c/"
+        },
+        "urllib3": {
+            "name": "urllib3",
+            "version": "2.2.1",
+            "requirements": [
+                {
+                    "raw": "urllib3==2.2.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "urllib3",
+                    "specifier": "==2.2.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.2",
+                "0.3",
+                "0.3.1",
+                "0.4.0",
+                "0.4.1",
+                "1.0",
+                "1.0.1",
+                "1.0.2",
+                "1.1",
+                "1.10",
+                "1.10.1",
+                "1.10.2",
+                "1.10.3",
+                "1.10.4",
+                "1.11",
+                "1.12",
+                "1.13",
+                "1.13.1",
+                "1.14",
+                "1.15",
+                "1.15.1",
+                "1.16",
+                "1.17",
+                "1.18",
+                "1.18.1",
+                "1.19",
+                "1.19.1",
+                "1.2",
+                "1.20",
+                "1.21",
+                "1.2.1",
+                "1.21.1",
+                "1.22",
+                "1.2.2",
+                "1.23",
+                "1.24",
+                "1.24.1",
+                "1.24.2",
+                "1.24.3",
+                "1.25",
+                "1.25.1",
+                "1.25.10",
+                "1.25.11",
+                "1.25.2",
+                "1.25.3",
+                "1.25.4",
+                "1.25.5",
+                "1.25.6",
+                "1.25.7",
+                "1.25.8",
+                "1.25.9",
+                "1.26.0",
+                "1.26.1",
+                "1.26.10",
+                "1.26.11",
+                "1.26.12",
+                "1.26.13",
+                "1.26.14",
+                "1.26.15",
+                "1.26.16",
+                "1.26.17",
+                "1.26.18",
+                "1.26.19",
+                "1.26.2",
+                "1.26.20",
+                "1.26.3",
+                "1.26.4",
+                "1.26.5",
+                "1.26.6",
+                "1.26.7",
+                "1.26.8",
+                "1.26.9",
+                "1.3",
+                "1.4",
+                "1.5",
+                "1.6",
+                "1.7",
+                "1.7.1",
+                "1.8",
+                "1.8.2",
+                "1.8.3",
+                "1.9",
+                "1.9.1",
+                "2.0.0",
+                "2.0.0a1",
+                "2.0.0a2",
+                "2.0.0a3",
+                "2.0.0a4",
+                "2.0.1",
+                "2.0.2",
+                "2.0.3",
+                "2.0.4",
+                "2.0.5",
+                "2.0.6",
+                "2.0.7",
+                "2.1.0",
+                "2.2.0",
+                "2.2.1",
+                "2.2.2",
+                "2.2.3",
+                "2.3.0",
+                "2.4.0"
+            ],
+            "secure_versions": [
+                "2.5.0"
+            ],
+            "latest_version_without_known_vulnerabilities": "2.5.0",
+            "latest_version": "2.5.0",
+            "more_info_url": "https://data.safetycli.com/p/pypi/urllib3/97c/"
+        },
+        "setuptools": {
+            "name": "setuptools",
+            "version": "69.2.0",
+            "requirements": [
+                {
+                    "raw": "setuptools==69.2.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "setuptools",
+                    "specifier": "==69.2.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.6b1",
+                "0.6b2",
+                "0.6b3",
+                "0.6b4",
+                "0.6rc1",
+                "0.6rc10",
+                "0.6rc11",
+                "0.6rc2",
+                "0.6rc3",
+                "0.6rc4",
+                "0.6rc5",
+                "0.6rc6",
+                "0.6rc7",
+                "0.6rc8",
+                "0.6rc9",
+                "0.7.2",
+                "0.7.3",
+                "0.7.4",
+                "0.7.5",
+                "0.7.6",
+                "0.7.7",
+                "0.7.8",
+                "0.8",
+                "0.9",
+                "0.9.1",
+                "0.9.2",
+                "0.9.3",
+                "0.9.4",
+                "0.9.5",
+                "0.9.6",
+                "0.9.7",
+                "0.9.8",
+                "1.0",
+                "10.0",
+                "10.0.1",
+                "10.1",
+                "10.2",
+                "10.2.1",
+                "1.1",
+                "11.0",
+                "1.1.1",
+                "11.1",
+                "1.1.2",
+                "11.2",
+                "1.1.3",
+                "11.3",
+                "11.3.1",
+                "1.1.4",
+                "1.1.5",
+                "1.1.6",
+                "1.1.7",
+                "1.2",
+                "12.0",
+                "12.0.1",
+                "12.0.2",
+                "12.0.3",
+                "12.0.4",
+                "12.0.5",
+                "12.1",
+                "12.2",
+                "12.3",
+                "12.4",
+                "1.3",
+                "13.0",
+                "13.0.1",
+                "13.0.2",
+                "1.3.1",
+                "1.3.2",
+                "1.4",
+                "14.0",
+                "1.4.1",
+                "14.1",
+                "14.1.1",
+                "1.4.2",
+                "14.2",
+                "14.3",
+                "14.3.1",
+                "15.0",
+                "15.1",
+                "15.2",
+                "16.0",
+                "17.0",
+                "17.1",
+                "17.1.1",
+                "18.0",
+                "18.0.1",
+                "18.1",
+                "18.2",
+                "18.3",
+                "18.3.1",
+                "18.3.2",
+                "18.4",
+                "18.5",
+                "18.6",
+                "18.6.1",
+                "18.7",
+                "18.7.1",
+                "18.8",
+                "18.8.1",
+                "19.0",
+                "19.1",
+                "19.1.1",
+                "19.2",
+                "19.3",
+                "19.4",
+                "19.4.1",
+                "19.5",
+                "19.6",
+                "19.6.1",
+                "19.6.2",
+                "19.7",
+                "2.0",
+                "20.0",
+                "2.0.1",
+                "20.1",
+                "20.10.1",
+                "20.1.1",
+                "2.0.2",
+                "20.2.2",
+                "20.3",
+                "20.3.1",
+                "20.4",
+                "20.6.6",
+                "20.6.7",
+                "20.6.8",
+                "20.7.0",
+                "20.8.0",
+                "20.8.1",
+                "20.9.0",
+                "2.1",
+                "21.0.0",
+                "2.1.1",
+                "21.1.0",
+                "2.1.2",
+                "21.2.0",
+                "21.2.1",
+                "21.2.2",
+                "2.2",
+                "22.0.0",
+                "22.0.1",
+                "22.0.2",
+                "22.0.4",
+                "22.0.5",
+                "23.0.0",
+                "23.1.0",
+                "23.2.0",
+                "23.2.1",
+                "24.0.0",
+                "24.0.1",
+                "24.0.2",
+                "24.0.3",
+                "24.1.0",
+                "24.1.1",
+                "24.2.0",
+                "24.2.1",
+                "24.3.0",
+                "24.3.1",
+                "25.0.0",
+                "25.0.1",
+                "25.0.2",
+                "25.1.0",
+                "25.1.1",
+                "25.1.2",
+                "25.1.3",
+                "25.1.4",
+                "25.1.5",
+                "25.1.6",
+                "25.2.0",
+                "25.3.0",
+                "25.4.0",
+                "26.0.0",
+                "26.1.0",
+                "26.1.1",
+                "27.0.0",
+                "27.1.0",
+                "27.1.2",
+                "27.2.0",
+                "27.3.0",
+                "27.3.1",
+                "28.0.0",
+                "28.1.0",
+                "28.2.0",
+                "28.3.0",
+                "28.4.0",
+                "28.5.0",
+                "28.6.0",
+                "28.6.1",
+                "28.7.0",
+                "28.7.1",
+                "28.8.0",
+                "28.8.1",
+                "29.0.0",
+                "29.0.1",
+                "3.0",
+                "30.0.0",
+                "3.0.1",
+                "30.1.0",
+                "3.0.2",
+                "30.2.0",
+                "30.2.1",
+                "30.3.0",
+                "30.4.0",
+                "3.1",
+                "31.0.0",
+                "31.0.1",
+                "3.2",
+                "32.0.0",
+                "32.1.0",
+                "32.1.1",
+                "32.1.2",
+                "32.1.3",
+                "32.2.0",
+                "32.3.0",
+                "32.3.1",
+                "3.3",
+                "33.1.0",
+                "33.1.1",
+                "3.4",
+                "34.0.0",
+                "34.0.1",
+                "34.0.2",
+                "34.0.3",
+                "3.4.1",
+                "34.1.0",
+                "34.1.1",
+                "3.4.2",
+                "34.2.0",
+                "3.4.3",
+                "34.3.0",
+                "34.3.1",
+                "34.3.2",
+                "34.3.3",
+                "3.4.4",
+                "34.4.0",
+                "34.4.1",
+                "3.5",
+                "35.0.0",
+                "35.0.1",
+                "35.0.2",
+                "3.5.1",
+                "3.5.2",
+                "3.6",
+                "36.0.1",
+                "36.1.0",
+                "36.1.1",
+                "36.2.0",
+                "36.2.1",
+                "36.2.2",
+                "36.2.3",
+                "36.2.4",
+                "36.2.5",
+                "36.2.6",
+                "36.2.7",
+                "36.3.0",
+                "36.4.0",
+                "36.5.0",
+                "36.6.0",
+                "36.6.1",
+                "36.7.0",
+                "36.7.1",
+                "36.7.2",
+                "36.8.0",
+                "3.7",
+                "37.0.0",
+                "3.7.1",
+                "3.8",
+                "38.0.0",
+                "3.8.1",
+                "38.1.0",
+                "38.2.0",
+                "38.2.1",
+                "38.2.3",
+                "38.2.4",
+                "38.2.5",
+                "38.3.0",
+                "38.4.0",
+                "38.4.1",
+                "38.5.0",
+                "38.5.1",
+                "38.5.2",
+                "38.6.0",
+                "38.6.1",
+                "38.7.0",
+                "39.0.0",
+                "39.0.1",
+                "39.1.0",
+                "39.2.0",
+                "4.0",
+                "40.0.0",
+                "4.0.1",
+                "40.1.0",
+                "40.1.1",
+                "40.2.0",
+                "40.3.0",
+                "40.4.0",
+                "40.4.1",
+                "40.4.2",
+                "40.4.3",
+                "40.5.0",
+                "40.6.0",
+                "40.6.1",
+                "40.6.2",
+                "40.6.3",
+                "40.7.0",
+                "40.7.1",
+                "40.7.2",
+                "40.7.3",
+                "40.8.0",
+                "40.9.0",
+                "41.0.0",
+                "41.0.1",
+                "41.1.0",
+                "41.2.0",
+                "41.3.0",
+                "41.4.0",
+                "41.5.0",
+                "41.5.1",
+                "41.6.0",
+                "42.0.0",
+                "42.0.1",
+                "42.0.2",
+                "43.0.0",
+                "44.0.0",
+                "44.1.0",
+                "44.1.1",
+                "45.0.0",
+                "45.1.0",
+                "45.2.0",
+                "45.3.0",
+                "46.0.0",
+                "46.1.0",
+                "46.1.1",
+                "46.1.2",
+                "46.1.3",
+                "46.2.0",
+                "46.3.0",
+                "46.3.1",
+                "46.4.0",
+                "47.0.0",
+                "47.1.0",
+                "47.1.1",
+                "47.2.0",
+                "47.3.0",
+                "47.3.1",
+                "47.3.2",
+                "48.0.0",
+                "49.0.0",
+                "49.0.1",
+                "49.1.0",
+                "49.1.1",
+                "49.1.2",
+                "49.1.3",
+                "49.2.0",
+                "49.2.1",
+                "49.3.0",
+                "49.3.1",
+                "49.3.2",
+                "49.4.0",
+                "49.5.0",
+                "49.6.0",
+                "5.0",
+                "50.0.0",
+                "50.0.1",
+                "50.0.2",
+                "50.0.3",
+                "5.0.1",
+                "50.1.0",
+                "5.0.2",
+                "50.2.0",
+                "50.3.0",
+                "50.3.1",
+                "50.3.2",
+                "5.1",
+                "51.0.0",
+                "51.1.0",
+                "51.1.0.post20201221",
+                "51.1.1",
+                "51.1.2",
+                "51.2.0",
+                "51.3.0",
+                "51.3.1",
+                "51.3.2",
+                "51.3.3",
+                "5.2",
+                "52.0.0",
+                "5.3",
+                "53.0.0",
+                "53.1.0",
+                "5.4",
+                "54.0.0",
+                "5.4.1",
+                "54.1.0",
+                "54.1.1",
+                "54.1.2",
+                "54.1.3",
+                "5.4.2",
+                "54.2.0",
+                "5.5",
+                "5.5.1",
+                "5.6",
+                "56.0.0",
+                "56.1.0",
+                "56.2.0",
+                "5.7",
+                "57.0.0",
+                "57.1.0",
+                "57.2.0",
+                "57.3.0",
+                "57.4.0",
+                "57.5.0",
+                "5.8",
+                "58.0.0",
+                "58.0.1",
+                "58.0.2",
+                "58.0.3",
+                "58.0.4",
+                "58.1.0",
+                "58.2.0",
+                "58.3.0",
+                "58.4.0",
+                "58.5.0",
+                "58.5.1",
+                "58.5.2",
+                "58.5.3",
+                "59.0.1",
+                "59.1.0",
+                "59.1.1",
+                "59.2.0",
+                "59.3.0",
+                "59.4.0",
+                "59.5.0",
+                "59.6.0",
+                "59.7.0",
+                "59.8.0",
+                "60.0.0",
+                "60.0.1",
+                "60.0.2",
+                "60.0.3",
+                "60.0.4",
+                "60.0.5",
+                "6.0.1",
+                "60.1.0",
+                "60.10.0",
+                "60.1.1",
+                "6.0.2",
+                "60.2.0",
+                "60.3.0",
+                "60.3.1",
+                "60.4.0",
+                "60.5.0",
+                "60.6.0",
+                "60.7.0",
+                "60.7.1",
+                "60.8.0",
+                "60.8.1",
+                "60.8.2",
+                "60.9.0",
+                "60.9.1",
+                "60.9.2",
+                "60.9.3",
+                "6.1",
+                "61.0.0",
+                "61.1.0",
+                "61.1.1",
+                "61.2.0",
+                "61.3.0",
+                "61.3.1",
+                "62.0.0",
+                "62.1.0",
+                "62.2.0",
+                "62.3.0",
+                "62.3.1",
+                "62.3.2",
+                "62.3.3",
+                "62.3.4",
+                "62.4.0",
+                "62.5.0",
+                "62.6.0",
+                "63.0.0",
+                "63.0.0b1",
+                "63.1.0",
+                "63.2.0",
+                "63.3.0",
+                "63.4.0",
+                "63.4.1",
+                "63.4.2",
+                "63.4.3",
+                "64.0.0",
+                "64.0.1",
+                "64.0.2",
+                "64.0.3",
+                "65.0.0",
+                "65.0.1",
+                "65.0.2",
+                "65.1.0",
+                "65.1.1",
+                "65.2.0",
+                "65.3.0",
+                "65.4.0",
+                "65.4.1",
+                "65.5.0",
+                "65.5.1",
+                "65.6.0",
+                "65.6.1",
+                "65.6.2",
+                "65.6.3",
+                "65.7.0",
+                "66.0.0",
+                "66.1.0",
+                "66.1.1",
+                "67.0.0",
+                "67.1.0",
+                "67.2.0",
+                "67.3.1",
+                "67.3.2",
+                "67.3.3",
+                "67.4.0",
+                "67.5.0",
+                "67.5.1",
+                "67.6.0",
+                "67.6.1",
+                "67.7.0",
+                "67.7.1",
+                "67.7.2",
+                "67.8.0",
+                "68.0.0",
+                "68.1.0",
+                "68.1.2",
+                "68.2.0",
+                "68.2.1",
+                "68.2.2",
+                "69.0.0",
+                "69.0.1",
+                "69.0.2",
+                "69.0.3",
+                "69.1.0",
+                "69.1.1",
+                "69.2.0",
+                "69.3.0",
+                "69.3.1",
+                "69.4.0",
+                "69.4.1",
+                "69.4.2",
+                "69.5.0",
+                "69.5.1",
+                "7.0",
+                "70.0.0",
+                "70.1.0",
+                "70.1.1",
+                "70.2.0",
+                "70.3.0",
+                "71.0.0",
+                "71.0.1",
+                "71.0.2",
+                "71.0.3",
+                "71.0.4",
+                "71.1.0",
+                "72.0.0",
+                "72.1.0",
+                "72.2.0",
+                "73.0.0",
+                "73.0.1",
+                "74.0.0",
+                "74.1.0",
+                "74.1.1",
+                "74.1.2",
+                "74.1.3",
+                "75.0.0",
+                "75.1.0",
+                "75.2.0",
+                "75.3.0",
+                "75.3.1",
+                "75.3.2",
+                "75.4.0",
+                "75.5.0",
+                "75.6.0",
+                "75.7.0",
+                "75.8.0",
+                "75.8.1",
+                "75.8.2",
+                "75.9.0",
+                "75.9.1",
+                "76.0.0",
+                "76.1.0",
+                "77.0.1",
+                "77.0.3",
+                "78.0.1",
+                "78.0.2",
+                "78.1.0",
+                "8.0",
+                "8.0.1",
+                "8.0.2",
+                "8.0.3",
+                "8.0.4",
+                "8.1",
+                "8.2",
+                "8.2.1",
+                "8.3",
+                "9.0",
+                "9.0.1",
+                "9.1"
+            ],
+            "secure_versions": [
+                "80.9.0",
+                "80.8.0",
+                "80.7.1",
+                "80.7.0",
+                "80.6.0",
+                "80.4.0",
+                "80.3.1",
+                "80.3.0",
+                "80.2.0",
+                "80.1.0",
+                "80.0.1",
+                "80.0.0",
+                "79.0.1",
+                "79.0.0",
+                "78.1.1"
+            ],
+            "latest_version_without_known_vulnerabilities": "80.9.0",
+            "latest_version": "80.9.0",
+            "more_info_url": "https://data.safetycli.com/p/pypi/setuptools/97c/"
+        },
+        "requests": {
+            "name": "requests",
+            "version": "2.31.0",
+            "requirements": [
+                {
+                    "raw": "requests==2.31.0",
+                    "extras": [],
+                    "marker": null,
+                    "name": "requests",
+                    "specifier": "==2.31.0",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.0.1",
+                "0.10.0",
+                "0.10.1",
+                "0.10.2",
+                "0.10.3",
+                "0.10.4",
+                "0.10.6",
+                "0.10.7",
+                "0.10.8",
+                "0.11.1",
+                "0.11.2",
+                "0.12.0",
+                "0.12.1",
+                "0.13.0",
+                "0.13.1",
+                "0.13.2",
+                "0.13.3",
+                "0.13.4",
+                "0.13.5",
+                "0.13.6",
+                "0.13.7",
+                "0.13.8",
+                "0.13.9",
+                "0.14.0",
+                "0.14.1",
+                "0.14.2",
+                "0.2.0",
+                "0.2.1",
+                "0.2.2",
+                "0.2.3",
+                "0.2.4",
+                "0.3.0",
+                "0.3.1",
+                "0.3.2",
+                "0.3.3",
+                "0.3.4",
+                "0.4.0",
+                "0.4.1",
+                "0.5.0",
+                "0.5.1",
+                "0.6.0",
+                "0.6.1",
+                "0.6.2",
+                "0.6.3",
+                "0.6.4",
+                "0.6.5",
+                "0.6.6",
+                "0.7.0",
+                "0.7.1",
+                "0.7.2",
+                "0.7.3",
+                "0.7.4",
+                "0.7.5",
+                "0.7.6",
+                "0.8.0",
+                "0.8.1",
+                "0.8.2",
+                "0.8.3",
+                "0.8.4",
+                "0.8.5",
+                "0.8.6",
+                "0.8.7",
+                "0.8.8",
+                "0.8.9",
+                "0.9.0",
+                "0.9.1",
+                "0.9.2",
+                "0.9.3",
+                "1.0.0",
+                "1.0.1",
+                "1.0.2",
+                "1.0.3",
+                "1.0.4",
+                "1.1.0",
+                "1.2.0",
+                "1.2.1",
+                "1.2.2",
+                "1.2.3",
+                "2.0.0",
+                "2.0.1",
+                "2.1.0",
+                "2.10.0",
+                "2.11.0",
+                "2.11.1",
+                "2.12.0",
+                "2.12.1",
+                "2.12.2",
+                "2.12.3",
+                "2.12.4",
+                "2.12.5",
+                "2.13.0",
+                "2.14.0",
+                "2.14.1",
+                "2.14.2",
+                "2.15.0",
+                "2.15.1",
+                "2.16.0",
+                "2.16.1",
+                "2.16.2",
+                "2.16.3",
+                "2.16.4",
+                "2.16.5",
+                "2.17.0",
+                "2.17.1",
+                "2.17.2",
+                "2.17.3",
+                "2.18.0",
+                "2.18.1",
+                "2.18.2",
+                "2.18.3",
+                "2.18.4",
+                "2.19.0",
+                "2.19.1",
+                "2.2.0",
+                "2.20.0",
+                "2.20.1",
+                "2.2.1",
+                "2.21.0",
+                "2.22.0",
+                "2.23.0",
+                "2.24.0",
+                "2.25.0",
+                "2.25.1",
+                "2.26.0",
+                "2.27.0",
+                "2.27.1",
+                "2.28.0",
+                "2.28.1",
+                "2.28.2",
+                "2.29.0",
+                "2.3.0",
+                "2.30.0",
+                "2.31.0",
+                "2.32.0",
+                "2.32.1",
+                "2.32.2",
+                "2.32.3",
+                "2.4.0",
+                "2.4.1",
+                "2.4.2",
+                "2.4.3",
+                "2.5.0",
+                "2.5.1",
+                "2.5.2",
+                "2.5.3",
+                "2.6.0",
+                "2.6.1",
+                "2.6.2",
+                "2.7.0",
+                "2.8.0",
+                "2.8.1",
+                "2.9.0",
+                "2.9.1",
+                "2.9.2"
+            ],
+            "secure_versions": [
+                "2.32.5",
+                "2.32.4"
+            ],
+            "latest_version_without_known_vulnerabilities": "2.32.5",
+            "latest_version": "2.32.5",
+            "more_info_url": "https://data.safetycli.com/p/pypi/requests/97c/"
+        },
+        "pip": {
+            "name": "pip",
+            "version": "24.3.1",
+            "requirements": [
+                {
+                    "raw": "pip==24.3.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "pip",
+                    "specifier": "==24.3.1",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.2",
+                "0.2.1",
+                "0.3",
+                "0.3.1",
+                "0.4",
+                "0.5",
+                "0.5.1",
+                "0.6",
+                "0.6.1",
+                "0.6.2",
+                "0.6.3",
+                "0.7",
+                "0.7.1",
+                "0.7.2",
+                "0.8",
+                "0.8.1",
+                "0.8.2",
+                "0.8.3",
+                "1.0",
+                "10.0.0",
+                "10.0.0b1",
+                "10.0.0b2",
+                "10.0.1",
+                "1.0.1",
+                "1.0.2",
+                "1.1",
+                "1.2",
+                "1.2.1",
+                "1.3",
+                "1.3.1",
+                "1.4",
+                "1.4.1",
+                "1.5",
+                "1.5.1",
+                "1.5.2",
+                "1.5.3",
+                "1.5.4",
+                "1.5.5",
+                "1.5.6",
+                "18.0",
+                "18.1",
+                "19.0",
+                "19.0.1",
+                "19.0.2",
+                "19.0.3",
+                "19.1",
+                "19.1.1",
+                "19.2",
+                "19.2.1",
+                "19.2.2",
+                "19.2.3",
+                "19.3",
+                "19.3.1",
+                "20.0",
+                "20.0.1",
+                "20.0.2",
+                "20.1",
+                "20.1.1",
+                "20.1b1",
+                "20.2",
+                "20.2.1",
+                "20.2.2",
+                "20.2.3",
+                "20.2.4",
+                "20.2b1",
+                "20.3",
+                "20.3.1",
+                "20.3.2",
+                "20.3.3",
+                "20.3.4",
+                "20.3b1",
+                "21.0",
+                "21.0.1",
+                "21.1",
+                "21.1.1",
+                "21.1.2",
+                "21.1.3",
+                "21.2",
+                "21.2.1",
+                "21.2.2",
+                "21.2.3",
+                "21.2.4",
+                "21.3",
+                "21.3.1",
+                "22.0",
+                "22.0.1",
+                "22.0.2",
+                "22.0.3",
+                "22.0.4",
+                "22.1",
+                "22.1.1",
+                "22.1.2",
+                "22.1b1",
+                "22.2",
+                "22.2.1",
+                "22.2.2",
+                "22.3",
+                "22.3.1",
+                "23.0",
+                "23.0.1",
+                "23.1",
+                "23.1.1",
+                "23.1.2",
+                "23.2",
+                "23.2.1",
+                "23.3",
+                "23.3.1",
+                "23.3.2",
+                "24.0",
+                "24.1",
+                "24.1.1",
+                "24.1.2",
+                "24.1b1",
+                "24.1b2",
+                "24.2",
+                "24.3",
+                "24.3.1",
+                "6.0",
+                "6.0.1",
+                "6.0.2",
+                "6.0.3",
+                "6.0.4",
+                "6.0.5",
+                "6.0.6",
+                "6.0.7",
+                "6.0.8",
+                "6.1.0",
+                "6.1.1",
+                "7.0.0",
+                "7.0.1",
+                "7.0.2",
+                "7.0.3",
+                "7.1.0",
+                "7.1.1",
+                "7.1.2",
+                "8.0.0",
+                "8.0.1",
+                "8.0.2",
+                "8.0.3",
+                "8.1.0",
+                "8.1.1",
+                "8.1.2",
+                "9.0.0",
+                "9.0.1",
+                "9.0.2",
+                "9.0.3"
+            ],
+            "secure_versions": [
+                "25.2",
+                "25.1.1",
+                "25.1",
+                "25.0.1",
+                "25.0"
+            ],
+            "latest_version_without_known_vulnerabilities": "25.2",
+            "latest_version": "25.2",
+            "more_info_url": "https://data.safetycli.com/p/pypi/pip/97c/"
+        },
+        "idna": {
+            "name": "idna",
+            "version": "3.6",
+            "requirements": [
+                {
+                    "raw": "idna==3.6",
+                    "extras": [],
+                    "marker": null,
+                    "name": "idna",
+                    "specifier": "==3.6",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.1",
+                "0.2",
+                "0.3",
+                "0.4",
+                "0.5",
+                "0.6",
+                "0.7",
+                "0.8",
+                "0.9",
+                "1.0",
+                "1.1",
+                "2.0",
+                "2.1",
+                "2.10",
+                "2.2",
+                "2.3",
+                "2.4",
+                "2.5",
+                "2.6",
+                "2.7",
+                "2.8",
+                "2.9",
+                "3.0",
+                "3.1",
+                "3.2",
+                "3.3",
+                "3.4",
+                "3.5",
+                "3.6"
+            ],
+            "secure_versions": [
+                "3.10",
+                "3.9",
+                "3.8",
+                "3.7"
+            ],
+            "latest_version_without_known_vulnerabilities": "3.10",
+            "latest_version": "3.10",
+            "more_info_url": "https://data.safetycli.com/p/pypi/idna/97c/"
+        },
+        "certifi": {
+            "name": "certifi",
+            "version": "2024.2.2",
+            "requirements": [
+                {
+                    "raw": "certifi==2024.2.2",
+                    "extras": [],
+                    "marker": null,
+                    "name": "certifi",
+                    "specifier": "==2024.2.2",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0",
+                "0.0.1",
+                "0.0.2",
+                "0.0.3",
+                "0.0.4",
+                "0.0.5",
+                "0.0.6",
+                "0.0.7",
+                "0.0.8",
+                "1.0.0",
+                "1.0.1",
+                "14.5.14",
+                "2015.11.20",
+                "2015.11.20.1",
+                "2015.4.28",
+                "2015.9.6",
+                "2015.9.6.1",
+                "2015.9.6.2",
+                "2016.2.28",
+                "2016.8.2",
+                "2016.8.31",
+                "2016.8.8",
+                "2016.9.26",
+                "2017.11.5",
+                "2017.1.23",
+                "2017.4.17",
+                "2017.7.27",
+                "2017.7.27.1",
+                "2018.10.15",
+                "2018.11.29",
+                "2018.1.18",
+                "2018.4.16",
+                "2018.8.13",
+                "2018.8.24",
+                "2019.11.28",
+                "2019.3.9",
+                "2019.6.16",
+                "2019.9.11",
+                "2020.11.8",
+                "2020.12.5",
+                "2020.4.5",
+                "2020.4.5.1",
+                "2020.4.5.2",
+                "2020.6.20",
+                "2021.10.8",
+                "2021.5.30",
+                "2022.12.7",
+                "2022.5.18",
+                "2022.5.18.1",
+                "2022.6.15",
+                "2022.6.15.1",
+                "2022.6.15.2",
+                "2022.9.14",
+                "2022.9.24",
+                "2023.11.17",
+                "2023.5.7",
+                "2023.7.22",
+                "2024.2.2",
+                "2024.6.2"
+            ],
+            "secure_versions": [
+                "2025.8.3",
+                "2025.7.14",
+                "2025.7.9",
+                "2025.6.15",
+                "2025.4.26",
+                "2025.1.31",
+                "2024.12.14",
+                "2024.8.30",
+                "2024.7.4"
+            ],
+            "latest_version_without_known_vulnerabilities": "2025.8.3",
+            "latest_version": "2025.8.3",
+            "more_info_url": "https://data.safetycli.com/p/pypi/certifi/97c/"
+        },
+        "aiohttp": {
+            "name": "aiohttp",
+            "version": "3.11.14",
+            "requirements": [
+                {
+                    "raw": "aiohttp==3.11.14",
+                    "extras": [],
+                    "marker": null,
+                    "name": "aiohttp",
+                    "specifier": "==3.11.14",
+                    "url": null,
+                    "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                }
+            ],
+            "found": null,
+            "insecure_versions": [
+                "0.1",
+                "0.10.0",
+                "0.10.1",
+                "0.10.2",
+                "0.11.0",
+                "0.12.0",
+                "0.13.0",
+                "0.13.1",
+                "0.14.0",
+                "0.14.1",
+                "0.14.2",
+                "0.14.3",
+                "0.14.4",
+                "0.15.0",
+                "0.15.1",
+                "0.15.2",
+                "0.15.3",
+                "0.16.0",
+                "0.16.1",
+                "0.16.2",
+                "0.16.3",
+                "0.16.4",
+                "0.16.5",
+                "0.16.6",
+                "0.17.0",
+                "0.17.1",
+                "0.17.2",
+                "0.17.3",
+                "0.17.4",
+                "0.18.0",
+                "0.18.1",
+                "0.18.2",
+                "0.18.3",
+                "0.18.4",
+                "0.19.0",
+                "0.2",
+                "0.20.0",
+                "0.20.1",
+                "0.20.2",
+                "0.21.0",
+                "0.21.1",
+                "0.21.2",
+                "0.21.4",
+                "0.21.5",
+                "0.21.6",
+                "0.22.0",
+                "0.22.0a0",
+                "0.22.0b0",
+                "0.22.0b1",
+                "0.22.0b2",
+                "0.22.0b3",
+                "0.22.0b4",
+                "0.22.0b5",
+                "0.22.0b6",
+                "0.22.1",
+                "0.22.2",
+                "0.22.3",
+                "0.22.4",
+                "0.22.5",
+                "0.3",
+                "0.4",
+                "0.4.1",
+                "0.4.2",
+                "0.4.3",
+                "0.4.4",
+                "0.5.0",
+                "0.6.0",
+                "0.6.1",
+                "0.6.2",
+                "0.6.3",
+                "0.6.4",
+                "0.6.5",
+                "0.7.0",
+                "0.7.1",
+                "0.7.2",
+                "0.7.3",
+                "0.8.0",
+                "0.8.1",
+                "0.8.2",
+                "0.8.3",
+                "0.8.4",
+                "0.9.0",
+                "0.9.1",
+                "0.9.2",
+                "0.9.3",
+                "1.0.0",
+                "1.0.1",
+                "1.0.2",
+                "1.0.3",
+                "1.0.5",
+                "1.1.0",
+                "1.1.1",
+                "1.1.2",
+                "1.1.3",
+                "1.1.4",
+                "1.1.5",
+                "1.1.6",
+                "1.2.0",
+                "1.3.0",
+                "1.3.1",
+                "1.3.2",
+                "1.3.3",
+                "1.3.4",
+                "1.3.5",
+                "2.0.0",
+                "2.0.0rc1",
+                "2.0.1",
+                "2.0.2",
+                "2.0.3",
+                "2.0.4",
+                "2.0.5",
+                "2.0.6",
+                "2.0.7",
+                "2.1.0",
+                "2.2.0",
+                "2.2.1",
+                "2.2.2",
+                "2.2.3",
+                "2.2.4",
+                "2.2.5",
+                "2.3.0",
+                "2.3.0a1",
+                "2.3.0a2",
+                "2.3.0a3",
+                "2.3.0a4",
+                "2.3.1",
+                "2.3.10",
+                "2.3.1a1",
+                "2.3.2",
+                "2.3.2b2",
+                "2.3.2b3",
+                "2.3.3",
+                "2.3.4",
+                "2.3.5",
+                "2.3.6",
+                "2.3.7",
+                "2.3.8",
+                "2.3.9",
+                "3.0.0",
+                "3.0.0b0",
+                "3.0.0b1",
+                "3.0.0b2",
+                "3.0.0b3",
+                "3.0.0b4",
+                "3.0.1",
+                "3.0.2",
+                "3.0.3",
+                "3.0.4",
+                "3.0.5",
+                "3.0.6",
+                "3.0.7",
+                "3.0.8",
+                "3.0.9",
+                "3.1.0",
+                "3.10.0",
+                "3.10.0b1",
+                "3.10.0rc0",
+                "3.10.1",
+                "3.10.10",
+                "3.10.11",
+                "3.10.11rc0",
+                "3.10.2",
+                "3.10.3",
+                "3.10.4",
+                "3.10.5",
+                "3.10.6",
+                "3.10.6rc0",
+                "3.10.6rc1",
+                "3.10.6rc2",
+                "3.10.7",
+                "3.10.8",
+                "3.10.9",
+                "3.1.1",
+                "3.11.0",
+                "3.11.0b0",
+                "3.11.0b1",
+                "3.11.0b2",
+                "3.11.0b3",
+                "3.11.0b4",
+                "3.11.0b5",
+                "3.11.0rc0",
+                "3.11.0rc1",
+                "3.11.0rc2",
+                "3.11.1",
+                "3.11.10",
+                "3.11.11",
+                "3.11.12",
+                "3.11.13",
+                "3.11.14",
+                "3.11.15",
+                "3.11.16",
+                "3.11.17",
+                "3.11.18",
+                "3.11.2",
+                "3.11.3",
+                "3.11.4",
+                "3.11.5",
+                "3.11.6",
+                "3.11.7",
+                "3.11.8",
+                "3.11.9",
+                "3.1.2",
+                "3.12.0",
+                "3.12.0b0",
+                "3.12.0b1",
+                "3.12.0b2",
+                "3.12.0b3",
+                "3.12.0rc0",
+                "3.12.0rc1",
+                "3.12.1",
+                "3.12.10",
+                "3.12.11",
+                "3.12.12",
+                "3.12.13",
+                "3.12.1rc0",
+                "3.12.2",
+                "3.12.3",
+                "3.12.4",
+                "3.12.6",
+                "3.12.7",
+                "3.12.7rc0",
+                "3.12.8",
+                "3.12.9",
+                "3.1.3",
+                "3.2.0",
+                "3.2.1",
+                "3.3.0",
+                "3.3.0a0",
+                "3.3.1",
+                "3.3.2",
+                "3.3.2a0",
+                "3.4.0",
+                "3.4.0a0",
+                "3.4.0a3",
+                "3.4.0b1",
+                "3.4.0b2",
+                "3.4.1",
+                "3.4.2",
+                "3.4.3",
+                "3.4.4",
+                "3.5.0",
+                "3.5.0a1",
+                "3.5.0b1",
+                "3.5.0b2",
+                "3.5.0b3",
+                "3.5.1",
+                "3.5.2",
+                "3.5.3",
+                "3.5.4",
+                "3.6.0",
+                "3.6.0a0",
+                "3.6.0a1",
+                "3.6.0a11",
+                "3.6.0a12",
+                "3.6.0a2",
+                "3.6.0a3",
+                "3.6.0a4",
+                "3.6.0a5",
+                "3.6.0a6",
+                "3.6.0a7",
+                "3.6.0a8",
+                "3.6.0a9",
+                "3.6.0b0",
+                "3.6.1",
+                "3.6.1b3",
+                "3.6.1b4",
+                "3.6.2",
+                "3.6.2a0",
+                "3.6.2a1",
+                "3.6.2a2",
+                "3.6.3",
+                "3.7.0",
+                "3.7.0b0",
+                "3.7.0b1",
+                "3.7.1",
+                "3.7.2",
+                "3.7.3",
+                "3.7.4",
+                "3.7.4.post0",
+                "3.8.0",
+                "3.8.0a7",
+                "3.8.0b0",
+                "3.8.1",
+                "3.8.2",
+                "3.8.3",
+                "3.8.4",
+                "3.8.5",
+                "3.8.6",
+                "3.9.0",
+                "3.9.0b0",
+                "3.9.0b1",
+                "3.9.0rc0",
+                "3.9.1",
+                "3.9.2",
+                "3.9.3",
+                "3.9.4",
+                "3.9.4rc0",
+                "3.9.5"
+            ],
+            "secure_versions": [
+                "4.0.0a1",
+                "4.0.0a0",
+                "3.12.15",
+                "3.12.14"
+            ],
+            "latest_version_without_known_vulnerabilities": "4.0.0a1",
+            "latest_version": "3.12.15",
+            "more_info_url": "https://data.safetycli.com/p/pypi/aiohttp/97c/"
+        }
+    },
+    "announcements": [],
+    "vulnerabilities": [
+        {
+            "vulnerability_id": "73456",
+            "package_name": "virtualenv",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<20.26.6"
+            ],
+            "all_vulnerable_specs": [
+                "<20.26.6"
+            ],
+            "analyzed_version": "20.25.1",
+            "analyzed_requirement": {
+                "raw": "virtualenv==20.25.1",
+                "extras": [],
+                "marker": null,
+                "name": "virtualenv",
+                "specifier": "==20.25.1",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Affected versions of the virtualenv package are vulnerable to command injection. This vulnerability could allow an attacker to execute arbitrary commands by exploiting improperly quoted string placeholders in activation scripts. The vulnerable functions include various shell activation scripts where placeholders like __VIRTUAL_ENV__ are used. The exploitability depends on the ability to control the input to these placeholders. Users are advised to update to the version where a quoting mechanism has been implemented to mitigate this risk. This vulnerability is specific to environments where shell scripts are used for virtual environment activation. The issue is tracked under CWE-77: Improper Neutralization of Special Elements used in a Command ('Command Injection').",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": null,
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/73456/97c"
+        },
+        {
+            "vulnerability_id": "77744",
+            "package_name": "urllib3",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<2.5.0"
+            ],
+            "all_vulnerable_specs": [
+                "<2.5.0"
+            ],
+            "analyzed_version": "2.2.1",
+            "analyzed_requirement": {
+                "raw": "urllib3==2.2.1",
+                "extras": [],
+                "marker": null,
+                "name": "urllib3",
+                "specifier": "==2.2.1",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "urllib3 is a user-friendly HTTP client library for Python. Prior to 2.5.0, it is possible to disable redirects for all requests by instantiating a PoolManager and specifying retries in a way that disable redirects. By default, requests and botocore users are not affected. An application attempting to mitigate SSRF or open redirect vulnerabilities by disabling redirects at the PoolManager level will remain vulnerable. This issue has been patched in version 2.5.0.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2025-50181",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/77744/97c"
+        },
+        {
+            "vulnerability_id": "77745",
+            "package_name": "urllib3",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<2.5.0"
+            ],
+            "all_vulnerable_specs": [
+                "<2.5.0"
+            ],
+            "analyzed_version": "2.2.1",
+            "analyzed_requirement": {
+                "raw": "urllib3==2.2.1",
+                "extras": [],
+                "marker": null,
+                "name": "urllib3",
+                "specifier": "==2.2.1",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Urllib3 is a user-friendly HTTP client library for Python. Starting in version 2.2.0 and before 2.5.0, urllib3 does not control redirects in browsers and Node.js. urllib3 supports being used in a Pyodide runtime, utilizing the JavaScript Fetch API or falling back on XMLHttpRequest. This means Python libraries can be used to make HTTP requests from a browser or Node.js. Additionally, urllib3 provides a mechanism to control redirects, but the retries and redirect parameters are ignored with Pyodide; the runtime itself determines redirect behaviour. This issue has been patched in version 2.5.0.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2025-50182",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/77745/97c"
+        },
+        {
+            "vulnerability_id": "71608",
+            "package_name": "urllib3",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                ">=2.0.0a1,<=2.2.1"
+            ],
+            "all_vulnerable_specs": [
+                "<=1.26.18",
+                ">=2.0.0a1,<=2.2.1"
+            ],
+            "analyzed_version": "2.2.1",
+            "analyzed_requirement": {
+                "raw": "urllib3==2.2.1",
+                "extras": [],
+                "marker": null,
+                "name": "urllib3",
+                "specifier": "==2.2.1",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Urllib3's ProxyManager ensures that the Proxy-Authorization header is correctly directed only to configured proxies. However, when HTTP requests bypass urllib3's proxy support, there's a risk of inadvertently setting the Proxy-Authorization header, which remains ineffective without a forwarding or tunneling proxy. Urllib3 does not recognize this header as carrying authentication data, failing to remove it during cross-origin redirects. While this scenario is uncommon and poses low risk to most users, urllib3 now proactively removes the Proxy-Authorization header during cross-origin redirects as a precautionary measure. Users are advised to utilize urllib3's proxy support or disable automatic redirects to handle the Proxy-Authorization header securely. Despite these precautions, urllib3 defaults to stripping the header to safeguard users who may inadvertently misconfigure requests.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-37891",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/71608/97c"
+        },
+        {
+            "vulnerability_id": "72236",
+            "package_name": "setuptools",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<70.0.0"
+            ],
+            "all_vulnerable_specs": [
+                "<70.0.0"
+            ],
+            "analyzed_version": "69.2.0",
+            "analyzed_requirement": {
+                "raw": "setuptools==69.2.0",
+                "extras": [],
+                "marker": null,
+                "name": "setuptools",
+                "specifier": "==69.2.0",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Affected versions of Setuptools allow for remote code execution via its download functions. These functions, which are used to download packages from URLs provided by users or retrieved from package index servers, are susceptible to code injection. If these functions are exposed to user-controlled inputs, such as package URLs, they can execute arbitrary commands on the system.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-6345",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/72236/97c"
+        },
+        {
+            "vulnerability_id": "76752",
+            "package_name": "setuptools",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<78.1.1"
+            ],
+            "all_vulnerable_specs": [
+                "<78.1.1"
+            ],
+            "analyzed_version": "69.2.0",
+            "analyzed_requirement": {
+                "raw": "setuptools==69.2.0",
+                "extras": [],
+                "marker": null,
+                "name": "setuptools",
+                "specifier": "==69.2.0",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Affected versions of Setuptools are vulnerable to Path Traversal via PackageIndex.download(). The impact is Arbitrary File Overwrite: An attacker would be allowed to write files to arbitrary locations on the filesystem with the permissions of the process running the Python code, which could escalate to RCE depending on the context.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2025-47273",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/76752/97c"
+        },
+        {
+            "vulnerability_id": "71064",
+            "package_name": "requests",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<2.32.2"
+            ],
+            "all_vulnerable_specs": [
+                "<2.32.2"
+            ],
+            "analyzed_version": "2.31.0",
+            "analyzed_requirement": {
+                "raw": "requests==2.31.0",
+                "extras": [],
+                "marker": null,
+                "name": "requests",
+                "specifier": "==2.31.0",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Affected versions of Requests, when making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same host will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool. Requests 2.32.0 fixes the issue, but versions 2.32.0 and 2.32.1 were yanked due to conflicts with CVE-2024-35195 mitigation.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-35195",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/71064/97c"
+        },
+        {
+            "vulnerability_id": "77680",
+            "package_name": "requests",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<2.32.4"
+            ],
+            "all_vulnerable_specs": [
+                "<2.32.4"
+            ],
+            "analyzed_version": "2.31.0",
+            "analyzed_requirement": {
+                "raw": "requests==2.31.0",
+                "extras": [],
+                "marker": null,
+                "name": "requests",
+                "specifier": "==2.31.0",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Requests is an HTTP library. Due to a URL parsing issue, Requests releases prior to 2.32.4 may leak .netrc credentials to third parties for specific maliciously-crafted URLs. Users should upgrade to version 2.32.4 to receive a fix. For older versions of Requests, use of the .netrc file can be disabled with `trust_env=False` on one's Requests Session.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-47081",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/77680/97c"
+        },
+        {
+            "vulnerability_id": "75180",
+            "package_name": "pip",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<25.0"
+            ],
+            "all_vulnerable_specs": [
+                "<25.0"
+            ],
+            "analyzed_version": "24.3.1",
+            "analyzed_requirement": {
+                "raw": "pip==24.3.1",
+                "extras": [],
+                "marker": null,
+                "name": "pip",
+                "specifier": "==24.3.1",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Pip solves a security vulnerability that previously allowed maliciously crafted wheel files to execute unauthorized code during installation.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": null,
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/75180/97c"
+        },
+        {
+            "vulnerability_id": "67895",
+            "package_name": "idna",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<3.7"
+            ],
+            "all_vulnerable_specs": [
+                "<3.7"
+            ],
+            "analyzed_version": "3.6",
+            "analyzed_requirement": {
+                "raw": "idna==3.6",
+                "extras": [],
+                "marker": null,
+                "name": "idna",
+                "specifier": "==3.6",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Affected versions of Idna are vulnerable to Denial Of Service via the idna.encode(), where a specially crafted argument could lead to significant resource consumption. In version 3.7, this function has been updated to reject such inputs efficiently, minimizing resource use. A practical workaround involves enforcing a maximum domain name length of 253 characters before encoding, as the vulnerability is triggered by unusually large inputs that normal operations wouldn't encounter.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-3651",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/67895/97c"
+        },
+        {
+            "vulnerability_id": "72083",
+            "package_name": "certifi",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                ">=2021.05.30,<2024.07.04"
+            ],
+            "all_vulnerable_specs": [
+                ">=2021.05.30,<2024.07.04"
+            ],
+            "analyzed_version": "2024.2.2",
+            "analyzed_requirement": {
+                "raw": "certifi==2024.2.2",
+                "extras": [],
+                "marker": null,
+                "name": "certifi",
+                "specifier": "==2024.2.2",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "Certifi affected versions recognized root certificates from GLOBALTRUST. Certifi patch removes these root certificates from the root store. These certificates are being removed pursuant to an investigation that identified \"long-running and unresolved compliance issues\" and are also in the process of being removed from Mozilla's trust store.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2024-39689",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/72083/97c"
+        },
+        {
+            "vulnerability_id": "78162",
+            "package_name": "aiohttp",
+            "ignored": {},
+            "ignored_reason": null,
+            "ignored_expires": null,
+            "vulnerable_spec": [
+                "<3.12.14"
+            ],
+            "all_vulnerable_specs": [
+                "<3.12.14"
+            ],
+            "analyzed_version": "3.11.14",
+            "analyzed_requirement": {
+                "raw": "aiohttp==3.11.14",
+                "extras": [],
+                "marker": null,
+                "name": "aiohttp",
+                "specifier": "==3.11.14",
+                "url": null,
+                "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+            },
+            "advisory": "AIOHTTP is an asynchronous HTTP client/server framework for asyncio and Python. Prior to version 3.12.14, the Python parser is vulnerable to a request smuggling vulnerability due to not parsing trailer sections of an HTTP request. If a pure Python version of aiohttp is installed (i.e. without the usual C extensions) or AIOHTTP_NO_EXTENSIONS is enabled, then an attacker may be able to execute a request smuggling attack to bypass certain firewalls or proxy protections. Version 3.12.14 contains a patch for this issue.",
+            "is_transitive": false,
+            "published_date": null,
+            "fixed_versions": [],
+            "closest_versions_without_known_vulnerabilities": [],
+            "resources": [],
+            "CVE": "CVE-2025-53643",
+            "severity": null,
+            "affected_versions": [],
+            "more_info_url": "https://data.safetycli.com/v/78162/97c"
+        }
+    ],
+    "ignored_vulnerabilities": [],
+    "remediations": {
+        "virtualenv": {
+            "requirements": {
+                "==20.25.1": {
+                    "vulnerabilities_found": 1,
+                    "version": "20.25.1",
+                    "requirement": {
+                        "raw": "virtualenv==20.25.1",
+                        "extras": [],
+                        "marker": null,
+                        "name": "virtualenv",
+                        "specifier": "==20.25.1",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/virtualenv/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "urllib3": {
+            "requirements": {
+                "==2.2.1": {
+                    "vulnerabilities_found": 3,
+                    "version": "2.2.1",
+                    "requirement": {
+                        "raw": "urllib3==2.2.1",
+                        "extras": [],
+                        "marker": null,
+                        "name": "urllib3",
+                        "specifier": "==2.2.1",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/urllib3/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "setuptools": {
+            "requirements": {
+                "==69.2.0": {
+                    "vulnerabilities_found": 2,
+                    "version": "69.2.0",
+                    "requirement": {
+                        "raw": "setuptools==69.2.0",
+                        "extras": [],
+                        "marker": null,
+                        "name": "setuptools",
+                        "specifier": "==69.2.0",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/setuptools/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "requests": {
+            "requirements": {
+                "==2.31.0": {
+                    "vulnerabilities_found": 2,
+                    "version": "2.31.0",
+                    "requirement": {
+                        "raw": "requests==2.31.0",
+                        "extras": [],
+                        "marker": null,
+                        "name": "requests",
+                        "specifier": "==2.31.0",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/requests/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "pip": {
+            "requirements": {
+                "==24.3.1": {
+                    "vulnerabilities_found": 1,
+                    "version": "24.3.1",
+                    "requirement": {
+                        "raw": "pip==24.3.1",
+                        "extras": [],
+                        "marker": null,
+                        "name": "pip",
+                        "specifier": "==24.3.1",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/pip/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "idna": {
+            "requirements": {
+                "==3.6": {
+                    "vulnerabilities_found": 1,
+                    "version": "3.6",
+                    "requirement": {
+                        "raw": "idna==3.6",
+                        "extras": [],
+                        "marker": null,
+                        "name": "idna",
+                        "specifier": "==3.6",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/idna/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "certifi": {
+            "requirements": {
+                "==2024.2.2": {
+                    "vulnerabilities_found": 1,
+                    "version": "2024.2.2",
+                    "requirement": {
+                        "raw": "certifi==2024.2.2",
+                        "extras": [],
+                        "marker": null,
+                        "name": "certifi",
+                        "specifier": "==2024.2.2",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/certifi/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        },
+        "aiohttp": {
+            "requirements": {
+                "==3.11.14": {
+                    "vulnerabilities_found": 1,
+                    "version": "3.11.14",
+                    "requirement": {
+                        "raw": "aiohttp==3.11.14",
+                        "extras": [],
+                        "marker": null,
+                        "name": "aiohttp",
+                        "specifier": "==3.11.14",
+                        "url": null,
+                        "found": "/home/ubuntu/.pyenv/versions/3.12.8/lib/python3.12/site-packages"
+                    },
+                    "more_info_url": "https://data.safetycli.com/p/pypi/aiohttp/97c/"
+                }
+            },
+            "current_version": null,
+            "vulnerabilities_found": null,
+            "recommended_version": null,
+            "other_recommended_versions": [],
+            "more_info_url": null
+        }
+    },
+    "remediations_results": {
+        "vulnerabilities_fixed": [],
+        "remediations_applied": {},
+        "remediations_skipped": {}
+    }
+}
+
+
++===========================================================================================================================================================================================+
+
+
+DEPRECATED: this command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.
+
+
+We highly encourage switching to the new `scan` command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.
+
+
++===========================================================================================================================================================================================+
+
+

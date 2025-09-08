@@ -1,4 +1,3 @@
-from typing import List
 
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
@@ -31,7 +30,7 @@ async def create_item(item: Item):
     return {"message": "Item received"}
 
 
-@app.get("/items/", response_model=List[Item], tags=["items"])
+@app.get("/items/", response_model=list[Item], tags=["items"])
 async def get_items():
     return [
         {"name": "Plumbus", "price": 3},

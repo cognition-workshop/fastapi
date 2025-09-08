@@ -1,4 +1,3 @@
-from typing import List
 
 from dirty_equals import IsDict
 from fastapi import Depends, FastAPI
@@ -40,7 +39,7 @@ async def no_duplicates(item: Item, item2: Item = Depends(dependency)):
 
 @app.post("/with-duplicates-sub")
 async def no_duplicates_sub(
-    item: Item, sub_items: List[Item] = Depends(sub_duplicate_dependency)
+    item: Item, sub_items: list[Item] = Depends(sub_duplicate_dependency)
 ):
     return [item, sub_items]
 
