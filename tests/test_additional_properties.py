@@ -1,4 +1,3 @@
-from typing import Dict
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -8,7 +7,7 @@ app = FastAPI()
 
 
 class Items(BaseModel):
-    items: Dict[str, int]
+    items: dict[str, int]
 
 
 @app.post("/foo")

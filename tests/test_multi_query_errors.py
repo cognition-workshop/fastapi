@@ -1,4 +1,3 @@
-from typing import List
 
 from dirty_equals import IsDict
 from fastapi import FastAPI, Query
@@ -8,7 +7,7 @@ app = FastAPI()
 
 
 @app.get("/items/")
-def read_items(q: List[int] = Query(default=None)):
+def read_items(q: list[int] = Query(default=None)):
     return {"q": q}
 
 

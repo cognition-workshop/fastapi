@@ -1,4 +1,3 @@
-from typing import List
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -44,7 +43,7 @@ async def read_pet(pet_id: int):
     return pet
 
 
-@app.get("/pets/", response_model=List[PetOut])
+@app.get("/pets/", response_model=list[PetOut])
 async def read_pets():
     user = UserDB(
         email="johndoe@example.com",
