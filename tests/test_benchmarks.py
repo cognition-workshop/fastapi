@@ -1,28 +1,29 @@
 """Benchmark tests for FastAPI performance"""
 
+from typing import Optional
+
 import pytest
 from fastapi import FastAPI
 from starlette.testclient import TestClient
-from typing import Optional
 
 
 @pytest.fixture
 def app():
     """Create FastAPI app for benchmarking"""
     app = FastAPI()
-    
+
     @app.get("/")
     def read_root():
         return {"Hello": "World"}
-    
+
     @app.get("/items/{item_id}")
     def read_item(item_id: int, q: Optional[str] = None):
         return {"item_id": item_id, "q": q}
-    
+
     @app.post("/items/")
     def create_item(item: dict):
         return {"item": item, "created": True}
-    
+
     return app
 
 
@@ -53,14 +54,15 @@ def test_json_post_performance(benchmark, client):
 
 def test_app_startup_performance(benchmark):
     """Benchmark FastAPI app startup time"""
+
     def create_app():
         app = FastAPI()
-        
+
         @app.get("/")
         def read_root():
             return {"Hello": "World"}
-        
+
         return app
-    
+
     app = benchmark(create_app)
     assert app is not None

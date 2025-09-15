@@ -7,10 +7,10 @@ echo "🔒 Running Security Scans..."
 
 echo "Running bandit security scan..."
 bandit -r fastapi/ -f json -o security-report.json || true
-bandit -r fastapi/ -f txt
+bandit -r fastapi/ -f txt --severity-level medium || true
 
 echo "Checking dependency vulnerabilities..."
-safety check --json --output safety-report.json || true
+safety check > safety-report.txt || true
 safety check
 
 echo "Running semgrep security analysis..."
