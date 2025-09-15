@@ -136,6 +136,73 @@ jobs:
         with:
           name: coverage-html
           path: htmlcov
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install security tools
+        run: pip install -r requirements-quality.txt
+      - name: Run security scans
+        run: bash scripts/security-scan.sh
+      - name: Upload security reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            security-report.json
+            safety-report.json
+            semgrep-report.json
+
+  quality-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install quality tools
+        run: pip install -r requirements-quality.txt
+      - name: Run quality analysis
+        run: bash scripts/quality-analysis.sh
+      - name: Upload quality reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-reports
+          path: |
+            complexity-report.json
+            deadcode-report.json
+            interrogate_badge.svg
+
+  performance-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-tests.txt
+          pip install -r requirements-quality.txt
+      - name: Create performance test directory
+        run: mkdir -p performance_tests
+      - name: Run performance tests
+        run: bash scripts/performance-test.sh
+      - name: Upload performance reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-reports
+          path: |
+            performance-report.html
+            benchmark-report.json
+            memory-report.txt
           include-hidden-files: true
 
   # https://github.com/marketplace/actions/alls-green#why
@@ -143,6 +210,9 @@ jobs:
     if: always()
     needs:
       - coverage-combine
+      - security-scan
+      - quality-analysis
+      - performance-test
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context

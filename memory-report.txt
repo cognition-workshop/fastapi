@@ -1,0 +1,31 @@
+Memory profiling completed
+Filename: performance_tests/memory_test.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    10     61.3 MiB     61.3 MiB           1   @profile
+    11                                         def test_memory_usage():
+    12                                             """Profile memory usage of FastAPI operations"""
+    13                                             
+    14     61.3 MiB      0.0 MiB           1       app = FastAPI()
+    15                                             
+    16     61.3 MiB      0.0 MiB           2       @app.get("/")
+    17     61.3 MiB      0.0 MiB           2       def read_root():
+    18                                                 return {"Hello": "World"}
+    19                                             
+    20     61.6 MiB      0.3 MiB           2       @app.get("/items/{item_id}")
+    21     61.6 MiB      0.0 MiB           2       def read_item(item_id: int, q: Optional[str] = None):
+    22                                                 return {"item_id": item_id, "q": q}
+    23                                             
+    24     61.6 MiB      0.0 MiB           1       client = TestClient(app)
+    25                                             
+    26     73.2 MiB      0.0 MiB        1001       for i in range(1000):
+    27     73.2 MiB      5.6 MiB        1000           response = client.get("/")
+    28     73.2 MiB      0.0 MiB        1000           assert response.status_code == 200
+    29                                                 
+    30     73.2 MiB      6.1 MiB        1000           response = client.get(f"/items/{i}?q=test{i}")
+    31     73.2 MiB      0.0 MiB        1000           assert response.status_code == 200
+    32                                             
+    33     73.2 MiB      0.0 MiB           1       print("Memory profiling completed")
+
+
