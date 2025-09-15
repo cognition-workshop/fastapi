@@ -1,0 +1,28 @@
+# Enhanced Quality Framework Dependencies
+# Security Scanning
+bandit[toml]>=1.7.5
+safety>=3.0.0
+semgrep>=1.45.0
+
+# Performance Testing
+locust>=2.17.0
+memory-profiler>=0.61.0
+py-spy>=0.3.14
+pytest-benchmark>=4.0.0
+
+# Code Quality Analytics
+radon>=6.0.1
+xenon>=0.9.1
+vulture>=2.10
+interrogate>=1.5.0
+
+# Advanced CI/CD
+mutmut>=2.4.3
+pip-audit>=2.6.1
+licensecheck>=2023.1.1
+pre-commit>=3.5.0
+
+# Metrics & Reporting
+plotly>=5.17.0
+pandas>=2.1.0
+jinja2>=3.1.2

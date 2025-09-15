@@ -20,6 +20,20 @@ repos:
         args:
         - --fix
     -   id: ruff-format
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+    -   id: bandit
+        args: [-r, fastapi/]
+        exclude: ^tests/
+-   repo: local
+    hooks:
+    -   id: safety
+        name: safety
+        entry: safety
+        args: [check, --json]
+        language: system
+        pass_filenames: false
 ci:
     autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
     autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
