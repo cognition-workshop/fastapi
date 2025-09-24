@@ -20,6 +20,7 @@ swagger_ui_default_parameters: Annotated[
     "deepLinking": True,
     "showExtensions": True,
     "showCommonExtensions": True,
+    "defaultModelsExpandDepth": -1,
 }
 
 
