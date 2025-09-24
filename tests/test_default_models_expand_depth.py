@@ -15,6 +15,10 @@ def test_default_models_expand_depth_included():
     assert '"defaultModelsExpandDepth": -1,' in response.text, (
         "default defaultModelsExpandDepth should be included"
     )
+    
+    response = client.get("/test")
+    assert response.status_code == 200
+    assert response.json() == {"test": "value"}
 
 
 def test_custom_models_expand_depth_override():
@@ -33,3 +37,7 @@ def test_custom_models_expand_depth_override():
     assert '"defaultModelsExpandDepth": -1' not in response.text, (
         "default value should not appear when overridden"
     )
+    
+    response = client.get("/test")
+    assert response.status_code == 200
+    assert response.json() == {"test": "value"}
