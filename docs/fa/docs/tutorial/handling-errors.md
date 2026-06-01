@@ -1,49 +1,49 @@
-# Handling Errors
+# مدیریت خطاها
 
-There are many situations in which you need to notify an error to a client that is using your API.
+موقعیت‌های زیادی وجود دارد که باید یک خطا را به کلاینتی که از API شما استفاده می‌کند اطلاع دهید.
 
-This client could be a browser with a frontend, a code from someone else, an IoT device, etc.
+این کلاینت می‌تواند یک مرورگر با فرانت‌اند، کد شخص دیگری، یک دستگاه IoT و غیره باشد.
 
-You could need to tell the client that:
+ممکن است نیاز داشته باشید به کلاینت بگویید که:
 
-* The client doesn't have enough privileges for that operation.
-* The client doesn't have access to that resource.
-* The item the client was trying to access doesn't exist.
-* etc.
+* کلاینت امتیازات کافی برای آن عملیات را ندارد.
+* کلاینت به آن منبع دسترسی ندارد.
+* آیتمی که کلاینت تلاش داشت به آن دسترسی پیدا کند وجود ندارد.
+* و غیره.
 
-In these cases, you would normally return an **HTTP status code** in the range of **400** (from 400 to 499).
+در این موارد، معمولاً یک **کد وضعیت HTTP** در محدوده **400** (از 400 تا 499) برمی‌گردانید.
 
-This is similar to the 200 HTTP status codes (from 200 to 299). Those "200" status codes mean that somehow there was a "success" in the request.
+این مشابه کدهای وضعیت HTTP 200 (از 200 تا 299) است. آن کدهای وضعیت "200" به این معنا هستند که به نوعی "موفقیتی" در درخواست وجود داشته.
 
-The status codes in the 400 range mean that there was an error from the client.
+کدهای وضعیت در محدوده 400 به این معنا هستند که خطایی از طرف کلاینت وجود داشته.
 
-Remember all those **"404 Not Found"** errors (and jokes)?
+تمام آن خطاهای **"404 یافت نشد"** (و شوخی‌ها) را به یاد دارید؟
 
-## Use `HTTPException`
+## استفاده از `HTTPException`
 
-To return HTTP responses with errors to the client you use `HTTPException`.
+برای برگرداندن پاسخ‌های HTTP با خطا به کلاینت از `HTTPException` استفاده می‌کنید.
 
-### Import `HTTPException`
+### وارد کردن `HTTPException`
 
 {* ../../docs_src/handling_errors/tutorial001.py hl[1] *}
 
-### Raise an `HTTPException` in your code
+### ایجاد `HTTPException` در کد
 
-`HTTPException` is a normal Python exception with additional data relevant for APIs.
+`HTTPException` یک استثنای عادی پایتون با داده‌های اضافی مرتبط با APIها است.
 
-Because it's a Python exception, you don't `return` it, you `raise` it.
+چون یک استثنای پایتون است، آن را `return` نمی‌کنید، بلکه `raise` می‌کنید.
 
-This also means that if you are inside a utility function that you are calling inside of your *path operation function*, and you raise the `HTTPException` from inside of that utility function, it won't run the rest of the code in the *path operation function*, it will terminate that request right away and send the HTTP error from the `HTTPException` to the client.
+این همچنین به این معناست که اگر درون یک تابع کمکی هستید که آن را درون *تابع عملیات مسیر* خود فراخوانی می‌کنید و `HTTPException` را از درون آن تابع کمکی `raise` کنید، بقیه کد در *تابع عملیات مسیر* اجرا نخواهد شد، آن درخواست را بلافاصله خاتمه داده و خطای HTTP از `HTTPException` را به کلاینت ارسال می‌کند.
 
-The benefit of raising an exception over `return`ing a value will be more evident in the section about Dependencies and Security.
+مزیت `raise` کردن استثنا نسبت به `return` کردن مقدار در بخش مربوط به وابستگی‌ها و امنیت واضح‌تر خواهد بود.
 
-In this example, when the client requests an item by an ID that doesn't exist, raise an exception with a status code of `404`:
+در این مثال، وقتی کلاینت آیتمی را با شناسه‌ای که وجود ندارد درخواست می‌کند، استثنایی با کد وضعیت `404` ایجاد کنید:
 
 {* ../../docs_src/handling_errors/tutorial001.py hl[11] *}
 
-### The resulting response
+### پاسخ حاصل
 
-If the client requests `http://example.com/items/foo` (an `item_id` `"foo"`), that client will receive an HTTP status code of 200, and a JSON response of:
+اگر کلاینت `http://example.com/items/foo` (یک `item_id` `"foo"`) درخواست کند، آن کلاینت یک کد وضعیت HTTP 200 و یک پاسخ JSON دریافت خواهد کرد:
 
 ```JSON
 {
@@ -51,7 +51,7 @@ If the client requests `http://example.com/items/foo` (an `item_id` `"foo"`), th
 }
 ```
 
-But if the client requests `http://example.com/items/bar` (a non-existent `item_id` `"bar"`), that client will receive an HTTP status code of 404 (the "not found" error), and a JSON response of:
+اما اگر کلاینت `http://example.com/items/bar` (یک `item_id` ناموجود `"bar"`) درخواست کند، آن کلاینت یک کد وضعیت HTTP 404 (خطای "یافت نشد") و یک پاسخ JSON دریافت خواهد کرد:
 
 ```JSON
 {
@@ -61,75 +61,75 @@ But if the client requests `http://example.com/items/bar` (a non-existent `item_
 
 /// tip
 
-When raising an `HTTPException`, you can pass any value that can be converted to JSON as the parameter `detail`, not only `str`.
+هنگام `raise` کردن `HTTPException`، می‌توانید هر مقداری که قابل تبدیل به JSON باشد را به عنوان پارامتر `detail` ارسال کنید، نه فقط `str`.
 
-You could pass a `dict`, a `list`, etc.
+می‌توانید یک `dict`، یک `list` و غیره ارسال کنید.
 
-They are handled automatically by **FastAPI** and converted to JSON.
+آنها به طور خودکار توسط **FastAPI** مدیریت و به JSON تبدیل می‌شوند.
 
 ///
 
-## Add custom headers
+## افزودن هدرهای سفارشی
 
-There are some situations in where it's useful to be able to add custom headers to the HTTP error. For example, for some types of security.
+موقعیت‌هایی وجود دارد که افزودن هدرهای سفارشی به خطای HTTP مفید است. برای مثال، برای برخی انواع امنیت.
 
-You probably won't need to use it directly in your code.
+احتمالاً نیازی نخواهید داشت مستقیماً در کد خود از آن استفاده کنید.
 
-But in case you needed it for an advanced scenario, you can add custom headers:
+اما در صورتی که برای سناریوی پیشرفته‌ای به آن نیاز داشتید، می‌توانید هدرهای سفارشی اضافه کنید:
 
 {* ../../docs_src/handling_errors/tutorial002.py hl[14] *}
 
-## Install custom exception handlers
+## نصب هندلرهای استثنای سفارشی
 
-You can add custom exception handlers with <a href="https://www.starlette.io/exceptions/" class="external-link" target="_blank">the same exception utilities from Starlette</a>.
+می‌توانید هندلرهای استثنای سفارشی با <a href="https://www.starlette.io/exceptions/" class="external-link" target="_blank">همان ابزارهای استثنای Starlette</a> اضافه کنید.
 
-Let's say you have a custom exception `UnicornException` that you (or a library you use) might `raise`.
+فرض کنید یک استثنای سفارشی `UnicornException` دارید که شما (یا کتابخانه‌ای که استفاده می‌کنید) ممکن است `raise` کنید.
 
-And you want to handle this exception globally with FastAPI.
+و می‌خواهید این استثنا را به صورت سراسری با FastAPI مدیریت کنید.
 
-You could add a custom exception handler with `@app.exception_handler()`:
+می‌توانید یک هندلر استثنای سفارشی با `@app.exception_handler()` اضافه کنید:
 
 {* ../../docs_src/handling_errors/tutorial003.py hl[5:7,13:18,24] *}
 
-Here, if you request `/unicorns/yolo`, the *path operation* will `raise` a `UnicornException`.
+اینجا، اگر `/unicorns/yolo` درخواست کنید، *عملیات مسیر* یک `UnicornException` را `raise` خواهد کرد.
 
-But it will be handled by the `unicorn_exception_handler`.
+اما توسط `unicorn_exception_handler` مدیریت خواهد شد.
 
-So, you will receive a clean error, with an HTTP status code of `418` and a JSON content of:
+بنابراین، یک خطای تمیز با کد وضعیت HTTP `418` و محتوای JSON دریافت خواهید کرد:
 
 ```JSON
 {"message": "Oops! yolo did something. There goes a rainbow..."}
 ```
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette.requests import Request` and `from starlette.responses import JSONResponse`.
+همچنین می‌توانید از `from starlette.requests import Request` و `from starlette.responses import JSONResponse` استفاده کنید.
 
-**FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette. The same with `Request`.
+**FastAPI** همان `starlette.responses` را به عنوان `fastapi.responses` فقط به عنوان راحتی برای شما، توسعه‌دهنده، ارائه می‌دهد. اما بیشتر پاسخ‌های موجود مستقیماً از Starlette می‌آیند. همینطور برای `Request`.
 
 ///
 
-## Override the default exception handlers
+## بازنویسی هندلرهای استثنای پیش‌فرض
 
-**FastAPI** has some default exception handlers.
+**FastAPI** برخی هندلرهای استثنای پیش‌فرض دارد.
 
-These handlers are in charge of returning the default JSON responses when you `raise` an `HTTPException` and when the request has invalid data.
+این هندلرها مسئول برگرداندن پاسخ‌های JSON پیش‌فرض هستند وقتی `HTTPException` را `raise` می‌کنید و وقتی درخواست داده‌های نامعتبر دارد.
 
-You can override these exception handlers with your own.
+می‌توانید این هندلرهای استثنا را با هندلرهای خود بازنویسی کنید.
 
-### Override request validation exceptions
+### بازنویسی استثناهای اعتبارسنجی درخواست
 
-When a request contains invalid data, **FastAPI** internally raises a `RequestValidationError`.
+وقتی یک درخواست حاوی داده‌های نامعتبر باشد، **FastAPI** به صورت داخلی یک `RequestValidationError` ایجاد می‌کند.
 
-And it also includes a default exception handler for it.
+و همچنین یک هندلر استثنای پیش‌فرض برای آن شامل می‌شود.
 
-To override it, import the `RequestValidationError` and use it with `@app.exception_handler(RequestValidationError)` to decorate the exception handler.
+برای بازنویسی آن، `RequestValidationError` را وارد کنید و با `@app.exception_handler(RequestValidationError)` برای تزیین هندلر استثنا استفاده کنید.
 
-The exception handler will receive a `Request` and the exception.
+هندلر استثنا یک `Request` و استثنا را دریافت خواهد کرد.
 
 {* ../../docs_src/handling_errors/tutorial004.py hl[2,14:16] *}
 
-Now, if you go to `/items/foo`, instead of getting the default JSON error with:
+حالا، اگر به `/items/foo` بروید، به جای دریافت خطای پیش‌فرض JSON:
 
 ```JSON
 {
@@ -146,7 +146,7 @@ Now, if you go to `/items/foo`, instead of getting the default JSON error with:
 }
 ```
 
-you will get a text version, with:
+یک نسخه متنی دریافت خواهید کرد:
 
 ```
 1 validation error
@@ -154,49 +154,49 @@ path -> item_id
   value is not a valid integer (type=type_error.integer)
 ```
 
-#### `RequestValidationError` vs `ValidationError`
+#### `RequestValidationError` در مقابل `ValidationError`
 
 /// warning
 
-These are technical details that you might skip if it's not important for you now.
+اینها جزئیات فنی هستند که اگر الان برایتان مهم نیست ممکن است رد شوید.
 
 ///
 
-`RequestValidationError` is a sub-class of Pydantic's <a href="https://docs.pydantic.dev/latest/concepts/models/#error-handling" class="external-link" target="_blank">`ValidationError`</a>.
+`RequestValidationError` یک زیرکلاس از `ValidationError` خود Pydantic است.
 
-**FastAPI** uses it so that, if you use a Pydantic model in `response_model`, and your data has an error, you will see the error in your log.
+**FastAPI** از آن استفاده می‌کند تا اگر از مدل Pydantic در `response_model` استفاده کنید و داده‌های شما خطایی داشته باشند، خطا را در لاگ خود ببینید.
 
-But the client/user will not see it. Instead, the client will receive an "Internal Server Error" with an HTTP status code `500`.
+اما کلاینت/کاربر آن را نخواهد دید. در عوض، کلاینت یک "خطای سرور داخلی" با کد وضعیت HTTP `500` دریافت خواهد کرد.
 
-It should be this way because if you have a Pydantic `ValidationError` in your *response* or anywhere in your code (not in the client's *request*), it's actually a bug in your code.
+باید اینطور باشد زیرا اگر `ValidationError` از Pydantic در *پاسخ* یا هر جای دیگری در کد شما (نه در *درخواست* کلاینت) داشته باشید، در واقع یک باگ در کد شما است.
 
-And while you fix it, your clients/users shouldn't have access to internal information about the error, as that could expose a security vulnerability.
+و در حالی که آن را رفع می‌کنید، کلاینت‌ها/کاربران شما نباید به اطلاعات داخلی درباره خطا دسترسی داشته باشند، زیرا این می‌تواند یک آسیب‌پذیری امنیتی را آشکار کند.
 
-### Override the `HTTPException` error handler
+### بازنویسی هندلر خطای `HTTPException`
 
-The same way, you can override the `HTTPException` handler.
+به همین ترتیب، می‌توانید هندلر `HTTPException` را بازنویسی کنید.
 
-For example, you could want to return a plain text response instead of JSON for these errors:
+برای مثال، ممکن است بخواهید یک پاسخ متن ساده به جای JSON برای این خطاها برگردانید:
 
 {* ../../docs_src/handling_errors/tutorial004.py hl[3:4,9:11,22] *}
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette.responses import PlainTextResponse`.
+همچنین می‌توانید از `from starlette.responses import PlainTextResponse` استفاده کنید.
 
-**FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette.
+**FastAPI** همان `starlette.responses` را به عنوان `fastapi.responses` فقط به عنوان راحتی برای شما، توسعه‌دهنده، ارائه می‌دهد. اما بیشتر پاسخ‌های موجود مستقیماً از Starlette می‌آیند.
 
 ///
 
-### Use the `RequestValidationError` body
+### استفاده از بدنه `RequestValidationError`
 
-The `RequestValidationError` contains the `body` it received with invalid data.
+`RequestValidationError` حاوی `body` است که دریافت کرده با داده‌های نامعتبر.
 
-You could use it while developing your app to log the body and debug it, return it to the user, etc.
+می‌توانید هنگام توسعه برنامه از آن استفاده کنید تا بدنه را لاگ کرده و آن را اشکال‌زدایی کنید، به کاربر برگردانید و غیره.
 
 {* ../../docs_src/handling_errors/tutorial005.py hl[14] *}
 
-Now try sending an invalid item like:
+حالا تلاش کنید یک آیتم نامعتبر مانند این ارسال کنید:
 
 ```JSON
 {
@@ -205,7 +205,7 @@ Now try sending an invalid item like:
 }
 ```
 
-You will receive a response telling you that the data is invalid containing the received body:
+یک پاسخ دریافت خواهید کرد که به شما می‌گوید داده‌ای شامل بدنه دریافتی نامعتبر است:
 
 ```JSON hl_lines="12-15"
 {
@@ -226,30 +226,32 @@ You will receive a response telling you that the data is invalid containing the 
 }
 ```
 
-#### FastAPI's `HTTPException` vs Starlette's `HTTPException`
+#### `HTTPException` از FastAPI در مقابل `HTTPException` از Starlette
 
-**FastAPI** has its own `HTTPException`.
+**FastAPI** `HTTPException` مخصوص خود را دارد.
 
-And **FastAPI**'s `HTTPException` error class inherits from Starlette's `HTTPException` error class.
+و کلاس خطای `HTTPException` از **FastAPI** از کلاس خطای `HTTPException` از Starlette ارث‌بری می‌کند.
 
-The only difference is that **FastAPI**'s `HTTPException` accepts any JSON-able data for the `detail` field, while Starlette's `HTTPException` only accepts strings for it.
+تنها تفاوت این است که `HTTPException` از **FastAPI** هدرهایی را نیز می‌پذیرد که به پاسخ‌ها شامل شوند.
 
-So, you can keep raising **FastAPI**'s `HTTPException` as normally in your code.
+این برای استفاده داخلی OAuth 2.0 و برخی ابزارهای امنیتی مورد نیاز/استفاده است.
 
-But when you register an exception handler, you should register it for Starlette's `HTTPException`.
+بنابراین، می‌توانید مثل قبل `HTTPException` از **FastAPI** را در کد خود `raise` کنید.
 
-This way, if any part of Starlette's internal code, or a Starlette extension or plug-in, raises a Starlette `HTTPException`, your handler will be able to catch and handle it.
+اما وقتی یک هندلر استثنا ثبت می‌کنید، باید آن را برای `HTTPException` از Starlette ثبت کنید.
 
-In this example, to be able to have both `HTTPException`s in the same code, Starlette's exceptions is renamed to `StarletteHTTPException`:
+به این ترتیب، اگر هر بخشی از کد داخلی Starlette، یا یک اکستنشن یا پلاگین Starlette، `HTTPException` از Starlette را `raise` کند، هندلر شما قادر خواهد بود آن را بگیرد و مدیریت کند.
+
+در این مثال، برای اینکه بتوانیم هر دو `HTTPException` را در یک کد داشته باشیم، `HTTPException` از Starlette به عنوان `StarletteHTTPException` تغییر نام داده شده:
 
 ```Python
 from starlette.exceptions import HTTPException as StarletteHTTPException
 ```
 
-### Reuse **FastAPI**'s exception handlers
+### استفاده مجدد از هندلرهای استثنای **FastAPI**
 
-If you want to use the exception along with the same default exception handlers from  **FastAPI**, you can import and reuse the default exception handlers from `fastapi.exception_handlers`:
+اگر می‌خواهید از استثنا همراه با همان هندلرهای استثنای پیش‌فرض از **FastAPI** استفاده کنید، می‌توانید هندلرهای استثنای پیش‌فرض را از `fastapi.exception_handlers` وارد و مجدداً استفاده کنید:
 
 {* ../../docs_src/handling_errors/tutorial006.py hl[2:5,15,21] *}
 
-In this example you are just `print`ing the error with a very expressive message, but you get the idea. You can use the exception and then just reuse the default exception handlers.
+در این مثال فقط خطا را با یک پیام بسیار بیانگر `print` می‌کنید، اما ایده را متوجه شدید. می‌توانید از استثنا استفاده کنید و سپس فقط از هندلرهای استثنای پیش‌فرض مجدداً استفاده کنید.
