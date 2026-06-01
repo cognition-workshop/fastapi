@@ -1,104 +1,104 @@
-# Path Operation Advanced Configuration
+# پیکربندی پیشرفته عملیات مسیر
 
-## OpenAPI operationId
+## operationId OpenAPI
 
 /// warning
 
-If you are not an "expert" in OpenAPI, you probably don't need this.
+اگر "متخصص" OpenAPI نیستید، احتمالاً به این نیاز ندارید.
 
 ///
 
-You can set the OpenAPI `operationId` to be used in your *path operation* with the parameter `operation_id`.
+می‌توانید `operationId` OpenAPI را که در *عملیات مسیر* شما استفاده می‌شود با پارامتر `operation_id` تنظیم کنید.
 
-You would have to make sure that it is unique for each operation.
+باید مطمئن شوید که برای هر عملیات منحصربه‌فرد باشد.
 
 {* ../../docs_src/path_operation_advanced_configuration/tutorial001.py hl[6] *}
 
-### Using the *path operation function* name as the operationId
+### استفاده از نام *تابع عملیات مسیر* به عنوان operationId
 
-If you want to use your APIs' function names as `operationId`s, you can iterate over all of them and override each *path operation's* `operation_id` using their `APIRoute.name`.
+اگر می‌خواهید از نام توابع API خود به عنوان `operationId` استفاده کنید، می‌توانید روی همه آنها تکرار کنید و `operation_id` هر *عملیات مسیر* را با استفاده از `APIRoute.name` بازنویسی کنید.
 
-You should do it after adding all your *path operations*.
+باید این کار را بعد از اضافه کردن تمام *عملیات‌های مسیر* انجام دهید.
 
 {* ../../docs_src/path_operation_advanced_configuration/tutorial002.py hl[2, 12:21, 24] *}
 
 /// tip
 
-If you manually call `app.openapi()`, you should update the `operationId`s before that.
+اگر `app.openapi()` را به صورت دستی فراخوانی می‌کنید، باید `operationId`ها را قبل از آن به‌روز کنید.
 
 ///
 
 /// warning
 
-If you do this, you have to make sure each one of your *path operation functions* has a unique name.
+اگر این کار را انجام دهید، باید مطمئن شوید هر یک از *توابع عملیات مسیر* شما نام منحصربه‌فردی دارد.
 
-Even if they are in different modules (Python files).
+حتی اگر در ماژول‌های مختلف (فایل‌های Python) باشند.
 
 ///
 
-## Exclude from OpenAPI
+## حذف از OpenAPI
 
-To exclude a *path operation* from the generated OpenAPI schema (and thus, from the automatic documentation systems), use the parameter `include_in_schema` and set it to `False`:
+برای حذف یک *عملیات مسیر* از شمای OpenAPI تولید شده (و بنابراین، از سیستم‌های مستندسازی خودکار)، از پارامتر `include_in_schema` استفاده کنید و آن را به `False` تنظیم کنید:
 
 {* ../../docs_src/path_operation_advanced_configuration/tutorial003.py hl[6] *}
 
-## Advanced description from docstring
+## توضیحات پیشرفته از docstring
 
-You can limit the lines used from the docstring of a *path operation function* for OpenAPI.
+می‌توانید خطوط استفاده شده از docstring *تابع عملیات مسیر* را برای OpenAPI محدود کنید.
 
-Adding an `\f` (an escaped "form feed" character) causes **FastAPI** to truncate the output used for OpenAPI at this point.
+اضافه کردن `\f` (یک کاراکتر "form feed" فرار شده) باعث می‌شود **FastAPI** خروجی استفاده شده برای OpenAPI را در این نقطه کوتاه کند.
 
-It won't show up in the documentation, but other tools (such as Sphinx) will be able to use the rest.
+در مستندات نمایش داده نخواهد شد، اما ابزارهای دیگر (مانند Sphinx) قادر به استفاده از بقیه خواهند بود.
 
 {* ../../docs_src/path_operation_advanced_configuration/tutorial004.py hl[19:29] *}
 
-## Additional Responses
+## پاسخ‌های اضافی
 
-You probably have seen how to declare the `response_model` and `status_code` for a *path operation*.
+احتمالاً دیده‌اید چگونه `response_model` و `status_code` را برای یک *عملیات مسیر* اعلام کنید.
 
-That defines the metadata about the main response of a *path operation*.
+آن متاداده درباره پاسخ اصلی یک *عملیات مسیر* را تعریف می‌کند.
 
-You can also declare additional responses with their models, status codes, etc.
+همچنین می‌توانید پاسخ‌های اضافی با مدل‌ها، کدهای وضعیت و غیره اعلام کنید.
 
-There's a whole chapter here in the documentation about it, you can read it at [Additional Responses in OpenAPI](additional-responses.md){.internal-link target=_blank}.
+یک فصل کامل در اینجا در مستندات درباره آن وجود دارد، می‌توانید آن را در [پاسخ‌های اضافی در OpenAPI](additional-responses.md){.internal-link target=_blank} بخوانید.
 
-## OpenAPI Extra
+## اضافات OpenAPI
 
-When you declare a *path operation* in your application, **FastAPI** automatically generates the relevant metadata about that *path operation* to be included in the OpenAPI schema.
+وقتی یک *عملیات مسیر* در برنامه خود اعلام می‌کنید، **FastAPI** به طور خودکار متاداده مربوطه درباره آن *عملیات مسیر* را برای گنجاندن در شمای OpenAPI تولید می‌کند.
 
-/// note | Technical details
+/// note | جزئیات فنی
 
-In the OpenAPI specification it is called the <a href="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#operation-object" class="external-link" target="_blank">Operation Object</a>.
+در مشخصات OpenAPI به آن <a href="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#operation-object" class="external-link" target="_blank">شیء عملیات</a> گفته می‌شود.
 
 ///
 
-It has all the information about the *path operation* and is used to generate the automatic documentation.
+تمام اطلاعات درباره *عملیات مسیر* را دارد و برای تولید مستندات خودکار استفاده می‌شود.
 
-It includes the `tags`, `parameters`, `requestBody`, `responses`, etc.
+شامل `tags`، `parameters`، `requestBody`، `responses` و غیره می‌شود.
 
-This *path operation*-specific OpenAPI schema is normally generated automatically by **FastAPI**, but you can also extend it.
+این شمای OpenAPI خاص *عملیات مسیر* معمولاً توسط **FastAPI** به طور خودکار تولید می‌شود، اما همچنین می‌توانید آن را گسترش دهید.
 
 /// tip
 
-This is a low level extension point.
+این یک نقطه گسترش سطح پایین است.
 
-If you only need to declare additional responses, a more convenient way to do it is with [Additional Responses in OpenAPI](additional-responses.md){.internal-link target=_blank}.
+اگر فقط نیاز به اعلام پاسخ‌های اضافی دارید، راه راحت‌تر انجام آن با [پاسخ‌های اضافی در OpenAPI](additional-responses.md){.internal-link target=_blank} است.
 
 ///
 
-You can extend the OpenAPI schema for a *path operation* using the parameter `openapi_extra`.
+می‌توانید شمای OpenAPI را برای یک *عملیات مسیر* با استفاده از پارامتر `openapi_extra` گسترش دهید.
 
-### OpenAPI Extensions
+### افزونه‌های OpenAPI
 
-This `openapi_extra` can be helpful, for example, to declare [OpenAPI Extensions](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#specificationExtensions):
+این `openapi_extra` می‌تواند مفید باشد، برای مثال، برای اعلام [افزونه‌های OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#specificationExtensions):
 
 {* ../../docs_src/path_operation_advanced_configuration/tutorial005.py hl[6] *}
 
-If you open the automatic API docs, your extension will show up at the bottom of the specific *path operation*.
+اگر مستندات خودکار API را باز کنید، افزونه شما در پایین *عملیات مسیر* خاص نمایش داده خواهد شد.
 
 <img src="/img/tutorial/path-operation-advanced-configuration/image01.png">
 
-And if you see the resulting OpenAPI (at `/openapi.json` in your API), you will see your extension as part of the specific *path operation* too:
+و اگر OpenAPI حاصل (در `/openapi.json` در API شما) را ببینید، افزونه خود را به عنوان بخشی از *عملیات مسیر* خاص خواهید دید:
 
 ```JSON hl_lines="22"
 {
@@ -129,29 +129,29 @@ And if you see the resulting OpenAPI (at `/openapi.json` in your API), you will 
 }
 ```
 
-### Custom OpenAPI *path operation* schema
+### شمای سفارشی *عملیات مسیر* OpenAPI
 
-The dictionary in `openapi_extra` will be deeply merged with the automatically generated OpenAPI schema for the *path operation*.
+دیکشنری در `openapi_extra` به صورت عمیق با شمای OpenAPI تولید شده خودکار برای *عملیات مسیر* ادغام خواهد شد.
 
-So, you could add additional data to the automatically generated schema.
+بنابراین، می‌توانید داده‌های اضافی به شمای تولید شده خودکار اضافه کنید.
 
-For example, you could decide to read and validate the request with your own code, without using the automatic features of FastAPI with Pydantic, but you could still want to define the request in the OpenAPI schema.
+برای مثال، می‌توانید تصمیم بگیرید درخواست را با کد خودتان بخوانید و اعتبارسنجی کنید، بدون استفاده از ویژگی‌های خودکار FastAPI با Pydantic، اما همچنان بخواهید درخواست را در شمای OpenAPI تعریف کنید.
 
-You could do that with `openapi_extra`:
+می‌توانید آن کار را با `openapi_extra` انجام دهید:
 
 {* ../../docs_src/path_operation_advanced_configuration/tutorial006.py hl[19:36, 39:40] *}
 
-In this example, we didn't declare any Pydantic model. In fact, the request body is not even <abbr title="converted from some plain format, like bytes, into Python objects">parsed</abbr> as JSON, it is read directly as `bytes`, and the function `magic_data_reader()` would be in charge of parsing it in some way.
+در این مثال، هیچ مدل Pydantic اعلام نکردیم. در واقع، بدنه درخواست حتی به عنوان JSON <abbr title="تبدیل از برخی فرمت‌های ساده، مانند بایت، به اشیاء Python">تجزیه</abbr> نمی‌شود، مستقیماً به عنوان `bytes` خوانده می‌شود و تابع `magic_data_reader()` مسئول تجزیه آن به نحوی خواهد بود.
 
-Nevertheless, we can declare the expected schema for the request body.
+با این حال، می‌توانیم شمای مورد انتظار برای بدنه درخواست را اعلام کنیم.
 
-### Custom OpenAPI content type
+### نوع محتوای سفارشی OpenAPI
 
-Using this same trick, you could use a Pydantic model to define the JSON Schema that is then included in the custom OpenAPI schema section for the *path operation*.
+با استفاده از همین ترفند، می‌توانید از مدل Pydantic برای تعریف شمای JSON استفاده کنید که سپس در بخش شمای سفارشی OpenAPI برای *عملیات مسیر* گنجانده می‌شود.
 
-And you could do this even if the data type in the request is not JSON.
+و می‌توانید این کار را حتی اگر نوع داده در درخواست JSON نباشد انجام دهید.
 
-For example, in this application we don't use FastAPI's integrated functionality to extract the JSON Schema from Pydantic models nor the automatic validation for JSON. In fact, we are declaring the request content type as YAML, not JSON:
+برای مثال، در این برنامه ما از عملکرد یکپارچه FastAPI برای استخراج شمای JSON از مدل‌های Pydantic و نه اعتبارسنجی خودکار برای JSON استفاده نمی‌کنیم. در واقع، نوع محتوای درخواست را YAML اعلام می‌کنیم، نه JSON:
 
 //// tab | Pydantic v2
 
@@ -167,15 +167,15 @@ For example, in this application we don't use FastAPI's integrated functionality
 
 /// info
 
-In Pydantic version 1 the method to get the JSON Schema for a model was called `Item.schema()`, in Pydantic version 2, the method is called `Item.model_json_schema()`.
+در Pydantic نسخه 1 متد برای دریافت شمای JSON یک مدل `Item.schema()` نامیده می‌شد، در Pydantic نسخه 2 متد `Item.model_json_schema()` نامیده می‌شود.
 
 ///
 
-Nevertheless, although we are not using the default integrated functionality, we are still using a Pydantic model to manually generate the JSON Schema for the data that we want to receive in YAML.
+با این حال، اگرچه از عملکرد یکپارچه پیش‌فرض استفاده نمی‌کنیم، همچنان از مدل Pydantic برای تولید دستی شمای JSON برای داده‌ای که می‌خواهیم در YAML دریافت کنیم استفاده می‌کنیم.
 
-Then we use the request directly, and extract the body as `bytes`. This means that FastAPI won't even try to parse the request payload as JSON.
+سپس درخواست را مستقیماً استفاده می‌کنیم و بدنه را به عنوان `bytes` استخراج می‌کنیم. این بدان معناست که FastAPI حتی سعی نخواهد کرد محتوای درخواست را به عنوان JSON تجزیه کند.
 
-And then in our code, we parse that YAML content directly, and then we are again using the same Pydantic model to validate the YAML content:
+و سپس در کد خود، آن محتوای YAML را مستقیماً تجزیه می‌کنیم و دوباره از همان مدل Pydantic برای اعتبارسنجی محتوای YAML استفاده می‌کنیم:
 
 //// tab | Pydantic v2
 
@@ -191,14 +191,14 @@ And then in our code, we parse that YAML content directly, and then we are again
 
 /// info
 
-In Pydantic version 1 the method to parse and validate an object was `Item.parse_obj()`, in Pydantic version 2, the method is called `Item.model_validate()`.
+در Pydantic نسخه 1 متد برای تجزیه و اعتبارسنجی یک شیء `Item.parse_obj()` بود، در Pydantic نسخه 2 متد `Item.model_validate()` نامیده می‌شود.
 
 ///
 
 /// tip
 
-Here we reuse the same Pydantic model.
+اینجا همان مدل Pydantic را مجدداً استفاده می‌کنیم.
 
-But the same way, we could have validated it in some other way.
+اما به همان ترتیب، می‌توانستیم آن را به نحو دیگری اعتبارسنجی کنیم.
 
 ///

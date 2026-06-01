@@ -1,30 +1,30 @@
-# Settings and Environment Variables
+# تنظیمات و متغیرهای محیطی
 
-In many cases your application could need some external settings or configurations, for example secret keys, database credentials, credentials for email services, etc.
+در بسیاری از موارد برنامه شما ممکن است به برخی تنظیمات یا پیکربندی‌های خارجی نیاز داشته باشد، برای مثال کلیدهای مخفی، اعتبارنامه‌های پایگاه داده، اعتبارنامه‌های سرویس‌های ایمیل و غیره.
 
-Most of these settings are variable (can change), like database URLs. And many could be sensitive, like secrets.
+بیشتر این تنظیمات متغیر هستند (قابل تغییر)، مانند URLهای پایگاه داده. و بسیاری از آنها حساس هستند، مانند رازها.
 
-For this reason it's common to provide them in environment variables that are read by the application.
+به همین دلیل معمول است که آنها را در متغیرهای محیطی ارائه دهید که توسط برنامه خوانده می‌شوند.
 
 /// tip
 
-To understand environment variables you can read [Environment Variables](../environment-variables.md){.internal-link target=_blank}.
+برای درک متغیرهای محیطی می‌توانید [متغیرهای محیطی](../environment-variables.md){.internal-link target=_blank} را بخوانید.
 
 ///
 
-## Types and validation
+## تایپ‌ها و اعتبارسنجی
 
-These environment variables can only handle text strings, as they are external to Python and have to be compatible with other programs and the rest of the system (and even with different operating systems, as Linux, Windows, macOS).
+این متغیرهای محیطی فقط می‌توانند رشته‌های متنی را مدیریت کنند، زیرا خارج از Python هستند و باید با برنامه‌های دیگر و بقیه سیستم (و حتی با سیستم‌عامل‌های مختلف، مانند Linux، Windows، macOS) سازگار باشند.
 
-That means that any value read in Python from an environment variable will be a `str`, and any conversion to a different type or any validation has to be done in code.
+این بدان معناست که هر مقدار خوانده شده در Python از یک متغیر محیطی یک `str` خواهد بود و هرگونه تبدیل به تایپ دیگر یا هرگونه اعتبارسنجی باید در کد انجام شود.
 
-## Pydantic `Settings`
+## `Settings` Pydantic
 
-Fortunately, Pydantic provides a great utility to handle these settings coming from environment variables with <a href="https://docs.pydantic.dev/latest/concepts/pydantic_settings/" class="external-link" target="_blank">Pydantic: Settings management</a>.
+خوشبختانه، Pydantic یک ابزار عالی برای مدیریت این تنظیمات از متغیرهای محیطی با <a href="https://docs.pydantic.dev/latest/concepts/pydantic_settings/" class="external-link" target="_blank">Pydantic: مدیریت تنظیمات</a> ارائه می‌دهد.
 
-### Install `pydantic-settings`
+### نصب `pydantic-settings`
 
-First, make sure you create your [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then install the `pydantic-settings` package:
+ابتدا مطمئن شوید که [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} خود را ایجاد کرده، آن را فعال کرده و سپس بسته `pydantic-settings` را نصب کنید:
 
 <div class="termy">
 
@@ -35,7 +35,7 @@ $ pip install pydantic-settings
 
 </div>
 
-It also comes included when you install the `all` extras with:
+همچنین هنگام نصب افزونه‌های `all` همراه می‌آید:
 
 <div class="termy">
 
@@ -48,17 +48,17 @@ $ pip install "fastapi[all]"
 
 /// info
 
-In Pydantic v1 it came included with the main package. Now it is distributed as this independent package so that you can choose to install it or not if you don't need that functionality.
+در Pydantic نسخه 1 با بسته اصلی ارائه می‌شد. اکنون به عنوان این بسته مستقل توزیع می‌شود تا بتوانید انتخاب کنید آن را نصب کنید یا نه اگر به آن عملکرد نیاز ندارید.
 
 ///
 
-### Create the `Settings` object
+### ایجاد شیء `Settings`
 
-Import `BaseSettings` from Pydantic and create a sub-class, very much like with a Pydantic model.
+`BaseSettings` را از Pydantic وارد کنید و یک زیرکلاس ایجاد کنید، بسیار شبیه به یک مدل Pydantic.
 
-The same way as with Pydantic models, you declare class attributes with type annotations, and possibly default values.
+به همان روش مدل‌های Pydantic، صفات کلاس را با حاشیه‌نویسی تایپ و احتمالاً مقادیر پیش‌فرض اعلام می‌کنید.
 
-You can use all the same validation features and tools you use for Pydantic models, like different data types and additional validations with `Field()`.
+می‌توانید از تمام ویژگی‌ها و ابزارهای اعتبارسنجی مشابهی که برای مدل‌های Pydantic استفاده می‌کنید استفاده کنید، مانند تایپ‌های داده مختلف و اعتبارسنجی‌های اضافی با `Field()`.
 
 //// tab | Pydantic v2
 
@@ -70,7 +70,7 @@ You can use all the same validation features and tools you use for Pydantic mode
 
 /// info
 
-In Pydantic v1 you would import `BaseSettings` directly from `pydantic` instead of from `pydantic_settings`.
+در Pydantic نسخه 1، `BaseSettings` را مستقیماً از `pydantic` به جای `pydantic_settings` وارد می‌کردید.
 
 ///
 
@@ -80,23 +80,23 @@ In Pydantic v1 you would import `BaseSettings` directly from `pydantic` instead 
 
 /// tip
 
-If you want something quick to copy and paste, don't use this example, use the last one below.
+اگر چیزی سریع برای کپی و چسباندن می‌خواهید، از این مثال استفاده نکنید، از آخرین مثال در زیر استفاده کنید.
 
 ///
 
-Then, when you create an instance of that `Settings` class (in this case, in the `settings` object), Pydantic will read the environment variables in a case-insensitive way, so, an upper-case variable `APP_NAME` will still be read for the attribute `app_name`.
+سپس، هنگامی که یک نمونه از آن کلاس `Settings` ایجاد می‌کنید (در این مورد، در شیء `settings`)، Pydantic متغیرهای محیطی را به صورت غیرحساس به حروف بزرگ و کوچک خواهد خواند، بنابراین یک متغیر با حروف بزرگ `APP_NAME` همچنان برای صفت `app_name` خوانده خواهد شد.
 
-Next it will convert and validate the data. So, when you use that `settings` object, you will have data of the types you declared (e.g. `items_per_user` will be an `int`).
+سپس داده‌ها را تبدیل و اعتبارسنجی خواهد کرد. بنابراین، هنگام استفاده از آن شیء `settings`، داده‌هایی از تایپ‌هایی که اعلام کرده‌اید خواهید داشت (مثلاً `items_per_user` یک `int` خواهد بود).
 
-### Use the `settings`
+### استفاده از `settings`
 
-Then you can use the new `settings` object in your application:
+سپس می‌توانید از شیء جدید `settings` در برنامه خود استفاده کنید:
 
 {* ../../docs_src/settings/tutorial001.py hl[18:20] *}
 
-### Run the server
+### اجرای سرور
 
-Next, you would run the server passing the configurations as environment variables, for example you could set an `ADMIN_EMAIL` and `APP_NAME` with:
+سپس، سرور را با ارسال پیکربندی‌ها به عنوان متغیرهای محیطی اجرا می‌کنید، برای مثال می‌توانید `ADMIN_EMAIL` و `APP_NAME` را تنظیم کنید:
 
 <div class="termy">
 
@@ -110,110 +110,110 @@ $ ADMIN_EMAIL="deadpool@example.com" APP_NAME="ChimichangApp" fastapi run main.p
 
 /// tip
 
-To set multiple env vars for a single command just separate them with a space, and put them all before the command.
+برای تنظیم چندین متغیر محیطی برای یک دستور، فقط آنها را با فاصله جدا کنید و همه را قبل از دستور قرار دهید.
 
 ///
 
-And then the `admin_email` setting would be set to `"deadpool@example.com"`.
+و سپس تنظیم `admin_email` به `"deadpool@example.com"` تنظیم خواهد شد.
 
-The `app_name` would be `"ChimichangApp"`.
+`app_name` برابر `"ChimichangApp"` خواهد بود.
 
-And the `items_per_user` would keep its default value of `50`.
+و `items_per_user` مقدار پیش‌فرض خود `50` را حفظ خواهد کرد.
 
-## Settings in another module
+## تنظیمات در ماژول دیگر
 
-You could put those settings in another module file as you saw in [Bigger Applications - Multiple Files](../tutorial/bigger-applications.md){.internal-link target=_blank}.
+می‌توانید آن تنظیمات را در فایل ماژول دیگری قرار دهید همانطور که در [برنامه‌های بزرگ‌تر - چندین فایل](../tutorial/bigger-applications.md){.internal-link target=_blank} دیدید.
 
-For example, you could have a file `config.py` with:
+برای مثال، می‌توانید فایلی به نام `config.py` داشته باشید:
 
 {* ../../docs_src/settings/app01/config.py *}
 
-And then use it in a file `main.py`:
+و سپس از آن در فایل `main.py` استفاده کنید:
 
 {* ../../docs_src/settings/app01/main.py hl[3,11:13] *}
 
 /// tip
 
-You would also need a file `__init__.py` as you saw in [Bigger Applications - Multiple Files](../tutorial/bigger-applications.md){.internal-link target=_blank}.
+همچنین به فایل `__init__.py` نیاز خواهید داشت همانطور که در [برنامه‌های بزرگ‌تر - چندین فایل](../tutorial/bigger-applications.md){.internal-link target=_blank} دیدید.
 
 ///
 
-## Settings in a dependency
+## تنظیمات در یک وابستگی
 
-In some occasions it might be useful to provide the settings from a dependency, instead of having a global object with `settings` that is used everywhere.
+در برخی مواقع ممکن است ارائه تنظیمات از یک وابستگی مفید باشد، به جای داشتن یک شیء سراسری `settings` که همه جا استفاده شود.
 
-This could be especially useful during testing, as it's very easy to override a dependency with your own custom settings.
+این می‌تواند به ویژه در حین تست مفید باشد، زیرا بازنویسی یک وابستگی با تنظیمات سفارشی خود بسیار آسان است.
 
-### The config file
+### فایل پیکربندی
 
-Coming from the previous example, your `config.py` file could look like:
+با توجه به مثال قبلی، فایل `config.py` شما می‌تواند به این شکل باشد:
 
 {* ../../docs_src/settings/app02/config.py hl[10] *}
 
-Notice that now we don't create a default instance `settings = Settings()`.
+توجه کنید که اکنون نمونه پیش‌فرض `settings = Settings()` ایجاد نمی‌کنیم.
 
-### The main app file
+### فایل اصلی برنامه
 
-Now we create a dependency that returns a new `config.Settings()`.
+اکنون یک وابستگی ایجاد می‌کنیم که `config.Settings()` جدیدی برمی‌گرداند.
 
 {* ../../docs_src/settings/app02_an_py39/main.py hl[6,12:13] *}
 
 /// tip
 
-We'll discuss the `@lru_cache` in a bit.
+درباره `@lru_cache` کمی بعد صحبت خواهیم کرد.
 
-For now you can assume `get_settings()` is a normal function.
+فعلاً فرض کنید `get_settings()` یک تابع عادی است.
 
 ///
 
-And then we can require it from the *path operation function* as a dependency and use it anywhere we need it.
+و سپس می‌توانیم آن را از *تابع عملیات مسیر* به عنوان وابستگی درخواست کنیم و هر جا نیاز است استفاده کنیم.
 
 {* ../../docs_src/settings/app02_an_py39/main.py hl[17,19:21] *}
 
-### Settings and testing
+### تنظیمات و تست
 
-Then it would be very easy to provide a different settings object during testing by creating a dependency override for `get_settings`:
+سپس ارائه یک شیء تنظیمات متفاوت در حین تست بسیار آسان خواهد بود با ایجاد یک بازنویسی وابستگی برای `get_settings`:
 
 {* ../../docs_src/settings/app02/test_main.py hl[9:10,13,21] *}
 
-In the dependency override we set a new value for the `admin_email` when creating the new `Settings` object, and then we return that new object.
+در بازنویسی وابستگی، مقدار جدیدی برای `admin_email` هنگام ایجاد شیء جدید `Settings` تنظیم می‌کنیم و سپس آن شیء جدید را برمی‌گردانیم.
 
-Then we can test that it is used.
+سپس می‌توانیم تست کنیم که از آن استفاده شده است.
 
-## Reading a `.env` file
+## خواندن فایل `.env`
 
-If you have many settings that possibly change a lot, maybe in different environments, it might be useful to put them on a file and then read them from it as if they were environment variables.
+اگر تنظیمات زیادی دارید که ممکن است زیاد تغییر کنند، شاید در محیط‌های مختلف، ممکن است مفید باشد آنها را در یک فایل قرار دهید و سپس از آن به عنوان متغیرهای محیطی بخوانید.
 
-This practice is common enough that it has a name, these environment variables are commonly placed in a file `.env`, and the file is called a "dotenv".
-
-/// tip
-
-A file starting with a dot (`.`) is a hidden file in Unix-like systems, like Linux and macOS.
-
-But a dotenv file doesn't really have to have that exact filename.
-
-///
-
-Pydantic has support for reading from these types of files using an external library. You can read more at <a href="https://docs.pydantic.dev/latest/concepts/pydantic_settings/#dotenv-env-support" class="external-link" target="_blank">Pydantic Settings: Dotenv (.env) support</a>.
+این عمل به اندازه کافی رایج است که نامی دارد، این متغیرهای محیطی معمولاً در فایلی به نام `.env` قرار می‌گیرند و فایل "dotenv" نامیده می‌شود.
 
 /// tip
 
-For this to work, you need to `pip install python-dotenv`.
+فایلی که با نقطه (`.`) شروع می‌شود یک فایل مخفی در سیستم‌های شبه یونیکس مانند Linux و macOS است.
+
+اما فایل dotenv واقعاً لازم نیست دقیقاً آن نام فایل را داشته باشد.
 
 ///
 
-### The `.env` file
+Pydantic با استفاده از یک کتابخانه خارجی از خواندن این نوع فایل‌ها پشتیبانی می‌کند. می‌توانید بیشتر در <a href="https://docs.pydantic.dev/latest/concepts/pydantic_settings/#dotenv-env-support" class="external-link" target="_blank">Pydantic Settings: پشتیبانی Dotenv (.env)</a> بخوانید.
 
-You could have a `.env` file with:
+/// tip
+
+برای اینکه کار کند، باید `pip install python-dotenv` کنید.
+
+///
+
+### فایل `.env`
+
+می‌توانید فایل `.env` داشته باشید با:
 
 ```bash
 ADMIN_EMAIL="deadpool@example.com"
 APP_NAME="ChimichangApp"
 ```
 
-### Read settings from `.env`
+### خواندن تنظیمات از `.env`
 
-And then update your `config.py` with:
+و سپس `config.py` خود را به‌روز کنید:
 
 //// tab | Pydantic v2
 
@@ -221,7 +221,7 @@ And then update your `config.py` with:
 
 /// tip
 
-The `model_config` attribute is used just for Pydantic configuration. You can read more at <a href="https://docs.pydantic.dev/latest/concepts/config/" class="external-link" target="_blank">Pydantic: Concepts: Configuration</a>.
+صفت `model_config` فقط برای پیکربندی Pydantic استفاده می‌شود. می‌توانید بیشتر در <a href="https://docs.pydantic.dev/latest/concepts/config/" class="external-link" target="_blank">Pydantic: مفاهیم: پیکربندی</a> بخوانید.
 
 ///
 
@@ -233,7 +233,7 @@ The `model_config` attribute is used just for Pydantic configuration. You can re
 
 /// tip
 
-The `Config` class is used just for Pydantic configuration. You can read more at <a href="https://docs.pydantic.dev/1.10/usage/model_config/" class="external-link" target="_blank">Pydantic Model Config</a>.
+کلاس `Config` فقط برای پیکربندی Pydantic استفاده می‌شود. می‌توانید بیشتر در <a href="https://docs.pydantic.dev/1.10/usage/model_config/" class="external-link" target="_blank">Pydantic Model Config</a> بخوانید.
 
 ///
 
@@ -241,46 +241,46 @@ The `Config` class is used just for Pydantic configuration. You can read more at
 
 /// info
 
-In Pydantic version 1 the configuration was done in an internal class `Config`, in Pydantic version 2 it's done in an attribute `model_config`. This attribute takes a `dict`, and to get autocompletion and inline errors you can import and use `SettingsConfigDict` to define that `dict`.
+در Pydantic نسخه 1 پیکربندی در یک کلاس داخلی `Config` انجام می‌شد، در Pydantic نسخه 2 در صفت `model_config` انجام می‌شود. این صفت یک `dict` می‌پذیرد و برای دریافت تکمیل خودکار و خطاهای درون‌خطی می‌توانید `SettingsConfigDict` را وارد و استفاده کنید تا آن `dict` را تعریف کنید.
 
 ///
 
-Here we define the config `env_file` inside of your Pydantic `Settings` class, and set the value to the filename with the dotenv file we want to use.
+اینجا پیکربندی `env_file` را در داخل کلاس `Settings` Pydantic خود تعریف می‌کنیم و مقدار را به نام فایل dotenv مورد نظر تنظیم می‌کنیم.
 
-### Creating the `Settings` only once with `lru_cache`
+### ایجاد `Settings` فقط یک بار با `lru_cache`
 
-Reading a file from disk is normally a costly (slow) operation, so you probably want to do it only once and then reuse the same settings object, instead of reading it for each request.
+خواندن فایل از دیسک معمولاً یک عملیات پرهزینه (کند) است، بنابراین احتمالاً می‌خواهید فقط یک بار انجام شود و سپس همان شیء تنظیمات را مجدداً استفاده کنید، به جای خواندن آن برای هر درخواست.
 
-But every time we do:
+اما هر بار که:
 
 ```Python
 Settings()
 ```
 
-a new `Settings` object would be created, and at creation it would read the `.env` file again.
+انجام دهیم، یک شیء جدید `Settings` ایجاد می‌شود و در زمان ایجاد فایل `.env` را دوباره می‌خواند.
 
-If the dependency function was just like:
+اگر تابع وابستگی فقط به این شکل بود:
 
 ```Python
 def get_settings():
     return Settings()
 ```
 
-we would create that object for each request, and we would be reading the `.env` file for each request. ⚠️
+آن شیء را برای هر درخواست ایجاد می‌کردیم و فایل `.env` را برای هر درخواست می‌خواندیم. ⚠️
 
-But as we are using the `@lru_cache` decorator on top, the `Settings` object will be created only once, the first time it's called. ✔️
+اما چون از دکوراتور `@lru_cache` در بالا استفاده می‌کنیم، شیء `Settings` فقط یک بار، اولین بار که فراخوانی می‌شود ایجاد خواهد شد. ✔️
 
 {* ../../docs_src/settings/app03_an_py39/main.py hl[1,11] *}
 
-Then for any subsequent call of `get_settings()` in the dependencies for the next requests, instead of executing the internal code of `get_settings()` and creating a new `Settings` object, it will return the same object that was returned on the first call, again and again.
+سپس برای هر فراخوانی بعدی `get_settings()` در وابستگی‌ها برای درخواست‌های بعدی، به جای اجرای کد داخلی `get_settings()` و ایجاد شیء جدید `Settings`، همان شیءای که در اولین فراخوانی برگردانده شد، دوباره و دوباره برگردانده خواهد شد.
 
-#### `lru_cache` Technical Details
+#### جزئیات فنی `lru_cache`
 
-`@lru_cache` modifies the function it decorates to return the same value that was returned the first time, instead of computing it again, executing the code of the function every time.
+`@lru_cache` تابعی که تزئین می‌کند را تغییر می‌دهد تا همان مقداری که اولین بار برگردانده شده را برگرداند، به جای محاسبه مجدد آن و اجرای کد تابع هر بار.
 
-So, the function below it will be executed once for each combination of arguments. And then the values returned by each of those combinations of arguments will be used again and again whenever the function is called with exactly the same combination of arguments.
+بنابراین، تابع زیر آن یک بار برای هر ترکیب از آرگومان‌ها اجرا خواهد شد. و سپس مقادیر برگردانده شده توسط هر یک از آن ترکیبات آرگومان‌ها دوباره و دوباره هر زمان که تابع با دقیقاً همان ترکیب آرگومان‌ها فراخوانی شود استفاده خواهد شد.
 
-For example, if you have a function:
+برای مثال، اگر تابعی دارید:
 
 ```Python
 @lru_cache
@@ -288,7 +288,7 @@ def say_hi(name: str, salutation: str = "Ms."):
     return f"Hello {salutation} {name}"
 ```
 
-your program could execute like this:
+برنامه شما می‌تواند به این شکل اجرا شود:
 
 ```mermaid
 sequenceDiagram
@@ -331,16 +331,16 @@ participant execute as Execute function
     end
 ```
 
-In the case of our dependency `get_settings()`, the function doesn't even take any arguments, so it always returns the same value.
+در مورد وابستگی ما `get_settings()`، تابع حتی هیچ آرگومانی نمی‌گیرد، بنابراین همیشه همان مقدار را برمی‌گرداند.
 
-That way, it behaves almost as if it was just a global variable. But as it uses a dependency function, then we can override it easily for testing.
+به این ترتیب، تقریباً به گونه‌ای رفتار می‌کند که انگار فقط یک متغیر سراسری است. اما چون از تابع وابستگی استفاده می‌کند، می‌توانیم آن را برای تست به راحتی بازنویسی کنیم.
 
-`@lru_cache` is part of `functools` which is part of Python's standard library, you can read more about it in the <a href="https://docs.python.org/3/library/functools.html#functools.lru_cache" class="external-link" target="_blank">Python docs for `@lru_cache`</a>.
+`@lru_cache` بخشی از `functools` است که بخشی از کتابخانه استاندارد Python است، می‌توانید بیشتر درباره آن در <a href="https://docs.python.org/3/library/functools.html#functools.lru_cache" class="external-link" target="_blank">مستندات Python برای `@lru_cache`</a> بخوانید.
 
-## Recap
+## خلاصه
 
-You can use Pydantic Settings to handle the settings or configurations for your application, with all the power of Pydantic models.
+می‌توانید از Pydantic Settings برای مدیریت تنظیمات یا پیکربندی‌های برنامه خود استفاده کنید، با تمام قدرت مدل‌های Pydantic.
 
-* By using a dependency you can simplify testing.
-* You can use `.env` files with it.
-* Using `@lru_cache` lets you avoid reading the dotenv file again and again for each request, while allowing you to override it during testing.
+* با استفاده از وابستگی می‌توانید تست را ساده‌تر کنید.
+* می‌توانید از فایل‌های `.env` با آن استفاده کنید.
+* استفاده از `@lru_cache` اجازه می‌دهد از خواندن مجدد فایل dotenv برای هر درخواست جلوگیری کنید، در حالی که اجازه می‌دهد آن را در حین تست بازنویسی کنید.
