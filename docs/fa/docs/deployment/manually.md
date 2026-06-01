@@ -1,8 +1,8 @@
-# Run a Server Manually
+# اجرای دستی سرور
 
-## Use the `fastapi run` Command
+## استفاده از دستور `fastapi run`
 
-In short, use `fastapi run` to serve your FastAPI application:
+به طور خلاصه، از `fastapi run` برای سرو کردن برنامه FastAPI خود استفاده کنید:
 
 <div class="termy">
 
@@ -38,45 +38,45 @@ $ <font color="#4E9A06">fastapi</font> run <u style="text-decoration-style:solid
 
 </div>
 
-That would work for most of the cases. 😎
+این برای اکثر موارد کار خواهد کرد. 😎
 
-You could use that command for example to start your **FastAPI** app in a container, in a server, etc.
+برای مثال می‌توانید از آن دستور برای شروع برنامه **FastAPI** خود در یک کانتینر، سرور و غیره استفاده کنید.
 
-## ASGI Servers
+## سرورهای ASGI
 
-Let's go a little deeper into the details.
+بیایید کمی عمیق‌تر به جزئیات برویم.
 
-FastAPI uses a standard for building Python web frameworks and servers called <abbr title="Asynchronous Server Gateway Interface">ASGI</abbr>. FastAPI is an ASGI web framework.
+FastAPI از یک استاندارد برای ساخت فریمورک‌ها و سرورهای وب Python به نام <abbr title="Asynchronous Server Gateway Interface">ASGI</abbr> استفاده می‌کند. FastAPI یک فریمورک وب ASGI است.
 
-The main thing you need to run a **FastAPI** application (or any other ASGI application) in a remote server machine is an ASGI server program like **Uvicorn**, this is the one that comes by default in the `fastapi` command.
+چیز اصلی که برای اجرای یک برنامه **FastAPI** (یا هر برنامه ASGI دیگر) در یک ماشین سرور راه دور نیاز دارید، یک برنامه سرور ASGI مانند **Uvicorn** است، که همان چیزی است که به طور پیش‌فرض در دستور `fastapi` می‌آید.
 
-There are several alternatives, including:
+چندین جایگزین وجود دارد، از جمله:
 
-* <a href="https://www.uvicorn.org/" class="external-link" target="_blank">Uvicorn</a>: a high performance ASGI server.
-* <a href="https://hypercorn.readthedocs.io/" class="external-link" target="_blank">Hypercorn</a>: an ASGI server compatible with HTTP/2 and Trio among other features.
-* <a href="https://github.com/django/daphne" class="external-link" target="_blank">Daphne</a>: the ASGI server built for Django Channels.
-* <a href="https://github.com/emmett-framework/granian" class="external-link" target="_blank">Granian</a>: A Rust HTTP server for Python applications.
-* <a href="https://unit.nginx.org/howto/fastapi/" class="external-link" target="_blank">NGINX Unit</a>: NGINX Unit is a lightweight and versatile web application runtime.
+* <a href="https://www.uvicorn.org/" class="external-link" target="_blank">Uvicorn</a>: یک سرور ASGI با کارایی بالا.
+* <a href="https://hypercorn.readthedocs.io/" class="external-link" target="_blank">Hypercorn</a>: یک سرور ASGI سازگار با HTTP/2 و Trio از جمله ویژگی‌های دیگر.
+* <a href="https://github.com/django/daphne" class="external-link" target="_blank">Daphne</a>: سرور ASGI ساخته شده برای Django Channels.
+* <a href="https://github.com/emmett-framework/granian" class="external-link" target="_blank">Granian</a>: یک سرور HTTP Rust برای برنامه‌های Python.
+* <a href="https://unit.nginx.org/howto/fastapi/" class="external-link" target="_blank">NGINX Unit</a>: NGINX Unit یک محیط اجرای سبک و انعطاف‌پذیر برنامه‌های وب است.
 
-## Server Machine and Server Program
+## ماشین سرور و برنامه سرور
 
-There's a small detail about names to keep in mind. 💡
+یک جزئیات کوچک درباره نام‌ها وجود دارد که باید به خاطر داشته باشید. 💡
 
-The word "**server**" is commonly used to refer to both the remote/cloud computer (the physical or virtual machine) and also the program that is running on that machine (e.g. Uvicorn).
+کلمه "**سرور**" معمولاً برای اشاره به هم رایانه راه دور/ابری (ماشین فیزیکی یا مجازی) و هم برنامه‌ای که روی آن ماشین اجرا می‌شود (مثلاً Uvicorn) استفاده می‌شود.
 
-Just keep in mind that when you read "server" in general, it could refer to one of those two things.
+فقط به خاطر داشته باشید که وقتی "سرور" را به طور کلی می‌خوانید، ممکن است به یکی از آن دو چیز اشاره داشته باشد.
 
-When referring to the remote machine, it's common to call it **server**, but also **machine**, **VM** (virtual machine), **node**. Those all refer to some type of remote machine, normally running Linux, where you run programs.
+هنگام اشاره به ماشین راه دور، معمول است آن را **سرور** بنامند، اما همچنین **ماشین**، **VM** (ماشین مجازی)، **node**. همه اینها به نوعی ماشین راه دور اشاره دارند، معمولاً لینوکس اجرا می‌کنند، جایی که برنامه‌ها را اجرا می‌کنید.
 
-## Install the Server Program
+## نصب برنامه سرور
 
-When you install FastAPI, it comes with a production server, Uvicorn, and you can start it with the `fastapi run` command.
+وقتی FastAPI نصب می‌کنید، با یک سرور تولیدی، Uvicorn همراه می‌آید و می‌توانید آن را با دستور `fastapi run` شروع کنید.
 
-But you can also install an ASGI server manually.
+اما همچنین می‌توانید یک سرور ASGI را به صورت دستی نصب کنید.
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then you can install the server application.
+مطمئن شوید که [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} خود را ایجاد کرده، آن را فعال کرده و سپس می‌توانید برنامه سرور را نصب کنید.
 
-For example, to install Uvicorn:
+برای مثال، برای نصب Uvicorn:
 
 <div class="termy">
 
@@ -88,40 +88,38 @@ $ pip install "uvicorn[standard]"
 
 </div>
 
-A similar process would apply to any other ASGI server program.
+فرآیند مشابهی برای هر برنامه سرور ASGI دیگری اعمال خواهد شد.
 
 /// tip
 
-By adding the `standard`, Uvicorn will install and use some recommended extra dependencies.
+با اضافه کردن `standard`، Uvicorn برخی وابستگی‌های اضافی توصیه شده را نصب و استفاده خواهد کرد.
 
-That including `uvloop`, the high-performance drop-in replacement for `asyncio`, that provides the big concurrency performance boost.
-
-When you install FastAPI with something like `pip install "fastapi[standard]"` you already get `uvicorn[standard]` as well.
+شامل `uvloop`، جایگزین با کارایی بالا برای `asyncio`، که افزایش سرعت همزمانی قابل توجهی ارائه می‌دهد.
 
 ///
 
-## Run the Server Program
+## اجرای برنامه سرور
 
-If you installed an ASGI server manually, you would normally need to pass an import string in a special format for it to import your FastAPI application:
+اگر سرور ASGI را به صورت دستی نصب کرده‌اید، معمولاً نیاز به ارسال یک رشته وارد‌سازی در فرمت خاصی دارید تا ماژول Python شما وارد شود:
 
 <div class="termy">
 
 ```console
 $ uvicorn main:app --host 0.0.0.0 --port 80
 
-<span style="color: green;">INFO</span>:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
+INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
 ```
 
 </div>
 
 /// note
 
-The command `uvicorn main:app` refers to:
+دستور `uvicorn main:app` به:
 
-* `main`: the file `main.py` (the Python "module").
-* `app`: the object created inside of `main.py` with the line `app = FastAPI()`.
+* `main`: فایل `main.py` (ماژول Python).
+* `app`: شیء ایجاد شده در `main.py` با خط `app = FastAPI()`.
 
-It is equivalent to:
+معادل:
 
 ```Python
 from main import app
@@ -129,29 +127,16 @@ from main import app
 
 ///
 
-Each alternative ASGI server program would have a similar command, you can read more in their respective documentation.
+هر سرور ASGI جایگزین فرمان وارد‌سازی مشابهی خواهد داشت، می‌توانید مستندات خاص آنها را بخوانید.
 
 /// warning
 
-Uvicorn and other servers support a `--reload` option that is useful during development.
+Uvicorn و سرورهای دیگر از گزینه `--reload` پشتیبانی می‌کنند که در حین توسعه مفید است.
 
-The `--reload` option consumes much more resources, is more unstable, etc.
+گزینه `--reload` منابع اضافی مصرف می‌کند، ناپایدارتر است و غیره.
 
-It helps a lot during **development**, but you **shouldn't** use it in **production**.
+فقط در حین **توسعه** بسیار کمک می‌کند.
+
+نباید آن را در **تولید** استفاده کنید.
 
 ///
-
-## Deployment Concepts
-
-These examples run the server program (e.g Uvicorn), starting **a single process**, listening on all the IPs (`0.0.0.0`) on a predefined port (e.g. `80`).
-
-This is the basic idea. But you will probably want to take care of some additional things, like:
-
-* Security - HTTPS
-* Running on startup
-* Restarts
-* Replication (the number of processes running)
-* Memory
-* Previous steps before starting
-
-I'll tell you more about each of these concepts, how to think about them, and some concrete examples with strategies to handle them in the next chapters. 🚀

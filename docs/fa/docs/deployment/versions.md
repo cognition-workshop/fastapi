@@ -1,92 +1,92 @@
-# About FastAPI versions
+# درباره نسخه‌های FastAPI
 
-**FastAPI** is already being used in production in many applications and systems. And the test coverage is kept at 100%. But its development is still moving quickly.
+**FastAPI** قبلاً در بسیاری از برنامه‌ها و سیستم‌ها در تولید استفاده می‌شود. و پوشش تست در ۱۰۰٪ نگه داشته می‌شود. اما توسعه آن هنوز به سرعت در حال پیشرفت است.
 
-New features are added frequently, bugs are fixed regularly, and the code is still continuously improving.
+ویژگی‌های جدید به طور مکرر اضافه می‌شوند، باگ‌ها به طور منظم رفع می‌شوند و کد هنوز به طور مداوم بهبود می‌یابد.
 
-That's why the current versions are still `0.x.x`, this reflects that each version could potentially have breaking changes. This follows the <a href="https://semver.org/" class="external-link" target="_blank">Semantic Versioning</a> conventions.
+به همین دلیل نسخه‌های فعلی هنوز `0.x.x` هستند، این نشان می‌دهد که هر نسخه به طور بالقوه می‌تواند تغییرات ناسازگار داشته باشد. این از قراردادهای <a href="https://semver.org/" class="external-link" target="_blank">نسخه‌بندی معنایی</a> پیروی می‌کند.
 
-You can create production applications with **FastAPI** right now (and you have probably been doing it for some time), you just have to make sure that you use a version that works correctly with the rest of your code.
+می‌توانید همین الان برنامه‌های تولیدی با **FastAPI** ایجاد کنید (و احتمالاً مدتی است که این کار را می‌کنید)، فقط باید مطمئن شوید که از نسخه‌ای استفاده می‌کنید که با بقیه کد شما به درستی کار می‌کند.
 
-## Pin your `fastapi` version
+## نسخه `fastapi` خود را ثابت کنید
 
-The first thing you should do is to "pin" the version of **FastAPI** you are using to the specific latest version that you know works correctly for your application.
+اولین کاری که باید انجام دهید "ثابت کردن" نسخه **FastAPI** است که استفاده می‌کنید به آخرین نسخه خاصی که می‌دانید برای برنامه شما به درستی کار می‌کند.
 
-For example, let's say you are using version `0.112.0` in your app.
+برای مثال، فرض کنید از نسخه `0.112.0` در برنامه خود استفاده می‌کنید.
 
-If you use a `requirements.txt` file you could specify the version with:
+اگر از فایل `requirements.txt` استفاده می‌کنید، می‌توانید نسخه را با:
 
 ```txt
 fastapi[standard]==0.112.0
 ```
 
-that would mean that you would use exactly the version `0.112.0`.
+مشخص کنید که به این معنی است که دقیقاً از نسخه `0.112.0` استفاده خواهید کرد.
 
-Or you could also pin it with:
+یا می‌توانید آن را با:
 
 ```txt
 fastapi[standard]>=0.112.0,<0.113.0
 ```
 
-that would mean that you would use the versions `0.112.0` or above, but less than `0.113.0`, for example, a version `0.112.2` would still be accepted.
+ثابت کنید که به این معنی است که از نسخه‌های `0.112.0` یا بالاتر استفاده خواهید کرد، اما کمتر از `0.113.0`، برای مثال نسخه `0.112.2` همچنان پذیرفته خواهد شد.
 
-If you use any other tool to manage your installations, like `uv`, Poetry, Pipenv, or others, they all have a way that you can use to define specific versions for your packages.
+اگر از هر ابزار دیگری برای مدیریت نصب‌های خود استفاده می‌کنید، مانند `uv`، Poetry، Pipenv یا دیگران، همه آنها راهی دارند که می‌توانید برای تعریف نسخه‌های خاص بسته‌های خود استفاده کنید.
 
-## Available versions
+## نسخه‌های موجود
 
-You can see the available versions (e.g. to check what is the current latest) in the [Release Notes](../release-notes.md){.internal-link target=_blank}.
+می‌توانید نسخه‌های موجود (مثلاً برای بررسی آخرین نسخه فعلی) را در [یادداشت‌های انتشار](../release-notes.md){.internal-link target=_blank} ببینید.
 
-## About versions
+## درباره نسخه‌ها
 
-Following the Semantic Versioning conventions, any version below `1.0.0` could potentially add breaking changes.
+با پیروی از قراردادهای نسخه‌بندی معنایی، هر نسخه‌ای زیر `1.0.0` به طور بالقوه می‌تواند تغییرات ناسازگار اضافه کند.
 
-FastAPI also follows the convention that any "PATCH" version change is for bug fixes and non-breaking changes.
+FastAPI همچنین از این قرارداد پیروی می‌کند که هر تغییر نسخه "PATCH" برای رفع باگ‌ها و تغییرات بدون شکستگی است.
 
 /// tip
 
-The "PATCH" is the last number, for example, in `0.2.3`, the PATCH version is `3`.
+"PATCH" آخرین عدد است، برای مثال در `0.2.3`، نسخه PATCH `3` است.
 
 ///
 
-So, you should be able to pin to a version like:
+بنابراین، باید بتوانید به نسخه‌ای مانند این ثابت کنید:
 
 ```txt
 fastapi>=0.45.0,<0.46.0
 ```
 
-Breaking changes and new features are added in "MINOR" versions.
+تغییرات ناسازگار و ویژگی‌های جدید در نسخه‌های "MINOR" اضافه می‌شوند.
 
 /// tip
 
-The "MINOR" is the number in the middle, for example, in `0.2.3`, the MINOR version is `2`.
+"MINOR" عدد وسط است، برای مثال در `0.2.3`، نسخه MINOR `2` است.
 
 ///
 
-## Upgrading the FastAPI versions
+## ارتقاء نسخه‌های FastAPI
 
-You should add tests for your app.
+باید تست‌هایی برای برنامه خود اضافه کنید.
 
-With **FastAPI** it's very easy (thanks to Starlette), check the docs: [Testing](../tutorial/testing.md){.internal-link target=_blank}
+با **FastAPI** بسیار آسان است (به لطف Starlette)، مستندات را بررسی کنید: [تست](../tutorial/testing.md){.internal-link target=_blank}
 
-After you have tests, then you can upgrade the **FastAPI** version to a more recent one, and make sure that all your code is working correctly by running your tests.
+بعد از داشتن تست‌ها، می‌توانید نسخه **FastAPI** را به نسخه جدیدتری ارتقاء دهید و با اجرای تست‌های خود مطمئن شوید که تمام کد شما به درستی کار می‌کند.
 
-If everything is working, or after you make the necessary changes, and all your tests are passing, then you can pin your `fastapi` to that new recent version.
+اگر همه چیز کار می‌کند، یا بعد از انجام تغییرات لازم و گذراندن تمام تست‌ها، می‌توانید `fastapi` خود را به آن نسخه جدید اخیر ثابت کنید.
 
-## About Starlette
+## درباره Starlette
 
-You shouldn't pin the version of `starlette`.
+نباید نسخه `starlette` را ثابت کنید.
 
-Different versions of **FastAPI** will use a specific newer version of Starlette.
+نسخه‌های مختلف **FastAPI** از نسخه جدیدتر خاصی از Starlette استفاده خواهند کرد.
 
-So, you can just let **FastAPI** use the correct Starlette version.
+بنابراین، فقط اجازه دهید **FastAPI** از نسخه صحیح Starlette استفاده کند.
 
-## About Pydantic
+## درباره Pydantic
 
-Pydantic includes the tests for **FastAPI** with its own tests, so new versions of Pydantic (above `1.0.0`) are always compatible with FastAPI.
+Pydantic شامل تست‌هایی برای **FastAPI** با تست‌های خودش است، بنابراین نسخه‌های جدید Pydantic (بالای `1.0.0`) همیشه با FastAPI سازگار هستند.
 
-You can pin Pydantic to any version above `1.0.0` that works for you.
+می‌توانید Pydantic را به هر نسخه‌ای بالای `1.0.0` که برای شما کار می‌کند ثابت کنید.
 
-For example:
+برای مثال:
 
 ```txt
 pydantic>=2.7.0,<3.0.0
