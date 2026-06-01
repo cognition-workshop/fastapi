@@ -1,79 +1,79 @@
-# History, Design and Future
+# تاریخچه، طراحی و آینده
 
-Some time ago, <a href="https://github.com/fastapi/fastapi/issues/3#issuecomment-454956920" class="external-link" target="_blank">a **FastAPI** user asked</a>:
+مدتی پیش، <a href="https://github.com/fastapi/fastapi/issues/3#issuecomment-454956920" class="external-link" target="_blank">یک کاربر **FastAPI** پرسید</a>:
 
-> What’s the history of this project? It seems to have come from nowhere to awesome in a few weeks [...]
+> تاریخچه این پروژه چیست؟ به نظر می‌رسد از هیچ‌جا در عرض چند هفته به چیزی فوق‌العاده تبدیل شده [...]
 
-Here's a little bit of that history.
+اینجا کمی از آن تاریخچه آمده.
 
-## Alternatives
+## جایگزین‌ها
 
-I have been creating APIs with complex requirements for several years (Machine Learning, distributed systems, asynchronous jobs, NoSQL databases, etc), leading several teams of developers.
+من سال‌ها با نیازمندی‌های پیچیده APIها ایجاد کرده‌ام (یادگیری ماشین، سیستم‌های توزیع‌شده، کارهای ناهمزمان، پایگاه‌های داده NoSQL و غیره)، و چندین تیم توسعه‌دهنده را رهبری کرده‌ام.
 
-As part of that, I needed to investigate, test and use many alternatives.
+به عنوان بخشی از آن، نیاز داشتم بسیاری از جایگزین‌ها را بررسی، آزمایش و استفاده کنم.
 
-The history of **FastAPI** is in great part the history of its predecessors.
+تاریخچه **FastAPI** تا حد زیادی تاریخچه پیشینیان آن است.
 
-As said in the section [Alternatives](alternatives.md){.internal-link target=_blank}:
+همانطور که در بخش [جایگزین‌ها](alternatives.md){.internal-link target=_blank} گفته شد:
 
 <blockquote markdown="1">
 
-**FastAPI** wouldn't exist if not for the previous work of others.
+**FastAPI** بدون کار قبلی دیگران وجود نداشت.
 
-There have been many tools created before that have helped inspire its creation.
+ابزارهای بسیاری قبلاً ایجاد شده‌اند که به الهام‌بخشی ایجاد آن کمک کرده‌اند.
 
-I have been avoiding the creation of a new framework for several years. First I tried to solve all the features covered by **FastAPI** using many different frameworks, plug-ins, and tools.
+من سال‌ها از ایجاد یک فریم‌ورک جدید اجتناب کرده‌ام. ابتدا سعی کردم تمام ویژگی‌های پوشش داده شده توسط **FastAPI** را با استفاده از بسیاری از فریم‌ورک‌ها، پلاگین‌ها و ابزارهای مختلف حل کنم.
 
-But at some point, there was no other option than creating something that provided all these features, taking the best ideas from previous tools, and combining them in the best way possible, using language features that weren't even available before (Python 3.6+ type hints).
+اما در نقطه‌ای، گزینه دیگری جز ایجاد چیزی وجود نداشت که تمام این ویژگی‌ها را ارائه دهد، بهترین ایده‌ها را از ابزارهای قبلی بگیرد و آنها را به بهترین شکل ممکن ترکیب کند، با استفاده از ویژگی‌های زبان که قبلاً در دسترس نبودند (اشاره‌های تایپ پایتون 3.6+).
 
 </blockquote>
 
-## Investigation
+## تحقیق
 
-By using all the previous alternatives I had the chance to learn from all of them, take ideas, and combine them in the best way I could find for myself and the teams of developers I have worked with.
+با استفاده از تمام جایگزین‌های قبلی، فرصت یادگیری از همه آنها، گرفتن ایده‌ها و ترکیب آنها به بهترین شکلی که می‌توانستم برای خودم و تیم‌هایی که با آنها کار کرده‌ام پیدا کنم را داشتم.
 
-For example, it was clear that ideally it should be based on standard Python type hints.
+برای مثال، واضح بود که در حالت ایده‌آل باید بر اساس اشاره‌های تایپ استاندارد پایتون باشد.
 
-Also, the best approach was to use already existing standards.
+همچنین، بهترین رویکرد استفاده از استانداردهای موجود بود.
 
-So, before even starting to code **FastAPI**, I spent several months studying the specs for OpenAPI, JSON Schema, OAuth2, etc. Understanding their relationship, overlap, and differences.
+بنابراین، حتی قبل از شروع کدنویسی **FastAPI**، چندین ماه صرف مطالعه مشخصات OpenAPI، JSON Schema، OAuth2 و غیره کردم. درک رابطه، همپوشانی و تفاوت‌های آنها.
 
-## Design
+## طراحی
 
-Then I spent some time designing the developer "API" I wanted to have as a user (as a developer using FastAPI).
+سپس مدتی صرف طراحی "API" توسعه‌دهنده‌ای کردم که می‌خواستم به عنوان کاربر داشته باشم (به عنوان توسعه‌دهنده‌ای که از FastAPI استفاده می‌کند).
 
-I tested several ideas in the most popular Python editors: PyCharm, VS Code, Jedi based editors.
+چندین ایده را در محبوب‌ترین ویرایشگرهای پایتون آزمایش کردم: PyCharm، VS Code، ویرایشگرهای مبتنی بر Jedi.
 
-By the last <a href="https://www.jetbrains.com/research/python-developers-survey-2018/#development-tools" class="external-link" target="_blank">Python Developer Survey</a>, that covers about 80% of the users.
+طبق آخرین <a href="https://www.jetbrains.com/research/python-developers-survey-2018/#development-tools" class="external-link" target="_blank">نظرسنجی توسعه‌دهندگان پایتون</a>، این حدود ۸۰٪ از کاربران را پوشش می‌دهد.
 
-It means that **FastAPI** was specifically tested with the editors used by 80% of the Python developers. And as most of the other editors tend to work similarly, all its benefits should work for virtually all editors.
+این به این معناست که **FastAPI** به طور خاص با ویرایشگرهایی که توسط ۸۰٪ توسعه‌دهندگان پایتون استفاده می‌شود آزمایش شده است. و از آنجا که بیشتر ویرایشگرهای دیگر به طور مشابه کار می‌کنند، مزایای آن عملاً برای تقریباً همه ویرایشگرها کار خواهد کرد.
 
-That way I could find the best ways to reduce code duplication as much as possible, to have completion everywhere, type and error checks, etc.
+به این ترتیب توانستم بهترین راه‌ها برای کاهش تکرار کد تا حد ممکن، تکمیل خودکار در همه جا، بررسی تایپ و خطا و غیره را پیدا کنم.
 
-All in a way that provided the best development experience for all the developers.
+همه اینها به شکلی که بهترین تجربه توسعه را برای همه توسعه‌دهندگان فراهم کند.
 
-## Requirements
+## نیازمندی‌ها
 
-After testing several alternatives, I decided that I was going to use <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">**Pydantic**</a> for its advantages.
+پس از آزمایش چندین جایگزین، تصمیم گرفتم از <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">**Pydantic**</a> به دلیل مزایایش استفاده کنم.
 
-Then I contributed to it, to make it fully compliant with JSON Schema, to support different ways to define constraint declarations, and to improve editor support (type checks, autocompletion) based on the tests in several editors.
+سپس در آن مشارکت کردم تا آن را کاملاً سازگار با JSON Schema کنم، از روش‌های مختلف تعریف اعلان محدودیت پشتیبانی کنم و پشتیبانی ویرایشگر (بررسی تایپ، تکمیل خودکار) را بر اساس آزمایش‌ها در چندین ویرایشگر بهبود بخشم.
 
-During the development, I also contributed to <a href="https://www.starlette.io/" class="external-link" target="_blank">**Starlette**</a>, the other key requirement.
+در طول توسعه، همچنین در <a href="https://www.starlette.io/" class="external-link" target="_blank">**Starlette**</a>، نیازمندی کلیدی دیگر، مشارکت کردم.
 
-## Development
+## توسعه
 
-By the time I started creating **FastAPI** itself, most of the pieces were already in place, the design was defined, the requirements and tools were ready, and the knowledge about the standards and specifications was clear and fresh.
+تا زمانی که شروع به ایجاد خود **FastAPI** کردم، بیشتر قطعات قبلاً در جای خود بودند، طراحی تعریف شده بود، نیازمندی‌ها و ابزارها آماده بودند و دانش درباره استانداردها و مشخصات واضح و تازه بود.
 
-## Future
+## آینده
 
-By this point, it's already clear that **FastAPI** with its ideas is being useful for many people.
+در این نقطه، قبلاً واضح است که **FastAPI** با ایده‌هایش برای بسیاری از افراد مفید است.
 
-It is being chosen over previous alternatives for suiting many use cases better.
+به جای جایگزین‌های قبلی انتخاب می‌شود زیرا برای بسیاری از موارد استفاده مناسب‌تر است.
 
-Many developers and teams already depend on **FastAPI** for their projects (including me and my team).
+بسیاری از توسعه‌دهندگان و تیم‌ها قبلاً برای پروژه‌های خود به **FastAPI** وابسته هستند (از جمله من و تیمم).
 
-But still, there are many improvements and features to come.
+اما هنوز، بهبودها و ویژگی‌های بسیاری در راه هستند.
 
-**FastAPI** has a great future ahead.
+**FastAPI** آینده درخشانی پیش رو دارد.
 
-And [your help](help-fastapi.md){.internal-link target=_blank} is greatly appreciated.
+و [کمک شما](help-fastapi.md){.internal-link target=_blank} بسیار ارزشمند است.

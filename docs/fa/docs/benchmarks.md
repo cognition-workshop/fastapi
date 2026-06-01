@@ -1,34 +1,34 @@
-# Benchmarks
+# معیارهای عملکرد
 
-Independent TechEmpower benchmarks show **FastAPI** applications running under Uvicorn as <a href="https://www.techempower.com/benchmarks/#section=test&runid=7464e520-0dc2-473d-bd34-dbdfd7e85911&hw=ph&test=query&l=zijzen-7" class="external-link" target="_blank">one of the fastest Python frameworks available</a>, only below Starlette and Uvicorn themselves (used internally by FastAPI).
+معیارهای مستقل TechEmpower نشان می‌دهند که برنامه‌های **FastAPI** که تحت Uvicorn اجرا می‌شوند، به عنوان <a href="https://www.techempower.com/benchmarks/#section=test&runid=7464e520-0dc2-473d-bd34-dbdfd7e85911&hw=ph&test=query&l=zijzen-7" class="external-link" target="_blank">یکی از سریع‌ترین فریم‌ورک‌های پایتون موجود</a> هستند، فقط پایین‌تر از خود Starlette و Uvicorn (که به صورت داخلی توسط FastAPI استفاده می‌شوند).
 
-But when checking benchmarks and comparisons you should keep the following in mind.
+اما هنگام بررسی معیارها و مقایسه‌ها باید نکات زیر را در نظر داشته باشید.
 
-## Benchmarks and speed
+## معیارها و سرعت
 
-When you check the benchmarks, it is common to see several tools of different types compared as equivalent.
+هنگام بررسی معیارها، معمول است که چندین ابزار از انواع مختلف به عنوان معادل مقایسه شوند.
 
-Specifically, to see Uvicorn, Starlette and FastAPI compared together (among many other tools).
+به طور خاص، Uvicorn، Starlette و FastAPI با هم مقایسه می‌شوند (در میان بسیاری از ابزارهای دیگر).
 
-The simpler the problem solved by the tool, the better performance it will get. And most of the benchmarks don't test the additional features provided by the tool.
+هرچه مشکلی که ابزار حل می‌کند ساده‌تر باشد، عملکرد بهتری خواهد داشت. و بیشتر معیارها ویژگی‌های اضافی ارائه شده توسط ابزار را آزمایش نمی‌کنند.
 
-The hierarchy is like:
+سلسله‌مراتب به این صورت است:
 
-* **Uvicorn**: an ASGI server
-    * **Starlette**: (uses Uvicorn) a web microframework
-        * **FastAPI**: (uses Starlette) an API microframework with several additional features for building APIs, with data validation, etc.
+* **Uvicorn**: یک سرور ASGI
+    * **Starlette**: (از Uvicorn استفاده می‌کند) یک میکروفریم‌ورک وب
+        * **FastAPI**: (از Starlette استفاده می‌کند) یک میکروفریم‌ورک API با چندین ویژگی اضافی برای ساخت APIها، با اعتبارسنجی داده و غیره.
 
 * **Uvicorn**:
-    * Will have the best performance, as it doesn't have much extra code apart from the server itself.
-    * You wouldn't write an application in Uvicorn directly. That would mean that your code would have to include more or less, at least, all the code provided by Starlette (or **FastAPI**). And if you did that, your final application would have the same overhead as having used a framework and minimizing your app code and bugs.
-    * If you are comparing Uvicorn, compare it against Daphne, Hypercorn, uWSGI, etc. Application servers.
+    * بهترین عملکرد را خواهد داشت، زیرا کد اضافی زیادی فراتر از خود سرور ندارد.
+    * شما مستقیماً یک برنامه در Uvicorn نمی‌نویسید. این به معنای آن است که کد شما باید کم و بیش حداقل تمام کدهای ارائه شده توسط Starlette (یا **FastAPI**) را شامل شود. و اگر این کار را کردید، برنامه نهایی شما همان سربار استفاده از یک فریم‌ورک و به حداقل رساندن کد و باگ‌های برنامه را خواهد داشت.
+    * اگر Uvicorn را مقایسه می‌کنید، آن را با Daphne، Hypercorn، uWSGI و غیره مقایسه کنید. سرورهای برنامه.
 * **Starlette**:
-    * Will have the next best performance, after Uvicorn. In fact, Starlette uses Uvicorn to run. So, it probably can only get "slower" than Uvicorn by having to execute more code.
-    * But it provides you the tools to build simple web applications, with routing based on paths, etc.
-    * If you are comparing Starlette, compare it against Sanic, Flask, Django, etc. Web frameworks (or microframeworks).
+    * بهترین عملکرد بعدی را بعد از Uvicorn خواهد داشت. در واقع، Starlette از Uvicorn برای اجرا استفاده می‌کند. بنابراین، احتمالاً فقط با اجرای کد بیشتر می‌تواند "کندتر" از Uvicorn شود.
+    * اما ابزارهایی برای ساخت برنامه‌های وب ساده با مسیریابی بر اساس مسیرها و غیره به شما ارائه می‌دهد.
+    * اگر Starlette را مقایسه می‌کنید، آن را با Sanic، Flask، Django و غیره مقایسه کنید. فریم‌ورک‌های وب (یا میکروفریم‌ورک‌ها).
 * **FastAPI**:
-    * The same way that Starlette uses Uvicorn and cannot be faster than it, **FastAPI** uses Starlette, so it cannot be faster than it.
-    * FastAPI provides more features on top of Starlette. Features that you almost always need when building APIs, like data validation and serialization. And by using it, you get automatic documentation for free (the automatic documentation doesn't even add overhead to running applications, it is generated on startup).
-    * If you didn't use FastAPI and used Starlette directly (or another tool, like Sanic, Flask, Responder, etc) you would have to implement all the data validation and serialization yourself. So, your final application would still have the same overhead as if it was built using FastAPI. And in many cases, this data validation and serialization is the biggest amount of code written in applications.
-    * So, by using FastAPI you are saving development time, bugs, lines of code, and you would probably get the same performance (or better) you would if you didn't use it (as you would have to implement it all in your code).
-    * If you are comparing FastAPI, compare it against a web application framework (or set of tools) that provides data validation, serialization and documentation, like Flask-apispec, NestJS, Molten, etc. Frameworks with integrated automatic data validation, serialization and documentation.
+    * به همان شکلی که Starlette از Uvicorn استفاده می‌کند و نمی‌تواند سریع‌تر از آن باشد، **FastAPI** از Starlette استفاده می‌کند، بنابراین نمی‌تواند سریع‌تر از آن باشد.
+    * FastAPI ویژگی‌های بیشتری بر روی Starlette ارائه می‌دهد. ویژگی‌هایی که تقریباً همیشه هنگام ساخت APIها به آنها نیاز دارید، مانند اعتبارسنجی و سریال‌سازی داده. و با استفاده از آن، مستندات خودکار را رایگان دریافت می‌کنید (مستندات خودکار حتی سرباری به اجرای برنامه‌ها اضافه نمی‌کند، در زمان شروع تولید می‌شود).
+    * اگر از FastAPI استفاده نمی‌کردید و مستقیماً از Starlette (یا ابزار دیگری مانند Sanic، Flask، Responder و غیره) استفاده می‌کردید، باید تمام اعتبارسنجی و سریال‌سازی داده را خودتان پیاده‌سازی کنید. بنابراین، برنامه نهایی شما همچنان همان سربار را خواهد داشت که اگر با FastAPI ساخته شده بود. و در بسیاری از موارد، این اعتبارسنجی و سریال‌سازی داده بیشترین مقدار کد نوشته شده در برنامه‌ها است.
+    * بنابراین، با استفاده از FastAPI در زمان توسعه، باگ‌ها، خطوط کد صرفه‌جویی می‌کنید و احتمالاً همان عملکرد (یا بهتر) را خواهید داشت که اگر از آن استفاده نمی‌کردید (زیرا باید همه چیز را در کد خود پیاده‌سازی می‌کردید).
+    * اگر FastAPI را مقایسه می‌کنید، آن را با یک فریم‌ورک برنامه وب (یا مجموعه ابزارها) که اعتبارسنجی داده، سریال‌سازی و مستندات ارائه می‌دهد مقایسه کنید، مانند Flask-apispec، NestJS، Molten و غیره. فریم‌ورک‌هایی با اعتبارسنجی خودکار یکپارچه داده، سریال‌سازی و مستندات.

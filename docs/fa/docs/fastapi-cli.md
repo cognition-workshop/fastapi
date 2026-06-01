@@ -1,10 +1,10 @@
 # FastAPI CLI
 
-**FastAPI CLI** is a command line program that you can use to serve your FastAPI app, manage your FastAPI project, and more.
+**FastAPI CLI** یک برنامه خط فرمان است که می‌توانید از آن برای سرو کردن برنامه FastAPI خود، مدیریت پروژه FastAPI و موارد دیگر استفاده کنید.
 
-When you install FastAPI (e.g. with `pip install "fastapi[standard]"`), it includes a package called `fastapi-cli`, this package provides the `fastapi` command in the terminal.
+وقتی FastAPI را نصب می‌کنید (مثلاً با `pip install "fastapi[standard]"`)، شامل پکیجی به نام `fastapi-cli` می‌شود، این پکیج دستور `fastapi` را در ترمینال فراهم می‌کند.
 
-To run your FastAPI app for development, you can use the `fastapi dev` command:
+برای اجرای برنامه FastAPI خود برای توسعه، می‌توانید از دستور `fastapi dev` استفاده کنید:
 
 <div class="termy">
 
@@ -46,30 +46,30 @@ $ <font color="#4E9A06">fastapi</font> dev <u style="text-decoration-style:solid
 
 </div>
 
-The command line program called `fastapi` is **FastAPI CLI**.
+برنامه خط فرمانی که `fastapi` نامیده می‌شود، **FastAPI CLI** است.
 
-FastAPI CLI takes the path to your Python program (e.g. `main.py`) and automatically detects the `FastAPI` instance (commonly named `app`), determines the correct import process, and then serves it.
+FastAPI CLI مسیر برنامه پایتون شما (مثلاً `main.py`) را می‌گیرد و به طور خودکار نمونه `FastAPI` (که معمولاً `app` نامیده می‌شود) را تشخیص می‌دهد، فرآیند وارد کردن صحیح را تعیین می‌کند و سپس آن را سرو می‌کند.
 
-For production you would use `fastapi run` instead. 🚀
+برای تولید از `fastapi run` استفاده کنید. 🚀
 
-Internally, **FastAPI CLI** uses <a href="https://www.uvicorn.org" class="external-link" target="_blank">Uvicorn</a>, a high-performance, production-ready, ASGI server. 😎
+به صورت داخلی، **FastAPI CLI** از <a href="https://www.uvicorn.org" class="external-link" target="_blank">Uvicorn</a> استفاده می‌کند، یک سرور ASGI با عملکرد بالا و آماده تولید. 😎
 
 ## `fastapi dev`
 
-Running `fastapi dev` initiates development mode.
+اجرای `fastapi dev` حالت توسعه را شروع می‌کند.
 
-By default, **auto-reload** is enabled, automatically reloading the server when you make changes to your code. This is resource-intensive and could be less stable than when it's disabled. You should only use it for development. It also listens on the IP address `127.0.0.1`, which is the IP for your machine to communicate with itself alone (`localhost`).
+به طور پیش‌فرض، **بارگذاری مجدد خودکار** فعال است و به طور خودکار سرور را هنگام ایجاد تغییرات در کد شما مجدداً بارگذاری می‌کند. این منابع زیادی مصرف می‌کند و می‌تواند نسبت به حالت غیرفعال ناپایدارتر باشد. فقط باید از آن برای توسعه استفاده کنید. همچنین روی آدرس IP `127.0.0.1` گوش می‌دهد، که IP دستگاه شما برای ارتباط تنها با خودش (`localhost`) است.
 
 ## `fastapi run`
 
-Executing `fastapi run` starts FastAPI in production mode by default.
+اجرای `fastapi run` FastAPI را به طور پیش‌فرض در حالت تولید شروع می‌کند.
 
-By default, **auto-reload** is disabled. It also listens on the IP address `0.0.0.0`, which means all the available IP addresses, this way it will be publicly accessible to anyone that can communicate with the machine. This is how you would normally run it in production, for example, in a container.
+به طور پیش‌فرض، **بارگذاری مجدد خودکار** غیرفعال است. همچنین روی آدرس IP `0.0.0.0` گوش می‌دهد، که به معنای تمام آدرس‌های IP موجود است، به این ترتیب برای هر کسی که بتواند با دستگاه ارتباط برقرار کند به صورت عمومی قابل دسترسی خواهد بود. معمولاً آن را اینگونه در تولید اجرا می‌کنید، برای مثال، در یک کانتینر.
 
-In most cases you would (and should) have a "termination proxy" handling HTTPS for you on top, this will depend on how you deploy your application, your provider might do this for you, or you might need to set it up yourself.
+در بیشتر موارد شما یک "پروکسی خاتمه" دارید (و باید داشته باشید) که HTTPS را بر روی آن مدیریت می‌کند، این بستگی به نحوه استقرار برنامه شما دارد، ارائه‌دهنده شما ممکن است این کار را برای شما انجام دهد، یا ممکن است نیاز باشد خودتان آن را تنظیم کنید.
 
 /// tip
 
-You can learn more about it in the [deployment documentation](deployment/index.md){.internal-link target=_blank}.
+می‌توانید بیشتر درباره آن در [مستندات استقرار](deployment/index.md){.internal-link target=_blank} بیاموزید.
 
 ///
