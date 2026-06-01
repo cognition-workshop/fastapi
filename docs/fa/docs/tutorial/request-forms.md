@@ -1,12 +1,12 @@
-# Form Data
+# داده‌های فرم
 
-When you need to receive form fields instead of JSON, you can use `Form`.
+وقتی نیاز دارید به جای JSON فیلدهای فرم دریافت کنید، می‌توانید از `Form` استفاده کنید.
 
 /// info
 
-To use forms, first install <a href="https://github.com/Kludex/python-multipart" class="external-link" target="_blank">`python-multipart`</a>.
+برای استفاده از فرم‌ها، ابتدا <a href="https://github.com/Kludex/python-multipart" class="external-link" target="_blank">`python-multipart`</a> را نصب کنید.
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then install it, for example:
+مطمئن شوید یک [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} ایجاد کنید، آن را فعال کنید و سپس نصب کنید، برای مثال:
 
 ```console
 $ pip install python-multipart
@@ -14,60 +14,60 @@ $ pip install python-multipart
 
 ///
 
-## Import `Form`
+## وارد کردن `Form`
 
-Import `Form` from `fastapi`:
+`Form` را از `fastapi` وارد کنید:
 
 {* ../../docs_src/request_forms/tutorial001_an_py39.py hl[3] *}
 
-## Define `Form` parameters
+## تعریف پارامترهای `Form`
 
-Create form parameters the same way you would for `Body` or `Query`:
+پارامترهای فرم را به همان شکلی که برای `Body` یا `Query` ایجاد می‌کنید، بسازید:
 
 {* ../../docs_src/request_forms/tutorial001_an_py39.py hl[9] *}
 
-For example, in one of the ways the OAuth2 specification can be used (called "password flow") it is required to send a `username` and `password` as form fields.
+برای مثال، در یکی از روش‌هایی که مشخصه OAuth2 می‌تواند استفاده شود (به نام "password flow") ارسال `username` و `password` به عنوان فیلدهای فرم الزامی است.
 
-The <abbr title="specification">spec</abbr> requires the fields to be exactly named `username` and `password`, and to be sent as form fields, not JSON.
+<abbr title="مشخصه">spec</abbr> نیاز دارد که فیلدها دقیقاً `username` و `password` نامگذاری شوند و به عنوان فیلدهای فرم ارسال شوند، نه JSON.
 
-With `Form` you can declare the same configurations as with `Body` (and `Query`, `Path`, `Cookie`), including validation, examples, an alias (e.g. `user-name` instead of `username`), etc.
+با `Form` می‌توانید همان پیکربندی‌هایی که با `Body` (و `Query`، `Path`، `Cookie`) دارید اعلان کنید، شامل اعتبارسنجی، مثال‌ها، نام مستعار (مثلاً `user-name` به جای `username`) و غیره.
 
 /// info
 
-`Form` is a class that inherits directly from `Body`.
+`Form` کلاسی است که مستقیماً از `Body` ارث‌بری می‌کند.
 
 ///
 
 /// tip
 
-To declare form bodies, you need to use `Form` explicitly, because without it the parameters would be interpreted as query parameters or body (JSON) parameters.
+برای اعلان بدنه‌های فرم، باید صریحاً از `Form` استفاده کنید، زیرا بدون آن پارامترها به عنوان پارامترهای کوئری یا بدنه (JSON) تفسیر خواهند شد.
 
 ///
 
-## About "Form Fields"
+## درباره "فیلدهای فرم"
 
-The way HTML forms (`<form></form>`) sends the data to the server normally uses a "special" encoding for that data, it's different from JSON.
+روشی که فرم‌های HTML (`<form></form>`) داده‌ها را به سرور ارسال می‌کنند معمولاً از یک رمزگذاری "خاص" برای آن داده‌ها استفاده می‌کند، متفاوت از JSON.
 
-**FastAPI** will make sure to read that data from the right place instead of JSON.
+**FastAPI** مطمئن خواهد شد که آن داده‌ها را از مکان صحیح به جای JSON می‌خواند.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-Data from forms is normally encoded using the "media type" `application/x-www-form-urlencoded`.
+داده‌های فرم‌ها معمولاً با استفاده از "نوع رسانه" `application/x-www-form-urlencoded` رمزگذاری می‌شوند.
 
-But when the form includes files, it is encoded as `multipart/form-data`. You'll read about handling files in the next chapter.
+اما وقتی فرم شامل فایل‌ها باشد، به عنوان `multipart/form-data` رمزگذاری می‌شود. در فصل بعدی درباره مدیریت فایل‌ها خواهید خواند.
 
-If you want to read more about these encodings and form fields, head to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST" class="external-link" target="_blank"><abbr title="Mozilla Developer Network">MDN</abbr> web docs for <code>POST</code></a>.
+اگر می‌خواهید بیشتر درباره این رمزگذاری‌ها و فیلدهای فرم بخوانید، به <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST" class="external-link" target="_blank">مستندات وب <abbr title="Mozilla Developer Network">MDN</abbr> برای <code>POST</code></a> مراجعه کنید.
 
 ///
 
 /// warning
 
-You can declare multiple `Form` parameters in a *path operation*, but you can't also declare `Body` fields that you expect to receive as JSON, as the request will have the body encoded using `application/x-www-form-urlencoded` instead of `application/json`.
+شما می‌توانید چندین پارامتر `Form` در یک *عملیات مسیر* اعلان کنید، اما نمی‌توانید همزمان فیلدهای `Body` که انتظار دارید به عنوان JSON دریافت شوند نیز اعلان کنید، زیرا درخواست بدنه را با استفاده از `application/x-www-form-urlencoded` به جای `application/json` رمزگذاری خواهد کرد.
 
-This is not a limitation of **FastAPI**, it's part of the HTTP protocol.
+این محدودیت **FastAPI** نیست، بخشی از پروتکل HTTP است.
 
 ///
 
-## Recap
+## خلاصه
 
-Use `Form` to declare form data input parameters.
+از `Form` برای اعلان پارامترهای ورودی داده فرم استفاده کنید.

@@ -1,16 +1,16 @@
-# Tutorial - User Guide
+# آموزش - راهنمای کاربر
 
-This tutorial shows you how to use **FastAPI** with most of its features, step by step.
+این آموزش نحوه استفاده از **FastAPI** با بیشتر ویژگی‌های آن را، قدم به قدم، به شما نشان می‌دهد.
 
-Each section gradually builds on the previous ones, but it's structured to separate topics, so that you can go directly to any specific one to solve your specific API needs.
+هر بخش به تدریج بر بخش‌های قبلی بنا شده، اما به گونه‌ای ساختاردهی شده که موضوعات جدا باشند، تا بتوانید مستقیماً به هر مورد خاص بروید و نیاز خاص API خود را حل کنید.
 
-It is also built to work as a future reference so you can come back and see exactly what you need.
+همچنین به گونه‌ای ساخته شده که به عنوان یک مرجع آینده عمل کند تا بتوانید برگردید و دقیقاً آنچه نیاز دارید را ببینید.
 
-## Run the code
+## اجرای کد
 
-All the code blocks can be copied and used directly (they are actually tested Python files).
+تمام بلوک‌های کد قابل کپی و استفاده مستقیم هستند (آنها در واقع فایل‌های پایتون تست شده هستند).
 
-To run any of the examples, copy the code to a file `main.py`, and start `fastapi dev` with:
+برای اجرای هر یک از مثال‌ها، کد را در فایلی به نام `main.py` کپی کنید و `fastapi dev` را اجرا کنید:
 
 <div class="termy">
 
@@ -52,17 +52,17 @@ $ <font color="#4E9A06">fastapi</font> dev <u style="text-decoration-style:solid
 
 </div>
 
-It is **HIGHLY encouraged** that you write or copy the code, edit it and run it locally.
+**به شدت توصیه می‌شود** که کد را بنویسید یا کپی کنید، آن را ویرایش کنید و به صورت محلی اجرا کنید.
 
-Using it in your editor is what really shows you the benefits of FastAPI, seeing how little code you have to write, all the type checks, autocompletion, etc.
+استفاده از آن در ویرایشگر شما چیزی است که واقعاً مزایای FastAPI را به شما نشان می‌دهد، با دیدن اینکه چقدر کد کمی باید بنویسید، تمام بررسی‌های تایپ، تکمیل خودکار و غیره.
 
 ---
 
-## Install FastAPI
+## نصب FastAPI
 
-The first step is to install FastAPI.
+اولین قدم نصب FastAPI است.
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then **install FastAPI**:
+مطمئن شوید یک [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} ایجاد کنید، آن را فعال کنید و سپس **FastAPI را نصب کنید**:
 
 <div class="termy">
 
@@ -76,18 +76,18 @@ $ pip install "fastapi[standard]"
 
 /// note
 
-When you install with `pip install "fastapi[standard]"` it comes with some default optional standard dependencies.
+وقتی با `pip install "fastapi[standard]"` نصب می‌کنید، برخی وابستگی‌های استاندارد اختیاری پیش‌فرض همراه آن می‌آیند.
 
-If you don't want to have those optional dependencies, you can instead install `pip install fastapi`.
+اگر نمی‌خواهید آن وابستگی‌های اختیاری را داشته باشید، می‌توانید به جای آن `pip install fastapi` نصب کنید.
 
 ///
 
-## Advanced User Guide
+## راهنمای کاربر پیشرفته
 
-There is also an **Advanced User Guide** that you can read later after this **Tutorial - User guide**.
+همچنین یک **راهنمای کاربر پیشرفته** وجود دارد که می‌توانید بعداً بعد از این **آموزش - راهنمای کاربر** بخوانید.
 
-The **Advanced User Guide** builds on this one, uses the same concepts, and teaches you some extra features.
+**راهنمای کاربر پیشرفته** بر این آموزش بنا شده، از همان مفاهیم استفاده می‌کند و برخی ویژگی‌های اضافی را آموزش می‌دهد.
 
-But you should first read the **Tutorial - User Guide** (what you are reading right now).
+اما ابتدا باید **آموزش - راهنمای کاربر** (آنچه الان می‌خوانید) را بخوانید.
 
-It's designed so that you can build a complete application with just the **Tutorial - User Guide**, and then extend it in different ways, depending on your needs, using some of the additional ideas from the **Advanced User Guide**.
+به گونه‌ای طراحی شده که بتوانید یک برنامه کامل فقط با **آموزش - راهنمای کاربر** بسازید و سپس آن را به روش‌های مختلف، بسته به نیازهایتان، با استفاده از برخی ایده‌های اضافی از **راهنمای کاربر پیشرفته** گسترش دهید.

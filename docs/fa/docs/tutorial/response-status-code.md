@@ -1,101 +1,101 @@
-# Response Status Code
+# کد وضعیت پاسخ
 
-The same way you can specify a response model, you can also declare the HTTP status code used for the response with the parameter `status_code` in any of the *path operations*:
+به همان شکلی که می‌توانید مدل پاسخ مشخص کنید، می‌توانید کد وضعیت HTTP استفاده شده برای پاسخ را نیز با پارامتر `status_code` در هر یک از *عملیات‌های مسیر* اعلان کنید:
 
 * `@app.get()`
 * `@app.post()`
 * `@app.put()`
 * `@app.delete()`
-* etc.
+* و غیره.
 
 {* ../../docs_src/response_status_code/tutorial001.py hl[6] *}
 
 /// note
 
-Notice that `status_code` is a parameter of the "decorator" method (`get`, `post`, etc). Not of your *path operation function*, like all the parameters and body.
+توجه کنید که `status_code` یک پارامتر متد "دکوراتور" (`get`، `post` و غیره) است. نه *تابع عملیات مسیر* شما، مانند تمام پارامترها و بدنه.
 
 ///
 
-The `status_code` parameter receives a number with the HTTP status code.
+پارامتر `status_code` یک عدد با کد وضعیت HTTP دریافت می‌کند.
 
 /// info
 
-`status_code` can alternatively also receive an `IntEnum`, such as Python's <a href="https://docs.python.org/3/library/http.html#http.HTTPStatus" class="external-link" target="_blank">`http.HTTPStatus`</a>.
+`status_code` همچنین می‌تواند یک `IntEnum` دریافت کند، مانند <a href="https://docs.python.org/3/library/http.html#http.HTTPStatus" class="external-link" target="_blank">`http.HTTPStatus`</a> پایتون.
 
 ///
 
-It will:
+این کار:
 
-* Return that status code in the response.
-* Document it as such in the OpenAPI schema (and so, in the user interfaces):
+* آن کد وضعیت را در پاسخ برمی‌گرداند.
+* آن را در اسکیمای OpenAPI مستند می‌کند (و بنابراین، در رابط‌های کاربری):
 
 <img src="/img/tutorial/response-status-code/image01.png">
 
 /// note
 
-Some response codes (see the next section) indicate that the response does not have a body.
+برخی کدهای پاسخ (بخش بعدی را ببینید) نشان می‌دهند که پاسخ بدنه‌ای ندارد.
 
-FastAPI knows this, and will produce OpenAPI docs that state there is no response body.
+FastAPI این را می‌داند و مستندات OpenAPI تولید می‌کند که بیان می‌کند بدنه پاسخی وجود ندارد.
 
 ///
 
-## About HTTP status codes
+## درباره کدهای وضعیت HTTP
 
 /// note
 
-If you already know what HTTP status codes are, skip to the next section.
+اگر از قبل می‌دانید کدهای وضعیت HTTP چیست، به بخش بعدی بروید.
 
 ///
 
-In HTTP, you send a numeric status code of 3 digits as part of the response.
+در HTTP، یک کد وضعیت عددی ۳ رقمی را به عنوان بخشی از پاسخ ارسال می‌کنید.
 
-These status codes have a name associated to recognize them, but the important part is the number.
+این کدهای وضعیت نامی مرتبط برای شناسایی دارند، اما بخش مهم عدد است.
 
-In short:
+به طور خلاصه:
 
-* `100 - 199` are for "Information". You rarely use them directly.  Responses with these status codes cannot have a body.
-* **`200 - 299`** are for "Successful" responses. These are the ones you would use the most.
-    * `200` is the default status code, which means everything was "OK".
-    * Another example would be `201`, "Created". It is commonly used after creating a new record in the database.
-    * A special case is `204`, "No Content".  This response is used when there is no content to return to the client, and so the response must not have a body.
-* **`300 - 399`** are for "Redirection".  Responses with these status codes may or may not have a body, except for `304`, "Not Modified", which must not have one.
-* **`400 - 499`** are for "Client error" responses. These are the second type you would probably use the most.
-    * An example is `404`, for a "Not Found" response.
-    * For generic errors from the client, you can just use `400`.
-* `500 - 599` are for server errors. You almost never use them directly. When something goes wrong at some part in your application code, or server, it will automatically return one of these status codes.
+* `100 - 199` برای "اطلاعات" هستند. به ندرت مستقیماً از آنها استفاده می‌کنید. پاسخ‌هایی با این کدهای وضعیت نمی‌توانند بدنه داشته باشند.
+* **`200 - 299`** برای پاسخ‌های "موفق" هستند. اینها هستند که بیشتر استفاده می‌کنید.
+    * `200` کد وضعیت پیش‌فرض است، که به معنای همه چیز "خوب بود" است.
+    * مثال دیگر `201`، "ایجاد شد" است. معمولاً بعد از ایجاد یک رکورد جدید در پایگاه داده استفاده می‌شود.
+    * مورد خاص `204`، "بدون محتوا" است. این پاسخ زمانی استفاده می‌شود که محتوایی برای برگرداندن به کلاینت وجود ندارد و بنابراین پاسخ نباید بدنه‌ای داشته باشد.
+* **`300 - 399`** برای "تغییر مسیر" هستند. پاسخ‌هایی با این کدهای وضعیت ممکن است بدنه داشته یا نداشته باشند، به جز `304`، "تغییر نکرده"، که نباید داشته باشد.
+* **`400 - 499`** برای پاسخ‌های "خطای کلاینت" هستند. اینها دومین نوعی هستند که احتمالاً بیشتر استفاده می‌کنید.
+    * مثالی `404` است، برای پاسخ "یافت نشد".
+    * برای خطاهای عمومی از کلاینت، می‌توانید فقط از `400` استفاده کنید.
+* `500 - 599` برای خطاهای سرور هستند. تقریباً هرگز مستقیماً از آنها استفاده نمی‌کنید. وقتی چیزی در بخشی از کد برنامه یا سرور شما اشتباه پیش برود، به طور خودکار یکی از این کدهای وضعیت را برمی‌گرداند.
 
 /// tip
 
-To know more about each status code and which code is for what, check the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" class="external-link" target="_blank"><abbr title="Mozilla Developer Network">MDN</abbr> documentation about HTTP status codes</a>.
+برای دانستن بیشتر درباره هر کد وضعیت و اینکه کدام کد برای چیست، <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" class="external-link" target="_blank">مستندات <abbr title="Mozilla Developer Network">MDN</abbr> درباره کدهای وضعیت HTTP</a> را بررسی کنید.
 
 ///
 
-## Shortcut to remember the names
+## میانبر برای به خاطر سپردن نام‌ها
 
-Let's see the previous example again:
+بیایید مثال قبلی را دوباره ببینیم:
 
 {* ../../docs_src/response_status_code/tutorial001.py hl[6] *}
 
-`201` is the status code for "Created".
+`201` کد وضعیت "ایجاد شد" است.
 
-But you don't have to memorize what each of these codes mean.
+اما لازم نیست معنای هر یک از این کدها را حفظ کنید.
 
-You can use the convenience variables from `fastapi.status`.
+می‌توانید از متغیرهای راحتی از `fastapi.status` استفاده کنید.
 
 {* ../../docs_src/response_status_code/tutorial002.py hl[1,6] *}
 
-They are just a convenience, they hold the same number, but that way you can use the editor's autocomplete to find them:
+آنها فقط یک راحتی هستند، همان عدد را نگه می‌دارند، اما به این ترتیب می‌توانید از تکمیل خودکار ویرایشگر برای پیدا کردن آنها استفاده کنید:
 
 <img src="/img/tutorial/response-status-code/image02.png">
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette import status`.
+شما همچنین می‌توانید از `from starlette import status` استفاده کنید.
 
-**FastAPI** provides the same `starlette.status` as `fastapi.status` just as a convenience for you, the developer. But it comes directly from Starlette.
+**FastAPI** همان `starlette.status` را به عنوان `fastapi.status` فقط به عنوان راحتی برای شما، توسعه‌دهنده، ارائه می‌دهد. اما مستقیماً از Starlette می‌آید.
 
 ///
 
-## Changing the default
+## تغییر پیش‌فرض
 
-Later, in the [Advanced User Guide](../advanced/response-change-status-code.md){.internal-link target=_blank}, you will see how to return a different status code than the default you are declaring here.
+بعداً، در [راهنمای کاربر پیشرفته](../advanced/response-change-status-code.md){.internal-link target=_blank}، خواهید دید چگونه کد وضعیت متفاوتی از پیش‌فرضی که اینجا اعلان می‌کنید برگردانید.
