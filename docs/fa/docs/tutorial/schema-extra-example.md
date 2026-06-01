@@ -1,12 +1,12 @@
-# Declare Request Example Data
+# اعلان داده‌های نمونه درخواست
 
-You can declare examples of the data your app can receive.
+می‌توانید نمونه‌هایی از داده‌هایی که برنامه شما می‌تواند دریافت کند را اعلان کنید.
 
-Here are several ways to do it.
+در اینجا چندین راه برای انجام آن آمده.
 
-## Extra JSON Schema data in Pydantic models
+## داده‌های اضافی JSON Schema در مدل‌های Pydantic
 
-You can declare `examples` for a Pydantic model that will be added to the generated JSON Schema.
+می‌توانید `examples` را برای یک مدل Pydantic اعلان کنید که به JSON Schema تولید شده اضافه خواهد شد.
 
 //// tab | Pydantic v2
 
@@ -20,51 +20,51 @@ You can declare `examples` for a Pydantic model that will be added to the genera
 
 ////
 
-That extra info will be added as-is to the output **JSON Schema** for that model, and it will be used in the API docs.
+آن اطلاعات اضافی به همان شکل به **JSON Schema** خروجی آن مدل اضافه خواهد شد و در مستندات API استفاده خواهد شد.
 
 //// tab | Pydantic v2
 
-In Pydantic version 2, you would use the attribute `model_config`, that takes a `dict` as described in <a href="https://docs.pydantic.dev/latest/api/config/" class="external-link" target="_blank">Pydantic's docs: Configuration</a>.
+در نسخه 2 Pydantic، از ویژگی `model_config` استفاده می‌کنید، که یک `dict` می‌گیرد همانطور که در <a href="https://docs.pydantic.dev/latest/api/config/" class="external-link" target="_blank">مستندات Pydantic: پیکربندی</a> توضیح داده شده.
 
-You can set `"json_schema_extra"` with a `dict` containing any additional data you would like to show up in the generated JSON Schema, including `examples`.
+می‌توانید `"json_schema_extra"` را با یک `dict` شامل هر داده اضافی‌ای که می‌خواهید در JSON Schema تولید شده نمایش داده شود تنظیم کنید، از جمله `examples`.
 
 ////
 
 //// tab | Pydantic v1
 
-In Pydantic version 1, you would use an internal class `Config` and `schema_extra`, as described in <a href="https://docs.pydantic.dev/1.10/usage/schema/#schema-customization" class="external-link" target="_blank">Pydantic's docs: Schema customization</a>.
+در نسخه 1 Pydantic، از یک کلاس داخلی `Config` و `schema_extra` استفاده می‌کنید، همانطور که در <a href="https://docs.pydantic.dev/1.10/usage/schema/#schema-customization" class="external-link" target="_blank">مستندات Pydantic: سفارشی‌سازی Schema</a> توضیح داده شده.
 
-You can set `schema_extra` with a `dict` containing any additional data you would like to show up in the generated JSON Schema, including `examples`.
+می‌توانید `schema_extra` را با یک `dict` شامل هر داده اضافی‌ای که می‌خواهید در JSON Schema تولید شده نمایش داده شود تنظیم کنید، از جمله `examples`.
 
 ////
 
 /// tip
 
-You could use the same technique to extend the JSON Schema and add your own custom extra info.
+می‌توانید از همین تکنیک برای گسترش JSON Schema و اضافه کردن اطلاعات اضافی سفارشی خود استفاده کنید.
 
-For example you could use it to add metadata for a frontend user interface, etc.
+برای مثال می‌توانید از آن برای اضافه کردن متاداده برای رابط کاربری فرانت‌اند و غیره استفاده کنید.
 
 ///
 
 /// info
 
-OpenAPI 3.1.0 (used since FastAPI 0.99.0) added support for `examples`, which is part of the **JSON Schema** standard.
+OpenAPI 3.1.0 (که از FastAPI 0.99.0 استفاده می‌شود) پشتیبانی از `examples` را اضافه کرد، که بخشی از استاندارد **JSON Schema** است.
 
-Before that, it only supported the keyword `example` with a single example. That is still supported by OpenAPI 3.1.0, but is deprecated and is not part of the JSON Schema standard. So you are encouraged to migrate `example` to `examples`. 🤓
+قبل از آن، فقط از کلمه کلیدی `example` با یک نمونه تکی پشتیبانی می‌کرد. آن همچنان توسط OpenAPI 3.1.0 پشتیبانی می‌شود، اما منسوخ شده و بخشی از استاندارد JSON Schema نیست. بنابراین تشویق می‌شوید `example` را به `examples` مهاجرت دهید. 🤓
 
-You can read more at the end of this page.
+می‌توانید بیشتر در انتهای این صفحه بخوانید.
 
 ///
 
-## `Field` additional arguments
+## آرگومان‌های اضافی `Field`
 
-When using `Field()` with Pydantic models, you can also declare additional `examples`:
+هنگام استفاده از `Field()` با مدل‌های Pydantic، همچنین می‌توانید `examples` اضافی اعلان کنید:
 
 {* ../../docs_src/schema_extra_example/tutorial002_py310.py hl[2,8:11] *}
 
-## `examples` in JSON Schema - OpenAPI
+## `examples` در JSON Schema - OpenAPI
 
-When using any of:
+هنگام استفاده از هر یک از:
 
 * `Path()`
 * `Query()`
@@ -74,45 +74,45 @@ When using any of:
 * `Form()`
 * `File()`
 
-you can also declare a group of `examples` with additional information that will be added to their **JSON Schemas** inside of **OpenAPI**.
+همچنین می‌توانید گروهی از `examples` با اطلاعات اضافی اعلان کنید که به **JSON Schemaهای** آنها درون **OpenAPI** اضافه خواهد شد.
 
-### `Body` with `examples`
+### `Body` با `examples`
 
-Here we pass `examples` containing one example of the data expected in `Body()`:
+اینجا `examples` شامل یک نمونه از داده‌های مورد انتظار در `Body()` ارسال می‌کنیم:
 
 {* ../../docs_src/schema_extra_example/tutorial003_an_py310.py hl[22:29] *}
 
-### Example in the docs UI
+### نمونه در رابط کاربری مستندات
 
-With any of the methods above it would look like this in the `/docs`:
+با هر یک از روش‌های بالا به این شکل در `/docs` نمایش داده خواهد شد:
 
 <img src="/img/tutorial/body-fields/image01.png">
 
-### `Body` with multiple `examples`
+### `Body` با چندین `examples`
 
-You can of course also pass multiple `examples`:
+البته همچنین می‌توانید چندین `examples` ارسال کنید:
 
 {* ../../docs_src/schema_extra_example/tutorial004_an_py310.py hl[23:38] *}
 
-When you do this, the examples will be part of the internal **JSON Schema** for that body data.
+وقتی این کار را انجام می‌دهید، نمونه‌ها بخشی از **JSON Schema** داخلی برای آن داده بدنه خواهند بود.
 
-Nevertheless, at the <abbr title="2023-08-26">time of writing this</abbr>, Swagger UI, the tool in charge of showing the docs UI, doesn't support showing multiple examples for the data in **JSON Schema**. But read below for a workaround.
+با این حال، در <abbr title="2023-08-26">زمان نگارش این مطلب</abbr>، Swagger UI، ابزار مسئول نمایش رابط کاربری مستندات، از نمایش چندین نمونه برای داده‌ها در **JSON Schema** پشتیبانی نمی‌کند. اما برای راه‌حل جایگزین ادامه بخوانید.
 
-### OpenAPI-specific `examples`
+### `examples` مختص OpenAPI
 
-Since before **JSON Schema** supported `examples` OpenAPI had support for a different field also called `examples`.
+از قبل از اینکه **JSON Schema** از `examples` پشتیبانی کند، OpenAPI پشتیبانی از فیلد متفاوتی به نام `examples` داشت.
 
-This **OpenAPI-specific** `examples` goes in another section in the OpenAPI specification. It goes in the **details for each *path operation***, not inside each JSON Schema.
+این `examples` **مختص OpenAPI** در بخش دیگری از مشخصه OpenAPI قرار می‌گیرد. در **جزئیات هر *عملیات مسیر*** قرار می‌گیرد، نه درون هر JSON Schema.
 
-And Swagger UI has supported this particular `examples` field for a while. So, you can use it to **show** different **examples in the docs UI**.
+و Swagger UI مدتی است که از این فیلد `examples` خاص پشتیبانی می‌کند. بنابراین، می‌توانید از آن برای **نمایش** **نمونه‌های** مختلف در **رابط کاربری مستندات** استفاده کنید.
 
-The shape of this OpenAPI-specific field `examples` is a `dict` with **multiple examples** (instead of a `list`), each with extra information that will be added to **OpenAPI** too.
+شکل این فیلد `examples` مختص OpenAPI یک `dict` با **چندین نمونه** (به جای `list`) است، هر کدام با اطلاعات اضافی‌ای که به **OpenAPI** نیز اضافه خواهد شد.
 
-This doesn't go inside of each JSON Schema contained in OpenAPI, this goes outside, in the *path operation* directly.
+این درون هر JSON Schema موجود در OpenAPI نمی‌رود، بلکه بیرون از آن، مستقیماً در *عملیات مسیر* قرار می‌گیرد.
 
-### Using the `openapi_examples` Parameter
+### استفاده از پارامتر `openapi_examples`
 
-You can declare the OpenAPI-specific `examples` in FastAPI with the parameter `openapi_examples` for:
+می‌توانید `examples` مختص OpenAPI را در FastAPI با پارامتر `openapi_examples` برای موارد زیر اعلان کنید:
 
 * `Path()`
 * `Query()`
@@ -122,103 +122,103 @@ You can declare the OpenAPI-specific `examples` in FastAPI with the parameter `o
 * `Form()`
 * `File()`
 
-The keys of the `dict` identify each example, and each value is another `dict`.
+کلیدهای `dict` هر نمونه را شناسایی می‌کنند و هر مقدار یک `dict` دیگر است.
 
-Each specific example `dict` in the `examples` can contain:
+هر `dict` نمونه خاص در `examples` می‌تواند شامل موارد زیر باشد:
 
-* `summary`: Short description for the example.
-* `description`: A long description that can contain Markdown text.
-* `value`: This is the actual example shown, e.g. a `dict`.
-* `externalValue`: alternative to `value`, a URL pointing to the example. Although this might not be supported by as many tools as `value`.
+* `summary`: توضیحات کوتاه برای نمونه.
+* `description`: توضیحات بلند که می‌تواند شامل متن Markdown باشد.
+* `value`: نمونه واقعی نمایش داده شده، مثلاً یک `dict`.
+* `externalValue`: جایگزین `value`، یک URL اشاره‌کننده به نمونه. اگرچه ممکن است توسط ابزارهای کمتری نسبت به `value` پشتیبانی شود.
 
-You can use it like this:
+می‌توانید آن را اینطور استفاده کنید:
 
 {* ../../docs_src/schema_extra_example/tutorial005_an_py310.py hl[23:49] *}
 
-### OpenAPI Examples in the Docs UI
+### نمونه‌های OpenAPI در رابط کاربری مستندات
 
-With `openapi_examples` added to `Body()` the `/docs` would look like:
+با اضافه شدن `openapi_examples` به `Body()`، `/docs` به این شکل خواهد بود:
 
 <img src="/img/tutorial/body-fields/image02.png">
 
-## Technical Details
+## جزئیات فنی
 
 /// tip
 
-If you are already using **FastAPI** version **0.99.0 or above**, you can probably **skip** these details.
+اگر از **FastAPI** نسخه **0.99.0 یا بالاتر** استفاده می‌کنید، احتمالاً می‌توانید این جزئیات را **رد** کنید.
 
-They are more relevant for older versions, before OpenAPI 3.1.0 was available.
+آنها بیشتر مربوط به نسخه‌های قدیمی‌تر هستند، قبل از اینکه OpenAPI 3.1.0 در دسترس باشد.
 
-You can consider this a brief OpenAPI and JSON Schema **history lesson**. 🤓
+می‌توانید این را یک **درس تاریخ** کوتاه OpenAPI و JSON Schema در نظر بگیرید. 🤓
 
 ///
 
 /// warning
 
-These are very technical details about the standards **JSON Schema** and **OpenAPI**.
+اینها جزئیات بسیار فنی درباره استانداردهای **JSON Schema** و **OpenAPI** هستند.
 
-If the ideas above already work for you, that might be enough, and you probably don't need these details, feel free to skip them.
+اگر ایده‌های بالا قبلاً برای شما کار می‌کنند، ممکن است کافی باشد و احتمالاً به این جزئیات نیاز ندارید، خیالتان راحت باشد و رد شوید.
 
 ///
 
-Before OpenAPI 3.1.0, OpenAPI used an older and modified version of **JSON Schema**.
+قبل از OpenAPI 3.1.0، OpenAPI از نسخه قدیمی‌تر و اصلاح شده **JSON Schema** استفاده می‌کرد.
 
-JSON Schema didn't have `examples`, so OpenAPI added its own `example` field to its own modified version.
+JSON Schema فیلد `examples` نداشت، بنابراین OpenAPI فیلد `example` خاص خود را به نسخه اصلاح شده خود اضافه کرد.
 
-OpenAPI also added `example` and `examples` fields to other parts of the specification:
+OpenAPI همچنین فیلدهای `example` و `examples` را به بخش‌های دیگر مشخصه اضافه کرد:
 
-* <a href="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#parameter-object" class="external-link" target="_blank">`Parameter Object` (in the specification)</a> that was used by FastAPI's:
+* <a href="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#parameter-object" class="external-link" target="_blank">`Parameter Object` (در مشخصه)</a> که توسط موارد زیر FastAPI استفاده می‌شد:
     * `Path()`
     * `Query()`
     * `Header()`
     * `Cookie()`
-* <a href="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#media-type-object" class="external-link" target="_blank">`Request Body Object`, in the field `content`, on the `Media Type Object` (in the specification)</a> that was used by FastAPI's:
+* <a href="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#media-type-object" class="external-link" target="_blank">`Request Body Object`، در فیلد `content`، در `Media Type Object` (در مشخصه)</a> که توسط موارد زیر FastAPI استفاده می‌شد:
     * `Body()`
     * `File()`
     * `Form()`
 
 /// info
 
-This old OpenAPI-specific `examples` parameter is now `openapi_examples` since FastAPI `0.103.0`.
+این پارامتر `examples` مختص OpenAPI قدیمی اکنون `openapi_examples` در FastAPI `0.103.0` است.
 
 ///
 
-### JSON Schema's `examples` field
+### فیلد `examples` در JSON Schema
 
-But then JSON Schema added an <a href="https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.5" class="external-link" target="_blank">`examples`</a> field to a new version of the specification.
+اما سپس JSON Schema فیلد <a href="https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.5" class="external-link" target="_blank">`examples`</a> را به نسخه جدید مشخصه اضافه کرد.
 
-And then the new OpenAPI 3.1.0 was based on the latest version (JSON Schema 2020-12) that included this new field `examples`.
+و سپس OpenAPI 3.1.0 جدید بر اساس آخرین نسخه (JSON Schema 2020-12) بود که این فیلد `examples` جدید را شامل می‌شد.
 
-And now this new `examples` field takes precedence over the old single (and custom) `example` field, that is now deprecated.
+و اکنون این فیلد `examples` جدید بر فیلد قدیمی تکی (و سفارشی) `example` که اکنون منسوخ شده اولویت دارد.
 
-This new `examples` field in JSON Schema is **just a `list`** of examples, not a dict with extra metadata as in the other places in OpenAPI (described above).
+این فیلد `examples` جدید در JSON Schema **فقط یک `list`** از نمونه‌هاست، نه یک dict با متاداده اضافی مانند مکان‌های دیگر در OpenAPI (که بالا توضیح داده شد).
 
 /// info
 
-Even after OpenAPI 3.1.0 was released with this new simpler integration with JSON Schema, for a while, Swagger UI, the tool that provides the automatic docs, didn't support OpenAPI 3.1.0 (it does since version 5.0.0 🎉).
+حتی بعد از انتشار OpenAPI 3.1.0 با این ادغام جدید ساده‌تر با JSON Schema، برای مدتی، Swagger UI، ابزاری که مستندات خودکار را ارائه می‌دهد، از OpenAPI 3.1.0 پشتیبانی نمی‌کرد (از نسخه 5.0.0 پشتیبانی می‌کند 🎉).
 
-Because of that, versions of FastAPI previous to 0.99.0 still used versions of OpenAPI lower than 3.1.0.
+به همین دلیل، نسخه‌های FastAPI قبل از 0.99.0 همچنان از نسخه‌های OpenAPI پایین‌تر از 3.1.0 استفاده می‌کردند.
 
 ///
 
-### Pydantic and FastAPI `examples`
+### `examples` در Pydantic و FastAPI
 
-When you add `examples` inside a Pydantic model, using `schema_extra` or `Field(examples=["something"])` that example is added to the **JSON Schema** for that Pydantic model.
+وقتی `examples` را درون یک مدل Pydantic اضافه می‌کنید، با استفاده از `schema_extra` یا `Field(examples=["something"])`، آن نمونه به **JSON Schema** آن مدل Pydantic اضافه می‌شود.
 
-And that **JSON Schema** of the Pydantic model is included in the **OpenAPI** of your API, and then it's used in the docs UI.
+و آن **JSON Schema** مدل Pydantic در **OpenAPI** API شما گنجانده شده و سپس در رابط کاربری مستندات استفاده می‌شود.
 
-In versions of FastAPI before 0.99.0 (0.99.0 and above use the newer OpenAPI 3.1.0) when you used `example` or `examples` with any of the other utilities (`Query()`, `Body()`, etc.) those examples were not added to the JSON Schema that describes that data (not even to OpenAPI's own version of JSON Schema), they were added directly to the *path operation* declaration in OpenAPI (outside the parts of OpenAPI that use JSON Schema).
+در نسخه‌های FastAPI قبل از 0.99.0 (0.99.0 و بالاتر از OpenAPI 3.1.0 جدیدتر استفاده می‌کنند) وقتی از `example` یا `examples` با سایر ابزارها (`Query()`، `Body()` و غیره) استفاده می‌کردید، آن نمونه‌ها به JSON Schema توصیف‌کننده آن داده اضافه نمی‌شدند (حتی به نسخه خاص OpenAPI از JSON Schema)، بلکه مستقیماً به اعلان *عملیات مسیر* در OpenAPI اضافه می‌شدند (خارج از بخش‌هایی از OpenAPI که از JSON Schema استفاده می‌کنند).
 
-But now that FastAPI 0.99.0 and above uses OpenAPI 3.1.0, that uses JSON Schema 2020-12, and Swagger UI 5.0.0 and above, everything is more consistent and the examples are included in JSON Schema.
+اما اکنون که FastAPI 0.99.0 و بالاتر از OpenAPI 3.1.0 استفاده می‌کند، که از JSON Schema 2020-12 استفاده می‌کند، و Swagger UI 5.0.0 و بالاتر، همه چیز سازگارتر است و نمونه‌ها در JSON Schema گنجانده شده‌اند.
 
-### Swagger UI and OpenAPI-specific `examples`
+### Swagger UI و `examples` مختص OpenAPI
 
-Now, as Swagger UI didn't support multiple JSON Schema examples (as of 2023-08-26), users didn't have a way to show multiple examples in the docs.
+اکنون، چون Swagger UI از چندین نمونه JSON Schema پشتیبانی نمی‌کرد (تا تاریخ 2023-08-26)، کاربران راهی برای نمایش چندین نمونه در مستندات نداشتند.
 
-To solve that, FastAPI `0.103.0` **added support** for declaring the same old **OpenAPI-specific** `examples` field with the new parameter `openapi_examples`. 🤓
+برای حل این مسئله، FastAPI `0.103.0` **پشتیبانی** از اعلان همان فیلد `examples` **مختص OpenAPI** قدیمی را با پارامتر جدید `openapi_examples` اضافه کرد. 🤓
 
-### Summary
+### خلاصه
 
-I used to say I didn't like history that much... and look at me now giving "tech history" lessons. 😅
+من عادت داشتم بگویم خیلی تاریخ دوست ندارم... و نگاه کنید الان دارم "درس‌های تاریخ فناوری" می‌دهم. 😅
 
-In short, **upgrade to FastAPI 0.99.0 or above**, and things are much **simpler, consistent, and intuitive**, and you don't have to know all these historic details. 😎
+در خلاصه، **به FastAPI 0.99.0 یا بالاتر ارتقا دهید**، و همه چیز بسیار **ساده‌تر، سازگارتر و بدیهی‌تر** است، و لازم نیست همه این جزئیات تاریخی را بدانید. 😎

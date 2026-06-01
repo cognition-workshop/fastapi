@@ -1,51 +1,51 @@
-# Query Parameters and String Validations
+# پارامترهای کوئری و اعتبارسنجی رشته‌ای
 
-**FastAPI** allows you to declare additional information and validation for your parameters.
+**FastAPI** به شما امکان می‌دهد اطلاعات و اعتبارسنجی اضافی برای پارامترهای خود اعلان کنید.
 
-Let's take this application as example:
+بیایید این برنامه را به عنوان مثال در نظر بگیریم:
 
 {* ../../docs_src/query_params_str_validations/tutorial001_py310.py hl[7] *}
 
-The query parameter `q` is of type `str | None`, that means that it's of type `str` but could also be `None`, and indeed, the default value is `None`, so FastAPI will know it's not required.
+پارامتر کوئری `q` از تایپ `str | None` است، یعنی از تایپ `str` است اما می‌تواند `None` هم باشد، و در واقع مقدار پیش‌فرض `None` است، بنابراین FastAPI خواهد دانست که الزامی نیست.
 
 /// note
 
-FastAPI will know that the value of `q` is not required because of the default value `= None`.
+FastAPI خواهد دانست که مقدار `q` الزامی نیست به دلیل مقدار پیش‌فرض `= None`.
 
-Having `str | None` will allow your editor to give you better support and detect errors.
+داشتن `str | None` به ویرایشگر شما اجازه می‌دهد پشتیبانی بهتری ارائه دهد و خطاها را تشخیص دهد.
 
 ///
 
-## Additional validation
+## اعتبارسنجی اضافی
 
-We are going to enforce that even though `q` is optional, whenever it is provided, **its length doesn't exceed 50 characters**.
+قرار است الزام کنیم که حتی اگر `q` اختیاری است، هر وقت ارائه شد، **طول آن از 50 کاراکتر بیشتر نشود**.
 
-### Import `Query` and `Annotated`
+### وارد کردن `Query` و `Annotated`
 
-To achieve that, first import:
+برای رسیدن به این هدف، ابتدا وارد کنید:
 
-* `Query` from `fastapi`
-* `Annotated` from `typing`
+* `Query` از `fastapi`
+* `Annotated` از `typing`
 
 {* ../../docs_src/query_params_str_validations/tutorial002_an_py310.py hl[1,3] *}
 
 /// info
 
-FastAPI added support for `Annotated` (and started recommending it) in version 0.95.0.
+FastAPI پشتیبانی از `Annotated` را در نسخه 0.95.0 اضافه کرد (و شروع به توصیه آن کرد).
 
-If you have an older version, you would get errors when trying to use `Annotated`.
+اگر نسخه قدیمی‌تری دارید، هنگام تلاش برای استفاده از `Annotated` خطا دریافت خواهید کرد.
 
-Make sure you [Upgrade the FastAPI version](../deployment/versions.md#upgrading-the-fastapi-versions){.internal-link target=_blank} to at least 0.95.1 before using `Annotated`.
+مطمئن شوید که [نسخه FastAPI را ارتقا دهید](../deployment/versions.md#upgrading-the-fastapi-versions){.internal-link target=_blank} حداقل به 0.95.1 قبل از استفاده از `Annotated`.
 
 ///
 
-## Use `Annotated` in the type for the `q` parameter
+## استفاده از `Annotated` در تایپ پارامتر `q`
 
-Remember I told you before that `Annotated` can be used to add metadata to your parameters in the [Python Types Intro](../python-types.md#type-hints-with-metadata-annotations){.internal-link target=_blank}?
+یادتان هست قبلاً گفتم `Annotated` می‌تواند برای اضافه کردن متاداده به پارامترهای شما در [معرفی تایپ‌های پایتون](../python-types.md#type-hints-with-metadata-annotations){.internal-link target=_blank} استفاده شود؟
 
-Now it's the time to use it with FastAPI. 🚀
+حالا وقت استفاده از آن با FastAPI است. 🚀
 
-We had this type annotation:
+ما این حاشیه‌نویسی تایپ را داشتیم:
 
 //// tab | Python 3.10+
 
@@ -63,7 +63,7 @@ q: Union[str, None] = None
 
 ////
 
-What we will do is wrap that with `Annotated`, so it becomes:
+کاری که می‌کنیم این است که آن را با `Annotated` بپوشانیم، تا بشود:
 
 //// tab | Python 3.10+
 
@@ -81,136 +81,136 @@ q: Annotated[Union[str, None]] = None
 
 ////
 
-Both of those versions mean the same thing, `q` is a parameter that can be a `str` or `None`, and by default, it is `None`.
+هر دو نسخه به یک معنا هستند، `q` پارامتری است که می‌تواند `str` یا `None` باشد، و به طور پیش‌فرض `None` است.
 
-Now let's jump to the fun stuff. 🎉
+حالا بریم سراغ بخش هیجان‌انگیز. 🎉
 
-## Add `Query` to `Annotated` in the `q` parameter
+## اضافه کردن `Query` به `Annotated` در پارامتر `q`
 
-Now that we have this `Annotated` where we can put more information (in this case some additional validation), add `Query` inside of `Annotated`, and set the parameter `max_length` to `50`:
+حالا که این `Annotated` را داریم که می‌توانیم اطلاعات بیشتری (در این مورد اعتبارسنجی اضافی) در آن قرار دهیم، `Query` را درون `Annotated` اضافه کنید و پارامتر `max_length` را به `50` تنظیم کنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial002_an_py310.py hl[9] *}
 
-Notice that the default value is still `None`, so the parameter is still optional.
+توجه کنید که مقدار پیش‌فرض همچنان `None` است، بنابراین پارامتر همچنان اختیاری است.
 
-But now, having `Query(max_length=50)` inside of `Annotated`, we are telling FastAPI that we want it to have **additional validation** for this value, we want it to have maximum 50 characters. 😎
-
-/// tip
-
-Here we are using `Query()` because this is a **query parameter**. Later we will see others like `Path()`, `Body()`, `Header()`, and `Cookie()`, that also accept the same arguments as `Query()`.
-
-///
-
-FastAPI will now:
-
-* **Validate** the data making sure that the max length is 50 characters
-* Show a **clear error** for the client when the data is not valid
-* **Document** the parameter in the OpenAPI schema *path operation* (so it will show up in the **automatic docs UI**)
-
-## Alternative (old): `Query` as the default value
-
-Previous versions of FastAPI (before <abbr title="before 2023-03">0.95.0</abbr>) required you to use `Query` as the default value of your parameter, instead of putting it in `Annotated`, there's a high chance that you will see code using it around, so I'll explain it to you.
+اما اکنون، با داشتن `Query(max_length=50)` درون `Annotated`، به FastAPI می‌گوییم که می‌خواهیم **اعتبارسنجی اضافی** برای این مقدار داشته باشیم، می‌خواهیم حداکثر 50 کاراکتر داشته باشد. 😎
 
 /// tip
 
-For new code and whenever possible, use `Annotated` as explained above. There are multiple advantages (explained below) and no disadvantages. 🍰
+اینجا از `Query()` استفاده می‌کنیم زیرا این یک **پارامتر کوئری** است. بعداً دیگران مانند `Path()`، `Body()`، `Header()` و `Cookie()` را خواهیم دید که همان آرگومان‌های `Query()` را می‌پذیرند.
 
 ///
 
-This is how you would use `Query()` as the default value of your function parameter, setting the parameter `max_length` to 50:
+FastAPI اکنون:
+
+* داده‌ها را **اعتبارسنجی** می‌کند و مطمئن می‌شود حداکثر طول 50 کاراکتر است
+* وقتی داده‌ها معتبر نیستند **خطای واضح** به کلاینت نشان می‌دهد
+* پارامتر را در اسکیمای OpenAPI *عملیات مسیر* **مستند** می‌کند (بنابراین در **رابط کاربری مستندات خودکار** نمایش داده خواهد شد)
+
+## جایگزین (قدیمی): `Query` به عنوان مقدار پیش‌فرض
+
+نسخه‌های قبلی FastAPI (قبل از <abbr title="قبل از 2023-03">0.95.0</abbr>) از شما می‌خواستند `Query` را به عنوان مقدار پیش‌فرض پارامتر خود استفاده کنید، به جای قرار دادن آن در `Annotated`، احتمال زیادی وجود دارد که کدهایی با این روش ببینید، پس برایتان توضیح می‌دهم.
+
+/// tip
+
+برای کد جدید و هر زمان که امکانش هست، از `Annotated` همانطور که بالا توضیح داده شد استفاده کنید. مزایای متعددی دارد (که در زیر توضیح داده شده) و هیچ عیبی ندارد. 🍰
+
+///
+
+اینطور از `Query()` به عنوان مقدار پیش‌فرض پارامتر تابع خود استفاده می‌کنید، با تنظیم پارامتر `max_length` به 50:
 
 {* ../../docs_src/query_params_str_validations/tutorial002_py310.py hl[7] *}
 
-As in this case (without using `Annotated`) we have to replace the default value `None` in the function with `Query()`, we now need to set the default value with the parameter `Query(default=None)`, it serves the same purpose of defining that default value (at least for FastAPI).
+چون در این مورد (بدون استفاده از `Annotated`) باید مقدار پیش‌فرض `None` را در تابع با `Query()` جایگزین کنیم، اکنون باید مقدار پیش‌فرض را با پارامتر `Query(default=None)` تنظیم کنیم، همان هدف تعریف آن مقدار پیش‌فرض را دارد (حداقل برای FastAPI).
 
-So:
+بنابراین:
 
 ```Python
 q: str | None = Query(default=None)
 ```
 
-...makes the parameter optional, with a default value of `None`, the same as:
+...پارامتر را اختیاری می‌کند، با مقدار پیش‌فرض `None`، مثل:
 
 
 ```Python
 q: str | None = None
 ```
 
-But the `Query` version declares it explicitly as being a query parameter.
+اما نسخه `Query` آن را صریحاً به عنوان پارامتر کوئری اعلان می‌کند.
 
-Then, we can pass more parameters to `Query`. In this case, the `max_length` parameter that applies to strings:
+سپس، می‌توانیم پارامترهای بیشتری به `Query` ارسال کنیم. در این مورد، پارامتر `max_length` که به رشته‌ها اعمال می‌شود:
 
 ```Python
 q: str | None = Query(default=None, max_length=50)
 ```
 
-This will validate the data, show a clear error when the data is not valid, and document the parameter in the OpenAPI schema *path operation*.
+این داده‌ها را اعتبارسنجی می‌کند، وقتی داده‌ها معتبر نیستند خطای واضح نشان می‌دهد و پارامتر را در اسکیمای OpenAPI *عملیات مسیر* مستند می‌کند.
 
-### `Query` as the default value or in `Annotated`
+### `Query` به عنوان مقدار پیش‌فرض یا در `Annotated`
 
-Keep in mind that when using `Query` inside of `Annotated` you cannot use the `default` parameter for `Query`.
+به خاطر داشته باشید که وقتی از `Query` درون `Annotated` استفاده می‌کنید، نمی‌توانید از پارامتر `default` برای `Query` استفاده کنید.
 
-Instead, use the actual default value of the function parameter. Otherwise, it would be inconsistent.
+در عوض، از مقدار پیش‌فرض واقعی پارامتر تابع استفاده کنید. در غیر این صورت، ناسازگار خواهد بود.
 
-For example, this is not allowed:
+برای مثال، این مجاز نیست:
 
 ```Python
 q: Annotated[str, Query(default="rick")] = "morty"
 ```
 
-...because it's not clear if the default value should be `"rick"` or `"morty"`.
+...زیرا مشخص نیست مقدار پیش‌فرض باید `"rick"` باشد یا `"morty"`.
 
-So, you would use (preferably):
+بنابراین، (ترجیحاً) اینطور استفاده کنید:
 
 ```Python
 q: Annotated[str, Query()] = "rick"
 ```
 
-...or in older code bases you will find:
+...یا در پایگاه‌های کد قدیمی‌تر خواهید دید:
 
 ```Python
 q: str = Query(default="rick")
 ```
 
-### Advantages of `Annotated`
+### مزایای `Annotated`
 
-**Using `Annotated` is recommended** instead of the default value in function parameters, it is **better** for multiple reasons. 🤓
+**استفاده از `Annotated` توصیه می‌شود** به جای مقدار پیش‌فرض در پارامترهای تابع، به چندین دلیل **بهتر** است. 🤓
 
-The **default** value of the **function parameter** is the **actual default** value, that's more intuitive with Python in general. 😌
+**مقدار پیش‌فرض** **پارامتر تابع** همان **مقدار پیش‌فرض واقعی** است، که به طور کلی با پایتون بدیهی‌تر است. 😌
 
-You could **call** that same function in **other places** without FastAPI, and it would **work as expected**. If there's a **required** parameter (without a default value), your **editor** will let you know with an error, **Python** will also complain if you run it without passing the required parameter.
+می‌توانید همان تابع را در **مکان‌های دیگر** بدون FastAPI **فراخوانی** کنید، و **به درستی کار خواهد کرد**. اگر یک **پارامتر الزامی** (بدون مقدار پیش‌فرض) وجود داشته باشد، **ویرایشگر** با خطا به شما اطلاع خواهد داد، و **پایتون** هم اگر بدون ارسال پارامتر الزامی آن را اجرا کنید شکایت خواهد کرد.
 
-When you don't use `Annotated` and instead use the **(old) default value style**, if you call that function without FastAPI in **other places**, you have to **remember** to pass the arguments to the function for it to work correctly, otherwise the values will be different from what you expect (e.g. `QueryInfo` or something similar instead of `str`). And your editor won't complain, and Python won't complain running that function, only when the operations inside error out.
+وقتی از `Annotated` استفاده نمی‌کنید و به جای آن از سبک **(قدیمی) مقدار پیش‌فرض** استفاده می‌کنید، اگر آن تابع را بدون FastAPI در **مکان‌های دیگر** فراخوانی کنید، باید **به یاد داشته باشید** آرگومان‌ها را به تابع ارسال کنید تا درست کار کند، در غیر این صورت مقادیر با آنچه انتظار دارید متفاوت خواهند بود (مثلاً `QueryInfo` یا چیزی مشابه به جای `str`). و ویرایشگر شکایت نخواهد کرد، و پایتون هم هنگام اجرای آن تابع شکایت نخواهد کرد، فقط وقتی عملیات‌های داخل آن خطا بدهند.
 
-Because `Annotated` can have more than one metadata annotation, you could now even use the same function with other tools, like <a href="https://typer.tiangolo.com/" class="external-link" target="_blank">Typer</a>. 🚀
+چون `Annotated` می‌تواند بیش از یک حاشیه‌نویسی متاداده داشته باشد، حتی می‌توانید همان تابع را با ابزارهای دیگر مانند <a href="https://typer.tiangolo.com/" class="external-link" target="_blank">Typer</a> استفاده کنید. 🚀
 
-## Add more validations
+## اضافه کردن اعتبارسنجی‌های بیشتر
 
-You can also add a parameter `min_length`:
+همچنین می‌توانید پارامتر `min_length` اضافه کنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial003_an_py310.py hl[10] *}
 
-## Add regular expressions
+## اضافه کردن عبارات باقاعده
 
-You can define a <abbr title="A regular expression, regex or regexp is a sequence of characters that define a search pattern for strings.">regular expression</abbr> `pattern` that the parameter should match:
+می‌توانید یک <abbr title="عبارت باقاعده، regex یا regexp دنباله‌ای از کاراکترهاست که یک الگوی جستجو برای رشته‌ها تعریف می‌کند.">عبارت باقاعده</abbr> `pattern` تعریف کنید که پارامتر باید با آن مطابقت داشته باشد:
 
 {* ../../docs_src/query_params_str_validations/tutorial004_an_py310.py hl[11] *}
 
-This specific regular expression pattern checks that the received parameter value:
+این الگوی عبارت باقاعده خاص بررسی می‌کند که مقدار پارامتر دریافتی:
 
-* `^`: starts with the following characters, doesn't have characters before.
-* `fixedquery`: has the exact value `fixedquery`.
-* `$`: ends there, doesn't have any more characters after `fixedquery`.
+* `^`: با کاراکترهای بعدی شروع شود، قبل از آن کاراکتری نداشته باشد.
+* `fixedquery`: دقیقاً مقدار `fixedquery` داشته باشد.
+* `$`: آنجا تمام شود، بعد از `fixedquery` کاراکتر دیگری نداشته باشد.
 
-If you feel lost with all these **"regular expression"** ideas, don't worry. They are a hard topic for many people. You can still do a lot of stuff without needing regular expressions yet.
+اگر با همه این ایده‌های **"عبارت باقاعده"** گیج شدید، نگران نباشید. برای بسیاری از افراد موضوع دشواری است. هنوز هم می‌توانید بدون نیاز به عبارات باقاعده کارهای زیادی انجام دهید.
 
-Now you know that whenever you need them you can use them in **FastAPI**.
+حالا می‌دانید که هر وقت به آنها نیاز داشتید می‌توانید در **FastAPI** از آنها استفاده کنید.
 
-### Pydantic v1 `regex` instead of `pattern`
+### `regex` در Pydantic v1 به جای `pattern`
 
-Before Pydantic version 2 and before FastAPI 0.100.0, the parameter was called `regex` instead of `pattern`, but it's now deprecated.
+قبل از نسخه 2 Pydantic و قبل از FastAPI 0.100.0، پارامتر `regex` نام داشت به جای `pattern`، اما اکنون منسوخ شده.
 
-You could still see some code using it:
+ممکن است هنوز کدهایی ببینید که از آن استفاده می‌کنند:
 
 //// tab | Pydantic v1
 
@@ -218,37 +218,37 @@ You could still see some code using it:
 
 ////
 
-But know that this is deprecated and it should be updated to use the new parameter `pattern`. 🤓
+اما بدانید که این منسوخ شده و باید به استفاده از پارامتر جدید `pattern` به‌روزرسانی شود. 🤓
 
-## Default values
+## مقادیر پیش‌فرض
 
-You can, of course, use default values other than `None`.
+البته می‌توانید از مقادیر پیش‌فرض غیر از `None` استفاده کنید.
 
-Let's say that you want to declare the `q` query parameter to have a `min_length` of `3`, and to have a default value of `"fixedquery"`:
+فرض کنید می‌خواهید پارامتر کوئری `q` را با `min_length` برابر `3` و مقدار پیش‌فرض `"fixedquery"` اعلان کنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial005_an_py39.py hl[9] *}
 
 /// note
 
-Having a default value of any type, including `None`, makes the parameter optional (not required).
+داشتن مقدار پیش‌فرض از هر تایپی، از جمله `None`، پارامتر را اختیاری (نه الزامی) می‌کند.
 
 ///
 
-## Required parameters
+## پارامترهای الزامی
 
-When we don't need to declare more validations or metadata, we can make the `q` query parameter required just by not declaring a default value, like:
+وقتی نیازی به اعلان اعتبارسنجی یا متاداده بیشتر نداریم، می‌توانیم پارامتر کوئری `q` را فقط با عدم اعلان مقدار پیش‌فرض الزامی کنیم:
 
 ```Python
 q: str
 ```
 
-instead of:
+به جای:
 
 ```Python
 q: str | None = None
 ```
 
-But we are now declaring it with `Query`, for example like:
+اما اکنون آن را با `Query` اعلان می‌کنیم، برای مثال مانند:
 
 //// tab | Annotated
 
@@ -258,35 +258,35 @@ q: Annotated[str | None, Query(min_length=3)] = None
 
 ////
 
-So, when you need to declare a value as required while using `Query`, you can simply not declare a default value:
+بنابراین، وقتی نیاز دارید مقداری را هنگام استفاده از `Query` به عنوان الزامی اعلان کنید، می‌توانید به سادگی مقدار پیش‌فرض اعلان نکنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial006_an_py39.py hl[9] *}
 
-### Required, can be `None`
+### الزامی، می‌تواند `None` باشد
 
-You can declare that a parameter can accept `None`, but that it's still required. This would force clients to send a value, even if the value is `None`.
+می‌توانید اعلان کنید که یک پارامتر می‌تواند `None` بپذیرد، اما همچنان الزامی است. این کلاینت‌ها را مجبور می‌کند مقداری ارسال کنند، حتی اگر مقدار `None` باشد.
 
-To do that, you can declare that `None` is a valid type but simply do not declare a default value:
+برای این کار، می‌توانید اعلان کنید که `None` یک تایپ معتبر است اما به سادگی مقدار پیش‌فرض اعلان نکنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial006c_an_py310.py hl[9] *}
 
-## Query parameter list / multiple values
+## لیست پارامترهای کوئری / مقادیر چندگانه
 
-When you define a query parameter explicitly with `Query` you can also declare it to receive a list of values, or said in another way, to receive multiple values.
+وقتی یک پارامتر کوئری را صریحاً با `Query` تعریف می‌کنید، همچنین می‌توانید آن را برای دریافت لیست مقادیر، یا به عبارت دیگر، دریافت مقادیر چندگانه اعلان کنید.
 
-For example, to declare a query parameter `q` that can appear multiple times in the URL, you can write:
+برای مثال، برای اعلان پارامتر کوئری `q` که می‌تواند چندین بار در URL ظاهر شود، می‌توانید بنویسید:
 
 {* ../../docs_src/query_params_str_validations/tutorial011_an_py310.py hl[9] *}
 
-Then, with a URL like:
+سپس، با URL مانند:
 
 ```
 http://localhost:8000/items/?q=foo&q=bar
 ```
 
-you would receive the multiple `q` *query parameters'* values (`foo` and `bar`) in a Python `list` inside your *path operation function*, in the *function parameter* `q`.
+مقادیر چندگانه *پارامترهای کوئری* `q` (`foo` و `bar`) را در یک `list` پایتون درون *تابع عملیات مسیر* خود، در *پارامتر تابع* `q` دریافت خواهید کرد.
 
-So, the response to that URL would be:
+بنابراین، پاسخ به آن URL خواهد بود:
 
 ```JSON
 {
@@ -299,27 +299,27 @@ So, the response to that URL would be:
 
 /// tip
 
-To declare a query parameter with a type of `list`, like in the example above, you need to explicitly use `Query`, otherwise it would be interpreted as a request body.
+برای اعلان یک پارامتر کوئری با تایپ `list`، مانند مثال بالا، باید صریحاً از `Query` استفاده کنید، در غیر این صورت به عنوان بدنه درخواست تفسیر خواهد شد.
 
 ///
 
-The interactive API docs will update accordingly, to allow multiple values:
+مستندات API تعاملی به‌روز خواهد شد تا مقادیر چندگانه را اجازه دهد:
 
 <img src="/img/tutorial/query-params-str-validations/image02.png">
 
-### Query parameter list / multiple values with defaults
+### لیست پارامترهای کوئری / مقادیر چندگانه با پیش‌فرض‌ها
 
-You can also define a default `list` of values if none are provided:
+همچنین می‌توانید یک `list` پیش‌فرض تعریف کنید اگر هیچ‌کدام ارائه نشود:
 
 {* ../../docs_src/query_params_str_validations/tutorial012_an_py39.py hl[9] *}
 
-If you go to:
+اگر به:
 
 ```
 http://localhost:8000/items/
 ```
 
-the default of `q` will be: `["foo", "bar"]` and your response will be:
+بروید، پیش‌فرض `q` خواهد بود: `["foo", "bar"]` و پاسخ شما خواهد بود:
 
 ```JSON
 {
@@ -330,163 +330,163 @@ the default of `q` will be: `["foo", "bar"]` and your response will be:
 }
 ```
 
-#### Using just `list`
+#### استفاده فقط از `list`
 
-You can also use `list` directly instead of `list[str]`:
+همچنین می‌توانید مستقیماً از `list` به جای `list[str]` استفاده کنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial013_an_py39.py hl[9] *}
 
 /// note
 
-Keep in mind that in this case, FastAPI won't check the contents of the list.
+به خاطر داشته باشید که در این مورد، FastAPI محتوای لیست را بررسی نخواهد کرد.
 
-For example, `list[int]` would check (and document) that the contents of the list are integers. But `list` alone wouldn't.
+برای مثال، `list[int]` محتوای لیست را بررسی (و مستند) می‌کند که اعداد صحیح هستند. اما `list` به تنهایی این کار را نخواهد کرد.
 
 ///
 
-## Declare more metadata
+## اعلان متاداده بیشتر
 
-You can add more information about the parameter.
+می‌توانید اطلاعات بیشتری درباره پارامتر اضافه کنید.
 
-That information will be included in the generated OpenAPI and used by the documentation user interfaces and external tools.
+آن اطلاعات در OpenAPI تولید شده گنجانده و توسط رابط‌های کاربری مستندات و ابزارهای خارجی استفاده خواهد شد.
 
 /// note
 
-Keep in mind that different tools might have different levels of OpenAPI support.
+به خاطر داشته باشید که ابزارهای مختلف ممکن است سطوح مختلفی از پشتیبانی OpenAPI داشته باشند.
 
-Some of them might not show all the extra information declared yet, although in most of the cases, the missing feature is already planned for development.
+برخی از آنها ممکن است هنوز همه اطلاعات اضافی اعلان شده را نشان ندهند، اگرچه در بیشتر موارد، ویژگی مفقود قبلاً برای توسعه برنامه‌ریزی شده.
 
 ///
 
-You can add a `title`:
+می‌توانید یک `title` اضافه کنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial007_an_py310.py hl[10] *}
 
-And a `description`:
+و یک `description`:
 
 {* ../../docs_src/query_params_str_validations/tutorial008_an_py310.py hl[14] *}
 
-## Alias parameters
+## پارامترهای مستعار
 
-Imagine that you want the parameter to be `item-query`.
+تصور کنید می‌خواهید پارامتر `item-query` باشد.
 
-Like in:
+مانند:
 
 ```
 http://127.0.0.1:8000/items/?item-query=foobaritems
 ```
 
-But `item-query` is not a valid Python variable name.
+اما `item-query` یک نام متغیر معتبر پایتون نیست.
 
-The closest would be `item_query`.
+نزدیک‌ترین مورد `item_query` خواهد بود.
 
-But you still need it to be exactly `item-query`...
+اما همچنان نیاز دارید دقیقاً `item-query` باشد...
 
-Then you can declare an `alias`, and that alias is what will be used to find the parameter value:
+در این صورت می‌توانید یک `alias` اعلان کنید، و آن مستعار برای یافتن مقدار پارامتر استفاده خواهد شد:
 
 {* ../../docs_src/query_params_str_validations/tutorial009_an_py310.py hl[9] *}
 
-## Deprecating parameters
+## منسوخ کردن پارامترها
 
-Now let's say you don't like this parameter anymore.
+حالا فرض کنید دیگر این پارامتر را دوست ندارید.
 
-You have to leave it there a while because there are clients using it, but you want the docs to clearly show it as <abbr title="obsolete, recommended not to use it">deprecated</abbr>.
+باید مدتی آن را نگه دارید زیرا کلاینت‌هایی هستند که از آن استفاده می‌کنند، اما می‌خواهید مستندات به وضوح آن را به عنوان <abbr title="منسوخ، توصیه به عدم استفاده">منسوخ</abbr> نشان دهد.
 
-Then pass the parameter `deprecated=True` to `Query`:
+سپس پارامتر `deprecated=True` را به `Query` ارسال کنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial010_an_py310.py hl[19] *}
 
-The docs will show it like this:
+مستندات آن را اینطور نشان خواهد داد:
 
 <img src="/img/tutorial/query-params-str-validations/image01.png">
 
-## Exclude parameters from OpenAPI
+## حذف پارامترها از OpenAPI
 
-To exclude a query parameter from the generated OpenAPI schema (and thus, from the automatic documentation systems), set the parameter `include_in_schema` of `Query` to `False`:
+برای حذف یک پارامتر کوئری از اسکیمای OpenAPI تولید شده (و بنابراین از سیستم‌های مستندات خودکار)، پارامتر `include_in_schema` از `Query` را به `False` تنظیم کنید:
 
 {* ../../docs_src/query_params_str_validations/tutorial014_an_py310.py hl[10] *}
 
-## Custom Validation
+## اعتبارسنجی سفارشی
 
-There could be cases where you need to do some **custom validation** that can't be done with the parameters shown above.
+ممکن است مواردی باشد که نیاز به **اعتبارسنجی سفارشی** دارید که با پارامترهای نشان داده شده در بالا امکان‌پذیر نیست.
 
-In those cases, you can use a **custom validator function** that is applied after the normal validation (e.g. after validating that the value is a `str`).
+در آن موارد، می‌توانید از یک **تابع اعتبارسنج سفارشی** استفاده کنید که پس از اعتبارسنجی عادی اعمال می‌شود (مثلاً بعد از اعتبارسنجی اینکه مقدار `str` است).
 
-You can achieve that using <a href="https://docs.pydantic.dev/latest/concepts/validators/#field-after-validator" class="external-link" target="_blank">Pydantic's `AfterValidator`</a> inside of `Annotated`.
+می‌توانید با استفاده از <a href="https://docs.pydantic.dev/latest/concepts/validators/#field-after-validator" class="external-link" target="_blank">`AfterValidator` از Pydantic</a> درون `Annotated` به این هدف برسید.
 
 /// tip
 
-Pydantic also has <a href="https://docs.pydantic.dev/latest/concepts/validators/#field-before-validator" class="external-link" target="_blank">`BeforeValidator`</a> and others. 🤓
+Pydantic همچنین <a href="https://docs.pydantic.dev/latest/concepts/validators/#field-before-validator" class="external-link" target="_blank">`BeforeValidator`</a> و موارد دیگر دارد. 🤓
 
 ///
 
-For example, this custom validator checks that the item ID starts with `isbn-` for an <abbr title="ISBN means International Standard Book Number">ISBN</abbr> book number or with `imdb-` for an <abbr title="IMDB (Internet Movie Database) is a website with information about movies">IMDB</abbr> movie URL ID:
+برای مثال، این اعتبارسنج سفارشی بررسی می‌کند که شناسه آیتم با `isbn-` برای شماره کتاب <abbr title="ISBN یعنی شماره استاندارد بین‌المللی کتاب">ISBN</abbr> یا با `imdb-` برای شناسه URL فیلم <abbr title="IMDB (پایگاه داده فیلم‌های اینترنتی) وب‌سایتی با اطلاعات درباره فیلم‌هاست">IMDB</abbr> شروع شود:
 
 {* ../../docs_src/query_params_str_validations/tutorial015_an_py310.py hl[5,16:19,24] *}
 
 /// info
 
-This is available with Pydantic version 2 or above. 😎
+این با نسخه 2 یا بالاتر Pydantic در دسترس است. 😎
 
 ///
 
 /// tip
 
-If you need to do any type of validation that requires communicating with any **external component**, like a database or another API, you should instead use **FastAPI Dependencies**, you will learn about them later.
+اگر نیاز به هر نوع اعتبارسنجی دارید که مستلزم ارتباط با هر **مؤلفه خارجی** باشد، مانند پایگاه داده یا API دیگری، باید از **وابستگی‌های FastAPI** استفاده کنید، که بعداً درباره آنها خواهید آموخت.
 
-These custom validators are for things that can be checked with **only** the **same data** provided in the request.
+این اعتبارسنج‌های سفارشی برای چیزهایی هستند که فقط با **همان داده‌های** ارائه شده در درخواست قابل بررسی هستند.
 
 ///
 
-### Understand that Code
+### درک آن کد
 
-The important point is just using **`AfterValidator` with a function inside `Annotated`**. Feel free to skip this part. 🤸
+نکته مهم فقط استفاده از **`AfterValidator` با یک تابع درون `Annotated`** است. خیالتان راحت باشد و این بخش را رد کنید. 🤸
 
 ---
 
-But if you're curious about this specific code example and you're still entertained, here are some extra details.
+اما اگر درباره این مثال کد خاص کنجکاو هستید و هنوز سرگرم هستید، اینجا جزئیات بیشتری آمده.
 
-#### String with `value.startswith()`
+#### رشته با `value.startswith()`
 
-Did you notice? a string using `value.startswith()` can take a tuple, and it will check each value in the tuple:
+متوجه شدید؟ یک رشته با استفاده از `value.startswith()` می‌تواند یک تاپل بگیرد و هر مقدار در تاپل را بررسی کند:
 
 {* ../../docs_src/query_params_str_validations/tutorial015_an_py310.py ln[16:19] hl[17] *}
 
-#### A Random Item
+#### یک آیتم تصادفی
 
-With `data.items()` we get an <abbr title="Something we can iterate on with a for loop, like a list, set, etc.">iterable object</abbr> with tuples containing the key and value for each dictionary item.
+با `data.items()` یک شیء <abbr title="چیزی که می‌توانیم با حلقه for روی آن تکرار کنیم، مانند لیست، مجموعه و غیره">قابل تکرار</abbr> با تاپل‌های شامل کلید و مقدار برای هر آیتم دیکشنری دریافت می‌کنیم.
 
-We convert this iterable object into a proper `list` with `list(data.items())`.
+این شیء قابل تکرار را با `list(data.items())` به یک `list` واقعی تبدیل می‌کنیم.
 
-Then with `random.choice()` we can get a **random value** from the list, so, we get a tuple with `(id, name)`. It will be something like `("imdb-tt0371724", "The Hitchhiker's Guide to the Galaxy")`.
+سپس با `random.choice()` یک **مقدار تصادفی** از لیست دریافت می‌کنیم، بنابراین یک تاپل با `(id, name)` دریافت می‌کنیم. چیزی مانند `("imdb-tt0371724", "The Hitchhiker's Guide to the Galaxy")` خواهد بود.
 
-Then we **assign those two values** of the tuple to the variables `id` and `name`.
+سپس آن **دو مقدار** تاپل را به متغیرهای `id` و `name` **اختصاص** می‌دهیم.
 
-So, if the user didn't provide an item ID, they will still receive a random suggestion.
+بنابراین، اگر کاربر شناسه آیتمی ارائه نکرد، همچنان یک پیشنهاد تصادفی دریافت خواهد کرد.
 
-...we do all this in a **single simple line**. 🤯 Don't you love Python? 🐍
+...ما همه اینها را در **یک خط ساده** انجام می‌دهیم. 🤯 پایتون را دوست ندارید؟ 🐍
 
 {* ../../docs_src/query_params_str_validations/tutorial015_an_py310.py ln[22:30] hl[29] *}
 
-## Recap
+## خلاصه
 
-You can declare additional validations and metadata for your parameters.
+می‌توانید اعتبارسنجی‌ها و متاداده اضافی برای پارامترهای خود اعلان کنید.
 
-Generic validations and metadata:
+اعتبارسنجی‌ها و متاداده عمومی:
 
 * `alias`
 * `title`
 * `description`
 * `deprecated`
 
-Validations specific for strings:
+اعتبارسنجی‌های مختص رشته‌ها:
 
 * `min_length`
 * `max_length`
 * `pattern`
 
-Custom validations using `AfterValidator`.
+اعتبارسنجی‌های سفارشی با استفاده از `AfterValidator`.
 
-In these examples you saw how to declare validations for `str` values.
+در این مثال‌ها نحوه اعلان اعتبارسنجی برای مقادیر `str` را دیدید.
 
-See the next chapters to learn how to declare validations for other types, like numbers.
+فصل‌های بعدی را ببینید تا نحوه اعلان اعتبارسنجی برای تایپ‌های دیگر مانند اعداد را بیاموزید.

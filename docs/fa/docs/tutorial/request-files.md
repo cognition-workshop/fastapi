@@ -1,176 +1,176 @@
-# Request Files
+# فایل‌های درخواست
 
-You can define files to be uploaded by the client using `File`.
+می‌توانید فایل‌هایی که باید توسط کلاینت آپلود شوند را با استفاده از `File` تعریف کنید.
 
 /// info
 
-To receive uploaded files, first install <a href="https://github.com/Kludex/python-multipart" class="external-link" target="_blank">`python-multipart`</a>.
+برای دریافت فایل‌های آپلود شده، ابتدا <a href="https://github.com/Kludex/python-multipart" class="external-link" target="_blank">`python-multipart`</a> را نصب کنید.
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then install it, for example:
+مطمئن شوید که یک [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} ایجاد کرده، آن را فعال کرده و سپس نصب کنید، برای مثال:
 
 ```console
 $ pip install python-multipart
 ```
 
-This is because uploaded files are sent as "form data".
+این به این دلیل است که فایل‌های آپلود شده به صورت "داده‌های فرم" ارسال می‌شوند.
 
 ///
 
-## Import `File`
+## وارد کردن `File`
 
-Import `File` and `UploadFile` from `fastapi`:
+`File` و `UploadFile` را از `fastapi` وارد کنید:
 
 {* ../../docs_src/request_files/tutorial001_an_py39.py hl[3] *}
 
-## Define `File` Parameters
+## تعریف پارامترهای `File`
 
-Create file parameters the same way you would for `Body` or `Form`:
+پارامترهای فایل را به همان شکلی که برای `Body` یا `Form` انجام می‌دهید ایجاد کنید:
 
 {* ../../docs_src/request_files/tutorial001_an_py39.py hl[9] *}
 
 /// info
 
-`File` is a class that inherits directly from `Form`.
+`File` کلاسی است که مستقیماً از `Form` ارث‌بری می‌کند.
 
-But remember that when you import `Query`, `Path`, `File` and others from `fastapi`, those are actually functions that return special classes.
+اما به یاد داشته باشید که وقتی `Query`، `Path`، `File` و دیگران را از `fastapi` وارد می‌کنید، آنها در واقع توابعی هستند که کلاس‌های خاصی برمی‌گردانند.
 
 ///
 
 /// tip
 
-To declare File bodies, you need to use `File`, because otherwise the parameters would be interpreted as query parameters or body (JSON) parameters.
+برای اعلان بدنه‌های فایل، باید از `File` استفاده کنید، زیرا در غیر این صورت پارامترها به عنوان پارامترهای کوئری یا پارامترهای بدنه (JSON) تفسیر خواهند شد.
 
 ///
 
-The files will be uploaded as "form data".
+فایل‌ها به عنوان "داده‌های فرم" آپلود خواهند شد.
 
-If you declare the type of your *path operation function* parameter as `bytes`, **FastAPI** will read the file for you and you will receive the contents as `bytes`.
+اگر تایپ پارامتر *تابع عملیات مسیر* خود را به عنوان `bytes` اعلان کنید، **FastAPI** فایل را برای شما خواهد خواند و محتوا را به صورت `bytes` دریافت خواهید کرد.
 
-Keep in mind that this means that the whole contents will be stored in memory. This will work well for small files.
+به خاطر داشته باشید که این به این معنی است که کل محتوا در حافظه ذخیره خواهد شد. این برای فایل‌های کوچک به خوبی کار خواهد کرد.
 
-But there are several cases in which you might benefit from using `UploadFile`.
+اما موارد متعددی وجود دارد که ممکن است از استفاده از `UploadFile` بهره‌مند شوید.
 
-## File Parameters with `UploadFile`
+## پارامترهای فایل با `UploadFile`
 
-Define a file parameter with a type of `UploadFile`:
+یک پارامتر فایل با تایپ `UploadFile` تعریف کنید:
 
 {* ../../docs_src/request_files/tutorial001_an_py39.py hl[14] *}
 
-Using `UploadFile` has several advantages over `bytes`:
+استفاده از `UploadFile` چندین مزیت نسبت به `bytes` دارد:
 
-* You don't have to use `File()` in the default value of the parameter.
-* It uses a "spooled" file:
-    * A file stored in memory up to a maximum size limit, and after passing this limit it will be stored in disk.
-* This means that it will work well for large files like images, videos, large binaries, etc. without consuming all the memory.
-* You can get metadata from the uploaded file.
-* It has a <a href="https://docs.python.org/3/glossary.html#term-file-like-object" class="external-link" target="_blank">file-like</a> `async` interface.
-* It exposes an actual Python <a href="https://docs.python.org/3/library/tempfile.html#tempfile.SpooledTemporaryFile" class="external-link" target="_blank">`SpooledTemporaryFile`</a> object that you can pass directly to other libraries that expect a file-like object.
+* نیازی به استفاده از `File()` در مقدار پیش‌فرض پارامتر ندارید.
+* از یک فایل "spooled" استفاده می‌کند:
+    * فایلی که تا حداکثر محدودیت اندازه در حافظه ذخیره می‌شود و پس از عبور از این حد در دیسک ذخیره خواهد شد.
+* این بدان معناست که برای فایل‌های بزرگ مانند تصاویر، ویدیوها، باینری‌های بزرگ و غیره بدون مصرف تمام حافظه به خوبی کار خواهد کرد.
+* می‌توانید متاداده از فایل آپلود شده دریافت کنید.
+* یک رابط `async` <a href="https://docs.python.org/3/glossary.html#term-file-like-object" class="external-link" target="_blank">شبه‌فایل</a> دارد.
+* یک شیء واقعی پایتون <a href="https://docs.python.org/3/library/tempfile.html#tempfile.SpooledTemporaryFile" class="external-link" target="_blank">`SpooledTemporaryFile`</a> را در اختیار می‌گذارد که می‌توانید مستقیماً به کتابخانه‌های دیگری که انتظار یک شیء شبه‌فایل دارند ارسال کنید.
 
 ### `UploadFile`
 
-`UploadFile` has the following attributes:
+`UploadFile` ویژگی‌های زیر را دارد:
 
-* `filename`: A `str` with the original file name that was uploaded (e.g. `myimage.jpg`).
-* `content_type`: A `str` with the content type (MIME type / media type) (e.g. `image/jpeg`).
-* `file`: A <a href="https://docs.python.org/3/library/tempfile.html#tempfile.SpooledTemporaryFile" class="external-link" target="_blank">`SpooledTemporaryFile`</a> (a <a href="https://docs.python.org/3/glossary.html#term-file-like-object" class="external-link" target="_blank">file-like</a> object). This is the actual Python file object that you can pass directly to other functions or libraries that expect a "file-like" object.
+* `filename`: یک `str` با نام اصلی فایل آپلود شده (مثلاً `myimage.jpg`).
+* `content_type`: یک `str` با تایپ محتوا (تایپ MIME / تایپ رسانه) (مثلاً `image/jpeg`).
+* `file`: یک <a href="https://docs.python.org/3/library/tempfile.html#tempfile.SpooledTemporaryFile" class="external-link" target="_blank">`SpooledTemporaryFile`</a> (یک شیء <a href="https://docs.python.org/3/glossary.html#term-file-like-object" class="external-link" target="_blank">شبه‌فایل</a>). این شیء واقعی فایل پایتون است که می‌توانید مستقیماً به توابع یا کتابخانه‌های دیگری که انتظار یک شیء "شبه‌فایل" دارند ارسال کنید.
 
-`UploadFile` has the following `async` methods. They all call the corresponding file methods underneath (using the internal `SpooledTemporaryFile`).
+`UploadFile` متدهای `async` زیر را دارد. همه آنها متدهای فایل مربوطه را در زیر فراخوانی می‌کنند (با استفاده از `SpooledTemporaryFile` داخلی).
 
-* `write(data)`: Writes `data` (`str` or `bytes`) to the file.
-* `read(size)`: Reads `size` (`int`) bytes/characters of the file.
-* `seek(offset)`: Goes to the byte position `offset` (`int`) in the file.
-    * E.g., `await myfile.seek(0)` would go to the start of the file.
-    * This is especially useful if you run `await myfile.read()` once and then need to read the contents again.
-* `close()`: Closes the file.
+* `write(data)`: `data` (`str` یا `bytes`) را در فایل می‌نویسد.
+* `read(size)`: `size` (`int`) بایت/کاراکتر از فایل را می‌خواند.
+* `seek(offset)`: به موقعیت بایت `offset` (`int`) در فایل می‌رود.
+    * مثلاً `await myfile.seek(0)` به ابتدای فایل خواهد رفت.
+    * این به ویژه مفید است اگر یکبار `await myfile.read()` را اجرا کنید و سپس نیاز داشته باشید محتوا را دوباره بخوانید.
+* `close()`: فایل را می‌بندد.
 
-As all these methods are `async` methods, you need to "await" them.
+از آنجا که تمام این متدها `async` هستند، باید آنها را "await" کنید.
 
-For example, inside of an `async` *path operation function* you can get the contents with:
+برای مثال، درون یک *تابع عملیات مسیر* `async` می‌توانید محتوا را اینطور دریافت کنید:
 
 ```Python
 contents = await myfile.read()
 ```
 
-If you are inside of a normal `def` *path operation function*, you can access the `UploadFile.file` directly, for example:
+اگر درون یک *تابع عملیات مسیر* عادی `def` هستید، می‌توانید مستقیماً به `UploadFile.file` دسترسی پیدا کنید، برای مثال:
 
 ```Python
 contents = myfile.file.read()
 ```
 
-/// note | `async` Technical Details
+/// note | جزئیات فنی `async`
 
-When you use the `async` methods, **FastAPI** runs the file methods in a threadpool and awaits for them.
-
-///
-
-/// note | Starlette Technical Details
-
-**FastAPI**'s `UploadFile` inherits directly from **Starlette**'s `UploadFile`, but adds some necessary parts to make it compatible with **Pydantic** and the other parts of FastAPI.
+وقتی از متدهای `async` استفاده می‌کنید، **FastAPI** متدهای فایل را در یک threadpool اجرا و آنها را await می‌کند.
 
 ///
 
-## What is "Form Data"
+/// note | جزئیات فنی Starlette
 
-The way HTML forms (`<form></form>`) sends the data to the server normally uses a "special" encoding for that data, it's different from JSON.
+`UploadFile` **FastAPI** مستقیماً از `UploadFile` **Starlette** ارث‌بری می‌کند، اما بخش‌های لازمی اضافه می‌کند تا با **Pydantic** و سایر بخش‌های FastAPI سازگار شود.
 
-**FastAPI** will make sure to read that data from the right place instead of JSON.
+///
 
-/// note | Technical Details
+## "داده‌های فرم" چیست
 
-Data from forms is normally encoded using the "media type" `application/x-www-form-urlencoded` when it doesn't include files.
+روشی که فرم‌های HTML (`<form></form>`) داده‌ها را به سرور ارسال می‌کنند معمولاً از یک رمزگذاری "خاص" برای آن داده‌ها استفاده می‌کند که با JSON متفاوت است.
 
-But when the form includes files, it is encoded as `multipart/form-data`. If you use `File`, **FastAPI** will know it has to get the files from the correct part of the body.
+**FastAPI** مطمئن خواهد شد که آن داده‌ها را از جای درست به جای JSON بخواند.
 
-If you want to read more about these encodings and form fields, head to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST" class="external-link" target="_blank"><abbr title="Mozilla Developer Network">MDN</abbr> web docs for <code>POST</code></a>.
+/// note | جزئیات فنی
+
+داده‌های فرم‌ها معمولاً با "تایپ رسانه" `application/x-www-form-urlencoded` رمزگذاری می‌شوند وقتی شامل فایل نیستند.
+
+اما وقتی فرم شامل فایل‌هاست، به صورت `multipart/form-data` رمزگذاری می‌شود. اگر از `File` استفاده کنید، **FastAPI** خواهد دانست که باید فایل‌ها را از بخش صحیح بدنه دریافت کند.
+
+اگر می‌خواهید بیشتر درباره این رمزگذاری‌ها و فیلدهای فرم بخوانید، به <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST" class="external-link" target="_blank">مستندات وب <abbr title="Mozilla Developer Network">MDN</abbr> برای <code>POST</code></a> مراجعه کنید.
 
 ///
 
 /// warning
 
-You can declare multiple `File` and `Form` parameters in a *path operation*, but you can't also declare `Body` fields that you expect to receive as JSON, as the request will have the body encoded using `multipart/form-data` instead of `application/json`.
+می‌توانید چندین پارامتر `File` و `Form` را در یک *عملیات مسیر* اعلان کنید، اما نمی‌توانید فیلدهای `Body` را نیز اعلان کنید که انتظار دارید به صورت JSON دریافت شوند، زیرا درخواست بدنه با `multipart/form-data` رمزگذاری خواهد شد به جای `application/json`.
 
-This is not a limitation of **FastAPI**, it's part of the HTTP protocol.
+این محدودیت **FastAPI** نیست، بخشی از پروتکل HTTP است.
 
 ///
 
-## Optional File Upload
+## آپلود فایل اختیاری
 
-You can make a file optional by using standard type annotations and setting a default value of `None`:
+می‌توانید با استفاده از حاشیه‌نویسی تایپ استاندارد و تنظیم مقدار پیش‌فرض `None` فایل را اختیاری کنید:
 
 {* ../../docs_src/request_files/tutorial001_02_an_py310.py hl[9,17] *}
 
-## `UploadFile` with Additional Metadata
+## `UploadFile` با متاداده اضافی
 
-You can also use `File()` with `UploadFile`, for example, to set additional metadata:
+همچنین می‌توانید از `File()` با `UploadFile` استفاده کنید، برای مثال، برای تنظیم متاداده اضافی:
 
 {* ../../docs_src/request_files/tutorial001_03_an_py39.py hl[9,15] *}
 
-## Multiple File Uploads
+## آپلود چندین فایل
 
-It's possible to upload several files at the same time.
+امکان آپلود چندین فایل به طور همزمان وجود دارد.
 
-They would be associated to the same "form field" sent using "form data".
+آنها به همان "فیلد فرم" ارسال شده با "داده‌های فرم" مرتبط خواهند بود.
 
-To use that, declare a list of `bytes` or `UploadFile`:
+برای استفاده از آن، یک لیست از `bytes` یا `UploadFile` اعلان کنید:
 
 {* ../../docs_src/request_files/tutorial002_an_py39.py hl[10,15] *}
 
-You will receive, as declared, a `list` of `bytes` or `UploadFile`s.
+همانطور که اعلان شده، یک `list` از `bytes` یا `UploadFile`ها دریافت خواهید کرد.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette.responses import HTMLResponse`.
+همچنین می‌توانید از `from starlette.responses import HTMLResponse` استفاده کنید.
 
-**FastAPI** provides the same `starlette.responses` as `fastapi.responses` just as a convenience for you, the developer. But most of the available responses come directly from Starlette.
+**FastAPI** همان `starlette.responses` را به عنوان `fastapi.responses` فقط به عنوان راحتی برای شما، توسعه‌دهنده، ارائه می‌دهد. اما بیشتر پاسخ‌های موجود مستقیماً از Starlette می‌آیند.
 
 ///
 
-### Multiple File Uploads with Additional Metadata
+### آپلود چندین فایل با متاداده اضافی
 
-And the same way as before, you can use `File()` to set additional parameters, even for `UploadFile`:
+و به همان شکل قبل، می‌توانید از `File()` برای تنظیم پارامترهای اضافی استفاده کنید، حتی برای `UploadFile`:
 
 {* ../../docs_src/request_files/tutorial003_an_py39.py hl[11,18:20] *}
 
-## Recap
+## خلاصه
 
-Use `File`, `bytes`, and `UploadFile` to declare files to be uploaded in the request, sent as form data.
+از `File`، `bytes` و `UploadFile` برای اعلان فایل‌هایی که باید در درخواست آپلود شوند، به صورت داده‌های فرم ارسال شده، استفاده کنید.

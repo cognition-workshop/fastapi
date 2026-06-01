@@ -1,87 +1,87 @@
-# Response Model - Return Type
+# مدل پاسخ - تایپ بازگشتی
 
-You can declare the type used for the response by annotating the *path operation function* **return type**.
+می‌توانید تایپ مورد استفاده برای پاسخ را با حاشیه‌نویسی **تایپ بازگشتی** *تابع عملیات مسیر* اعلان کنید.
 
-You can use **type annotations** the same way you would for input data in function **parameters**, you can use Pydantic models, lists, dictionaries, scalar values like integers, booleans, etc.
+می‌توانید از **حاشیه‌نویسی تایپ** به همان شکلی که برای داده‌های ورودی در **پارامترهای** تابع استفاده می‌کنید استفاده کنید، می‌توانید از مدل‌های Pydantic، لیست‌ها، دیکشنری‌ها، مقادیر اسکالر مانند اعداد صحیح، بولی و غیره استفاده کنید.
 
 {* ../../docs_src/response_model/tutorial001_01_py310.py hl[16,21] *}
 
-FastAPI will use this return type to:
+FastAPI از این تایپ بازگشتی برای موارد زیر استفاده خواهد کرد:
 
-* **Validate** the returned data.
-    * If the data is invalid (e.g. you are missing a field), it means that *your* app code is broken, not returning what it should, and it will return a server error instead of returning incorrect data. This way you and your clients can be certain that they will receive the data and the data shape expected.
-* Add a **JSON Schema** for the response, in the OpenAPI *path operation*.
-    * This will be used by the **automatic docs**.
-    * It will also be used by automatic client code generation tools.
+* **اعتبارسنجی** داده‌های بازگشتی.
+    * اگر داده‌ها نامعتبر باشند (مثلاً فیلدی کم دارید)، به این معناست که کد برنامه *شما* خراب است، چیزی که باید برنگرداند را برنمی‌گرداند، و به جای بازگرداندن داده‌های نادرست خطای سرور برمی‌گرداند. به این ترتیب شما و کلاینت‌هایتان می‌توانید مطمئن باشید که داده و شکل داده مورد انتظار را دریافت می‌کنند.
+* اضافه کردن **JSON Schema** برای پاسخ، در *عملیات مسیر* OpenAPI.
+    * این توسط **مستندات خودکار** استفاده خواهد شد.
+    * همچنین توسط ابزارهای تولید خودکار کد کلاینت استفاده خواهد شد.
 
-But most importantly:
+اما مهم‌تر از همه:
 
-* It will **limit and filter** the output data to what is defined in the return type.
-    * This is particularly important for **security**, we'll see more of that below.
+* داده‌های خروجی را به آنچه در تایپ بازگشتی تعریف شده **محدود و فیلتر** خواهد کرد.
+    * این به ویژه برای **امنیت** مهم است، در ادامه بیشتر خواهیم دید.
 
-## `response_model` Parameter
+## پارامتر `response_model`
 
-There are some cases where you need or want to return some data that is not exactly what the type declares.
+مواردی وجود دارد که نیاز دارید یا می‌خواهید داده‌ای برگردانید که دقیقاً همان چیزی نیست که تایپ اعلان می‌کند.
 
-For example, you could want to **return a dictionary** or a database object, but **declare it as a Pydantic model**. This way the Pydantic model would do all the data documentation, validation, etc. for the object that you returned (e.g. a dictionary or database object).
+برای مثال، ممکن است بخواهید **یک دیکشنری** یا شیء پایگاه داده برگردانید، اما **آن را به عنوان مدل Pydantic اعلان کنید**. به این ترتیب مدل Pydantic تمام مستندسازی داده، اعتبارسنجی و غیره را برای شیءای که برگردانده‌اید (مثلاً دیکشنری یا شیء پایگاه داده) انجام خواهد داد.
 
-If you added the return type annotation, tools and editors would complain with a (correct) error telling you that your function is returning a type (e.g. a dict) that is different from what you declared (e.g. a Pydantic model).
+اگر حاشیه‌نویسی تایپ بازگشتی اضافه کنید، ابزارها و ویرایشگرها با یک خطای (صحیح) شکایت خواهند کرد که تابع شما تایپی (مثلاً dict) متفاوت از آنچه اعلان کرده‌اید (مثلاً مدل Pydantic) برمی‌گرداند.
 
-In those cases, you can use the *path operation decorator* parameter `response_model` instead of the return type.
+در آن موارد، می‌توانید از پارامتر *دکوراتور عملیات مسیر* `response_model` به جای تایپ بازگشتی استفاده کنید.
 
-You can use the `response_model` parameter in any of the *path operations*:
+می‌توانید از پارامتر `response_model` در هر یک از *عملیات‌های مسیر* استفاده کنید:
 
 * `@app.get()`
 * `@app.post()`
 * `@app.put()`
 * `@app.delete()`
-* etc.
+* و غیره.
 
 {* ../../docs_src/response_model/tutorial001_py310.py hl[17,22,24:27] *}
 
 /// note
 
-Notice that `response_model` is a parameter of the "decorator" method (`get`, `post`, etc). Not of your *path operation function*, like all the parameters and body.
+توجه کنید که `response_model` پارامتر متد "دکوراتور" (`get`، `post` و غیره) است. نه *تابع عملیات مسیر* شما، مانند تمام پارامترها و بدنه.
 
 ///
 
-`response_model` receives the same type you would declare for a Pydantic model field, so, it can be a Pydantic model, but it can also be, e.g. a `list` of Pydantic models, like `List[Item]`.
+`response_model` همان تایپی را دریافت می‌کند که برای فیلد مدل Pydantic اعلان می‌کنید، بنابراین می‌تواند مدل Pydantic باشد، اما همچنین می‌تواند مثلاً یک `list` از مدل‌های Pydantic باشد، مانند `List[Item]`.
 
-FastAPI will use this `response_model` to do all the data documentation, validation, etc. and also to **convert and filter the output data** to its type declaration.
+FastAPI از این `response_model` برای انجام تمام مستندسازی داده، اعتبارسنجی و غیره استفاده خواهد کرد و همچنین برای **تبدیل و فیلتر داده‌های خروجی** به اعلان تایپ آن.
 
 /// tip
 
-If you have strict type checks in your editor, mypy, etc, you can declare the function return type as `Any`.
+اگر بررسی‌های تایپ سختگیرانه در ویرایشگر، mypy و غیره دارید، می‌توانید تایپ بازگشتی تابع را به عنوان `Any` اعلان کنید.
 
-That way you tell the editor that you are intentionally returning anything. But FastAPI will still do the data documentation, validation, filtering, etc. with the `response_model`.
+به این ترتیب به ویرایشگر می‌گویید که عمداً هر چیزی برمی‌گردانید. اما FastAPI همچنان مستندسازی داده، اعتبارسنجی، فیلتر و غیره را با `response_model` انجام خواهد داد.
 
 ///
 
-### `response_model` Priority
+### اولویت `response_model`
 
-If you declare both a return type and a `response_model`, the `response_model` will take priority and be used by FastAPI.
+اگر هم تایپ بازگشتی و هم `response_model` اعلان کنید، `response_model` اولویت خواهد داشت و توسط FastAPI استفاده خواهد شد.
 
-This way you can add correct type annotations to your functions even when you are returning a type different than the response model, to be used by the editor and tools like mypy. And still you can have FastAPI do the data validation, documentation, etc. using the `response_model`.
+به این ترتیب می‌توانید حاشیه‌نویسی تایپ صحیح به توابع خود اضافه کنید حتی وقتی تایپی متفاوت از مدل پاسخ برمی‌گردانید، تا توسط ویرایشگر و ابزارهایی مانند mypy استفاده شود. و همچنان می‌توانید FastAPI اعتبارسنجی داده، مستندسازی و غیره را با استفاده از `response_model` انجام دهد.
 
-You can also use `response_model=None` to disable creating a response model for that *path operation*, you might need to do it if you are adding type annotations for things that are not valid Pydantic fields, you will see an example of that in one of the sections below.
+همچنین می‌توانید از `response_model=None` برای غیرفعال کردن ایجاد مدل پاسخ برای آن *عملیات مسیر* استفاده کنید، ممکن است به این نیاز داشته باشید اگر حاشیه‌نویسی تایپ برای چیزهایی اضافه می‌کنید که فیلدهای معتبر Pydantic نیستند، نمونه‌ای از آن را در یکی از بخش‌های زیر خواهید دید.
 
-## Return the same input data
+## بازگرداندن همان داده ورودی
 
-Here we are declaring a `UserIn` model, it will contain a plaintext password:
+اینجا یک مدل `UserIn` اعلان می‌کنیم، که شامل رمز عبور متنی خواهد بود:
 
 {* ../../docs_src/response_model/tutorial002_py310.py hl[7,9] *}
 
 /// info
 
-To use `EmailStr`, first install <a href="https://github.com/JoshData/python-email-validator" class="external-link" target="_blank">`email-validator`</a>.
+برای استفاده از `EmailStr`، ابتدا <a href="https://github.com/JoshData/python-email-validator" class="external-link" target="_blank">`email-validator`</a> را نصب کنید.
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then install it, for example:
+مطمئن شوید که یک [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} ایجاد کرده، آن را فعال کرده و سپس نصب کنید، برای مثال:
 
 ```console
 $ pip install email-validator
 ```
 
-or with:
+یا با:
 
 ```console
 $ pip install "pydantic[email]"
@@ -89,159 +89,159 @@ $ pip install "pydantic[email]"
 
 ///
 
-And we are using this model to declare our input and the same model to declare our output:
+و از همین مدل برای اعلان ورودی و همان مدل برای اعلان خروجی استفاده می‌کنیم:
 
 {* ../../docs_src/response_model/tutorial002_py310.py hl[16] *}
 
-Now, whenever a browser is creating a user with a password, the API will return the same password in the response.
+حالا، هر وقت مرورگری یک کاربر با رمز عبور ایجاد کند، API همان رمز عبور را در پاسخ برمی‌گرداند.
 
-In this case, it might not be a problem, because it's the same user sending the password.
+در این مورد، ممکن است مشکلی نباشد، زیرا همان کاربر رمز عبور را ارسال می‌کند.
 
-But if we use the same model for another *path operation*, we could be sending our user's passwords to every client.
+اما اگر از همان مدل برای *عملیات مسیر* دیگری استفاده کنیم، ممکن است رمزهای عبور کاربران را به هر کلاینتی ارسال کنیم.
 
 /// danger
 
-Never store the plain password of a user or send it in a response like this, unless you know all the caveats and you know what you are doing.
+هرگز رمز عبور متنی کاربر را ذخیره نکنید یا در پاسخ اینطور ارسال نکنید، مگر اینکه همه نکات را بدانید و بدانید چه کار می‌کنید.
 
 ///
 
-## Add an output model
+## اضافه کردن مدل خروجی
 
-We can instead create an input model with the plaintext password and an output model without it:
+در عوض می‌توانیم یک مدل ورودی با رمز عبور متنی و یک مدل خروجی بدون آن ایجاد کنیم:
 
 {* ../../docs_src/response_model/tutorial003_py310.py hl[9,11,16] *}
 
-Here, even though our *path operation function* is returning the same input user that contains the password:
+اینجا، حتی اگر *تابع عملیات مسیر* ما همان کاربر ورودی شامل رمز عبور را برمی‌گرداند:
 
 {* ../../docs_src/response_model/tutorial003_py310.py hl[24] *}
 
-...we declared the `response_model` to be our model `UserOut`, that doesn't include the password:
+...ما `response_model` را مدل `UserOut` خود اعلان کردیم، که شامل رمز عبور نیست:
 
 {* ../../docs_src/response_model/tutorial003_py310.py hl[22] *}
 
-So, **FastAPI** will take care of filtering out all the data that is not declared in the output model (using Pydantic).
+بنابراین، **FastAPI** مراقب فیلتر کردن تمام داده‌هایی که در مدل خروجی اعلان نشده‌اند خواهد بود (با استفاده از Pydantic).
 
-### `response_model` or Return Type
+### `response_model` یا تایپ بازگشتی
 
-In this case, because the two models are different, if we annotated the function return type as `UserOut`, the editor and tools would complain that we are returning an invalid type, as those are different classes.
+در این مورد، چون دو مدل متفاوت هستند، اگر تایپ بازگشتی تابع را به عنوان `UserOut` حاشیه‌نویسی کنیم، ویرایشگر و ابزارها شکایت خواهند کرد که تابع تایپ نامعتبری (مثلاً dict) متفاوت از آنچه اعلان شده (مثلاً مدل Pydantic) برمی‌گرداند.
 
-That's why in this example we have to declare it in the `response_model` parameter.
+به همین دلیل در این مثال باید آن را در پارامتر `response_model` اعلان کنیم.
 
-...but continue reading below to see how to overcome that.
+...اما ادامه بخوانید تا ببینید چگونه بر این مسئله غلبه کنیم.
 
-## Return Type and Data Filtering
+## تایپ بازگشتی و فیلتر داده
 
-Let's continue from the previous example. We wanted to **annotate the function with one type**, but we wanted to be able to return from the function something that actually includes **more data**.
+بیایید از مثال قبلی ادامه دهیم. می‌خواستیم **تابع را با یک تایپ حاشیه‌نویسی کنیم**، اما بتوانیم چیزی از تابع برگردانیم که واقعاً شامل **داده‌های بیشتری** باشد.
 
-We want FastAPI to keep **filtering** the data using the response model. So that even though the function returns more data, the response will only include the fields declared in the response model.
+می‌خواهیم FastAPI با استفاده از مدل پاسخ **فیلتر** داده‌ها را ادامه دهد. به طوری که حتی اگر تابع داده‌های بیشتری برگرداند، پاسخ فقط فیلدهای اعلان شده در مدل پاسخ را شامل شود.
 
-In the previous example, because the classes were different, we had to use the `response_model` parameter. But that also means that we don't get the support from the editor and tools checking the function return type.
+در مثال قبلی، چون کلاس‌ها متفاوت بودند، مجبور بودیم از پارامتر `response_model` استفاده کنیم. اما این همچنین به این معنی است که پشتیبانی ویرایشگر و ابزارها برای بررسی تایپ بازگشتی تابع را دریافت نمی‌کنیم.
 
-But in most of the cases where we need to do something like this, we want the model just to **filter/remove** some of the data as in this example.
+اما در بیشتر مواردی که نیاز داریم چنین کاری انجام دهیم، می‌خواهیم مدل فقط برخی از داده‌ها را **فیلتر/حذف** کند مانند این مثال.
 
-And in those cases, we can use classes and inheritance to take advantage of function **type annotations** to get better support in the editor and tools, and still get the FastAPI **data filtering**.
+و در آن موارد، می‌توانیم از کلاس‌ها و ارث‌بری برای بهره‌گیری از **حاشیه‌نویسی تایپ** تابع استفاده کنیم تا پشتیبانی بهتری از ویرایشگر و ابزارها دریافت کنیم، و همچنان **فیلتر داده** FastAPI را داشته باشیم.
 
 {* ../../docs_src/response_model/tutorial003_01_py310.py hl[7:10,13:14,18] *}
 
-With this, we get tooling support, from editors and mypy as this code is correct in terms of types, but we also get the data filtering from FastAPI.
+با این، پشتیبانی ابزارها از ویرایشگرها و mypy دریافت می‌کنیم زیرا این کد از نظر تایپ‌ها صحیح است، اما فیلتر داده از FastAPI را هم داریم.
 
-How does this work? Let's check that out. 🤓
+این چطور کار می‌کند؟ بیایید بررسی کنیم. 🤓
 
-### Type Annotations and Tooling
+### حاشیه‌نویسی تایپ و ابزارها
 
-First let's see how editors, mypy and other tools would see this.
+ابتدا ببینیم ویرایشگرها، mypy و سایر ابزارها این را چطور می‌بینند.
 
-`BaseUser` has the base fields. Then `UserIn` inherits from `BaseUser` and adds the `password` field, so, it will include all the fields from both models.
+`BaseUser` فیلدهای پایه را دارد. سپس `UserIn` از `BaseUser` ارث‌بری می‌کند و فیلد `password` اضافه می‌کند، بنابراین شامل تمام فیلدهای هر دو مدل خواهد بود.
 
-We annotate the function return type as `BaseUser`, but we are actually returning a `UserIn` instance.
+تایپ بازگشتی تابع را به عنوان `BaseUser` حاشیه‌نویسی می‌کنیم، اما در واقع یک نمونه `UserIn` برمی‌گردانیم.
 
-The editor, mypy, and other tools won't complain about this because, in typing terms, `UserIn` is a subclass of `BaseUser`, which means it's a *valid* type when what is expected is anything that is a `BaseUser`.
+ویرایشگر، mypy و سایر ابزارها از این شکایت نخواهند کرد زیرا، از نظر تایپ، `UserIn` زیرکلاس `BaseUser` است، که یعنی تایپ *معتبری* است وقتی آنچه انتظار می‌رود هر چیزی است که `BaseUser` باشد.
 
-### FastAPI Data Filtering
+### فیلتر داده FastAPI
 
-Now, for FastAPI, it will see the return type and make sure that what you return includes **only** the fields that are declared in the type.
+حالا، برای FastAPI، تایپ بازگشتی را خواهد دید و مطمئن خواهد شد که آنچه برمی‌گردانید **فقط** فیلدهایی را شامل می‌شود که در تایپ اعلان شده‌اند.
 
-FastAPI does several things internally with Pydantic to make sure that those same rules of class inheritance are not used for the returned data filtering, otherwise you could end up returning much more data than what you expected.
+FastAPI چندین کار داخلی با Pydantic انجام می‌دهد تا مطمئن شود همان قوانین ارث‌بری کلاس برای فیلتر داده بازگشتی استفاده نشوند، در غیر این صورت ممکن بود داده‌های بسیار بیشتری از آنچه انتظار داشتید برگردانید.
 
-This way, you can get the best of both worlds: type annotations with **tooling support** and **data filtering**.
+به این ترتیب، بهترین هر دو جهان را دریافت می‌کنید: حاشیه‌نویسی تایپ با **پشتیبانی ابزارها** و **فیلتر داده**.
 
-## See it in the docs
+## مشاهده در مستندات
 
-When you see the automatic docs, you can check that the input model and output model will both have their own JSON Schema:
+وقتی مستندات خودکار را مشاهده می‌کنید، می‌توانید بررسی کنید که مدل ورودی و مدل خروجی هر دو JSON Schema خاص خود را خواهند داشت:
 
 <img src="/img/tutorial/response-model/image01.png">
 
-And both models will be used for the interactive API documentation:
+و هر دو مدل برای مستندات API تعاملی استفاده خواهند شد:
 
 <img src="/img/tutorial/response-model/image02.png">
 
-## Other Return Type Annotations
+## سایر حاشیه‌نویسی‌های تایپ بازگشتی
 
-There might be cases where you return something that is not a valid Pydantic field and you annotate it in the function, only to get the support provided by tooling (the editor, mypy, etc).
+ممکن است مواردی باشد که چیزی برمی‌گردانید که تایپ معتبر Pydantic نیست و آن را در تابع حاشیه‌نویسی می‌کنید، فقط برای دریافت پشتیبانی ابزارها (ویرایشگر، mypy و غیره).
 
-### Return a Response Directly
+### بازگرداندن Response مستقیم
 
-The most common case would be [returning a Response directly as explained later in the advanced docs](../advanced/response-directly.md){.internal-link target=_blank}.
+رایج‌ترین مورد [بازگرداندن مستقیم Response همانطور که بعداً در مستندات پیشرفته توضیح داده شده](../advanced/response-directly.md){.internal-link target=_blank} خواهد بود.
 
 {* ../../docs_src/response_model/tutorial003_02.py hl[8,10:11] *}
 
-This simple case is handled automatically by FastAPI because the return type annotation is the class (or a subclass of) `Response`.
+این مورد ساده به طور خودکار توسط FastAPI مدیریت می‌شود زیرا حاشیه‌نویسی تایپ بازگشتی کلاس (یا زیرکلاسی از) `Response` است.
 
-And tools will also be happy because both `RedirectResponse` and `JSONResponse` are subclasses of `Response`, so the type annotation is correct.
+و ابزارها هم راضی خواهند بود زیرا هر دو `RedirectResponse` و `JSONResponse` زیرکلاس‌های `Response` هستند، بنابراین حاشیه‌نویسی تایپ صحیح است.
 
-### Annotate a Response Subclass
+### حاشیه‌نویسی زیرکلاس Response
 
-You can also use a subclass of `Response` in the type annotation:
+همچنین می‌توانید از زیرکلاس `Response` در حاشیه‌نویسی تایپ استفاده کنید:
 
 {* ../../docs_src/response_model/tutorial003_03.py hl[8:9] *}
 
-This will also work because `RedirectResponse` is a subclass of `Response`, and FastAPI will automatically handle this simple case.
+این هم کار خواهد کرد زیرا `RedirectResponse` زیرکلاس `Response` است و FastAPI به طور خودکار این مورد ساده را مدیریت خواهد کرد.
 
-### Invalid Return Type Annotations
+### حاشیه‌نویسی‌های تایپ بازگشتی نامعتبر
 
-But when you return some other arbitrary object that is not a valid Pydantic type (e.g. a database object) and you annotate it like that in the function, FastAPI will try to create a Pydantic response model from that type annotation, and will fail.
+اما وقتی شیء دلخواه دیگری که تایپ معتبر Pydantic نیست (مثلاً شیء پایگاه داده) برمی‌گردانید و آن را اینطور در تابع حاشیه‌نویسی می‌کنید، FastAPI سعی خواهد کرد یک مدل پاسخ Pydantic از آن حاشیه‌نویسی تایپ ایجاد کند و شکست خواهد خورد.
 
-The same would happen if you had something like a <abbr title='A union between multiple types means "any of these types".'>union</abbr> between different types where one or more of them are not valid Pydantic types, for example this would fail 💥:
+همین اتفاق می‌افتد اگر چیزی مانند <abbr title='اتحاد بین چندین تایپ یعنی "هر یک از این تایپ‌ها".'>union</abbr> بین تایپ‌های مختلف داشته باشید که یک یا چند تای آنها تایپ‌های معتبر Pydantic نیستند، برای مثال این شکست خواهد خورد 💥:
 
 {* ../../docs_src/response_model/tutorial003_04_py310.py hl[8] *}
 
-...this fails because the type annotation is not a Pydantic type and is not just a single `Response` class or subclass, it's a union (any of the two) between a `Response` and a `dict`.
+...این شکست می‌خورد زیرا حاشیه‌نویسی تایپ یک تایپ Pydantic نیست و فقط یک کلاس `Response` یا زیرکلاس آن نیست، بلکه یک union (هر یک از دو) بین `Response` و `dict` است.
 
-### Disable Response Model
+### غیرفعال کردن مدل پاسخ
 
-Continuing from the example above, you might not want to have the default data validation, documentation, filtering, etc. that is performed by FastAPI.
+با ادامه مثال بالا، ممکن است نخواهید اعتبارسنجی پیش‌فرض داده، مستندسازی، فیلتر و غیره که توسط FastAPI انجام می‌شود را داشته باشید.
 
-But you might want to still keep the return type annotation in the function to get the support from tools like editors and type checkers (e.g. mypy).
+اما ممکن است بخواهید حاشیه‌نویسی تایپ بازگشتی را در تابع نگه دارید تا پشتیبانی ابزارهایی مانند ویرایشگرها و بررسی‌کننده‌های تایپ (مثلاً mypy) را دریافت کنید.
 
-In this case, you can disable the response model generation by setting `response_model=None`:
+در این مورد، می‌توانید تولید مدل پاسخ را با تنظیم `response_model=None` غیرفعال کنید:
 
 {* ../../docs_src/response_model/tutorial003_05_py310.py hl[7] *}
 
-This will make FastAPI skip the response model generation and that way you can have any return type annotations you need without it affecting your FastAPI application. 🤓
+این باعث می‌شود FastAPI تولید مدل پاسخ را رد کند و به این ترتیب می‌توانید هر حاشیه‌نویسی تایپ بازگشتی‌ای که نیاز دارید داشته باشید بدون اینکه بر برنامه FastAPI شما تأثیر بگذارد. 🤓
 
-## Response Model encoding parameters
+## پارامترهای رمزگذاری مدل پاسخ
 
-Your response model could have default values, like:
+مدل پاسخ شما می‌تواند مقادیر پیش‌فرض داشته باشد، مانند:
 
 {* ../../docs_src/response_model/tutorial004_py310.py hl[9,11:12] *}
 
-* `description: Union[str, None] = None` (or `str | None = None` in Python 3.10) has a default of `None`.
-* `tax: float = 10.5` has a default of `10.5`.
-* `tags: List[str] = []` has a default of an empty list: `[]`.
+* `description: Union[str, None] = None` (یا `str | None = None` در پایتون 3.10) مقدار پیش‌فرض `None` دارد.
+* `tax: float = 10.5` مقدار پیش‌فرض `10.5` دارد.
+* `tags: List[str] = []` مقدار پیش‌فرض لیست خالی: `[]` دارد.
 
-but you might want to omit them from the result if they were not actually stored.
+اما ممکن است بخواهید آنها را از نتیجه حذف کنید اگر واقعاً ذخیره نشده‌اند.
 
-For example, if you have models with many optional attributes in a NoSQL database, but you don't want to send very long JSON responses full of default values.
+برای مثال، اگر مدل‌هایی با ویژگی‌های اختیاری زیاد در پایگاه داده NoSQL دارید، اما نمی‌خواهید پاسخ‌های JSON خیلی طولانی پر از مقادیر پیش‌فرض ارسال کنید.
 
-### Use the `response_model_exclude_unset` parameter
+### استفاده از پارامتر `response_model_exclude_unset`
 
-You can set the *path operation decorator* parameter `response_model_exclude_unset=True`:
+می‌توانید پارامتر *دکوراتور عملیات مسیر* `response_model_exclude_unset=True` را تنظیم کنید:
 
 {* ../../docs_src/response_model/tutorial004_py310.py hl[22] *}
 
-and those default values won't be included in the response, only the values actually set.
+و آن مقادیر پیش‌فرض در پاسخ گنجانده نخواهند شد، فقط مقادیری که واقعاً تنظیم شده‌اند.
 
-So, if you send a request to that *path operation* for the item with ID `foo`, the response (not including default values) will be:
+بنابراین، اگر یک درخواست به آن *عملیات مسیر* برای آیتم با ID `foo` ارسال کنید، پاسخ (بدون مقادیر پیش‌فرض) خواهد بود:
 
 ```JSON
 {
@@ -252,32 +252,32 @@ So, if you send a request to that *path operation* for the item with ID `foo`, t
 
 /// info
 
-In Pydantic v1 the method was called `.dict()`, it was deprecated (but still supported) in Pydantic v2, and renamed to `.model_dump()`.
+در Pydantic v1 متد `.dict()` نامیده می‌شد، در Pydantic v2 منسوخ شد (اما همچنان پشتیبانی می‌شود) و به `.model_dump()` تغییر نام داد.
 
-The examples here use `.dict()` for compatibility with Pydantic v1, but you should use `.model_dump()` instead if you can use Pydantic v2.
-
-///
-
-/// info
-
-FastAPI uses Pydantic model's `.dict()` with <a href="https://docs.pydantic.dev/1.10/usage/exporting_models/#modeldict" class="external-link" target="_blank">its `exclude_unset` parameter</a> to achieve this.
+مثال‌های اینجا از `.dict()` برای سازگاری با Pydantic v1 استفاده می‌کنند، اما اگر می‌توانید از Pydantic v2 استفاده کنید، باید از `.model_dump()` استفاده کنید.
 
 ///
 
 /// info
 
-You can also use:
+FastAPI از متد `.dict()` مدل Pydantic با <a href="https://docs.pydantic.dev/1.10/usage/exporting_models/#modeldict" class="external-link" target="_blank">پارامتر `exclude_unset`</a> برای رسیدن به این هدف استفاده می‌کند.
+
+///
+
+/// info
+
+همچنین می‌توانید از:
 
 * `response_model_exclude_defaults=True`
 * `response_model_exclude_none=True`
 
-as described in <a href="https://docs.pydantic.dev/1.10/usage/exporting_models/#modeldict" class="external-link" target="_blank">the Pydantic docs</a> for `exclude_defaults` and `exclude_none`.
+همانطور که در <a href="https://docs.pydantic.dev/1.10/usage/exporting_models/#modeldict" class="external-link" target="_blank">مستندات Pydantic</a> برای `exclude_defaults` و `exclude_none` توضیح داده شده استفاده کنید.
 
 ///
 
-#### Data with values for fields with defaults
+#### داده با مقادیر برای فیلدهای دارای پیش‌فرض
 
-But if your data has values for the model's fields with default values, like the item with ID `bar`:
+اما اگر داده شما مقادیری برای فیلدهای مدل با مقادیر پیش‌فرض داشته باشد، مانند آیتم با ID `bar`:
 
 ```Python hl_lines="3  5"
 {
@@ -288,11 +288,11 @@ But if your data has values for the model's fields with default values, like the
 }
 ```
 
-they will be included in the response.
+آنها در پاسخ گنجانده خواهند شد.
 
-#### Data with the same values as the defaults
+#### داده با همان مقادیر پیش‌فرض‌ها
 
-If the data has the same values as the default ones, like the item with ID `baz`:
+اگر داده همان مقادیر پیش‌فرض‌ها را داشته باشد، مانند آیتم با ID `baz`:
 
 ```Python hl_lines="3  5-6"
 {
@@ -304,33 +304,33 @@ If the data has the same values as the default ones, like the item with ID `baz`
 }
 ```
 
-FastAPI is smart enough (actually, Pydantic is smart enough) to realize that, even though `description`, `tax`, and `tags` have the same values as the defaults, they were set explicitly (instead of taken from the defaults).
+FastAPI به اندازه کافی هوشمند است (در واقع Pydantic به اندازه کافی هوشمند است) تا متوجه شود که حتی اگر `description`، `tax` و `tags` همان مقادیر پیش‌فرض‌ها را دارند، صریحاً تنظیم شده‌اند (نه از پیش‌فرض‌ها گرفته شده‌اند).
 
-So, they will be included in the JSON response.
+بنابراین، در پاسخ JSON گنجانده خواهند شد.
 
 /// tip
 
-Notice that the default values can be anything, not only `None`.
+توجه کنید که مقادیر پیش‌فرض می‌توانند هر چیزی باشند، نه فقط `None`.
 
-They can be a list (`[]`), a `float` of `10.5`, etc.
+می‌توانند یک لیست (`[]`)، یک `float` مانند `10.5` و غیره باشند.
 
 ///
 
-### `response_model_include` and `response_model_exclude`
+### `response_model_include` و `response_model_exclude`
 
-You can also use the *path operation decorator* parameters `response_model_include` and `response_model_exclude`.
+همچنین می‌توانید از پارامترهای *دکوراتور عملیات مسیر* `response_model_include` و `response_model_exclude` استفاده کنید.
 
-They take a `set` of `str` with the name of the attributes to include (omitting the rest) or to exclude (including the rest).
+آنها یک `set` از `str` با نام ویژگی‌هایی که باید شامل شوند (بقیه حذف می‌شوند) یا حذف شوند (بقیه شامل می‌شوند) می‌گیرند.
 
-This can be used as a quick shortcut if you have only one Pydantic model and want to remove some data from the output.
+اگر فقط یک مدل Pydantic دارید و می‌خواهید برخی داده‌ها را از خروجی حذف کنید، می‌تواند به عنوان میانبر سریع استفاده شود.
 
 /// tip
 
-But it is still recommended to use the ideas above, using multiple classes, instead of these parameters.
+اما همچنان توصیه می‌شود از ایده‌های بالا استفاده کنید، با استفاده از چندین کلاس، به جای این پارامترها.
 
-This is because the JSON Schema generated in your app's OpenAPI (and the docs) will still be the one for the complete model, even if you use `response_model_include` or `response_model_exclude` to omit some attributes.
+این به این دلیل است که JSON Schema تولید شده در OpenAPI برنامه شما (و مستندات) همچنان برای مدل کامل خواهد بود، حتی اگر از `response_model_include` یا `response_model_exclude` برای حذف برخی ویژگی‌ها استفاده کنید.
 
-This also applies to `response_model_by_alias` that works similarly.
+این برای `response_model_by_alias` هم که به طور مشابه کار می‌کند صادق است.
 
 ///
 
@@ -338,20 +338,20 @@ This also applies to `response_model_by_alias` that works similarly.
 
 /// tip
 
-The syntax `{"name", "description"}` creates a `set` with those two values.
+سینتکس `{"name", "description"}` یک `set` با آن دو مقدار ایجاد می‌کند.
 
-It is equivalent to `set(["name", "description"])`.
+معادل `set(["name", "description"])` است.
 
 ///
 
-#### Using `list`s instead of `set`s
+#### استفاده از `list` به جای `set`
 
-If you forget to use a `set` and use a `list` or `tuple` instead, FastAPI will still convert it to a `set` and it will work correctly:
+اگر فراموش کنید از `set` استفاده کنید و به جای آن از `list` یا `tuple` استفاده کنید، FastAPI همچنان آن را به `set` تبدیل خواهد کرد و به درستی کار خواهد کرد:
 
 {* ../../docs_src/response_model/tutorial006_py310.py hl[29,35] *}
 
-## Recap
+## خلاصه
 
-Use the *path operation decorator's* parameter `response_model` to define response models and especially to ensure private data is filtered out.
+از پارامتر `response_model` *دکوراتور عملیات مسیر* برای تعریف مدل‌های پاسخ استفاده کنید و به ویژه برای اطمینان از فیلتر شدن داده‌های خصوصی.
 
-Use `response_model_exclude_unset` to return only the values explicitly set.
+از `response_model_exclude_unset` برای بازگرداندن فقط مقادیری که صریحاً تنظیم شده‌اند استفاده کنید.
