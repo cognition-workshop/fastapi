@@ -1,144 +1,146 @@
-# Query Parameters
+# پارامترهای کوئری
 
-When you declare other function parameters that are not part of the path parameters, they are automatically interpreted as "query" parameters.
+وقتی پارامترهای دیگری برای تابع اعلان می‌کنید که بخشی از پارامترهای مسیر نیستند، به طور خودکار به عنوان پارامترهای "کوئری" تفسیر می‌شوند.
 
 {* ../../docs_src/query_params/tutorial001.py hl[9] *}
 
-The query is the set of key-value pairs that go after the `?` in a URL, separated by `&` characters.
+کوئری مجموعه‌ای از جفت‌های کلید-مقدار است که بعد از `?` در URL قرار می‌گیرند و با کاراکترهای `&` جدا می‌شوند.
 
-For example, in the URL:
+برای مثال، در URL:
 
 ```
 http://127.0.0.1:8000/items/?skip=0&limit=10
 ```
 
-...the query parameters are:
+...پارامترهای کوئری عبارتند از:
 
-* `skip`: with a value of `0`
-* `limit`: with a value of `10`
+* `skip`: با مقدار `0`
+* `limit`: با مقدار `10`
 
-As they are part of the URL, they are "naturally" strings.
+از آنجا که بخشی از URL هستند، "طبیعتاً" رشته هستند.
 
-But when you declare them with Python types (in the example above, as `int`), they are converted to that type and validated against it.
+اما وقتی آنها را با تایپ‌های پایتون اعلان می‌کنید (در مثال بالا، به عنوان `int`)، به آن تایپ تبدیل و در برابر آن اعتبارسنجی می‌شوند.
 
-All the same process that applied for path parameters also applies for query parameters:
+تمام همان فرآیندی که برای پارامترهای مسیر اعمال شد، برای پارامترهای کوئری نیز اعمال می‌شود:
 
-* Editor support (obviously)
-* Data <abbr title="converting the string that comes from an HTTP request into Python data">"parsing"</abbr>
-* Data validation
-* Automatic documentation
+* پشتیبانی ویرایشگر (بدیهی است)
+* <abbr title="تبدیل رشته‌ای که از یک درخواست HTTP می‌آید به داده پایتون">"تجزیه"</abbr> داده
+* اعتبارسنجی داده
+* مستندات خودکار
 
-## Defaults
+## مقادیر پیش‌فرض
 
-As query parameters are not a fixed part of a path, they can be optional and can have default values.
+از آنجا که پارامترهای کوئری بخش ثابتی از مسیر نیستند، می‌توانند اختیاری باشند و مقادیر پیش‌فرض داشته باشند.
 
-In the example above they have default values of `skip=0` and `limit=10`.
+در مثال بالا آنها مقادیر پیش‌فرض `skip=0` و `limit=10` دارند.
 
-So, going to the URL:
+بنابراین، رفتن به URL:
 
 ```
 http://127.0.0.1:8000/items/
 ```
 
-would be the same as going to:
+همانند رفتن به:
 
 ```
 http://127.0.0.1:8000/items/?skip=0&limit=10
 ```
 
-But if you go to, for example:
+خواهد بود.
+
+اما اگر به، برای مثال:
 
 ```
 http://127.0.0.1:8000/items/?skip=20
 ```
 
-The parameter values in your function will be:
+بروید، مقادیر پارامترها در تابع شما خواهند بود:
 
-* `skip=20`: because you set it in the URL
-* `limit=10`: because that was the default value
+* `skip=20`: زیرا آن را در URL تنظیم کردید
+* `limit=10`: زیرا مقدار پیش‌فرض بود
 
-## Optional parameters
+## پارامترهای اختیاری
 
-The same way, you can declare optional query parameters, by setting their default to `None`:
+به همین ترتیب، می‌توانید پارامترهای کوئری اختیاری اعلان کنید، با تنظیم مقدار پیش‌فرض آنها به `None`:
 
 {* ../../docs_src/query_params/tutorial002_py310.py hl[7] *}
 
-In this case, the function parameter `q` will be optional, and will be `None` by default.
+در این مورد، پارامتر تابع `q` اختیاری خواهد بود و به طور پیش‌فرض `None` خواهد بود.
 
 /// check
 
-Also notice that **FastAPI** is smart enough to notice that the path parameter `item_id` is a path parameter and `q` is not, so, it's a query parameter.
+همچنین توجه کنید که **FastAPI** به اندازه کافی هوشمند است تا متوجه شود که پارامتر مسیر `item_id` یک پارامتر مسیر است و `q` نیست، بنابراین یک پارامتر کوئری است.
 
 ///
 
-## Query parameter type conversion
+## تبدیل تایپ پارامتر کوئری
 
-You can also declare `bool` types, and they will be converted:
+شما همچنین می‌توانید تایپ‌های `bool` اعلان کنید و آنها تبدیل خواهند شد:
 
 {* ../../docs_src/query_params/tutorial003_py310.py hl[7] *}
 
-In this case, if you go to:
+در این مورد، اگر به:
 
 ```
 http://127.0.0.1:8000/items/foo?short=1
 ```
 
-or
+یا
 
 ```
 http://127.0.0.1:8000/items/foo?short=True
 ```
 
-or
+یا
 
 ```
 http://127.0.0.1:8000/items/foo?short=true
 ```
 
-or
+یا
 
 ```
 http://127.0.0.1:8000/items/foo?short=on
 ```
 
-or
+یا
 
 ```
 http://127.0.0.1:8000/items/foo?short=yes
 ```
 
-or any other case variation (uppercase, first letter in uppercase, etc), your function will see the parameter `short` with a `bool` value of `True`. Otherwise as `False`.
+یا هر تغییر حالت دیگری (حروف بزرگ، اولین حرف بزرگ و غیره) بروید، تابع شما پارامتر `short` را با مقدار `bool` برابر `True` خواهد دید. در غیر این صورت `False`.
 
 
-## Multiple path and query parameters
+## چندین پارامتر مسیر و کوئری
 
-You can declare multiple path parameters and query parameters at the same time, **FastAPI** knows which is which.
+شما می‌توانید چندین پارامتر مسیر و کوئری را همزمان اعلان کنید، **FastAPI** می‌داند کدام کدام است.
 
-And you don't have to declare them in any specific order.
+و لازم نیست آنها را به ترتیب خاصی اعلان کنید.
 
-They will be detected by name:
+آنها بر اساس نام شناسایی خواهند شد:
 
 {* ../../docs_src/query_params/tutorial004_py310.py hl[6,8] *}
 
-## Required query parameters
+## پارامترهای کوئری اجباری
 
-When you declare a default value for non-path parameters (for now, we have only seen query parameters), then it is not required.
+وقتی مقدار پیش‌فرضی برای پارامترهای غیر مسیر اعلان می‌کنید (فعلاً، فقط پارامترهای کوئری را دیده‌ایم)، آنگاه اجباری نیست.
 
-If you don't want to add a specific value but just make it optional, set the default as `None`.
+اگر نمی‌خواهید مقدار خاصی اضافه کنید بلکه فقط آن را اختیاری کنید، مقدار پیش‌فرض را `None` قرار دهید.
 
-But when you want to make a query parameter required, you can just not declare any default value:
+اما وقتی می‌خواهید یک پارامتر کوئری اجباری باشد، می‌توانید هیچ مقدار پیش‌فرضی اعلان نکنید:
 
 {* ../../docs_src/query_params/tutorial005.py hl[6:7] *}
 
-Here the query parameter `needy` is a required query parameter of type `str`.
+اینجا پارامتر کوئری `needy` یک پارامتر کوئری اجباری از تایپ `str` است.
 
-If you open in your browser a URL like:
+اگر در مرورگر خود URL مانند:
 
 ```
 http://127.0.0.1:8000/items/foo-item
 ```
 
-...without adding the required parameter `needy`, you will see an error like:
+...بدون اضافه کردن پارامتر اجباری `needy` باز کنید، خطایی مانند این خواهید دید:
 
 ```JSON
 {
@@ -157,13 +159,13 @@ http://127.0.0.1:8000/items/foo-item
 }
 ```
 
-As `needy` is a required parameter, you would need to set it in the URL:
+از آنجا که `needy` یک پارامتر اجباری است، باید آن را در URL تنظیم کنید:
 
 ```
 http://127.0.0.1:8000/items/foo-item?needy=sooooneedy
 ```
 
-...this would work:
+...این کار خواهد کرد:
 
 ```JSON
 {
@@ -172,18 +174,18 @@ http://127.0.0.1:8000/items/foo-item?needy=sooooneedy
 }
 ```
 
-And of course, you can define some parameters as required, some as having a default value, and some entirely optional:
+و البته، می‌توانید برخی پارامترها را به عنوان اجباری، برخی با مقدار پیش‌فرض و برخی را کاملاً اختیاری تعریف کنید:
 
 {* ../../docs_src/query_params/tutorial006_py310.py hl[8] *}
 
-In this case, there are 3 query parameters:
+در این مورد، ۳ پارامتر کوئری وجود دارد:
 
-* `needy`, a required `str`.
-* `skip`, an `int` with a default value of `0`.
-* `limit`, an optional `int`.
+* `needy`، یک `str` اجباری.
+* `skip`، یک `int` با مقدار پیش‌فرض `0`.
+* `limit`، یک `int` اختیاری.
 
 /// tip
 
-You could also use `Enum`s the same way as with [Path Parameters](path-params.md#predefined-values){.internal-link target=_blank}.
+شما همچنین می‌توانید از `Enum`ها به همان روشی که با [پارامترهای مسیر](path-params.md#predefined-values){.internal-link target=_blank} استفاده کردید، استفاده کنید.
 
 ///

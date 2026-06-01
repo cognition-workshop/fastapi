@@ -1,41 +1,41 @@
-# Request Body
+# بدنه درخواست
 
-When you need to send data from a client (let's say, a browser) to your API, you send it as a **request body**.
+وقتی نیاز دارید داده‌ای از یک کلاینت (مثلاً یک مرورگر) به API خود ارسال کنید، آن را به عنوان **بدنه درخواست** ارسال می‌کنید.
 
-A **request** body is data sent by the client to your API. A **response** body is the data your API sends to the client.
+بدنه **درخواست** داده‌ای است که توسط کلاینت به API شما ارسال می‌شود. بدنه **پاسخ** داده‌ای است که API شما به کلاینت ارسال می‌کند.
 
-Your API almost always has to send a **response** body. But clients don't necessarily need to send **request bodies** all the time, sometimes they only request a path, maybe with some query parameters, but don't send a body.
+API شما تقریباً همیشه باید بدنه **پاسخ** ارسال کند. اما کلاینت‌ها لزوماً نیاز ندارند همیشه **بدنه درخواست** ارسال کنند، گاهی فقط یک مسیر درخواست می‌کنند، شاید با برخی پارامترهای کوئری، اما بدنه‌ای ارسال نمی‌کنند.
 
-To declare a **request** body, you use <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a> models with all their power and benefits.
+برای اعلان بدنه **درخواست**، از مدل‌های <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a> با تمام قدرت و مزایای آنها استفاده می‌کنید.
 
 /// info
 
-To send data, you should use one of: `POST` (the more common), `PUT`, `DELETE` or `PATCH`.
+برای ارسال داده، باید از یکی استفاده کنید: `POST` (رایج‌تر)، `PUT`، `DELETE` یا `PATCH`.
 
-Sending a body with a `GET` request has an undefined behavior in the specifications, nevertheless, it is supported by FastAPI, only for very complex/extreme use cases.
+ارسال بدنه با درخواست `GET` رفتار تعریف‌نشده‌ای در مشخصات دارد، با این حال، توسط FastAPI پشتیبانی می‌شود، فقط برای موارد استفاده بسیار پیچیده/حاد.
 
-As it is discouraged, the interactive docs with Swagger UI won't show the documentation for the body when using `GET`, and proxies in the middle might not support it.
+از آنجا که توصیه نمی‌شود، مستندات تعاملی با Swagger UI مستندات بدنه را هنگام استفاده از `GET` نشان نخواهد داد و پروکسی‌های میانی ممکن است آن را پشتیبانی نکنند.
 
 ///
 
-## Import Pydantic's `BaseModel`
+## وارد کردن `BaseModel` از Pydantic
 
-First, you need to import `BaseModel` from `pydantic`:
+ابتدا، باید `BaseModel` را از `pydantic` وارد کنید:
 
 {* ../../docs_src/body/tutorial001_py310.py hl[2] *}
 
-## Create your data model
+## ایجاد مدل داده
 
-Then you declare your data model as a class that inherits from `BaseModel`.
+سپس مدل داده خود را به عنوان کلاسی که از `BaseModel` ارث‌بری می‌کند اعلان کنید.
 
-Use standard Python types for all the attributes:
+از تایپ‌های استاندارد پایتون برای تمام ویژگی‌ها استفاده کنید:
 
 {* ../../docs_src/body/tutorial001_py310.py hl[5:9] *}
 
 
-The same as when declaring query parameters, when a model attribute has a default value, it is not required. Otherwise, it is required. Use `None` to make it just optional.
+مانند اعلان پارامترهای کوئری، وقتی ویژگی مدل مقدار پیش‌فرض دارد، اجباری نیست. در غیر این صورت، اجباری است. از `None` استفاده کنید تا فقط اختیاری باشد.
 
-For example, this model above declares a JSON "`object`" (or Python `dict`) like:
+برای مثال، مدل بالا یک "`object`" JSON (یا `dict` پایتون) مانند این اعلان می‌کند:
 
 ```JSON
 {
@@ -46,7 +46,7 @@ For example, this model above declares a JSON "`object`" (or Python `dict`) like
 }
 ```
 
-...as `description` and `tax` are optional (with a default value of `None`), this JSON "`object`" would also be valid:
+...از آنجا که `description` و `tax` اختیاری هستند (با مقدار پیش‌فرض `None`)، این "`object`" JSON نیز معتبر خواهد بود:
 
 ```JSON
 {
@@ -55,112 +55,112 @@ For example, this model above declares a JSON "`object`" (or Python `dict`) like
 }
 ```
 
-## Declare it as a parameter
+## اعلان آن به عنوان پارامتر
 
-To add it to your *path operation*, declare it the same way you declared path and query parameters:
+برای اضافه کردن آن به *عملیات مسیر*، آن را به همان شکلی که پارامترهای مسیر و کوئری اعلان کردید، اعلان کنید:
 
 {* ../../docs_src/body/tutorial001_py310.py hl[16] *}
 
-...and declare its type as the model you created, `Item`.
+...و تایپ آن را به عنوان مدلی که ایجاد کردید، `Item`، اعلان کنید.
 
-## Results
+## نتایج
 
-With just that Python type declaration, **FastAPI** will:
+فقط با آن اعلان تایپ پایتون، **FastAPI** خواهد:
 
-* Read the body of the request as JSON.
-* Convert the corresponding types (if needed).
-* Validate the data.
-    * If the data is invalid, it will return a nice and clear error, indicating exactly where and what was the incorrect data.
-* Give you the received data in the parameter `item`.
-    * As you declared it in the function to be of type `Item`, you will also have all the editor support (completion, etc) for all of the attributes and their types.
-* Generate <a href="https://json-schema.org" class="external-link" target="_blank">JSON Schema</a> definitions for your model, you can also use them anywhere else you like if it makes sense for your project.
-* Those schemas will be part of the generated OpenAPI schema, and used by the automatic documentation <abbr title="User Interfaces">UIs</abbr>.
+* بدنه درخواست را به عنوان JSON خواند.
+* تایپ‌های متناظر را تبدیل کند (در صورت نیاز).
+* داده‌ها را اعتبارسنجی کند.
+    * اگر داده‌ها نامعتبر باشند، یک خطای زیبا و واضح برمی‌گرداند که دقیقاً محل و ماهیت داده نادرست را نشان می‌دهد.
+* داده دریافتی را در پارامتر `item` به شما بدهد.
+    * از آنجا که در تابع آن را از تایپ `Item` اعلان کردید، تمام پشتیبانی ویرایشگر (تکمیل خودکار و غیره) برای تمام ویژگی‌ها و تایپ‌های آنها نیز خواهید داشت.
+* تعاریف <a href="https://json-schema.org" class="external-link" target="_blank">JSON Schema</a> برای مدل شما تولید کند، همچنین می‌توانید از آنها در هر جای دیگری که برای پروژه شما منطقی است استفاده کنید.
+* آن اسکیماها بخشی از اسکیمای تولید شده OpenAPI خواهند بود و توسط <abbr title="رابط‌های کاربری">UI</abbr>‌های مستندات خودکار استفاده خواهند شد.
 
-## Automatic docs
+## مستندات خودکار
 
-The JSON Schemas of your models will be part of your OpenAPI generated schema, and will be shown in the interactive API docs:
+اسکیماهای JSON مدل‌های شما بخشی از اسکیمای تولید شده OpenAPI شما خواهند بود و در مستندات تعاملی API نشان داده خواهند شد:
 
 <img src="/img/tutorial/body/image01.png">
 
-And will also be used in the API docs inside each *path operation* that needs them:
+و همچنین در مستندات API داخل هر *عملیات مسیر* که به آنها نیاز دارد استفاده خواهند شد:
 
 <img src="/img/tutorial/body/image02.png">
 
-## Editor support
+## پشتیبانی ویرایشگر
 
-In your editor, inside your function you will get type hints and completion everywhere (this wouldn't happen if you received a `dict` instead of a Pydantic model):
+در ویرایشگر شما، داخل تابع، راهنمایی تایپ و تکمیل خودکار در همه جا خواهید داشت (اگر به جای مدل Pydantic یک `dict` دریافت می‌کردید این اتفاق نمی‌افتاد):
 
 <img src="/img/tutorial/body/image03.png">
 
-You also get error checks for incorrect type operations:
+همچنین بررسی خطا برای عملیات‌های نادرست تایپ دریافت می‌کنید:
 
 <img src="/img/tutorial/body/image04.png">
 
-This is not by chance, the whole framework was built around that design.
+این تصادفی نیست، کل فریمورک حول آن طراحی ساخته شده است.
 
-And it was thoroughly tested at the design phase, before any implementation, to ensure it would work with all the editors.
+و در مرحله طراحی، قبل از هرگونه پیاده‌سازی، به طور کامل تست شد تا اطمینان حاصل شود که با تمام ویرایشگرها کار خواهد کرد.
 
-There were even some changes to Pydantic itself to support this.
+حتی تغییراتی در خود Pydantic ایجاد شد تا از این پشتیبانی شود.
 
-The previous screenshots were taken with <a href="https://code.visualstudio.com" class="external-link" target="_blank">Visual Studio Code</a>.
+تصاویر قبلی با <a href="https://code.visualstudio.com" class="external-link" target="_blank">Visual Studio Code</a> گرفته شده‌اند.
 
-But you would get the same editor support with <a href="https://www.jetbrains.com/pycharm/" class="external-link" target="_blank">PyCharm</a> and most of the other Python editors:
+اما همان پشتیبانی ویرایشگر را با <a href="https://www.jetbrains.com/pycharm/" class="external-link" target="_blank">PyCharm</a> و بیشتر ویرایشگرهای پایتون دیگر نیز خواهید داشت:
 
 <img src="/img/tutorial/body/image05.png">
 
 /// tip
 
-If you use <a href="https://www.jetbrains.com/pycharm/" class="external-link" target="_blank">PyCharm</a> as your editor, you can use the <a href="https://github.com/koxudaxi/pydantic-pycharm-plugin/" class="external-link" target="_blank">Pydantic PyCharm Plugin</a>.
+اگر از <a href="https://www.jetbrains.com/pycharm/" class="external-link" target="_blank">PyCharm</a> به عنوان ویرایشگر خود استفاده می‌کنید، می‌توانید از <a href="https://github.com/koxudaxi/pydantic-pycharm-plugin/" class="external-link" target="_blank">افزونه Pydantic PyCharm</a> استفاده کنید.
 
-It improves editor support for Pydantic models, with:
+پشتیبانی ویرایشگر برای مدل‌های Pydantic را بهبود می‌بخشد، با:
 
-* auto-completion
-* type checks
-* refactoring
-* searching
-* inspections
+* تکمیل خودکار
+* بررسی تایپ
+* بازسازی
+* جستجو
+* بازرسی
 
 ///
 
-## Use the model
+## استفاده از مدل
 
-Inside of the function, you can access all the attributes of the model object directly:
+داخل تابع، می‌توانید به تمام ویژگی‌های شیء مدل مستقیماً دسترسی داشته باشید:
 
 {* ../../docs_src/body/tutorial002_py310.py *}
 
-## Request body + path parameters
+## بدنه درخواست + پارامترهای مسیر
 
-You can declare path parameters and request body at the same time.
+شما می‌توانید پارامترهای مسیر و بدنه درخواست را همزمان اعلان کنید.
 
-**FastAPI** will recognize that the function parameters that match path parameters should be **taken from the path**, and that function parameters that are declared to be Pydantic models should be **taken from the request body**.
+**FastAPI** تشخیص خواهد داد که پارامترهای تابعی که با پارامترهای مسیر مطابقت دارند باید **از مسیر گرفته شوند** و پارامترهای تابعی که به عنوان مدل‌های Pydantic اعلان شده‌اند باید **از بدنه درخواست گرفته شوند**.
 
 {* ../../docs_src/body/tutorial003_py310.py hl[15:16] *}
 
 
-## Request body + path + query parameters
+## بدنه درخواست + مسیر + پارامترهای کوئری
 
-You can also declare **body**, **path** and **query** parameters, all at the same time.
+شما همچنین می‌توانید پارامترهای **بدنه**، **مسیر** و **کوئری** را همه همزمان اعلان کنید.
 
-**FastAPI** will recognize each of them and take the data from the correct place.
+**FastAPI** هر یک از آنها را تشخیص خواهد داد و داده‌ها را از مکان صحیح خواهد گرفت.
 
 {* ../../docs_src/body/tutorial004_py310.py hl[16] *}
 
-The function parameters will be recognized as follows:
+پارامترهای تابع به این صورت تشخیص داده خواهند شد:
 
-* If the parameter is also declared in the **path**, it will be used as a path parameter.
-* If the parameter is of a **singular type** (like `int`, `float`, `str`, `bool`, etc) it will be interpreted as a **query** parameter.
-* If the parameter is declared to be of the type of a **Pydantic model**, it will be interpreted as a request **body**.
+* اگر پارامتر در **مسیر** نیز اعلان شده باشد، به عنوان پارامتر مسیر استفاده خواهد شد.
+* اگر پارامتر از **تایپ تکی** باشد (مانند `int`، `float`، `str`، `bool` و غیره) به عنوان پارامتر **کوئری** تفسیر خواهد شد.
+* اگر پارامتر از تایپ **مدل Pydantic** اعلان شده باشد، به عنوان **بدنه** درخواست تفسیر خواهد شد.
 
 /// note
 
-FastAPI will know that the value of `q` is not required because of the default value `= None`.
+FastAPI خواهد دانست که مقدار `q` اجباری نیست به دلیل مقدار پیش‌فرض `= None`.
 
-The `str | None` (Python 3.10+) or `Union` in `Union[str, None]` (Python 3.8+) is not used by FastAPI to determine that the value is not required, it will know it's not required because it has a default value of `= None`.
+`str | None` (پایتون ۳.۱۰+) یا `Union` در `Union[str, None]` (پایتون ۳.۸+) توسط FastAPI برای تعیین اینکه مقدار اجباری نیست استفاده نمی‌شود، بلکه می‌داند اجباری نیست زیرا مقدار پیش‌فرض `= None` دارد.
 
-But adding the type annotations will allow your editor to give you better support and detect errors.
+اما اضافه کردن حاشیه‌نویسی تایپ به ویرایشگر شما اجازه می‌دهد پشتیبانی بهتری ارائه دهد و خطاها را تشخیص دهد.
 
 ///
 
-## Without Pydantic
+## بدون Pydantic
 
-If you don't want to use Pydantic models, you can also use **Body** parameters. See the docs for [Body - Multiple Parameters: Singular values in body](body-multiple-params.md#singular-values-in-body){.internal-link target=_blank}.
+اگر نمی‌خواهید از مدل‌های Pydantic استفاده کنید، می‌توانید از پارامترهای **Body** نیز استفاده کنید. مستندات [بدنه - چندین پارامتر: مقادیر تکی در بدنه](body-multiple-params.md#singular-values-in-body){.internal-link target=_blank} را ببینید.
