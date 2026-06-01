@@ -1,109 +1,109 @@
-# Custom Request and APIRoute class
+# کلاس سفارشی Request و APIRoute
 
-In some cases, you may want to override the logic used by the `Request` and `APIRoute` classes.
+در برخی موارد، ممکن است بخواهید منطق استفاده شده توسط کلاس‌های `Request` و `APIRoute` را بازنویسی کنید.
 
-In particular, this may be a good alternative to logic in a middleware.
+به طور خاص، این ممکن است جایگزین خوبی برای منطق در یک میان‌افزار باشد.
 
-For example, if you want to read or manipulate the request body before it is processed by your application.
+برای مثال، اگر می‌خواهید بدنه درخواست را قبل از پردازش توسط برنامه خود بخوانید یا دستکاری کنید.
 
 /// danger
 
-This is an "advanced" feature.
+این یک ویژگی "پیشرفته" است.
 
-If you are just starting with **FastAPI** you might want to skip this section.
+اگر تازه با **FastAPI** شروع کرده‌اید ممکن است بخواهید از این بخش صرف‌نظر کنید.
 
 ///
 
-## Use cases
+## موارد استفاده
 
-Some use cases include:
+برخی موارد استفاده شامل:
 
-* Converting non-JSON request bodies to JSON (e.g. <a href="https://msgpack.org/index.html" class="external-link" target="_blank">`msgpack`</a>).
-* Decompressing gzip-compressed request bodies.
-* Automatically logging all request bodies.
+* تبدیل بدنه‌های درخواست غیر JSON به JSON (مثلاً <a href="https://msgpack.org/index.html" class="external-link" target="_blank">`msgpack`</a>).
+* رفع فشرده‌سازی بدنه‌های درخواست فشرده شده با gzip.
+* ثبت خودکار تمام بدنه‌های درخواست.
 
-## Handling custom request body encodings
+## مدیریت رمزگذاری‌های سفارشی بدنه درخواست
 
-Let's see how to make use of a custom `Request` subclass to decompress gzip requests.
+بیایید ببینیم چگونه از یک زیرکلاس سفارشی `Request` برای رفع فشرده‌سازی درخواست‌های gzip استفاده کنیم.
 
-And an `APIRoute` subclass to use that custom request class.
+و یک زیرکلاس `APIRoute` برای استفاده از آن کلاس درخواست سفارشی.
 
-### Create a custom `GzipRequest` class
+### ایجاد کلاس سفارشی `GzipRequest`
 
 /// tip
 
-This is a toy example to demonstrate how it works, if you need Gzip support, you can use the provided [`GzipMiddleware`](../advanced/middleware.md#gzipmiddleware){.internal-link target=_blank}.
+این یک مثال نمایشی برای نشان دادن نحوه کار است، اگر نیاز به پشتیبانی Gzip دارید، می‌توانید از [`GzipMiddleware`](../advanced/middleware.md#gzipmiddleware){.internal-link target=_blank} ارائه شده استفاده کنید.
 
 ///
 
-First, we create a `GzipRequest` class, which will overwrite the `Request.body()` method to decompress the body in the presence of an appropriate header.
+ابتدا، یک کلاس `GzipRequest` ایجاد می‌کنیم که متد `Request.body()` را برای رفع فشرده‌سازی بدنه در حضور هدر مناسب بازنویسی می‌کند.
 
-If there's no `gzip` in the header, it will not try to decompress the body.
+اگر `gzip` در هدر نباشد، سعی نخواهد کرد بدنه را رفع فشرده‌سازی کند.
 
-That way, the same route class can handle gzip compressed or uncompressed requests.
+به این ترتیب، همان کلاس مسیر می‌تواند درخواست‌های فشرده یا غیرفشرده gzip را مدیریت کند.
 
 {* ../../docs_src/custom_request_and_route/tutorial001.py hl[8:15] *}
 
-### Create a custom `GzipRoute` class
+### ایجاد کلاس سفارشی `GzipRoute`
 
-Next, we create a custom subclass of `fastapi.routing.APIRoute` that will make use of the `GzipRequest`.
+سپس، یک زیرکلاس سفارشی از `fastapi.routing.APIRoute` ایجاد می‌کنیم که از `GzipRequest` استفاده خواهد کرد.
 
-This time, it will overwrite the method `APIRoute.get_route_handler()`.
+این بار، متد `APIRoute.get_route_handler()` را بازنویسی می‌کند.
 
-This method returns a function. And that function is what will receive a request and return a response.
+این متد یک تابع برمی‌گرداند. و آن تابع چیزی است که درخواست را دریافت و پاسخ را برمی‌گرداند.
 
-Here we use it to create a `GzipRequest` from the original request.
+در اینجا از آن برای ایجاد یک `GzipRequest` از درخواست اصلی استفاده می‌کنیم.
 
 {* ../../docs_src/custom_request_and_route/tutorial001.py hl[18:26] *}
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-A `Request` has a `request.scope` attribute, that's just a Python `dict` containing the metadata related to the request.
+یک `Request` دارای صفت `request.scope` است، که فقط یک `dict` پایتون شامل متاداده مربوط به درخواست است.
 
-A `Request` also has a `request.receive`, that's a function to "receive" the body of the request.
+یک `Request` همچنین دارای `request.receive` است، که یک تابع برای "دریافت" بدنه درخواست است.
 
-The `scope` `dict` and `receive` function are both part of the ASGI specification.
+`dict` `scope` و تابع `receive` هر دو بخشی از مشخصات ASGI هستند.
 
-And those two things, `scope` and `receive`, are what is needed to create a new `Request` instance.
+و آن دو چیز، `scope` و `receive`، آنچه برای ایجاد یک نمونه جدید `Request` مورد نیاز است هستند.
 
-To learn more about the `Request` check <a href="https://www.starlette.io/requests/" class="external-link" target="_blank">Starlette's docs about Requests</a>.
+برای اطلاعات بیشتر درباره `Request`، <a href="https://www.starlette.io/requests/" class="external-link" target="_blank">مستندات Starlette درباره Requests</a> را بررسی کنید.
 
 ///
 
-The only thing the function returned by `GzipRequest.get_route_handler` does differently is convert the `Request` to a `GzipRequest`.
+تنها کاری که تابع برگردانده شده توسط `GzipRequest.get_route_handler` به طور متفاوت انجام می‌دهد، تبدیل `Request` به `GzipRequest` است.
 
-Doing this, our `GzipRequest` will take care of decompressing the data (if necessary) before passing it to our *path operations*.
+با این کار، `GzipRequest` ما رفع فشرده‌سازی داده‌ها (در صورت نیاز) را قبل از ارسال به *عملیات‌های مسیر* ما انجام خواهد داد.
 
-After that, all of the processing logic is the same.
+پس از آن، تمام منطق پردازش یکسان است.
 
-But because of our changes in `GzipRequest.body`, the request body will be automatically decompressed when it is loaded by **FastAPI** when needed.
+اما به دلیل تغییرات ما در `GzipRequest.body`، بدنه درخواست به طور خودکار هنگام بارگذاری توسط **FastAPI** در صورت نیاز رفع فشرده‌سازی خواهد شد.
 
-## Accessing the request body in an exception handler
+## دسترسی به بدنه درخواست در هندلر استثنا
 
 /// tip
 
-To solve this same problem, it's probably a lot easier to use the `body` in a custom handler for `RequestValidationError` ([Handling Errors](../tutorial/handling-errors.md#use-the-requestvalidationerror-body){.internal-link target=_blank}).
+برای حل همین مشکل، احتمالاً استفاده از `body` در یک هندلر سفارشی برای `RequestValidationError` ([مدیریت خطاها](../tutorial/handling-errors.md#use-the-requestvalidationerror-body){.internal-link target=_blank}) بسیار آسان‌تر است.
 
-But this example is still valid and it shows how to interact with the internal components.
+اما این مثال همچنان معتبر است و نشان می‌دهد چگونه با اجزای داخلی تعامل کنید.
 
 ///
 
-We can also use this same approach to access the request body in an exception handler.
+همچنین می‌توانیم از همین رویکرد برای دسترسی به بدنه درخواست در یک هندلر استثنا استفاده کنیم.
 
-All we need to do is handle the request inside a `try`/`except` block:
+تنها کاری که باید انجام دهیم مدیریت درخواست در یک بلوک `try`/`except` است:
 
 {* ../../docs_src/custom_request_and_route/tutorial002.py hl[13,15] *}
 
-If an exception occurs, the`Request` instance will still be in scope, so we can read and make use of the request body when handling the error:
+اگر استثنایی رخ دهد، نمونه `Request` همچنان در دسترس خواهد بود، بنابراین می‌توانیم هنگام مدیریت خطا بدنه درخواست را بخوانیم و استفاده کنیم:
 
 {* ../../docs_src/custom_request_and_route/tutorial002.py hl[16:18] *}
 
-## Custom `APIRoute` class in a router
+## کلاس سفارشی `APIRoute` در یک روتر
 
-You can also set the `route_class` parameter of an `APIRouter`:
+همچنین می‌توانید پارامتر `route_class` یک `APIRouter` را تنظیم کنید:
 
 {* ../../docs_src/custom_request_and_route/tutorial003.py hl[26] *}
 
-In this example, the *path operations* under the `router` will use the custom `TimedRoute` class, and will have an extra `X-Response-Time` header in the response with the time it took to generate the response:
+در این مثال، *عملیات‌های مسیر* تحت `router` از کلاس سفارشی `TimedRoute` استفاده خواهند کرد و یک هدر اضافی `X-Response-Time` در پاسخ با زمانی که برای تولید پاسخ صرف شده خواهند داشت:
 
 {* ../../docs_src/custom_request_and_route/tutorial003.py hl[13:20] *}

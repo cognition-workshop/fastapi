@@ -1,60 +1,60 @@
 # GraphQL
 
-As **FastAPI** is based on the **ASGI** standard, it's very easy to integrate any **GraphQL** library also compatible with ASGI.
+از آنجا که **FastAPI** بر اساس استاندارد **ASGI** ساخته شده است، یکپارچه‌سازی هر کتابخانه **GraphQL** که با ASGI سازگار باشد بسیار آسان است.
 
-You can combine normal FastAPI *path operations* with GraphQL on the same application.
+می‌توانید *عملیات‌های مسیر* عادی FastAPI را با GraphQL در یک برنامه ترکیب کنید.
 
 /// tip
 
-**GraphQL** solves some very specific use cases.
+**GraphQL** برخی موارد استفاده بسیار خاص را حل می‌کند.
 
-It has **advantages** and **disadvantages** when compared to common **web APIs**.
+در مقایسه با **APIهای وب** رایج، **مزایا** و **معایبی** دارد.
 
-Make sure you evaluate if the **benefits** for your use case compensate the **drawbacks**. 🤓
+مطمئن شوید که ارزیابی کنید آیا **فواید** برای مورد استفاده شما **معایب** را جبران می‌کند. 🤓
 
 ///
 
-## GraphQL Libraries
+## کتابخانه‌های GraphQL
 
-Here are some of the **GraphQL** libraries that have **ASGI** support. You could use them with **FastAPI**:
+در اینجا برخی از کتابخانه‌های **GraphQL** که پشتیبانی **ASGI** دارند آمده است. می‌توانید از آنها با **FastAPI** استفاده کنید:
 
 * <a href="https://strawberry.rocks/" class="external-link" target="_blank">Strawberry</a> 🍓
-    * With <a href="https://strawberry.rocks/docs/integrations/fastapi" class="external-link" target="_blank">docs for FastAPI</a>
+    * با <a href="https://strawberry.rocks/docs/integrations/fastapi" class="external-link" target="_blank">مستندات برای FastAPI</a>
 * <a href="https://ariadnegraphql.org/" class="external-link" target="_blank">Ariadne</a>
-    * With <a href="https://ariadnegraphql.org/docs/fastapi-integration" class="external-link" target="_blank">docs for FastAPI</a>
+    * با <a href="https://ariadnegraphql.org/docs/fastapi-integration" class="external-link" target="_blank">مستندات برای FastAPI</a>
 * <a href="https://tartiflette.io/" class="external-link" target="_blank">Tartiflette</a>
-    * With <a href="https://tartiflette.github.io/tartiflette-asgi/" class="external-link" target="_blank">Tartiflette ASGI</a> to provide ASGI integration
+    * با <a href="https://tartiflette.github.io/tartiflette-asgi/" class="external-link" target="_blank">Tartiflette ASGI</a> برای ارائه یکپارچه‌سازی ASGI
 * <a href="https://graphene-python.org/" class="external-link" target="_blank">Graphene</a>
-    * With <a href="https://github.com/ciscorn/starlette-graphene3" class="external-link" target="_blank">starlette-graphene3</a>
+    * با <a href="https://github.com/ciscorn/starlette-graphene3" class="external-link" target="_blank">starlette-graphene3</a>
 
-## GraphQL with Strawberry
+## GraphQL با Strawberry
 
-If you need or want to work with **GraphQL**, <a href="https://strawberry.rocks/" class="external-link" target="_blank">**Strawberry**</a> is the **recommended** library as it has the design closest to **FastAPI's** design, it's all based on **type annotations**.
+اگر نیاز دارید یا می‌خواهید با **GraphQL** کار کنید، <a href="https://strawberry.rocks/" class="external-link" target="_blank">**Strawberry**</a> کتابخانه **توصیه شده** است زیرا طراحی آن نزدیک‌ترین به طراحی **FastAPI** است و همه بر اساس **حاشیه‌نویسی تایپ** هستند.
 
-Depending on your use case, you might prefer to use a different library, but if you asked me, I would probably suggest you try **Strawberry**.
+بسته به مورد استفاده شما، ممکن است ترجیح دهید از کتابخانه دیگری استفاده کنید، اما اگر از من بپرسید، احتمالاً پیشنهاد می‌کنم **Strawberry** را امتحان کنید.
 
-Here's a small preview of how you could integrate Strawberry with FastAPI:
+در اینجا پیش‌نمایش کوچکی از نحوه یکپارچه‌سازی Strawberry با FastAPI آمده است:
 
 {* ../../docs_src/graphql/tutorial001.py hl[3,22,25] *}
 
-You can learn more about Strawberry in the <a href="https://strawberry.rocks/" class="external-link" target="_blank">Strawberry documentation</a>.
+می‌توانید در <a href="https://strawberry.rocks/" class="external-link" target="_blank">مستندات Strawberry</a> بیشتر بیاموزید.
 
-And also the docs about <a href="https://strawberry.rocks/docs/integrations/fastapi" class="external-link" target="_blank">Strawberry with FastAPI</a>.
+و همچنین مستندات درباره <a href="https://strawberry.rocks/docs/integrations/fastapi" class="external-link" target="_blank">Strawberry با FastAPI</a>.
 
-## Older `GraphQLApp` from Starlette
+## `GraphQLApp` قدیمی از Starlette
 
-Previous versions of Starlette included a `GraphQLApp` class to integrate with <a href="https://graphene-python.org/" class="external-link" target="_blank">Graphene</a>.
+نسخه‌های قبلی Starlette شامل یک کلاس `GraphQLApp` برای یکپارچه‌سازی با <a href="https://graphene-python.org/" class="external-link" target="_blank">Graphene</a> بودند.
 
-It was deprecated from Starlette, but if you have code that used it, you can easily **migrate** to <a href="https://github.com/ciscorn/starlette-graphene3" class="external-link" target="_blank">starlette-graphene3</a>, that covers the same use case and has an **almost identical interface**.
+از Starlette منسوخ شده است، اما اگر کدی دارید که از آن استفاده می‌کرده، می‌توانید به راحتی به <a href="https://github.com/ciscorn/starlette-graphene3" class="external-link" target="_blank">starlette-graphene3</a> مهاجرت کنید که همان مورد استفاده را پوشش می‌دهد و رابط تقریباً یکسانی دارد.
 
 /// tip
 
-If you need GraphQL, I still would recommend you check out <a href="https://strawberry.rocks/" class="external-link" target="_blank">Strawberry</a>, as it's based on type annotations instead of custom classes and types.
+اگر نیاز به GraphQL دارید، همچنان توصیه می‌کنم <a href="https://strawberry.rocks/" class="external-link" target="_blank">Strawberry</a> را بررسی کنید، زیرا بر اساس حاشیه‌نویسی تایپ به جای کلاس‌ها و تایپ‌های سفارشی ساخته شده است.
 
 ///
 
-## Learn More
+## بیشتر بیاموزید
 
-You can learn more about **GraphQL** in the <a href="https://graphql.org/" class="external-link" target="_blank">official GraphQL documentation</a>.
+می‌توانید درباره **GraphQL** در <a href="https://graphql.org/" class="external-link" target="_blank">مستندات رسمی GraphQL</a> بیشتر بیاموزید.
 
-You can also read more about each those libraries described above in their links.
+همچنین می‌توانید درباره هر یک از کتابخانه‌های توضیح داده شده در بالا در لینک‌های آنها بیشتر بخوانید.

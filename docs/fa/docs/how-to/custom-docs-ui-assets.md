@@ -1,70 +1,70 @@
-# Custom Docs UI Static Assets (Self-Hosting)
+# فایل‌های استاتیک سفارشی رابط مستندات (خود-میزبانی)
 
-The API docs use **Swagger UI** and **ReDoc**, and each of those need some JavaScript and CSS files.
+مستندات API از **Swagger UI** و **ReDoc** استفاده می‌کنند و هر یک به فایل‌های JavaScript و CSS نیاز دارند.
 
-By default, those files are served from a <abbr title="Content Delivery Network: A service, normally composed of several servers, that provides static files, like JavaScript and CSS. It's commonly used to serve those files from the server closer to the client, improving performance.">CDN</abbr>.
+به طور پیش‌فرض، آن فایل‌ها از یک <abbr title="شبکه تحویل محتوا: سرویسی که معمولاً از چندین سرور تشکیل شده و فایل‌های استاتیک مانند JavaScript و CSS ارائه می‌دهد.">CDN</abbr> سرو می‌شوند.
 
-But it's possible to customize it, you can set a specific CDN, or serve the files yourself.
+اما امکان سفارشی‌سازی آن وجود دارد، می‌توانید یک CDN خاص تنظیم کنید یا فایل‌ها را خودتان سرو کنید.
 
-## Custom CDN for JavaScript and CSS
+## CDN سفارشی برای JavaScript و CSS
 
-Let's say that you want to use a different <abbr title="Content Delivery Network">CDN</abbr>, for example you want to use `https://unpkg.com/`.
+فرض کنید می‌خواهید از یک <abbr title="شبکه تحویل محتوا">CDN</abbr> متفاوت استفاده کنید، برای مثال می‌خواهید از `https://unpkg.com/` استفاده کنید.
 
-This could be useful if for example you live in a country that restricts some URLs.
+این می‌تواند مفید باشد اگر برای مثال در کشوری زندگی می‌کنید که برخی URLها محدود هستند.
 
-### Disable the automatic docs
+### غیرفعال کردن مستندات خودکار
 
-The first step is to disable the automatic docs, as by default, those use the default CDN.
+اولین قدم غیرفعال کردن مستندات خودکار است، زیرا به طور پیش‌فرض از CDN پیش‌فرض استفاده می‌کنند.
 
-To disable them, set their URLs to `None` when creating your `FastAPI` app:
+برای غیرفعال کردن آنها، URLهای آنها را هنگام ایجاد برنامه `FastAPI` به `None` تنظیم کنید:
 
 {* ../../docs_src/custom_docs_ui/tutorial001.py hl[8] *}
 
-### Include the custom docs
+### گنجاندن مستندات سفارشی
 
-Now you can create the *path operations* for the custom docs.
+اکنون می‌توانید *عملیات‌های مسیر* برای مستندات سفارشی ایجاد کنید.
 
-You can reuse FastAPI's internal functions to create the HTML pages for the docs, and pass them the needed arguments:
+می‌توانید از توابع داخلی FastAPI برای ایجاد صفحات HTML مستندات استفاده کنید و آرگومان‌های مورد نیاز را به آنها ارسال کنید:
 
-* `openapi_url`: the URL where the HTML page for the docs can get the OpenAPI schema for your API. You can use here the attribute `app.openapi_url`.
-* `title`: the title of your API.
-* `oauth2_redirect_url`: you can use `app.swagger_ui_oauth2_redirect_url` here to use the default.
-* `swagger_js_url`: the URL where the HTML for your Swagger UI docs can get the **JavaScript** file. This is the custom CDN URL.
-* `swagger_css_url`: the URL where the HTML for your Swagger UI docs can get the **CSS** file. This is the custom CDN URL.
+* `openapi_url`: URL که صفحه HTML مستندات می‌تواند شمای OpenAPI برای API شما را از آن دریافت کند. می‌توانید از صفت `app.openapi_url` استفاده کنید.
+* `title`: عنوان API شما.
+* `oauth2_redirect_url`: می‌توانید از `app.swagger_ui_oauth2_redirect_url` برای استفاده از پیش‌فرض استفاده کنید.
+* `swagger_js_url`: URL که HTML مستندات Swagger UI شما می‌تواند فایل **JavaScript** را از آن دریافت کند. این URL سفارشی CDN است.
+* `swagger_css_url`: URL که HTML مستندات Swagger UI شما می‌تواند فایل **CSS** را از آن دریافت کند. این URL سفارشی CDN است.
 
-And similarly for ReDoc...
+و به طور مشابه برای ReDoc...
 
 {* ../../docs_src/custom_docs_ui/tutorial001.py hl[2:6,11:19,22:24,27:33] *}
 
 /// tip
 
-The *path operation* for `swagger_ui_redirect` is a helper for when you use OAuth2.
+*عملیات مسیر* برای `swagger_ui_redirect` یک کمک‌کننده برای استفاده از OAuth2 است.
 
-If you integrate your API with an OAuth2 provider, you will be able to authenticate and come back to the API docs with the acquired credentials. And interact with it using the real OAuth2 authentication.
+اگر API خود را با یک ارائه‌دهنده OAuth2 یکپارچه کنید، قادر خواهید بود احراز هویت کنید و با اعتبارنامه‌های کسب شده به مستندات API برگردید. و با استفاده از احراز هویت واقعی OAuth2 با آن تعامل کنید.
 
-Swagger UI will handle it behind the scenes for you, but it needs this "redirect" helper.
+Swagger UI آن را در پشت صحنه برای شما مدیریت خواهد کرد، اما به این کمک‌کننده "هدایت مجدد" نیاز دارد.
 
 ///
 
-### Create a *path operation* to test it
+### ایجاد یک *عملیات مسیر* برای تست
 
-Now, to be able to test that everything works, create a *path operation*:
+اکنون، برای اینکه بتوانید تست کنید همه چیز کار می‌کند، یک *عملیات مسیر* ایجاد کنید:
 
 {* ../../docs_src/custom_docs_ui/tutorial001.py hl[36:38] *}
 
-### Test it
+### تست آن
 
-Now, you should be able to go to your docs at <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>, and reload the page, it will load those assets from the new CDN.
+اکنون باید بتوانید به مستندات خود در <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a> بروید و صفحه را بازخوانی کنید، فایل‌ها از CDN جدید بارگذاری خواهند شد.
 
-## Self-hosting JavaScript and CSS for docs
+## خود-میزبانی JavaScript و CSS برای مستندات
 
-Self-hosting the JavaScript and CSS could be useful if, for example, you need your app to keep working even while offline, without open Internet access, or in a local network.
+خود-میزبانی JavaScript و CSS می‌تواند مفید باشد اگر، برای مثال، نیاز دارید برنامه شما حتی در حالت آفلاین، بدون دسترسی آزاد به اینترنت یا در یک شبکه محلی کار کند.
 
-Here you'll see how to serve those files yourself, in the same FastAPI app, and configure the docs to use them.
+در اینجا نحوه سرو کردن آن فایل‌ها توسط خودتان، در همان برنامه FastAPI و پیکربندی مستندات برای استفاده از آنها را خواهید دید.
 
-### Project file structure
+### ساختار فایل پروژه
 
-Let's say your project file structure looks like this:
+فرض کنید ساختار فایل پروژه شما به این شکل است:
 
 ```
 .
@@ -73,119 +73,71 @@ Let's say your project file structure looks like this:
 │   ├── main.py
 ```
 
-Now create a directory to store those static files.
+اکنون یک دایرکتوری برای ذخیره فایل‌های استاتیک ایجاد کنید.
 
-Your new file structure could look like this:
+ساختار فایل جدید شما می‌تواند به این شکل باشد:
 
 ```
 .
 ├── app
-│   ├── __init__.py
-│   ├── main.py
+│   ├── __init__.py
+│   ├── main.py
 └── static/
 ```
 
-### Download the files
+### دانلود فایل‌ها
 
-Download the static files needed for the docs and put them on that `static/` directory.
+فایل‌های استاتیک مورد نیاز برای مستندات را دانلود و در آن دایرکتوری `static/` قرار دهید.
 
-You can probably right-click each link and select an option similar to `Save link as...`.
+احتمالاً می‌توانید روی هر لینک کلیک راست کنید و گزینه‌ای مشابه `ذخیره لینک به عنوان...` را انتخاب کنید.
 
-**Swagger UI** uses the files:
+**Swagger UI** از فایل‌های زیر استفاده می‌کند:
 
 * <a href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js" class="external-link" target="_blank">`swagger-ui-bundle.js`</a>
 * <a href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css" class="external-link" target="_blank">`swagger-ui.css`</a>
 
-And **ReDoc** uses the file:
+و **ReDoc** از فایل زیر استفاده می‌کند:
 
 * <a href="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js" class="external-link" target="_blank">`redoc.standalone.js`</a>
 
-After that, your file structure could look like:
+پس از آن، ساختار فایل شما می‌تواند به این شکل باشد:
 
 ```
 .
 ├── app
-│   ├── __init__.py
-│   ├── main.py
+│   ├── __init__.py
+│   ├── main.py
 └── static
     ├── redoc.standalone.js
     ├── swagger-ui-bundle.js
     └── swagger-ui.css
 ```
 
-### Serve the static files
+### سرو کردن فایل‌های استاتیک
 
-* Import `StaticFiles`.
-* "Mount" a `StaticFiles()` instance in a specific path.
+* `StaticFiles` را وارد کنید.
+* یک نمونه `StaticFiles()` را در مسیر خاصی "سوار" کنید.
 
 {* ../../docs_src/custom_docs_ui/tutorial002.py hl[7,11] *}
 
-### Test the static files
+### تست فایل‌های استاتیک
 
-Start your application and go to <a href="http://127.0.0.1:8000/static/redoc.standalone.js" class="external-link" target="_blank">http://127.0.0.1:8000/static/redoc.standalone.js</a>.
+برنامه خود را شروع کنید و به <a href="http://127.0.0.1:8000/static/redoc.standalone.js" class="external-link" target="_blank">http://127.0.0.1:8000/static/redoc.standalone.js</a> بروید.
 
-You should see a very long JavaScript file for **ReDoc**.
+باید یک فایل JavaScript بسیار بلند برای **ReDoc** ببینید.
 
-It could start with something like:
+### غیرفعال کردن مستندات خودکار برای فایل‌های استاتیک
 
-```JavaScript
-/*!
- * ReDoc - OpenAPI/Swagger-generated API Reference Documentation
- * -------------------------------------------------------------
- *   Version: "2.0.0-rc.18"
- *   Repo: https://github.com/Redocly/redoc
- */
-!function(e,t){"object"==typeof exports&&"object"==typeof m
+مانند قبل هنگام استفاده از CDN سفارشی، اولین قدم غیرفعال کردن مستندات خودکار است.
 
-...
-```
+### گنجاندن مستندات سفارشی برای فایل‌های استاتیک
 
-That confirms that you are being able to serve static files from your app, and that you placed the static files for the docs in the correct place.
+و به همین ترتیب هنگام استفاده از CDN سفارشی، اکنون می‌توانید *عملیات‌های مسیر* برای مستندات سفارشی ایجاد کنید، اما URLهای فایل‌های استاتیک خود-میزبانی شده خود را استفاده کنید.
 
-Now we can configure the app to use those static files for the docs.
+{* ../../docs_src/custom_docs_ui/tutorial002.py hl[2:6,14:22,25:27,30:36,39:41] *}
 
-### Disable the automatic docs for static files
+### تست رابط مستندات فایل‌های استاتیک
 
-The same as when using a custom CDN, the first step is to disable the automatic docs, as those use the CDN by default.
+اکنون می‌توانید وای‌فای خود را قطع کنید، به مستندات خود در <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a> بروید و صفحه را بازخوانی کنید.
 
-To disable them, set their URLs to `None` when creating your `FastAPI` app:
-
-{* ../../docs_src/custom_docs_ui/tutorial002.py hl[9] *}
-
-### Include the custom docs for static files
-
-And the same way as with a custom CDN, now you can create the *path operations* for the custom docs.
-
-Again, you can reuse FastAPI's internal functions to create the HTML pages for the docs, and pass them the needed arguments:
-
-* `openapi_url`: the URL where the HTML page for the docs can get the OpenAPI schema for your API. You can use here the attribute `app.openapi_url`.
-* `title`: the title of your API.
-* `oauth2_redirect_url`: you can use `app.swagger_ui_oauth2_redirect_url` here to use the default.
-* `swagger_js_url`: the URL where the HTML for your Swagger UI docs can get the **JavaScript** file. **This is the one that your own app is now serving**.
-* `swagger_css_url`: the URL where the HTML for your Swagger UI docs can get the **CSS** file. **This is the one that your own app is now serving**.
-
-And similarly for ReDoc...
-
-{* ../../docs_src/custom_docs_ui/tutorial002.py hl[2:6,14:22,25:27,30:36] *}
-
-/// tip
-
-The *path operation* for `swagger_ui_redirect` is a helper for when you use OAuth2.
-
-If you integrate your API with an OAuth2 provider, you will be able to authenticate and come back to the API docs with the acquired credentials. And interact with it using the real OAuth2 authentication.
-
-Swagger UI will handle it behind the scenes for you, but it needs this "redirect" helper.
-
-///
-
-### Create a *path operation* to test static files
-
-Now, to be able to test that everything works, create a *path operation*:
-
-{* ../../docs_src/custom_docs_ui/tutorial002.py hl[39:41] *}
-
-### Test Static Files UI
-
-Now, you should be able to disconnect your WiFi, go to your docs at <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>, and reload the page.
-
-And even without Internet, you would be able to see the docs for your API and interact with it.
+و حتی بدون اینترنت، قادر خواهید بود مستندات API خود را ببینید و با آن تعامل کنید.

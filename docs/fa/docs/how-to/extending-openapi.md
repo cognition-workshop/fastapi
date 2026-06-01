@@ -1,80 +1,80 @@
-# Extending OpenAPI
+# گسترش OpenAPI
 
-There are some cases where you might need to modify the generated OpenAPI schema.
+مواردی وجود دارد که ممکن است نیاز به تغییر شمای OpenAPI تولید شده داشته باشید.
 
-In this section you will see how.
+در این بخش نحوه انجام این کار را خواهید دید.
 
-## The normal process
+## فرآیند عادی
 
-The normal (default) process, is as follows.
+فرآیند عادی (پیش‌فرض) به صورت زیر است.
 
-A `FastAPI` application (instance) has an `.openapi()` method that is expected to return the OpenAPI schema.
+یک برنامه `FastAPI` (نمونه) دارای متد `.openapi()` است که انتظار می‌رود شمای OpenAPI را برگرداند.
 
-As part of the application object creation, a *path operation* for `/openapi.json` (or for whatever you set your `openapi_url`) is registered.
+به عنوان بخشی از ایجاد شیء برنامه، یک *عملیات مسیر* برای `/openapi.json` (یا هر چیزی که `openapi_url` خود را تنظیم کرده‌اید) ثبت می‌شود.
 
-It just returns a JSON response with the result of the application's `.openapi()` method.
+فقط یک پاسخ JSON با نتیجه متد `.openapi()` برنامه برمی‌گرداند.
 
-By default, what the method `.openapi()` does is check the property `.openapi_schema` to see if it has contents and return them.
+به طور پیش‌فرض، کاری که متد `.openapi()` انجام می‌دهد بررسی ویژگی `.openapi_schema` برای دیدن اینکه آیا محتوا دارد و برگرداندن آنهاست.
 
-If it doesn't, it generates them using the utility function at `fastapi.openapi.utils.get_openapi`.
+اگر نداشته باشد، آنها را با استفاده از تابع ابزاری در `fastapi.openapi.utils.get_openapi` تولید می‌کند.
 
-And that function `get_openapi()` receives as parameters:
+و آن تابع `get_openapi()` به عنوان پارامتر دریافت می‌کند:
 
-* `title`: The OpenAPI title, shown in the docs.
-* `version`: The version of your API, e.g. `2.5.0`.
-* `openapi_version`: The version of the OpenAPI specification used. By default, the latest: `3.1.0`.
-* `summary`: A short summary of the API.
-* `description`: The description of your API, this can include markdown and will be shown in the docs.
-* `routes`: A list of routes, these are each of the registered *path operations*. They are taken from `app.routes`.
+* `title`: عنوان OpenAPI، نمایش داده شده در مستندات.
+* `version`: نسخه API شما، مثلاً `2.5.0`.
+* `openapi_version`: نسخه مشخصات OpenAPI استفاده شده. به طور پیش‌فرض، جدیدترین: `3.1.0`.
+* `summary`: خلاصه‌ای کوتاه از API.
+* `description`: توضیحات API شما، می‌تواند شامل markdown باشد و در مستندات نمایش داده خواهد شد.
+* `routes`: لیستی از مسیرها، هر یک از *عملیات‌های مسیر* ثبت شده. از `app.routes` گرفته می‌شوند.
 
 /// info
 
-The parameter `summary` is available in OpenAPI 3.1.0 and above, supported by FastAPI 0.99.0 and above.
+پارامتر `summary` در OpenAPI 3.1.0 و بالاتر در دسترس است، پشتیبانی شده توسط FastAPI 0.99.0 و بالاتر.
 
 ///
 
-## Overriding the defaults
+## بازنویسی پیش‌فرض‌ها
 
-Using the information above, you can use the same utility function to generate the OpenAPI schema and override each part that you need.
+با استفاده از اطلاعات بالا، می‌توانید از همان تابع ابزاری برای تولید شمای OpenAPI استفاده کنید و هر بخشی که نیاز دارید را بازنویسی کنید.
 
-For example, let's add <a href="https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md#x-logo" class="external-link" target="_blank">ReDoc's OpenAPI extension to include a custom logo</a>.
+برای مثال، بیایید <a href="https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md#x-logo" class="external-link" target="_blank">افزونه OpenAPI ReDoc برای گنجاندن یک لوگوی سفارشی</a> اضافه کنیم.
 
-### Normal **FastAPI**
+### **FastAPI** عادی
 
-First, write all your **FastAPI** application as normally:
+ابتدا، تمام برنامه **FastAPI** خود را مانند معمول بنویسید:
 
 {* ../../docs_src/extending_openapi/tutorial001.py hl[1,4,7:9] *}
 
-### Generate the OpenAPI schema
+### تولید شمای OpenAPI
 
-Then, use the same utility function to generate the OpenAPI schema, inside a `custom_openapi()` function:
+سپس، از همان تابع ابزاری برای تولید شمای OpenAPI، در داخل یک تابع `custom_openapi()` استفاده کنید:
 
 {* ../../docs_src/extending_openapi/tutorial001.py hl[2,15:21] *}
 
-### Modify the OpenAPI schema
+### تغییر شمای OpenAPI
 
-Now you can add the ReDoc extension, adding a custom `x-logo` to the `info` "object" in the OpenAPI schema:
+اکنون می‌توانید افزونه ReDoc را اضافه کنید، یک `x-logo` سفارشی به شیء `info` در شمای OpenAPI اضافه کنید:
 
 {* ../../docs_src/extending_openapi/tutorial001.py hl[22:24] *}
 
-### Cache the OpenAPI schema
+### ذخیره‌سازی شمای OpenAPI
 
-You can use the property `.openapi_schema` as a "cache", to store your generated schema.
+می‌توانید از ویژگی `.openapi_schema` به عنوان "حافظه پنهان" برای ذخیره شمای تولید شده استفاده کنید.
 
-That way, your application won't have to generate the schema every time a user opens your API docs.
+به این ترتیب، برنامه شما نیازی به تولید شما هر بار که کاربر مستندات API شما را باز می‌کند نخواهد داشت.
 
-It will be generated only once, and then the same cached schema will be used for the next requests.
+فقط یک بار تولید خواهد شد و سپس همان شمای ذخیره شده برای درخواست‌های بعدی استفاده خواهد شد.
 
 {* ../../docs_src/extending_openapi/tutorial001.py hl[13:14,25:26] *}
 
-### Override the method
+### بازنویسی متد
 
-Now you can replace the `.openapi()` method with your new function.
+اکنون می‌توانید متد `.openapi()` را با تابع جدید خود جایگزین کنید.
 
 {* ../../docs_src/extending_openapi/tutorial001.py hl[29] *}
 
-### Check it
+### بررسی آن
 
-Once you go to <a href="http://127.0.0.1:8000/redoc" class="external-link" target="_blank">http://127.0.0.1:8000/redoc</a> you will see that you are using your custom logo (in this example, **FastAPI**'s logo):
+هنگامی که به <a href="http://127.0.0.1:8000/redoc" class="external-link" target="_blank">http://127.0.0.1:8000/redoc</a> بروید، خواهید دید که از لوگوی سفارشی خود استفاده می‌کنید (در این مثال، لوگوی **FastAPI**):
 
 <img src="/img/tutorial/extending-openapi/image01.png">

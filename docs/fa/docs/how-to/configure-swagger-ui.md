@@ -1,62 +1,62 @@
-# Configure Swagger UI
+# پیکربندی رابط Swagger
 
-You can configure some extra <a href="https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/" class="external-link" target="_blank">Swagger UI parameters</a>.
+می‌توانید برخی <a href="https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/" class="external-link" target="_blank">پارامترهای اضافی Swagger UI</a> را پیکربندی کنید.
 
-To configure them, pass the `swagger_ui_parameters` argument when creating the `FastAPI()` app object or to the `get_swagger_ui_html()` function.
+برای پیکربندی آنها، آرگومان `swagger_ui_parameters` را هنگام ایجاد شیء برنامه `FastAPI()` یا به تابع `get_swagger_ui_html()` ارسال کنید.
 
-`swagger_ui_parameters` receives a dictionary with the configurations passed to Swagger UI directly.
+`swagger_ui_parameters` یک دیکشنری با پیکربندی‌هایی که مستقیماً به Swagger UI ارسال می‌شوند دریافت می‌کند.
 
-FastAPI converts the configurations to **JSON** to make them compatible with JavaScript, as that's what Swagger UI needs.
+FastAPI پیکربندی‌ها را به **JSON** تبدیل می‌کند تا با JavaScript سازگار شوند، زیرا Swagger UI به آن نیاز دارد.
 
-## Disable Syntax Highlighting
+## غیرفعال کردن هایلایت نحوی
 
-For example, you could disable syntax highlighting in Swagger UI.
+برای مثال، می‌توانید هایلایت نحوی را در Swagger UI غیرفعال کنید.
 
-Without changing the settings, syntax highlighting is enabled by default:
+بدون تغییر تنظیمات، هایلایت نحوی به طور پیش‌فرض فعال است:
 
 <img src="/img/tutorial/extending-openapi/image02.png">
 
-But you can disable it by setting `syntaxHighlight` to `False`:
+اما می‌توانید آن را با تنظیم `syntaxHighlight` به `False` غیرفعال کنید:
 
 {* ../../docs_src/configure_swagger_ui/tutorial001.py hl[3] *}
 
-...and then Swagger UI won't show the syntax highlighting anymore:
+...و سپس Swagger UI دیگر هایلایت نحوی را نمایش نخواهد داد:
 
 <img src="/img/tutorial/extending-openapi/image03.png">
 
-## Change the Theme
+## تغییر تم
 
-The same way you could set the syntax highlighting theme with the key `"syntaxHighlight.theme"` (notice that it has a dot in the middle):
+به همین ترتیب می‌توانید تم هایلایت نحوی را با کلید `"syntaxHighlight.theme"` تنظیم کنید (توجه کنید که یک نقطه در وسط دارد):
 
 {* ../../docs_src/configure_swagger_ui/tutorial002.py hl[3] *}
 
-That configuration would change the syntax highlighting color theme:
+آن پیکربندی تم رنگ هایلایت نحوی را تغییر خواهد داد:
 
 <img src="/img/tutorial/extending-openapi/image04.png">
 
-## Change Default Swagger UI Parameters
+## تغییر پارامترهای پیش‌فرض Swagger UI
 
-FastAPI includes some default configuration parameters appropriate for most of the use cases.
+FastAPI شامل برخی پارامترهای پیکربندی پیش‌فرض مناسب برای اکثر موارد استفاده است.
 
-It includes these default configurations:
+شامل این پیکربندی‌های پیش‌فرض است:
 
 {* ../../fastapi/openapi/docs.py ln[8:23] hl[17:23] *}
 
-You can override any of them by setting a different value in the argument `swagger_ui_parameters`.
+می‌توانید هر یک از آنها را با تنظیم مقدار متفاوت در آرگومان `swagger_ui_parameters` بازنویسی کنید.
 
-For example, to disable `deepLinking` you could pass these settings to `swagger_ui_parameters`:
+برای مثال، برای غیرفعال کردن `deepLinking` می‌توانید این تنظیمات را به `swagger_ui_parameters` ارسال کنید:
 
 {* ../../docs_src/configure_swagger_ui/tutorial003.py hl[3] *}
 
-## Other Swagger UI Parameters
+## سایر پارامترهای Swagger UI
 
-To see all the other possible configurations you can use, read the official <a href="https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/" class="external-link" target="_blank">docs for Swagger UI parameters</a>.
+برای مشاهده تمام پیکربندی‌های ممکن دیگر، <a href="https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/" class="external-link" target="_blank">مستندات رسمی پارامترهای Swagger UI</a> را بخوانید.
 
-## JavaScript-only settings
+## تنظیمات فقط JavaScript
 
-Swagger UI also allows other configurations to be **JavaScript-only** objects (for example, JavaScript functions).
+Swagger UI همچنین اجازه می‌دهد پیکربندی‌های دیگری به صورت اشیاء **فقط JavaScript** باشند (برای مثال، توابع JavaScript).
 
-FastAPI also includes these JavaScript-only `presets` settings:
+FastAPI همچنین این تنظیمات `presets` فقط JavaScript را شامل می‌شود:
 
 ```JavaScript
 presets: [
@@ -65,6 +65,6 @@ presets: [
 ]
 ```
 
-These are **JavaScript** objects, not strings, so you can't pass them from Python code directly.
+اینها اشیاء **JavaScript** هستند، نه رشته‌ها، بنابراین نمی‌توانید آنها را مستقیماً از کد Python ارسال کنید.
 
-If you need to use JavaScript-only configurations like those, you can use one of the methods above. Override all the Swagger UI *path operation* and manually write any JavaScript you need.
+اگر نیاز به استفاده از پیکربندی‌های فقط JavaScript مانند آنها دارید، می‌توانید از یکی از روش‌های بالا استفاده کنید. تمام *عملیات مسیر* Swagger UI را بازنویسی کنید و هر JavaScript مورد نیاز را به صورت دستی بنویسید.
