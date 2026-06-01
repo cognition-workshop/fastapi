@@ -1,107 +1,107 @@
-# Path Operation Configuration
+# پیکربندی عملیات مسیر
 
-There are several parameters that you can pass to your *path operation decorator* to configure it.
+چندین پارامتر وجود دارد که می‌توانید به *دکوراتور عملیات مسیر* خود برای پیکربندی آن ارسال کنید.
 
 /// warning
 
-Notice that these parameters are passed directly to the *path operation decorator*, not to your *path operation function*.
+توجه کنید که این پارامترها مستقیماً به *دکوراتور عملیات مسیر* ارسال می‌شوند، نه به *تابع عملیات مسیر* شما.
 
 ///
 
-## Response Status Code
+## کد وضعیت پاسخ
 
-You can define the (HTTP) `status_code` to be used in the response of your *path operation*.
+می‌توانید (HTTP) `status_code` مورد استفاده در پاسخ *عملیات مسیر* خود را تعریف کنید.
 
-You can pass directly the `int` code, like `404`.
+می‌توانید مستقیماً کد `int` مانند `404` را ارسال کنید.
 
-But if you don't remember what each number code is for, you can use the shortcut constants in `status`:
+اما اگر به یاد ندارید هر کد عددی برای چیست، می‌توانید از ثابت‌های میانبر در `status` استفاده کنید:
 
 {* ../../docs_src/path_operation_configuration/tutorial001_py310.py hl[1,15] *}
 
-That status code will be used in the response and will be added to the OpenAPI schema.
+آن کد وضعیت در پاسخ استفاده خواهد شد و به اسکیمای OpenAPI اضافه خواهد شد.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette import status`.
+همچنین می‌توانید از `from starlette import status` استفاده کنید.
 
-**FastAPI** provides the same `starlette.status` as `fastapi.status` just as a convenience for you, the developer. But it comes directly from Starlette.
+**FastAPI** همان `starlette.status` را به عنوان `fastapi.status` فقط به عنوان راحتی برای شما، توسعه‌دهنده، ارائه می‌دهد. اما مستقیماً از Starlette می‌آید.
 
 ///
 
-## Tags
+## تگ‌ها
 
-You can add tags to your *path operation*, pass the parameter `tags` with a `list` of `str` (commonly just one `str`):
+می‌توانید تگ‌ها به *عملیات مسیر* خود اضافه کنید، پارامتر `tags` را با یک `list` از `str` (معمولاً فقط یک `str`) ارسال کنید:
 
 {* ../../docs_src/path_operation_configuration/tutorial002_py310.py hl[15,20,25] *}
 
-They will be added to the OpenAPI schema and used by the automatic documentation interfaces:
+آنها به اسکیمای OpenAPI اضافه شده و توسط رابط‌های مستندات خودکار استفاده خواهند شد:
 
 <img src="/img/tutorial/path-operation-configuration/image01.png">
 
-### Tags with Enums
+### تگ‌ها با Enum
 
-If you have a big application, you might end up accumulating **several tags**, and you would want to make sure you always use the **same tag** for related *path operations*.
+اگر برنامه بزرگی دارید، ممکن است **تگ‌های متعدد** جمع شوند، و بخواهید مطمئن شوید همیشه **همان تگ** را برای *عملیات‌های مسیر* مرتبط استفاده می‌کنید.
 
-In these cases, it could make sense to store the tags in an `Enum`.
+در این موارد، ذخیره تگ‌ها در یک `Enum` منطقی خواهد بود.
 
-**FastAPI** supports that the same way as with plain strings:
+**FastAPI** آن را به همان شکل رشته‌های ساده پشتیبانی می‌کند:
 
 {* ../../docs_src/path_operation_configuration/tutorial002b.py hl[1,8:10,13,18] *}
 
-## Summary and description
+## خلاصه و توضیحات
 
-You can add a `summary` and `description`:
+می‌توانید `summary` و `description` اضافه کنید:
 
 {* ../../docs_src/path_operation_configuration/tutorial003_py310.py hl[18:19] *}
 
-## Description from docstring
+## توضیحات از docstring
 
-As descriptions tend to be long and cover multiple lines, you can declare the *path operation* description in the function <abbr title="a multi-line string as the first expression inside a function (not assigned to any variable) used for documentation">docstring</abbr> and **FastAPI** will read it from there.
+از آنجا که توضیحات معمولاً طولانی هستند و چندین خط را پوشش می‌دهند، می‌توانید توضیحات *عملیات مسیر* را در <abbr title="یک رشته چندخطی به عنوان اولین عبارت درون یک تابع (که به هیچ متغیری اختصاص داده نشده) و برای مستندسازی استفاده می‌شود">docstring</abbr> تابع اعلان کنید و **FastAPI** آن را از آنجا خواهد خواند.
 
-You can write <a href="https://en.wikipedia.org/wiki/Markdown" class="external-link" target="_blank">Markdown</a> in the docstring, it will be interpreted and displayed correctly (taking into account docstring indentation).
+می‌توانید <a href="https://en.wikipedia.org/wiki/Markdown" class="external-link" target="_blank">Markdown</a> در docstring بنویسید، به درستی تفسیر و نمایش داده خواهد شد (با در نظر گرفتن تورفتگی docstring).
 
 {* ../../docs_src/path_operation_configuration/tutorial004_py310.py hl[17:25] *}
 
-It will be used in the interactive docs:
+در مستندات تعاملی استفاده خواهد شد:
 
 <img src="/img/tutorial/path-operation-configuration/image02.png">
 
-## Response description
+## توضیحات پاسخ
 
-You can specify the response description with the parameter `response_description`:
+می‌توانید توضیحات پاسخ را با پارامتر `response_description` مشخص کنید:
 
 {* ../../docs_src/path_operation_configuration/tutorial005_py310.py hl[19] *}
 
 /// info
 
-Notice that `response_description` refers specifically to the response, the `description` refers to the *path operation* in general.
+توجه کنید که `response_description` به طور خاص به پاسخ اشاره دارد، `description` به *عملیات مسیر* به طور کلی اشاره دارد.
 
 ///
 
 /// check
 
-OpenAPI specifies that each *path operation* requires a response description.
+OpenAPI مشخص می‌کند که هر *عملیات مسیر* به توضیحات پاسخ نیاز دارد.
 
-So, if you don't provide one, **FastAPI** will automatically generate one of "Successful response".
+بنابراین، اگر یکی ارائه ندهید، **FastAPI** به طور خودکار یکی با عنوان "Successful response" تولید خواهد کرد.
 
 ///
 
 <img src="/img/tutorial/path-operation-configuration/image03.png">
 
-## Deprecate a *path operation*
+## منسوخ کردن یک *عملیات مسیر*
 
-If you need to mark a *path operation* as <abbr title="obsolete, recommended not to use it">deprecated</abbr>, but without removing it, pass the parameter `deprecated`:
+اگر نیاز دارید یک *عملیات مسیر* را به عنوان <abbr title="منسوخ، توصیه به عدم استفاده">منسوخ</abbr> علامت‌گذاری کنید، بدون حذف آن، پارامتر `deprecated` را ارسال کنید:
 
 {* ../../docs_src/path_operation_configuration/tutorial006.py hl[16] *}
 
-It will be clearly marked as deprecated in the interactive docs:
+در مستندات تعاملی به وضوح به عنوان منسوخ علامت‌گذاری خواهد شد:
 
 <img src="/img/tutorial/path-operation-configuration/image04.png">
 
-Check how deprecated and non-deprecated *path operations* look like:
+ببینید *عملیات‌های مسیر* منسوخ و غیرمنسوخ چگونه به نظر می‌رسند:
 
 <img src="/img/tutorial/path-operation-configuration/image05.png">
 
-## Recap
+## خلاصه
 
-You can configure and add metadata for your *path operations* easily by passing parameters to the *path operation decorators*.
+می‌توانید به راحتی با ارسال پارامترها به *دکوراتورهای عملیات مسیر*، متاداده را برای *عملیات‌های مسیر* خود پیکربندی و اضافه کنید.

@@ -1,64 +1,64 @@
-# Path Parameters and Numeric Validations
+# پارامترهای مسیر و اعتبارسنجی عددی
 
-In the same way that you can declare more validations and metadata for query parameters with `Query`, you can declare the same type of validations and metadata for path parameters with `Path`.
+به همان شکلی که می‌توانید اعتبارسنجی‌ها و متاداده بیشتری برای پارامترهای کوئری با `Query` اعلان کنید، می‌توانید همان نوع اعتبارسنجی‌ها و متاداده را برای پارامترهای مسیر با `Path` اعلان کنید.
 
-## Import Path
+## وارد کردن Path
 
-First, import `Path` from `fastapi`, and import `Annotated`:
+ابتدا، `Path` را از `fastapi` و `Annotated` را وارد کنید:
 
 {* ../../docs_src/path_params_numeric_validations/tutorial001_an_py310.py hl[1,3] *}
 
 /// info
 
-FastAPI added support for `Annotated` (and started recommending it) in version 0.95.0.
+FastAPI پشتیبانی از `Annotated` را در نسخه 0.95.0 اضافه کرد (و شروع به توصیه آن کرد).
 
-If you have an older version, you would get errors when trying to use `Annotated`.
+اگر نسخه قدیمی‌تری دارید، هنگام تلاش برای استفاده از `Annotated` خطا دریافت خواهید کرد.
 
-Make sure you [Upgrade the FastAPI version](../deployment/versions.md#upgrading-the-fastapi-versions){.internal-link target=_blank} to at least 0.95.1 before using `Annotated`.
+مطمئن شوید که [نسخه FastAPI را ارتقا دهید](../deployment/versions.md#upgrading-the-fastapi-versions){.internal-link target=_blank} حداقل به 0.95.1 قبل از استفاده از `Annotated`.
 
 ///
 
-## Declare metadata
+## اعلان متاداده
 
-You can declare all the same parameters as for `Query`.
+می‌توانید تمام همان پارامترها مانند `Query` را اعلان کنید.
 
-For example, to declare a `title` metadata value for the path parameter `item_id` you can type:
+برای مثال، برای اعلان مقدار متاداده `title` برای پارامتر مسیر `item_id` می‌توانید بنویسید:
 
 {* ../../docs_src/path_params_numeric_validations/tutorial001_an_py310.py hl[10] *}
 
 /// note
 
-A path parameter is always required as it has to be part of the path. Even if you declared it with `None` or set a default value, it would not affect anything, it would still be always required.
+یک پارامتر مسیر همیشه الزامی است زیرا باید بخشی از مسیر باشد. حتی اگر آن را با `None` اعلان کنید یا مقدار پیش‌فرض تنظیم کنید، تأثیری نخواهد داشت، همچنان همیشه الزامی خواهد بود.
 
 ///
 
-## Order the parameters as you need
+## ترتیب‌بندی پارامترها به دلخواه
 
 /// tip
 
-This is probably not as important or necessary if you use `Annotated`.
+اگر از `Annotated` استفاده کنید، احتمالاً این مهم یا ضروری نیست.
 
 ///
 
-Let's say that you want to declare the query parameter `q` as a required `str`.
+فرض کنید می‌خواهید پارامتر کوئری `q` را به عنوان یک `str` الزامی اعلان کنید.
 
-And you don't need to declare anything else for that parameter, so you don't really need to use `Query`.
+و لازم نیست چیز دیگری برای آن پارامتر اعلان کنید، پس واقعاً نیازی به استفاده از `Query` ندارید.
 
-But you still need to use `Path` for the `item_id` path parameter. And you don't want to use `Annotated` for some reason.
+اما همچنان باید از `Path` برای پارامتر مسیر `item_id` استفاده کنید. و به دلایلی نمی‌خواهید از `Annotated` استفاده کنید.
 
-Python will complain if you put a value with a "default" before a value that doesn't have a "default".
+پایتون اگر مقداری با "پیش‌فرض" را قبل از مقداری بدون "پیش‌فرض" قرار دهید شکایت خواهد کرد.
 
-But you can re-order them, and have the value without a default (the query parameter `q`) first.
+اما می‌توانید ترتیب آنها را تغییر دهید، و مقدار بدون پیش‌فرض (پارامتر کوئری `q`) را اول قرار دهید.
 
-It doesn't matter for **FastAPI**. It will detect the parameters by their names, types and default declarations (`Query`, `Path`, etc), it doesn't care about the order.
+برای **FastAPI** مهم نیست. پارامترها را با نام، تایپ و اعلان‌های پیش‌فرضشان (`Query`، `Path` و غیره) تشخیص خواهد داد، به ترتیب اهمیت نمی‌دهد.
 
-So, you can declare your function as:
+بنابراین، می‌توانید تابع خود را اینطور اعلان کنید:
 
 //// tab | Python 3.8 non-Annotated
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+ترجیحاً در صورت امکان از نسخه `Annotated` استفاده کنید.
 
 ///
 
@@ -66,99 +66,99 @@ Prefer to use the `Annotated` version if possible.
 
 ////
 
-But keep in mind that if you use `Annotated`, you won't have this problem, it won't matter as you're not using the function parameter default values for `Query()` or `Path()`.
+اما به خاطر داشته باشید که اگر از `Annotated` استفاده کنید، این مشکل را نخواهید داشت، مهم نیست زیرا از مقادیر پیش‌فرض پارامتر تابع برای `Query()` یا `Path()` استفاده نمی‌کنید.
 
 {* ../../docs_src/path_params_numeric_validations/tutorial002_an_py39.py *}
 
-## Order the parameters as you need, tricks
+## ترتیب‌بندی پارامترها به دلخواه، ترفندها
 
 /// tip
 
-This is probably not as important or necessary if you use `Annotated`.
+اگر از `Annotated` استفاده کنید، احتمالاً این مهم یا ضروری نیست.
 
 ///
 
-Here's a **small trick** that can be handy, but you won't need it often.
+اینجا یک **ترفند کوچک** است که می‌تواند مفید باشد، اما اغلب به آن نیاز نخواهید داشت.
 
-If you want to:
+اگر بخواهید:
 
-* declare the `q` query parameter without a `Query` nor any default value
-* declare the path parameter `item_id` using `Path`
-* have them in a different order
-* not use `Annotated`
+* پارامتر کوئری `q` را بدون `Query` و بدون مقدار پیش‌فرض اعلان کنید
+* پارامتر مسیر `item_id` را با استفاده از `Path` اعلان کنید
+* آنها را در ترتیب متفاوتی داشته باشید
+* از `Annotated` استفاده نکنید
 
-...Python has a little special syntax for that.
+...پایتون سینتکس خاص کوچکی برای این دارد.
 
-Pass `*`, as the first parameter of the function.
+`*` را به عنوان اولین پارامتر تابع ارسال کنید.
 
-Python won't do anything with that `*`, but it will know that all the following parameters should be called as keyword arguments (key-value pairs), also known as <abbr title="From: K-ey W-ord Arg-uments"><code>kwargs</code></abbr>. Even if they don't have a default value.
+پایتون کاری با آن `*` انجام نخواهد داد، اما خواهد دانست که تمام پارامترهای بعدی باید به عنوان آرگومان‌های کلیدواژه‌ای (جفت‌های کلید-مقدار)، معروف به <abbr title="از: K-ey W-ord Arg-uments"><code>kwargs</code></abbr>، فراخوانی شوند. حتی اگر مقدار پیش‌فرض نداشته باشند.
 
 {* ../../docs_src/path_params_numeric_validations/tutorial003.py hl[7] *}
 
-### Better with `Annotated`
+### بهتر با `Annotated`
 
-Keep in mind that if you use `Annotated`, as you are not using function parameter default values, you won't have this problem, and you probably won't need to use `*`.
+به خاطر داشته باشید که اگر از `Annotated` استفاده کنید، چون از مقادیر پیش‌فرض پارامتر تابع استفاده نمی‌کنید، این مشکل را نخواهید داشت و احتمالاً نیازی به استفاده از `*` ندارید.
 
 {* ../../docs_src/path_params_numeric_validations/tutorial003_an_py39.py hl[10] *}
 
-## Number validations: greater than or equal
+## اعتبارسنجی عددی: بزرگتر یا مساوی
 
-With `Query` and `Path` (and others you'll see later) you can declare number constraints.
+با `Query` و `Path` (و موارد دیگری که بعداً خواهید دید) می‌توانید محدودیت‌های عددی اعلان کنید.
 
-Here, with `ge=1`, `item_id` will need to be an integer number "`g`reater than or `e`qual" to `1`.
+اینجا، با `ge=1`، `item_id` باید یک عدد صحیح "`g`reater than or `e`qual" (بزرگتر یا مساوی) `1` باشد.
 
 {* ../../docs_src/path_params_numeric_validations/tutorial004_an_py39.py hl[10] *}
 
-## Number validations: greater than and less than or equal
+## اعتبارسنجی عددی: بزرگتر و کمتر یا مساوی
 
-The same applies for:
+همینطور برای:
 
-* `gt`: `g`reater `t`han
-* `le`: `l`ess than or `e`qual
+* `gt`: `g`reater `t`han (بزرگتر از)
+* `le`: `l`ess than or `e`qual (کمتر یا مساوی)
 
 {* ../../docs_src/path_params_numeric_validations/tutorial005_an_py39.py hl[10] *}
 
-## Number validations: floats, greater than and less than
+## اعتبارسنجی عددی: اعشاری، بزرگتر و کمتر
 
-Number validations also work for `float` values.
+اعتبارسنجی عددی برای مقادیر `float` نیز کار می‌کند.
 
-Here's where it becomes important to be able to declare <abbr title="greater than"><code>gt</code></abbr> and not just <abbr title="greater than or equal"><code>ge</code></abbr>. As with it you can require, for example, that a value must be greater than `0`, even if it is less than `1`.
+اینجاست که مهم می‌شود بتوانید <abbr title="بزرگتر از"><code>gt</code></abbr> اعلان کنید و نه فقط <abbr title="بزرگتر یا مساوی"><code>ge</code></abbr>. زیرا با آن می‌توانید مثلاً الزام کنید که مقدار باید بزرگتر از `0` باشد، حتی اگر کمتر از `1` باشد.
 
-So, `0.5` would be a valid value. But `0.0` or `0` would not.
+بنابراین، `0.5` یک مقدار معتبر خواهد بود. اما `0.0` یا `0` نخواهد بود.
 
-And the same for <abbr title="less than"><code>lt</code></abbr>.
+و همینطور برای <abbr title="کمتر از"><code>lt</code></abbr>.
 
 {* ../../docs_src/path_params_numeric_validations/tutorial006_an_py39.py hl[13] *}
 
-## Recap
+## خلاصه
 
-With `Query`, `Path` (and others you haven't seen yet) you can declare metadata and string validations in the same ways as with [Query Parameters and String Validations](query-params-str-validations.md){.internal-link target=_blank}.
+با `Query`، `Path` (و موارد دیگری که هنوز ندیده‌اید) می‌توانید متاداده و اعتبارسنجی رشته‌ای را به همان شکل‌هایی که با [پارامترهای کوئری و اعتبارسنجی رشته‌ای](query-params-str-validations.md){.internal-link target=_blank} انجام دادید اعلان کنید.
 
-And you can also declare numeric validations:
+و همچنین می‌توانید اعتبارسنجی‌های عددی اعلان کنید:
 
-* `gt`: `g`reater `t`han
-* `ge`: `g`reater than or `e`qual
-* `lt`: `l`ess `t`han
-* `le`: `l`ess than or `e`qual
+* `gt`: `g`reater `t`han (بزرگتر از)
+* `ge`: `g`reater than or `e`qual (بزرگتر یا مساوی)
+* `lt`: `l`ess `t`han (کمتر از)
+* `le`: `l`ess than or `e`qual (کمتر یا مساوی)
 
 /// info
 
-`Query`, `Path`, and other classes you will see later are subclasses of a common `Param` class.
+`Query`، `Path` و کلاس‌های دیگری که بعداً خواهید دید زیرکلاس‌های یک کلاس مشترک `Param` هستند.
 
-All of them share the same parameters for additional validation and metadata you have seen.
+همه آنها پارامترهای یکسان برای اعتبارسنجی و متاداده اضافی که دیده‌اید را به اشتراک می‌گذارند.
 
 ///
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-When you import `Query`, `Path` and others from `fastapi`, they are actually functions.
+وقتی `Query`، `Path` و دیگران را از `fastapi` وارد می‌کنید، آنها در واقع توابع هستند.
 
-That when called, return instances of classes of the same name.
+که وقتی فراخوانی می‌شوند، نمونه‌هایی از کلاس‌هایی با همان نام برمی‌گردانند.
 
-So, you import `Query`, which is a function. And when you call it, it returns an instance of a class also named `Query`.
+بنابراین، `Query` را وارد می‌کنید، که یک تابع است. و وقتی آن را فراخوانی می‌کنید، نمونه‌ای از کلاسی نیز به نام `Query` برمی‌گرداند.
 
-These functions are there (instead of just using the classes directly) so that your editor doesn't mark errors about their types.
+این توابع به جای استفاده مستقیم از کلاس‌ها وجود دارند تا ویرایشگر شما درباره تایپ‌های آنها خطا نشان ندهد.
 
-That way you can use your normal editor and coding tools without having to add custom configurations to disregard those errors.
+به این ترتیب می‌توانید از ویرایشگر و ابزارهای کدنویسی عادی خود بدون نیاز به اضافه کردن پیکربندی‌های سفارشی برای نادیده گرفتن آن خطاها استفاده کنید.
 
 ///

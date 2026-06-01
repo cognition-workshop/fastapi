@@ -1,120 +1,120 @@
-# Metadata and Docs URLs
+# متاداده و URLهای مستندات
 
-You can customize several metadata configurations in your **FastAPI** application.
+می‌توانید چندین پیکربندی متاداده را در برنامه **FastAPI** خود سفارشی کنید.
 
-## Metadata for API
+## متاداده برای API
 
-You can set the following fields that are used in the OpenAPI specification and the automatic API docs UIs:
+می‌توانید فیلدهای زیر را که در مشخصه OpenAPI و رابط‌های کاربری مستندات خودکار API استفاده می‌شوند تنظیم کنید:
 
-| Parameter | Type | Description |
+| پارامتر | تایپ | توضیحات |
 |------------|------|-------------|
-| `title` | `str` | The title of the API. |
-| `summary` | `str` | A short summary of the API. <small>Available since OpenAPI 3.1.0, FastAPI 0.99.0.</small> |
-| `description` | `str` | A short description of the API. It can use Markdown. |
-| `version` | `string` | The version of the API. This is the version of your own application, not of OpenAPI. For example `2.5.0`. |
-| `terms_of_service` | `str` | A URL to the Terms of Service for the API. If provided, this has to be a URL. |
-| `contact` | `dict` | The contact information for the exposed API. It can contain several fields. <details><summary><code>contact</code> fields</summary><table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>name</code></td><td><code>str</code></td><td>The identifying name of the contact person/organization.</td></tr><tr><td><code>url</code></td><td><code>str</code></td><td>The URL pointing to the contact information. MUST be in the format of a URL.</td></tr><tr><td><code>email</code></td><td><code>str</code></td><td>The email address of the contact person/organization. MUST be in the format of an email address.</td></tr></tbody></table></details> |
-| `license_info` | `dict` | The license information for the exposed API. It can contain several fields. <details><summary><code>license_info</code> fields</summary><table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>name</code></td><td><code>str</code></td><td><strong>REQUIRED</strong> (if a <code>license_info</code> is set). The license name used for the API.</td></tr><tr><td><code>identifier</code></td><td><code>str</code></td><td>An <a href="https://spdx.org/licenses/" class="external-link" target="_blank">SPDX</a> license expression for the API. The <code>identifier</code> field is mutually exclusive of the <code>url</code> field. <small>Available since OpenAPI 3.1.0, FastAPI 0.99.0.</small></td></tr><tr><td><code>url</code></td><td><code>str</code></td><td>A URL to the license used for the API. MUST be in the format of a URL.</td></tr></tbody></table></details> |
+| `title` | `str` | عنوان API. |
+| `summary` | `str` | خلاصه کوتاه API. <small>از OpenAPI 3.1.0 و FastAPI 0.99.0 در دسترس.</small> |
+| `description` | `str` | توضیحات کوتاه API. می‌تواند از Markdown استفاده کند. |
+| `version` | `string` | نسخه API. این نسخه برنامه خود شماست، نه OpenAPI. برای مثال `2.5.0`. |
+| `terms_of_service` | `str` | URL شرایط خدمات API. اگر ارائه شود، باید یک URL باشد. |
+| `contact` | `dict` | اطلاعات تماس برای API ارائه شده. می‌تواند شامل چندین فیلد باشد. <details><summary>فیلدهای <code>contact</code></summary><table><thead><tr><th>پارامتر</th><th>تایپ</th><th>توضیحات</th></tr></thead><tbody><tr><td><code>name</code></td><td><code>str</code></td><td>نام شناسایی شخص/سازمان تماس.</td></tr><tr><td><code>url</code></td><td><code>str</code></td><td>URL اشاره کننده به اطلاعات تماس. باید در قالب URL باشد.</td></tr><tr><td><code>email</code></td><td><code>str</code></td><td>آدرس ایمیل شخص/سازمان تماس. باید در قالب آدرس ایمیل باشد.</td></tr></tbody></table></details> |
+| `license_info` | `dict` | اطلاعات مجوز برای API ارائه شده. می‌تواند شامل چندین فیلد باشد. <details><summary>فیلدهای <code>license_info</code></summary><table><thead><tr><th>پارامتر</th><th>تایپ</th><th>توضیحات</th></tr></thead><tbody><tr><td><code>name</code></td><td><code>str</code></td><td><strong>الزامی</strong> (اگر <code>license_info</code> تنظیم شده باشد). نام مجوز استفاده شده برای API.</td></tr><tr><td><code>identifier</code></td><td><code>str</code></td><td>یک عبارت مجوز <a href="https://spdx.org/licenses/" class="external-link" target="_blank">SPDX</a> برای API. فیلد <code>identifier</code> با فیلد <code>url</code> متقابلاً انحصاری است. <small>از OpenAPI 3.1.0 و FastAPI 0.99.0 در دسترس.</small></td></tr><tr><td><code>url</code></td><td><code>str</code></td><td>URL مجوز استفاده شده برای API. باید در قالب URL باشد.</td></tr></tbody></table></details> |
 
-You can set them as follows:
+می‌توانید آنها را به صورت زیر تنظیم کنید:
 
 {* ../../docs_src/metadata/tutorial001.py hl[3:16, 19:32] *}
 
 /// tip
 
-You can write Markdown in the `description` field and it will be rendered in the output.
+می‌توانید در فیلد `description` Markdown بنویسید و در خروجی رندر خواهد شد.
 
 ///
 
-With this configuration, the automatic API docs would look like:
+با این پیکربندی، مستندات خودکار API به این شکل خواهد بود:
 
 <img src="/img/tutorial/metadata/image01.png">
 
-## License identifier
+## شناسه مجوز
 
-Since OpenAPI 3.1.0 and FastAPI 0.99.0, you can also set the `license_info` with an `identifier` instead of a `url`.
+از OpenAPI 3.1.0 و FastAPI 0.99.0، همچنین می‌توانید `license_info` را با یک `identifier` به جای `url` تنظیم کنید.
 
-For example:
+برای مثال:
 
 {* ../../docs_src/metadata/tutorial001_1.py hl[31] *}
 
-## Metadata for tags
+## متاداده برای تگ‌ها
 
-You can also add additional metadata for the different tags used to group your path operations with the parameter `openapi_tags`.
+همچنین می‌توانید متاداده اضافی برای تگ‌های مختلف استفاده شده برای گروه‌بندی عملیات‌های مسیر با پارامتر `openapi_tags` اضافه کنید.
 
-It takes a list containing one dictionary for each tag.
+یک لیست شامل یک دیکشنری برای هر تگ می‌گیرد.
 
-Each dictionary can contain:
+هر دیکشنری می‌تواند شامل موارد زیر باشد:
 
-* `name` (**required**): a `str` with the same tag name you use in the `tags` parameter in your *path operations* and `APIRouter`s.
-* `description`: a `str` with a short description for the tag. It can have Markdown and will be shown in the docs UI.
-* `externalDocs`: a `dict` describing external documentation with:
-    * `description`: a `str` with a short description for the external docs.
-    * `url` (**required**): a `str` with the URL for the external documentation.
+* `name` (**الزامی**): یک `str` با همان نام تگ که در پارامتر `tags` در *عملیات‌های مسیر* و `APIRouter`ها استفاده می‌کنید.
+* `description`: یک `str` با توضیحات کوتاه برای تگ. می‌تواند Markdown داشته باشد و در رابط کاربری مستندات نمایش داده خواهد شد.
+* `externalDocs`: یک `dict` توصیف‌کننده مستندات خارجی با:
+    * `description`: یک `str` با توضیحات کوتاه برای مستندات خارجی.
+    * `url` (**الزامی**): یک `str` با URL مستندات خارجی.
 
-### Create metadata for tags
+### ایجاد متاداده برای تگ‌ها
 
-Let's try that in an example with tags for `users` and `items`.
+بیایید آن را در مثالی با تگ‌هایی برای `users` و `items` امتحان کنیم.
 
-Create metadata for your tags and pass it to the `openapi_tags` parameter:
+متاداده برای تگ‌های خود ایجاد کنید و آن را به پارامتر `openapi_tags` ارسال کنید:
 
 {* ../../docs_src/metadata/tutorial004.py hl[3:16,18] *}
 
-Notice that you can use Markdown inside of the descriptions, for example "login" will be shown in bold (**login**) and "fancy" will be shown in italics (_fancy_).
+توجه کنید که می‌توانید از Markdown در توضیحات استفاده کنید، برای مثال "login" به صورت درشت (**login**) و "fancy" به صورت مورب (_fancy_) نمایش داده خواهد شد.
 
 /// tip
 
-You don't have to add metadata for all the tags that you use.
+لازم نیست برای تمام تگ‌هایی که استفاده می‌کنید متاداده اضافه کنید.
 
 ///
 
-### Use your tags
+### استفاده از تگ‌ها
 
-Use the `tags` parameter with your *path operations* (and `APIRouter`s) to assign them to different tags:
+از پارامتر `tags` با *عملیات‌های مسیر* خود (و `APIRouter`ها) برای اختصاص آنها به تگ‌های مختلف استفاده کنید:
 
 {* ../../docs_src/metadata/tutorial004.py hl[21,26] *}
 
 /// info
 
-Read more about tags in [Path Operation Configuration](path-operation-configuration.md#tags){.internal-link target=_blank}.
+بیشتر درباره تگ‌ها در [پیکربندی عملیات مسیر](path-operation-configuration.md#tags){.internal-link target=_blank} بخوانید.
 
 ///
 
-### Check the docs
+### بررسی مستندات
 
-Now, if you check the docs, they will show all the additional metadata:
+اکنون، اگر مستندات را بررسی کنید، تمام متاداده اضافی را نشان خواهند داد:
 
 <img src="/img/tutorial/metadata/image02.png">
 
-### Order of tags
+### ترتیب تگ‌ها
 
-The order of each tag metadata dictionary also defines the order shown in the docs UI.
+ترتیب هر دیکشنری متاداده تگ همچنین ترتیب نمایش در رابط کاربری مستندات را تعریف می‌کند.
 
-For example, even though `users` would go after `items` in alphabetical order, it is shown before them, because we added their metadata as the first dictionary in the list.
+برای مثال، حتی اگرچه `users` از نظر الفبایی بعد از `items` می‌آید، قبل از آنها نمایش داده می‌شود، زیرا متاداده آن را به عنوان اولین دیکشنری در لیست اضافه کردیم.
 
-## OpenAPI URL
+## URL اسکیمای OpenAPI
 
-By default, the OpenAPI schema is served at `/openapi.json`.
+به طور پیش‌فرض، اسکیمای OpenAPI در `/openapi.json` ارائه می‌شود.
 
-But you can configure it with the parameter `openapi_url`.
+اما می‌توانید آن را با پارامتر `openapi_url` پیکربندی کنید.
 
-For example, to set it to be served at `/api/v1/openapi.json`:
+برای مثال، برای تنظیم ارائه آن در `/api/v1/openapi.json`:
 
 {* ../../docs_src/metadata/tutorial002.py hl[3] *}
 
-If you want to disable the OpenAPI schema completely you can set `openapi_url=None`, that will also disable the documentation user interfaces that use it.
+اگر می‌خواهید اسکیمای OpenAPI را کاملاً غیرفعال کنید، می‌توانید `openapi_url=None` تنظیم کنید، که رابط‌های کاربری مستنداتی که از آن استفاده می‌کنند را نیز غیرفعال خواهد کرد.
 
-## Docs URLs
+## URLهای مستندات
 
-You can configure the two documentation user interfaces included:
+می‌توانید دو رابط کاربری مستندات شامل شده را پیکربندی کنید:
 
-* **Swagger UI**: served at `/docs`.
-    * You can set its URL with the parameter `docs_url`.
-    * You can disable it by setting `docs_url=None`.
-* **ReDoc**: served at `/redoc`.
-    * You can set its URL with the parameter `redoc_url`.
-    * You can disable it by setting `redoc_url=None`.
+* **Swagger UI**: در `/docs` ارائه می‌شود.
+    * می‌توانید URL آن را با پارامتر `docs_url` تنظیم کنید.
+    * می‌توانید با تنظیم `docs_url=None` آن را غیرفعال کنید.
+* **ReDoc**: در `/redoc` ارائه می‌شود.
+    * می‌توانید URL آن را با پارامتر `redoc_url` تنظیم کنید.
+    * می‌توانید با تنظیم `redoc_url=None` آن را غیرفعال کنید.
 
-For example, to set Swagger UI to be served at `/documentation` and disable ReDoc:
+برای مثال، برای تنظیم Swagger UI برای ارائه در `/documentation` و غیرفعال کردن ReDoc:
 
 {* ../../docs_src/metadata/tutorial003.py hl[3] *}

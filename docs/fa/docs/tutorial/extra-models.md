@@ -1,65 +1,65 @@
-# Extra Models
+# مدل‌های اضافی
 
-Continuing with the previous example, it will be common to have more than one related model.
+با ادامه مثال قبلی، معمول است که بیش از یک مدل مرتبط داشته باشید.
 
-This is especially the case for user models, because:
+این به ویژه برای مدل‌های کاربر صادق است، زیرا:
 
-* The **input model** needs to be able to have a password.
-* The **output model** should not have a password.
-* The **database model** would probably need to have a hashed password.
+* **مدل ورودی** باید بتواند رمز عبور داشته باشد.
+* **مدل خروجی** نباید رمز عبور داشته باشد.
+* **مدل پایگاه داده** احتمالاً باید رمز عبور هش شده داشته باشد.
 
 /// danger
 
-Never store user's plaintext passwords. Always store a "secure hash" that you can then verify.
+هرگز رمز عبور متنی کاربران را ذخیره نکنید. همیشه یک "هش امن" ذخیره کنید که سپس بتوانید آن را تأیید کنید.
 
-If you don't know, you will learn what a "password hash" is in the [security chapters](security/simple-oauth2.md#password-hashing){.internal-link target=_blank}.
+اگر نمی‌دانید، در [فصل‌های امنیت](security/simple-oauth2.md#password-hashing){.internal-link target=_blank} خواهید آموخت "هش رمز عبور" چیست.
 
 ///
 
-## Multiple models
+## مدل‌های چندگانه
 
-Here's a general idea of how the models could look like with their password fields and the places where they are used:
+در اینجا یک ایده کلی از اینکه مدل‌ها با فیلدهای رمز عبور و مکان‌هایی که استفاده می‌شوند چگونه می‌توانند باشند آمده:
 
 {* ../../docs_src/extra_models/tutorial001_py310.py hl[7,9,14,20,22,27:28,31:33,38:39] *}
 
 
 /// info
 
-In Pydantic v1 the method was called `.dict()`, it was deprecated (but still supported) in Pydantic v2, and renamed to `.model_dump()`.
+در Pydantic v1 متد `.dict()` نامیده می‌شد، در Pydantic v2 منسوخ شد (اما همچنان پشتیبانی می‌شود) و به `.model_dump()` تغییر نام داد.
 
-The examples here use `.dict()` for compatibility with Pydantic v1, but you should use `.model_dump()` instead if you can use Pydantic v2.
+مثال‌های اینجا از `.dict()` برای سازگاری با Pydantic v1 استفاده می‌کنند، اما اگر می‌توانید از Pydantic v2 استفاده کنید، باید از `.model_dump()` استفاده کنید.
 
 ///
 
-### About `**user_in.dict()`
+### درباره `**user_in.dict()`
 
-#### Pydantic's `.dict()`
+#### متد `.dict()` از Pydantic
 
-`user_in` is a Pydantic model of class `UserIn`.
+`user_in` یک مدل Pydantic از کلاس `UserIn` است.
 
-Pydantic models have a `.dict()` method that returns a `dict` with the model's data.
+مدل‌های Pydantic متد `.dict()` دارند که یک `dict` با داده‌های مدل برمی‌گرداند.
 
-So, if we create a Pydantic object `user_in` like:
+بنابراین، اگر یک شیء Pydantic `user_in` مانند این ایجاد کنیم:
 
 ```Python
 user_in = UserIn(username="john", password="secret", email="john.doe@example.com")
 ```
 
-and then we call:
+و سپس فراخوانی کنیم:
 
 ```Python
 user_dict = user_in.dict()
 ```
 
-we now have a `dict` with the data in the variable `user_dict` (it's a `dict` instead of a Pydantic model object).
+اکنون یک `dict` با داده‌ها در متغیر `user_dict` داریم (یک `dict` به جای شیء مدل Pydantic).
 
-And if we call:
+و اگر فراخوانی کنیم:
 
 ```Python
 print(user_dict)
 ```
 
-we would get a Python `dict` with:
+یک `dict` پایتون با این محتوا دریافت خواهیم کرد:
 
 ```Python
 {
@@ -70,17 +70,17 @@ we would get a Python `dict` with:
 }
 ```
 
-#### Unpacking a `dict`
+#### باز کردن یک `dict`
 
-If we take a `dict` like `user_dict` and pass it to a function (or class) with `**user_dict`, Python will "unpack" it. It will pass the keys and values of the `user_dict` directly as key-value arguments.
+اگر یک `dict` مانند `user_dict` بگیریم و آن را با `**user_dict` به یک تابع (یا کلاس) ارسال کنیم، پایتون آن را "باز" خواهد کرد. کلیدها و مقادیر `user_dict` را مستقیماً به عنوان آرگومان‌های کلید-مقدار ارسال خواهد کرد.
 
-So, continuing with the `user_dict` from above, writing:
+بنابراین، با ادامه `user_dict` از بالا، نوشتن:
 
 ```Python
 UserInDB(**user_dict)
 ```
 
-would result in something equivalent to:
+معادل چیزی مانند این خواهد بود:
 
 ```Python
 UserInDB(
@@ -91,7 +91,7 @@ UserInDB(
 )
 ```
 
-Or more exactly, using `user_dict` directly, with whatever contents it might have in the future:
+یا دقیق‌تر، استفاده مستقیم از `user_dict`، با هر محتوایی که ممکن است در آینده داشته باشد:
 
 ```Python
 UserInDB(
@@ -102,34 +102,34 @@ UserInDB(
 )
 ```
 
-#### A Pydantic model from the contents of another
+#### یک مدل Pydantic از محتوای دیگری
 
-As in the example above we got `user_dict` from `user_in.dict()`, this code:
+همانطور که در مثال بالا `user_dict` را از `user_in.dict()` گرفتیم، این کد:
 
 ```Python
 user_dict = user_in.dict()
 UserInDB(**user_dict)
 ```
 
-would be equivalent to:
+معادل خواهد بود با:
 
 ```Python
 UserInDB(**user_in.dict())
 ```
 
-...because `user_in.dict()` is a `dict`, and then we make Python "unpack" it by passing it to `UserInDB` prefixed with `**`.
+...زیرا `user_in.dict()` یک `dict` است، و سپس پایتون را وادار می‌کنیم با ارسال آن با پیشوند `**` به `UserInDB` آن را "باز" کند.
 
-So, we get a Pydantic model from the data in another Pydantic model.
+بنابراین، یک مدل Pydantic از داده‌های مدل Pydantic دیگر دریافت می‌کنیم.
 
-#### Unpacking a `dict` and extra keywords
+#### باز کردن یک `dict` و کلمات کلیدی اضافی
 
-And then adding the extra keyword argument `hashed_password=hashed_password`, like in:
+و سپس اضافه کردن آرگومان کلیدواژه‌ای اضافی `hashed_password=hashed_password`، مانند:
 
 ```Python
 UserInDB(**user_in.dict(), hashed_password=hashed_password)
 ```
 
-...ends up being like:
+...نتیجه‌اش چیزی مانند این می‌شود:
 
 ```Python
 UserInDB(
@@ -143,81 +143,81 @@ UserInDB(
 
 /// warning
 
-The supporting additional functions `fake_password_hasher` and `fake_save_user` are just to demo a possible flow of the data, but they of course are not providing any real security.
+توابع کمکی پشتیبان `fake_password_hasher` و `fake_save_user` فقط برای نمایش یک جریان ممکن داده هستند، اما البته هیچ امنیت واقعی‌ای ارائه نمی‌دهند.
 
 ///
 
-## Reduce duplication
+## کاهش تکرار
 
-Reducing code duplication is one of the core ideas in **FastAPI**.
+کاهش تکرار کد یکی از ایده‌های اصلی **FastAPI** است.
 
-As code duplication increments the chances of bugs, security issues, code desynchronization issues (when you update in one place but not in the others), etc.
+زیرا تکرار کد احتمال باگ‌ها، مسائل امنیتی، مسائل عدم همگام‌سازی کد (وقتی در یک مکان به‌روزرسانی می‌کنید اما در مکان‌های دیگر نه) و غیره را افزایش می‌دهد.
 
-And these models are all sharing a lot of the data and duplicating attribute names and types.
+و این مدل‌ها همگی داده‌های زیادی به اشتراک می‌گذارند و نام ویژگی‌ها و تایپ‌ها را تکرار می‌کنند.
 
-We could do better.
+ما می‌توانیم بهتر عمل کنیم.
 
-We can declare a `UserBase` model that serves as a base for our other models. And then we can make subclasses of that model that inherit its attributes (type declarations, validation, etc).
+می‌توانیم یک مدل `UserBase` اعلان کنیم که به عنوان پایه‌ای برای مدل‌های دیگر ما عمل کند. و سپس زیرکلاس‌هایی از آن مدل ایجاد کنیم که ویژگی‌های آن را به ارث ببرند (اعلان تایپ، اعتبارسنجی و غیره).
 
-All the data conversion, validation, documentation, etc. will still work as normally.
+تمام تبدیل داده، اعتبارسنجی، مستندسازی و غیره همچنان به طور عادی کار خواهند کرد.
 
-That way, we can declare just the differences between the models (with plaintext `password`, with `hashed_password` and without password):
+به این ترتیب، فقط تفاوت‌های بین مدل‌ها را اعلان می‌کنیم (با `password` متنی، با `hashed_password` و بدون رمز عبور):
 
 {* ../../docs_src/extra_models/tutorial002_py310.py hl[7,13:14,17:18,21:22] *}
 
-## `Union` or `anyOf`
+## `Union` یا `anyOf`
 
-You can declare a response to be the `Union` of two or more types, that means, that the response would be any of them.
+می‌توانید یک پاسخ را به عنوان `Union` دو یا چند تایپ اعلان کنید، به این معنا که پاسخ هر یک از آنها می‌تواند باشد.
 
-It will be defined in OpenAPI with `anyOf`.
+در OpenAPI با `anyOf` تعریف خواهد شد.
 
-To do that, use the standard Python type hint <a href="https://docs.python.org/3/library/typing.html#typing.Union" class="external-link" target="_blank">`typing.Union`</a>:
+برای این کار، از اشاره تایپ استاندارد پایتون <a href="https://docs.python.org/3/library/typing.html#typing.Union" class="external-link" target="_blank">`typing.Union`</a> استفاده کنید:
 
 /// note
 
-When defining a <a href="https://docs.pydantic.dev/latest/concepts/types/#unions" class="external-link" target="_blank">`Union`</a>, include the most specific type first, followed by the less specific type. In the example below, the more specific `PlaneItem` comes before `CarItem` in `Union[PlaneItem, CarItem]`.
+هنگام تعریف یک <a href="https://docs.pydantic.dev/latest/concepts/types/#unions" class="external-link" target="_blank">`Union`</a>، ابتدا تایپ خاص‌تر و سپس تایپ کمتر خاص را قرار دهید. در مثال زیر، `PlaneItem` خاص‌تر قبل از `CarItem` در `Union[PlaneItem, CarItem]` آمده.
 
 ///
 
 {* ../../docs_src/extra_models/tutorial003_py310.py hl[1,14:15,18:20,33] *}
 
 
-### `Union` in Python 3.10
+### `Union` در پایتون 3.10
 
-In this example we pass `Union[PlaneItem, CarItem]` as the value of the argument `response_model`.
+در این مثال `Union[PlaneItem, CarItem]` را به عنوان مقدار آرگومان `response_model` ارسال می‌کنیم.
 
-Because we are passing it as a **value to an argument** instead of putting it in a **type annotation**, we have to use `Union` even in Python 3.10.
+چون آن را به عنوان **مقدار به یک آرگومان** ارسال می‌کنیم به جای قرار دادن در یک **حاشیه‌نویسی تایپ**، باید از `Union` حتی در پایتون 3.10 استفاده کنیم.
 
-If it was in a type annotation we could have used the vertical bar, as:
+اگر در یک حاشیه‌نویسی تایپ بود، می‌توانستیم از خط عمودی استفاده کنیم:
 
 ```Python
 some_variable: PlaneItem | CarItem
 ```
 
-But if we put that in the assignment `response_model=PlaneItem | CarItem` we would get an error, because Python would try to perform an **invalid operation** between `PlaneItem` and `CarItem` instead of interpreting that as a type annotation.
+اما اگر آن را در انتساب `response_model=PlaneItem | CarItem` قرار دهیم خطا دریافت خواهیم کرد، زیرا پایتون سعی خواهد کرد یک **عملیات نامعتبر** بین `PlaneItem` و `CarItem` انجام دهد به جای تفسیر آن به عنوان حاشیه‌نویسی تایپ.
 
-## List of models
+## لیست مدل‌ها
 
-The same way, you can declare responses of lists of objects.
+به همین شکل، می‌توانید پاسخ‌هایی از لیست اشیاء اعلان کنید.
 
-For that, use the standard Python `typing.List` (or just `list` in Python 3.9 and above):
+برای این کار، از `typing.List` استاندارد پایتون (یا فقط `list` در پایتون 3.9 و بالاتر) استفاده کنید:
 
 {* ../../docs_src/extra_models/tutorial004_py39.py hl[18] *}
 
 
-## Response with arbitrary `dict`
+## پاسخ با `dict` دلخواه
 
-You can also declare a response using a plain arbitrary `dict`, declaring just the type of the keys and values, without using a Pydantic model.
+همچنین می‌توانید یک پاسخ با استفاده از یک `dict` دلخواه ساده اعلان کنید، فقط تایپ کلیدها و مقادیر را اعلان کنید، بدون استفاده از مدل Pydantic.
 
-This is useful if you don't know the valid field/attribute names (that would be needed for a Pydantic model) beforehand.
+اگر از قبل نام فیلد/ویژگی‌های معتبر (که برای مدل Pydantic لازم است) را نمی‌دانید، این مفید است.
 
-In this case, you can use `typing.Dict` (or just `dict` in Python 3.9 and above):
+در این مورد، می‌توانید از `typing.Dict` (یا فقط `dict` در پایتون 3.9 و بالاتر) استفاده کنید:
 
 {* ../../docs_src/extra_models/tutorial005_py39.py hl[6] *}
 
 
-## Recap
+## خلاصه
 
-Use multiple Pydantic models and inherit freely for each case.
+از چندین مدل Pydantic استفاده کنید و برای هر مورد آزادانه ارث‌بری کنید.
 
-You don't need to have a single data model per entity if that entity must be able to have different "states". As the case with the user "entity" with a state including `password`, `password_hash` and no password.
+لازم نیست برای هر موجودیت یک مدل داده واحد داشته باشید اگر آن موجودیت باید بتواند "وضعیت‌های" مختلف داشته باشد. مانند مورد "موجودیت" کاربر با وضعیتی شامل `password`، `password_hash` و بدون رمز عبور.
