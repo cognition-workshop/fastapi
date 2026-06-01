@@ -1,48 +1,48 @@
-# HTTP Basic Auth
+# احراز هویت پایه HTTP
 
-For the simplest cases, you can use HTTP Basic Auth.
+برای ساده‌ترین موارد، می‌توانید از احراز هویت پایه HTTP استفاده کنید.
 
-In HTTP Basic Auth, the application expects a header that contains a username and a password.
+در احراز هویت پایه HTTP، برنامه انتظار هدری شامل نام کاربری و رمز عبور دارد.
 
-If it doesn't receive it, it returns an HTTP 401 "Unauthorized" error.
+اگر آن را دریافت نکند، خطای HTTP 401 "Unauthorized" برمی‌گرداند.
 
-And returns a header `WWW-Authenticate` with a value of `Basic`, and an optional `realm` parameter.
+و هدر `WWW-Authenticate` با مقدار `Basic` و پارامتر اختیاری `realm` برمی‌گرداند.
 
-That tells the browser to show the integrated prompt for a username and password.
+این به مرورگر می‌گوید پنجره ورود یکپارچه نام کاربری و رمز عبور را نمایش دهد.
 
-Then, when you type that username and password, the browser sends them in the header automatically.
+سپس، وقتی نام کاربری و رمز عبور را تایپ می‌کنید، مرورگر آنها را به طور خودکار در هدر ارسال می‌کند.
 
-## Simple HTTP Basic Auth
+## احراز هویت پایه HTTP ساده
 
-* Import `HTTPBasic` and `HTTPBasicCredentials`.
-* Create a "`security` scheme" using `HTTPBasic`.
-* Use that `security` with a dependency in your *path operation*.
-* It returns an object of type `HTTPBasicCredentials`:
-    * It contains the `username` and `password` sent.
+* `HTTPBasic` و `HTTPBasicCredentials` را وارد کنید.
+* یک "طرح `security`" با استفاده از `HTTPBasic` ایجاد کنید.
+* از آن `security` با وابستگی در *عملیات مسیر* خود استفاده کنید.
+* یک شیء از تایپ `HTTPBasicCredentials` برمی‌گرداند:
+    * شامل `username` و `password` ارسال شده است.
 
 {* ../../docs_src/security/tutorial006_an_py39.py hl[4,8,12] *}
 
-When you try to open the URL for the first time (or click the "Execute" button in the docs) the browser will ask you for your username and password:
+وقتی برای اولین بار سعی می‌کنید URL را باز کنید (یا روی دکمه "Execute" در مستندات کلیک می‌کنید) مرورگر نام کاربری و رمز عبور از شما می‌خواهد:
 
 <img src="/img/tutorial/security/image12.png">
 
-## Check the username
+## بررسی نام کاربری
 
-Here's a more complete example.
+اینجا یک مثال کامل‌تر آمده.
 
-Use a dependency to check if the username and password are correct.
+از وابستگی برای بررسی صحت نام کاربری و رمز عبور استفاده کنید.
 
-For this, use the Python standard module <a href="https://docs.python.org/3/library/secrets.html" class="external-link" target="_blank">`secrets`</a> to check the username and password.
+برای این کار، از ماژول استاندارد پایتون <a href="https://docs.python.org/3/library/secrets.html" class="external-link" target="_blank">`secrets`</a> برای بررسی نام کاربری و رمز عبور استفاده کنید.
 
-`secrets.compare_digest()` needs to take `bytes` or a `str` that only contains ASCII characters (the ones in English), this means it wouldn't work with characters like `á`, as in `Sebastián`.
+`secrets.compare_digest()` نیاز به `bytes` یا `str` دارد که فقط شامل کاراکترهای ASCII (انگلیسی) باشد، یعنی با کاراکترهایی مانند `á` مثل `Sebastián` کار نخواهد کرد.
 
-To handle that, we first convert the `username` and `password` to `bytes` encoding them with UTF-8.
+برای مدیریت آن، ابتدا `username` و `password` را با رمزگذاری UTF-8 به `bytes` تبدیل می‌کنیم.
 
-Then we can use `secrets.compare_digest()` to ensure that `credentials.username` is `"stanleyjobson"`, and that `credentials.password` is `"swordfish"`.
+سپس می‌توانیم از `secrets.compare_digest()` استفاده کنیم تا مطمئن شویم `credentials.username` برابر `"stanleyjobson"` و `credentials.password` برابر `"swordfish"` است.
 
 {* ../../docs_src/security/tutorial007_an_py39.py hl[1,12:24] *}
 
-This would be similar to:
+این مشابه خواهد بود با:
 
 ```Python
 if not (credentials.username == "stanleyjobson") or not (credentials.password == "swordfish"):
@@ -50,58 +50,58 @@ if not (credentials.username == "stanleyjobson") or not (credentials.password ==
     ...
 ```
 
-But by using the `secrets.compare_digest()` it will be secure against a type of attacks called "timing attacks".
+اما با استفاده از `secrets.compare_digest()` در برابر نوعی حمله به نام "حملات زمان‌بندی" امن خواهد بود.
 
-### Timing Attacks
+### حملات زمان‌بندی
 
-But what's a "timing attack"?
+اما "حمله زمان‌بندی" چیست؟
 
-Let's imagine some attackers are trying to guess the username and password.
+بیایید تصور کنیم برخی مهاجمان سعی دارند نام کاربری و رمز عبور را حدس بزنند.
 
-And they send a request with a username `johndoe` and a password `love123`.
+و درخواستی با نام کاربری `johndoe` و رمز عبور `love123` ارسال می‌کنند.
 
-Then the Python code in your application would be equivalent to something like:
+سپس کد پایتون در برنامه شما معادل چیزی شبیه به این خواهد بود:
 
 ```Python
 if "johndoe" == "stanleyjobson" and "love123" == "swordfish":
     ...
 ```
 
-But right at the moment Python compares the first `j` in `johndoe` to the first `s` in `stanleyjobson`, it will return `False`, because it already knows that those two strings are not the same, thinking that "there's no need to waste more computation comparing the rest of the letters". And your application will say "Incorrect username or password".
+اما دقیقاً در لحظه‌ای که پایتون اولین `j` در `johndoe` را با اولین `s` در `stanleyjobson` مقایسه می‌کند، `False` برمی‌گرداند، زیرا قبلاً می‌داند آن دو رشته یکسان نیستند، با این فکر که "نیازی به صرف محاسبات بیشتر برای مقایسه بقیه حروف نیست". و برنامه شما خواهد گفت "نام کاربری یا رمز عبور نادرست است".
 
-But then the attackers try with username `stanleyjobsox` and password `love123`.
+اما سپس مهاجمان با نام کاربری `stanleyjobsox` و رمز عبور `love123` تلاش می‌کنند.
 
-And your application code does something like:
+و کد برنامه شما چیزی شبیه به این انجام می‌دهد:
 
 ```Python
 if "stanleyjobsox" == "stanleyjobson" and "love123" == "swordfish":
     ...
 ```
 
-Python will have to compare the whole `stanleyjobso` in both `stanleyjobsox` and `stanleyjobson` before realizing that both strings are not the same. So it will take some extra microseconds to reply back "Incorrect username or password".
+پایتون باید کل `stanleyjobso` را در هر دو `stanleyjobsox` و `stanleyjobson` مقایسه کند قبل از اینکه متوجه شود هر دو رشته یکسان نیستند. بنابراین چند میکروثانیه اضافی طول خواهد کشید تا پاسخ "نام کاربری یا رمز عبور نادرست است" را ارسال کند.
 
-#### The time to answer helps the attackers
+#### زمان پاسخ به مهاجمان کمک می‌کند
 
-At that point, by noticing that the server took some microseconds longer to send the "Incorrect username or password" response, the attackers will know that they got _something_ right, some of the initial letters were right.
+در آن نقطه، با متوجه شدن اینکه سرور چند میکروثانیه بیشتر طول کشید تا پاسخ "نام کاربری یا رمز عبور نادرست است" ارسال کند، مهاجمان خواهند دانست که _چیزی_ درست بوده، برخی از حروف اولیه درست بوده‌اند.
 
-And then they can try again knowing that it's probably something more similar to `stanleyjobsox` than to `johndoe`.
+و سپس می‌توانند دوباره تلاش کنند و بدانند احتمالاً چیزی شبیه‌تر به `stanleyjobsox` است تا `johndoe`.
 
-#### A "professional" attack
+#### یک حمله "حرفه‌ای"
 
-Of course, the attackers would not try all this by hand, they would write a program to do it, possibly with thousands or millions of tests per second. And they would get just one extra correct letter at a time.
+البته، مهاجمان همه اینها را دستی انجام نخواهند داد، برنامه‌ای خواهند نوشت تا این کار را انجام دهد، احتمالاً با هزاران یا میلیون‌ها آزمایش در ثانیه. و هر بار فقط یک حرف صحیح اضافی به دست خواهند آورد.
 
-But doing that, in some minutes or hours the attackers would have guessed the correct username and password, with the "help" of our application, just using the time taken to answer.
+اما با انجام این کار، در چند دقیقه یا ساعت مهاجمان نام کاربری و رمز عبور صحیح را حدس خواهند زد، با "کمک" برنامه ما، فقط با استفاده از زمان صرف شده برای پاسخ دادن.
 
-#### Fix it with `secrets.compare_digest()`
+#### رفع آن با `secrets.compare_digest()`
 
-But in our code we are actually using `secrets.compare_digest()`.
+اما در کد ما از `secrets.compare_digest()` استفاده می‌کنیم.
 
-In short, it will take the same time to compare `stanleyjobsox` to `stanleyjobson` than it takes to compare `johndoe` to `stanleyjobson`. And the same for the password.
+به طور خلاصه، مقایسه `stanleyjobsox` با `stanleyjobson` همان زمانی را خواهد برد که مقایسه `johndoe` با `stanleyjobson`. و همین‌طور برای رمز عبور.
 
-That way, using `secrets.compare_digest()` in your application code, it will be safe against this whole range of security attacks.
+به این ترتیب، با استفاده از `secrets.compare_digest()` در کد برنامه شما، در برابر کل این دامنه حملات امنیتی ایمن خواهد بود.
 
-### Return the error
+### بازگرداندن خطا
 
-After detecting that the credentials are incorrect, return an `HTTPException` with a status code 401 (the same returned when no credentials are provided) and add the header `WWW-Authenticate` to make the browser show the login prompt again:
+پس از تشخیص نادرست بودن اعتبارنامه‌ها، یک `HTTPException` با کد وضعیت 401 (همان چیزی که وقتی اعتبارنامه ارائه نشده برگردانده می‌شود) برگردانید و هدر `WWW-Authenticate` اضافه کنید تا مرورگر دوباره پنجره ورود را نمایش دهد:
 
 {* ../../docs_src/security/tutorial007_an_py39.py hl[26:30] *}

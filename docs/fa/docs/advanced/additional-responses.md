@@ -1,55 +1,55 @@
-# Additional Responses in OpenAPI
+# پاسخ‌های اضافی در OpenAPI
 
 /// warning
 
-This is a rather advanced topic.
+این یک موضوع نسبتاً پیشرفته است.
 
-If you are starting with **FastAPI**, you might not need this.
+اگر تازه با **FastAPI** شروع کرده‌اید، ممکن است به آن نیاز نداشته باشید.
 
 ///
 
-You can declare additional responses, with additional status codes, media types, descriptions, etc.
+می‌توانید پاسخ‌های اضافی با کدهای وضعیت، تایپ‌های رسانه، توضیحات و غیره اعلان کنید.
 
-Those additional responses will be included in the OpenAPI schema, so they will also appear in the API docs.
+آن پاسخ‌های اضافی در اسکیمای OpenAPI گنجانده خواهند شد، بنابراین در مستندات API نیز ظاهر خواهند شد.
 
-But for those additional responses you have to make sure you return a `Response` like `JSONResponse` directly, with your status code and content.
+اما برای آن پاسخ‌های اضافی باید مطمئن شوید که مستقیماً یک `Response` مانند `JSONResponse` با کد وضعیت و محتوای خود برگردانید.
 
-## Additional Response with `model`
+## پاسخ اضافی با `model`
 
-You can pass to your *path operation decorators* a parameter `responses`.
+می‌توانید پارامتر `responses` را به *دکوراتورهای عملیات مسیر* ارسال کنید.
 
-It receives a `dict`: the keys are status codes for each response (like `200`), and the values are other `dict`s with the information for each of them.
+این یک `dict` دریافت می‌کند: کلیدها کدهای وضعیت برای هر پاسخ هستند (مانند `200`)، و مقادیر `dict`های دیگری با اطلاعات هر کدام هستند.
 
-Each of those response `dict`s can have a key `model`, containing a Pydantic model, just like `response_model`.
+هر یک از آن `dict`های پاسخ می‌تواند کلید `model` داشته باشد که شامل مدل Pydantic است، دقیقاً مانند `response_model`.
 
-**FastAPI** will take that model, generate its JSON Schema and include it in the correct place in OpenAPI.
+**FastAPI** آن مدل را خواهد گرفت، JSON Schema آن را تولید و در مکان صحیح OpenAPI قرار خواهد داد.
 
-For example, to declare another response with a status code `404` and a Pydantic model `Message`, you can write:
+برای مثال، برای اعلان پاسخ دیگری با کد وضعیت `404` و مدل Pydantic به نام `Message`، می‌توانید بنویسید:
 
 {* ../../docs_src/additional_responses/tutorial001.py hl[18,22] *}
 
 /// note
 
-Keep in mind that you have to return the `JSONResponse` directly.
+به خاطر داشته باشید که باید `JSONResponse` را مستقیماً برگردانید.
 
 ///
 
 /// info
 
-The `model` key is not part of OpenAPI.
+کلید `model` بخشی از OpenAPI نیست.
 
-**FastAPI** will take the Pydantic model from there, generate the JSON Schema, and put it in the correct place.
+**FastAPI** مدل Pydantic را از آنجا خواهد گرفت، JSON Schema را تولید و در مکان صحیح قرار خواهد داد.
 
-The correct place is:
+مکان صحیح عبارت است از:
 
-* In the key `content`, that has as value another JSON object (`dict`) that contains:
-    * A key with the media type, e.g. `application/json`, that contains as value another JSON object, that contains:
-        * A key `schema`, that has as the value the JSON Schema from the model, here's the correct place.
-            * **FastAPI** adds a reference here to the global JSON Schemas in another place in your OpenAPI instead of including it directly. This way, other applications and clients can use those JSON Schemas directly, provide better code generation tools, etc.
+* در کلید `content`، که مقدارش شیء JSON دیگری (`dict`) است که شامل:
+    * کلیدی با تایپ رسانه مثلاً `application/json`، که مقدارش شیء JSON دیگری است که شامل:
+        * کلید `schema`، که مقدارش JSON Schema مدل است، اینجا مکان صحیح است.
+            * **FastAPI** یک ارجاع به JSON Schemaهای سراسری در مکان دیگری از OpenAPI اضافه می‌کند به جای اینکه مستقیماً آن را درج کند. به این ترتیب، برنامه‌ها و کلاینت‌های دیگر می‌توانند مستقیماً از آن JSON Schemaها استفاده کنند، ابزارهای تولید کد بهتری ارائه دهند و غیره.
 
 ///
 
-The generated responses in the OpenAPI for this *path operation* will be:
+پاسخ‌های تولید شده در OpenAPI برای این *عملیات مسیر* خواهند بود:
 
 ```JSON hl_lines="3-12"
 {
@@ -88,7 +88,7 @@ The generated responses in the OpenAPI for this *path operation* will be:
 }
 ```
 
-The schemas are referenced to another place inside the OpenAPI schema:
+اسکیماها در مکان دیگری درون اسکیمای OpenAPI ارجاع داده شده‌اند:
 
 ```JSON hl_lines="4-16"
 {
@@ -169,51 +169,51 @@ The schemas are referenced to another place inside the OpenAPI schema:
 }
 ```
 
-## Additional media types for the main response
+## تایپ‌های رسانه اضافی برای پاسخ اصلی
 
-You can use this same `responses` parameter to add different media types for the same main response.
+می‌توانید از همین پارامتر `responses` برای اضافه کردن تایپ‌های رسانه مختلف برای همان پاسخ اصلی استفاده کنید.
 
-For example, you can add an additional media type of `image/png`, declaring that your *path operation* can return a JSON object (with media type `application/json`) or a PNG image:
+برای مثال، می‌توانید تایپ رسانه اضافی `image/png` اضافه کنید و اعلان کنید که *عملیات مسیر* شما می‌تواند یک شیء JSON (با تایپ رسانه `application/json`) یا یک تصویر PNG برگرداند:
 
 {* ../../docs_src/additional_responses/tutorial002.py hl[19:24,28] *}
 
 /// note
 
-Notice that you have to return the image using a `FileResponse` directly.
+توجه کنید که باید تصویر را مستقیماً با استفاده از `FileResponse` برگردانید.
 
 ///
 
 /// info
 
-Unless you specify a different media type explicitly in your `responses` parameter, FastAPI will assume the response has the same media type as the main response class (default `application/json`).
+مگر اینکه صریحاً تایپ رسانه متفاوتی در پارامتر `responses` خود مشخص کنید، FastAPI فرض خواهد کرد پاسخ همان تایپ رسانه کلاس پاسخ اصلی را دارد (پیش‌فرض `application/json`).
 
-But if you have specified a custom response class with `None` as its media type, FastAPI will use `application/json` for any additional response that has an associated model.
+اما اگر کلاس پاسخ سفارشی با `None` به عنوان تایپ رسانه مشخص کرده باشید، FastAPI از `application/json` برای هر پاسخ اضافی‌ای که مدل مرتبط دارد استفاده خواهد کرد.
 
 ///
 
-## Combining information
+## ترکیب اطلاعات
 
-You can also combine response information from multiple places, including the `response_model`, `status_code`, and `responses` parameters.
+همچنین می‌توانید اطلاعات پاسخ از مکان‌های مختلف ترکیب کنید، از جمله پارامترهای `response_model`، `status_code` و `responses`.
 
-You can declare a `response_model`, using the default status code `200` (or a custom one if you need), and then declare additional information for that same response in `responses`, directly in the OpenAPI schema.
+می‌توانید یک `response_model` اعلان کنید، با استفاده از کد وضعیت پیش‌فرض `200` (یا یک مورد سفارشی در صورت نیاز)، و سپس اطلاعات اضافی برای همان پاسخ را در `responses`، مستقیماً در اسکیمای OpenAPI اعلان کنید.
 
-**FastAPI** will keep the additional information from `responses`, and combine it with the JSON Schema from your model.
+**FastAPI** اطلاعات اضافی از `responses` را نگه خواهد داشت و آن را با JSON Schema مدل شما ترکیب خواهد کرد.
 
-For example, you can declare a response with a status code `404` that uses a Pydantic model and has a custom `description`.
+برای مثال، می‌توانید پاسخی با کد وضعیت `404` که از مدل Pydantic استفاده می‌کند و `description` سفارشی دارد اعلان کنید.
 
-And a response with a status code `200` that uses your `response_model`, but includes a custom `example`:
+و پاسخی با کد وضعیت `200` که از `response_model` شما استفاده می‌کند، اما شامل یک `example` سفارشی است:
 
 {* ../../docs_src/additional_responses/tutorial003.py hl[20:31] *}
 
-It will all be combined and included in your OpenAPI, and shown in the API docs:
+همه اینها ترکیب شده و در OpenAPI شما گنجانده خواهند شد و در مستندات API نمایش داده خواهند شد:
 
 <img src="/img/tutorial/additional-responses/image01.png">
 
-## Combine predefined responses and custom ones
+## ترکیب پاسخ‌های از پیش تعریف شده و سفارشی
 
-You might want to have some predefined responses that apply to many *path operations*, but you want to combine them with custom responses needed by each *path operation*.
+ممکن است بخواهید پاسخ‌های از پیش تعریف شده‌ای داشته باشید که برای بسیاری از *عملیات‌های مسیر* اعمال شوند، اما بخواهید آنها را با پاسخ‌های سفارشی مورد نیاز هر *عملیات مسیر* ترکیب کنید.
 
-For those cases, you can use the Python technique of "unpacking" a `dict` with `**dict_to_unpack`:
+برای آن موارد، می‌توانید از تکنیک پایتون "باز کردن" یک `dict` با `**dict_to_unpack` استفاده کنید:
 
 ```Python
 old_dict = {
@@ -223,7 +223,7 @@ old_dict = {
 new_dict = {**old_dict, "new key": "new value"}
 ```
 
-Here, `new_dict` will contain all the key-value pairs from `old_dict` plus the new key-value pair:
+اینجا، `new_dict` شامل تمام جفت کلید-مقدارهای `old_dict` به اضافه جفت کلید-مقدار جدید خواهد بود:
 
 ```Python
 {
@@ -233,15 +233,15 @@ Here, `new_dict` will contain all the key-value pairs from `old_dict` plus the n
 }
 ```
 
-You can use that technique to reuse some predefined responses in your *path operations* and combine them with additional custom ones.
+می‌توانید از این تکنیک برای استفاده مجدد از پاسخ‌های از پیش تعریف شده در *عملیات‌های مسیر* خود و ترکیب آنها با موارد سفارشی اضافی استفاده کنید.
 
-For example:
+برای مثال:
 
 {* ../../docs_src/additional_responses/tutorial004.py hl[13:17,26] *}
 
-## More information about OpenAPI responses
+## اطلاعات بیشتر درباره پاسخ‌های OpenAPI
 
-To see what exactly you can include in the responses, you can check these sections in the OpenAPI specification:
+برای دیدن اینکه دقیقاً چه چیزی می‌توانید در پاسخ‌ها بگنجانید، می‌توانید این بخش‌ها را در مشخصه OpenAPI بررسی کنید:
 
-* <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#responses-object" class="external-link" target="_blank">OpenAPI Responses Object</a>, it includes the `Response Object`.
-* <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#response-object" class="external-link" target="_blank">OpenAPI Response Object</a>, you can include anything from this directly in each response inside your `responses` parameter. Including `description`, `headers`, `content` (inside of this is that you declare different media types and JSON Schemas), and `links`.
+* <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#responses-object" class="external-link" target="_blank">شیء پاسخ‌های OpenAPI</a>، شامل `Response Object` است.
+* <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#response-object" class="external-link" target="_blank">شیء پاسخ OpenAPI</a>، می‌توانید هر چیزی از این را مستقیماً در هر پاسخ درون پارامتر `responses` خود بگنجانید. از جمله `description`، `headers`، `content` (درون آن است که تایپ‌های رسانه مختلف و JSON Schemaها را اعلان می‌کنید) و `links`.

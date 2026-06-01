@@ -1,130 +1,130 @@
-# OpenAPI Callbacks
+# کال‌بک‌های OpenAPI
 
-You could create an API with a *path operation* that could trigger a request to an *external API* created by someone else (probably the same developer that would be *using* your API).
+می‌توانید یک API با *عملیات مسیر* ایجاد کنید که بتواند درخواستی به یک *API خارجی* ایجاد شده توسط شخص دیگری (احتمالاً همان توسعه‌دهنده‌ای که از API شما *استفاده می‌کند*) ارسال کند.
 
-The process that happens when your API app calls the *external API* is named a "callback". Because the software that the external developer wrote sends a request to your API and then your API *calls back*, sending a request to an *external API* (that was probably created by the same developer).
+فرایندی که هنگام فراخوانی *API خارجی* توسط برنامه API شما اتفاق می‌افتد "کال‌بک" نامیده می‌شود. زیرا نرم‌افزاری که توسعه‌دهنده خارجی نوشته درخواستی به API شما ارسال می‌کند و سپس API شما *فراخوانی برگشتی* می‌کند و درخواستی به *API خارجی* (که احتمالاً توسط همان توسعه‌دهنده ایجاد شده) ارسال می‌کند.
 
-In this case, you could want to document how that external API *should* look like. What *path operation* it should have, what body it should expect, what response it should return, etc.
+در این مورد، ممکن است بخواهید مستند کنید که آن API خارجی *باید* چگونه باشد. چه *عملیات مسیری* باید داشته باشد، چه بدنه‌ای باید انتظار داشته باشد، چه پاسخی باید برگرداند و غیره.
 
-## An app with callbacks
+## یک برنامه با کال‌بک
 
-Let's see all this with an example.
+بیایید همه اینها را با یک مثال ببینیم.
 
-Imagine you develop an app that allows creating invoices.
+تصور کنید یک برنامه توسعه می‌دهید که اجازه ایجاد فاکتور می‌دهد.
 
-These invoices will have an `id`, `title` (optional), `customer`, and `total`.
+این فاکتورها یک `id`، `title` (اختیاری)، `customer` و `total` خواهند داشت.
 
-The user of your API (an external developer) will create an invoice in your API with a POST request.
+کاربر API شما (یک توسعه‌دهنده خارجی) یک فاکتور در API شما با درخواست POST ایجاد خواهد کرد.
 
-Then your API will (let's imagine):
+سپس API شما (بیایید تصور کنیم):
 
-* Send the invoice to some customer of the external developer.
-* Collect the money.
-* Send a notification back to the API user (the external developer).
-    * This will be done by sending a POST request (from *your API*) to some *external API* provided by that external developer (this is the "callback").
+* فاکتور را به مشتری توسعه‌دهنده خارجی ارسال خواهد کرد.
+* پول را جمع‌آوری خواهد کرد.
+* یک اعلان به کاربر API (توسعه‌دهنده خارجی) ارسال خواهد کرد.
+    * این کار با ارسال یک درخواست POST (از *API شما*) به *API خارجی* ارائه شده توسط آن توسعه‌دهنده خارجی انجام خواهد شد (این همان "کال‌بک" است).
 
-## The normal **FastAPI** app
+## برنامه عادی **FastAPI**
 
-Let's first see how the normal API app would look like before adding the callback.
+ابتدا ببینیم برنامه عادی API بدون اضافه کردن کال‌بک چگونه خواهد بود.
 
-It will have a *path operation* that will receive an `Invoice` body, and a query parameter `callback_url` that will contain the URL for the callback.
+یک *عملیات مسیر* خواهد داشت که بدنه `Invoice` و پارامتر کوئری `callback_url` که شامل URL کال‌بک است را دریافت می‌کند.
 
-This part is pretty normal, most of the code is probably already familiar to you:
+این بخش کاملاً عادی است، بیشتر کد احتمالاً قبلاً برایتان آشناست:
 
 {* ../../docs_src/openapi_callbacks/tutorial001.py hl[9:13,36:53] *}
 
 /// tip
 
-The `callback_url` query parameter uses a Pydantic <a href="https://docs.pydantic.dev/latest/api/networks/" class="external-link" target="_blank">Url</a> type.
+پارامتر کوئری `callback_url` از تایپ <a href="https://docs.pydantic.dev/latest/api/networks/" class="external-link" target="_blank">Url</a> در Pydantic استفاده می‌کند.
 
 ///
 
-The only new thing is the `callbacks=invoices_callback_router.routes` as an argument to the *path operation decorator*. We'll see what that is next.
+تنها چیز جدید `callbacks=invoices_callback_router.routes` به عنوان آرگومان *دکوراتور عملیات مسیر* است. در ادامه خواهیم دید این چیست.
 
-## Documenting the callback
+## مستندسازی کال‌بک
 
-The actual callback code will depend heavily on your own API app.
+کد واقعی کال‌بک به شدت به برنامه API خودتان بستگی دارد.
 
-And it will probably vary a lot from one app to the next.
+و احتمالاً از یک برنامه به برنامه دیگر بسیار متفاوت خواهد بود.
 
-It could be just one or two lines of code, like:
+ممکن است فقط یک یا دو خط کد باشد، مانند:
 
 ```Python
 callback_url = "https://example.com/api/v1/invoices/events/"
 httpx.post(callback_url, json={"description": "Invoice paid", "paid": True})
 ```
 
-But possibly the most important part of the callback is making sure that your API user (the external developer) implements the *external API* correctly, according to the data that *your API* is going to send in the request body of the callback, etc.
+اما احتمالاً مهم‌ترین بخش کال‌بک اطمینان از پیاده‌سازی صحیح *API خارجی* توسط کاربر API شما (توسعه‌دهنده خارجی) مطابق با داده‌هایی است که *API شما* در بدنه درخواست کال‌بک ارسال خواهد کرد و غیره.
 
-So, what we will do next is add the code to document how that *external API* should look like to receive the callback from *your API*.
+بنابراین، کاری که در ادامه انجام خواهیم داد اضافه کردن کد برای مستندسازی نحوه ظاهر آن *API خارجی* برای دریافت کال‌بک از *API شما* است.
 
-That documentation will show up in the Swagger UI at `/docs` in your API, and it will let external developers know how to build the *external API*.
+آن مستندات در Swagger UI در `/docs` در API شما نمایش داده خواهد شد و به توسعه‌دهندگان خارجی اجازه خواهد داد بدانند چگونه *API خارجی* را بسازند.
 
-This example doesn't implement the callback itself (that could be just a line of code), only the documentation part.
-
-/// tip
-
-The actual callback is just an HTTP request.
-
-When implementing the callback yourself, you could use something like <a href="https://www.python-httpx.org" class="external-link" target="_blank">HTTPX</a> or <a href="https://requests.readthedocs.io/" class="external-link" target="_blank">Requests</a>.
-
-///
-
-## Write the callback documentation code
-
-This code won't be executed in your app, we only need it to *document* how that *external API* should look like.
-
-But, you already know how to easily create automatic documentation for an API with **FastAPI**.
-
-So we are going to use that same knowledge to document how the *external API* should look like... by creating the *path operation(s)* that the external API should implement (the ones your API will call).
+این مثال خود کال‌بک را پیاده‌سازی نمی‌کند (که می‌تواند فقط یک خط کد باشد)، فقط بخش مستندسازی.
 
 /// tip
 
-When writing the code to document a callback, it might be useful to imagine that you are that *external developer*. And that you are currently implementing the *external API*, not *your API*.
+کال‌بک واقعی فقط یک درخواست HTTP است.
 
-Temporarily adopting this point of view (of the *external developer*) can help you feel like it's more obvious where to put the parameters, the Pydantic model for the body, for the response, etc. for that *external API*.
+هنگام پیاده‌سازی خود کال‌بک، می‌توانید از چیزی مانند <a href="https://www.python-httpx.org" class="external-link" target="_blank">HTTPX</a> یا <a href="https://requests.readthedocs.io/" class="external-link" target="_blank">Requests</a> استفاده کنید.
 
 ///
 
-### Create a callback `APIRouter`
+## نوشتن کد مستندات کال‌بک
 
-First create a new `APIRouter` that will contain one or more callbacks.
+این کد در برنامه شما اجرا نخواهد شد، فقط به آن نیاز داریم تا *مستند* کنیم آن *API خارجی* باید چگونه باشد.
+
+اما، شما قبلاً می‌دانید چگونه به راحتی مستندات خودکار برای یک API با **FastAPI** ایجاد کنید.
+
+بنابراین قصد داریم از همان دانش برای مستندسازی نحوه ظاهر *API خارجی* استفاده کنیم... با ایجاد *عملیات مسیر(هایی)* که API خارجی باید پیاده‌سازی کند (آنهایی که API شما فراخوانی خواهد کرد).
+
+/// tip
+
+هنگام نوشتن کد برای مستندسازی کال‌بک، ممکن است مفید باشد تصور کنید شما آن *توسعه‌دهنده خارجی* هستید. و در حال حاضر *API خارجی* را پیاده‌سازی می‌کنید، نه *API خودتان* را.
+
+پذیرش موقت این دیدگاه (از *توسعه‌دهنده خارجی*) می‌تواند کمک کند احساس کنید مکان قرار دادن پارامترها، مدل Pydantic برای بدنه، برای پاسخ و غیره برای آن *API خارجی* واضح‌تر است.
+
+///
+
+### ایجاد یک `APIRouter` کال‌بک
+
+ابتدا یک `APIRouter` جدید ایجاد کنید که شامل یک یا چند کال‌بک خواهد بود.
 
 {* ../../docs_src/openapi_callbacks/tutorial001.py hl[3,25] *}
 
-### Create the callback *path operation*
+### ایجاد *عملیات مسیر* کال‌بک
 
-To create the callback *path operation* use the same `APIRouter` you created above.
+برای ایجاد *عملیات مسیر* کال‌بک از همان `APIRouter` که در بالا ایجاد کردید استفاده کنید.
 
-It should look just like a normal FastAPI *path operation*:
+باید دقیقاً مانند یک *عملیات مسیر* عادی FastAPI باشد:
 
-* It should probably have a declaration of the body it should receive, e.g. `body: InvoiceEvent`.
-* And it could also have a declaration of the response it should return, e.g. `response_model=InvoiceEventReceived`.
+* احتمالاً باید اعلان بدنه‌ای که باید دریافت کند داشته باشد، مثلاً `body: InvoiceEvent`.
+* و همچنین می‌تواند اعلان پاسخی که باید برگرداند داشته باشد، مثلاً `response_model=InvoiceEventReceived`.
 
 {* ../../docs_src/openapi_callbacks/tutorial001.py hl[16:18,21:22,28:32] *}
 
-There are 2 main differences from a normal *path operation*:
+2 تفاوت اصلی با یک *عملیات مسیر* عادی وجود دارد:
 
-* It doesn't need to have any actual code, because your app will never call this code. It's only used to document the *external API*. So, the function could just have `pass`.
-* The *path* can contain an <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#key-expression" class="external-link" target="_blank">OpenAPI 3 expression</a> (see more below) where it can use variables with parameters and parts of the original request sent to *your API*.
+* نیازی به داشتن کد واقعی ندارد، زیرا برنامه شما هرگز این کد را فراخوانی نخواهد کرد. فقط برای مستندسازی *API خارجی* استفاده می‌شود. بنابراین، تابع فقط می‌تواند `pass` داشته باشد.
+* *مسیر* می‌تواند شامل یک <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#key-expression" class="external-link" target="_blank">عبارت OpenAPI 3</a> باشد (بیشتر در زیر) که در آن می‌تواند از متغیرها با پارامترها و بخش‌هایی از درخواست اصلی ارسال شده به *API شما* استفاده کند.
 
-### The callback path expression
+### عبارت مسیر کال‌بک
 
-The callback *path* can have an <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#key-expression" class="external-link" target="_blank">OpenAPI 3 expression</a> that can contain parts of the original request sent to *your API*.
+*مسیر* کال‌بک می‌تواند یک <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md#key-expression" class="external-link" target="_blank">عبارت OpenAPI 3</a> داشته باشد که شامل بخش‌هایی از درخواست اصلی ارسال شده به *API شما* باشد.
 
-In this case, it's the `str`:
+در این مورد، `str` زیر است:
 
 ```Python
 "{$callback_url}/invoices/{$request.body.id}"
 ```
 
-So, if your API user (the external developer) sends a request to *your API* to:
+بنابراین، اگر کاربر API شما (توسعه‌دهنده خارجی) درخواستی به *API شما* ارسال کند به:
 
 ```
 https://yourapi.com/invoices/?callback_url=https://www.external.org/events
 ```
 
-with a JSON body of:
+با بدنه JSON:
 
 ```JSON
 {
@@ -134,13 +134,13 @@ with a JSON body of:
 }
 ```
 
-then *your API* will process the invoice, and at some point later, send a callback request to the `callback_url` (the *external API*):
+سپس *API شما* فاکتور را پردازش و در مقطعی بعداً درخواست کال‌بک به `callback_url` (*API خارجی*) ارسال خواهد کرد:
 
 ```
 https://www.external.org/events/invoices/2expen51ve
 ```
 
-with a JSON body containing something like:
+با بدنه JSON شامل چیزی مانند:
 
 ```JSON
 {
@@ -149,7 +149,7 @@ with a JSON body containing something like:
 }
 ```
 
-and it would expect a response from that *external API* with a JSON body like:
+و انتظار پاسخی از آن *API خارجی* با بدنه JSON مانند:
 
 ```JSON
 {
@@ -159,28 +159,28 @@ and it would expect a response from that *external API* with a JSON body like:
 
 /// tip
 
-Notice how the callback URL used contains the URL received as a query parameter in `callback_url` (`https://www.external.org/events`) and also the invoice `id` from inside of the JSON body (`2expen51ve`).
+توجه کنید چگونه URL کال‌بک مورد استفاده شامل URL دریافت شده به عنوان پارامتر کوئری در `callback_url` (`https://www.external.org/events`) و همچنین `id` فاکتور از داخل بدنه JSON (`2expen51ve`) است.
 
 ///
 
-### Add the callback router
+### اضافه کردن روتر کال‌بک
 
-At this point you have the *callback path operation(s)* needed (the one(s) that the *external developer*  should implement in the *external API*) in the callback router you created above.
+در این نقطه شما *عملیات مسیر کال‌بک* مورد نیاز (آنهایی که *توسعه‌دهنده خارجی* باید در *API خارجی* پیاده‌سازی کند) را در روتر کال‌بک ایجاد شده در بالا دارید.
 
-Now use the parameter `callbacks` in *your API's path operation decorator* to pass the attribute `.routes` (that's actually just a `list` of routes/*path operations*) from that callback router:
+حالا از پارامتر `callbacks` در *دکوراتور عملیات مسیر API خودتان* استفاده کنید تا ویژگی `.routes` (که در واقع فقط یک `list` از مسیرها/*عملیات‌های مسیر* است) از آن روتر کال‌بک را ارسال کنید:
 
 {* ../../docs_src/openapi_callbacks/tutorial001.py hl[35] *}
 
 /// tip
 
-Notice that you are not passing the router itself (`invoices_callback_router`) to `callback=`, but the attribute `.routes`, as in `invoices_callback_router.routes`.
+توجه کنید که خود روتر (`invoices_callback_router`) را به `callback=` ارسال نمی‌کنید، بلکه ویژگی `.routes` را ارسال می‌کنید، یعنی `invoices_callback_router.routes`.
 
 ///
 
-### Check the docs
+### بررسی مستندات
 
-Now you can start your app and go to <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>.
+حالا می‌توانید برنامه خود را شروع و به <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a> بروید.
 
-You will see your docs including a "Callbacks" section for your *path operation* that shows how the *external API* should look like:
+مستندات خود را خواهید دید شامل بخش "Callbacks" برای *عملیات مسیر* شما که نشان می‌دهد *API خارجی* باید چگونه باشد:
 
 <img src="/img/tutorial/openapi-callbacks/image01.png">
