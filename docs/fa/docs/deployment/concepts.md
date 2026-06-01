@@ -1,118 +1,118 @@
-# Deployments Concepts
+# مفاهیم استقرار
 
-When deploying a **FastAPI** application, or actually, any type of web API, there are several concepts that you probably care about, and using them you can find the **most appropriate** way to **deploy your application**.
+هنگام استقرار یک برنامه **FastAPI**، یا در واقع هر نوع API وب، چندین مفهوم وجود دارد که احتمالاً برایتان مهم هستند و با استفاده از آنها می‌توانید **مناسب‌ترین** راه برای **استقرار برنامه** خود را پیدا کنید.
 
-Some of the important concepts are:
+برخی از مفاهیم مهم عبارتند از:
 
-* Security - HTTPS
-* Running on startup
-* Restarts
-* Replication (the number of processes running)
-* Memory
-* Previous steps before starting
+* امنیت - HTTPS
+* اجرا در هنگام راه‌اندازی
+* راه‌اندازی مجدد
+* تکثیر (تعداد فرآیندهای در حال اجرا)
+* حافظه
+* مراحل قبلی قبل از شروع
 
-We'll see how they would affect **deployments**.
+ما خواهیم دید چگونه بر **استقرار** تأثیر می‌گذارند.
 
-In the end, the ultimate objective is to be able to **serve your API clients** in a way that is **secure**, to **avoid disruptions**, and to use the **compute resources** (for example remote servers/virtual machines) as efficiently as possible. 🚀
+در نهایت، هدف نهایی این است که بتوانید **به مشتریان API خود** به شکلی **امن** سرویس دهید، از **اختلالات جلوگیری** کنید و از **منابع محاسباتی** (برای مثال سرورهای راه دور/ماشین‌های مجازی) تا حد امکان بهینه استفاده کنید. 🚀
 
-I'll tell you a bit more about these **concepts** here, and that would hopefully give you the **intuition** you would need to decide how to deploy your API in very different environments, possibly even in **future** ones that don't exist yet.
+من کمی بیشتر درباره این **مفاهیم** اینجا به شما خواهم گفت و امیدوارم **شهودی** که نیاز دارید برای تصمیم‌گیری درباره نحوه استقرار API خود در محیط‌های بسیار مختلف، حتی احتمالاً در محیط‌های **آینده** که هنوز وجود ندارند، به شما بدهد.
 
-By considering these concepts, you will be able to **evaluate and design** the best way to deploy **your own APIs**.
+با در نظر گرفتن این مفاهیم، قادر خواهید بود بهترین راه برای استقرار **APIهای خود** را **ارزیابی و طراحی** کنید.
 
-In the next chapters, I'll give you more **concrete recipes** to deploy FastAPI applications.
+در فصل‌های بعدی، **دستورالعمل‌های عملی‌تری** برای استقرار برنامه‌های FastAPI به شما خواهم داد.
 
-But for now, let's check these important **conceptual ideas**. These concepts also apply to any other type of web API. 💡
+اما فعلاً، بیایید این **ایده‌های مفهومی** مهم را بررسی کنیم. این مفاهیم برای هر نوع دیگری از API وب نیز اعمال می‌شوند. 💡
 
-## Security - HTTPS
+## امنیت - HTTPS
 
-In the [previous chapter about HTTPS](https.md){.internal-link target=_blank} we learned about how HTTPS provides encryption for your API.
+در [فصل قبلی درباره HTTPS](https.md){.internal-link target=_blank} یاد گرفتیم که HTTPS چگونه رمزنگاری برای API شما فراهم می‌کند.
 
-We also saw that HTTPS is normally provided by a component **external** to your application server, a **TLS Termination Proxy**.
+همچنین دیدیم که HTTPS معمولاً توسط یک مؤلفه **خارجی** از سرور برنامه شما، یک **پروکسی پایان‌دهی TLS** ارائه می‌شود.
 
-And there has to be something in charge of **renewing the HTTPS certificates**, it could be the same component or it could be something different.
+و باید چیزی مسئول **تمدید گواهی‌های HTTPS** باشد، ممکن است همان مؤلفه باشد یا چیز دیگری.
 
-### Example Tools for HTTPS
+### ابزارهای نمونه برای HTTPS
 
-Some of the tools you could use as a TLS Termination Proxy are:
+برخی از ابزارهایی که می‌توانید به عنوان پروکسی پایان‌دهی TLS استفاده کنید عبارتند از:
 
 * Traefik
-    * Automatically handles certificates renewals ✨
+    * به طور خودکار تمدید گواهی‌ها را مدیریت می‌کند ✨
 * Caddy
-    * Automatically handles certificates renewals ✨
+    * به طور خودکار تمدید گواهی‌ها را مدیریت می‌کند ✨
 * Nginx
-    * With an external component like Certbot for certificate renewals
+    * با یک مؤلفه خارجی مانند Certbot برای تمدید گواهی
 * HAProxy
-    * With an external component like Certbot for certificate renewals
-* Kubernetes with an Ingress Controller like Nginx
-    * With an external component like cert-manager for certificate renewals
-* Handled internally by a cloud provider as part of their services (read below 👇)
+    * با یک مؤلفه خارجی مانند Certbot برای تمدید گواهی
+* Kubernetes با یک Ingress Controller مانند Nginx
+    * با یک مؤلفه خارجی مانند cert-manager برای تمدید گواهی
+* به صورت داخلی توسط یک ارائه‌دهنده ابری به عنوان بخشی از خدمات آنها مدیریت می‌شود (در زیر بخوانید 👇)
 
-Another option is that you could use a **cloud service** that does more of the work including setting up HTTPS. It could have some restrictions or charge you more, etc. But in that case, you wouldn't have to set up a TLS Termination Proxy yourself.
+گزینه دیگر این است که می‌توانید از یک **سرویس ابری** استفاده کنید که کارهای بیشتری از جمله تنظیم HTTPS را انجام می‌دهد. ممکن است محدودیت‌هایی داشته باشد یا هزینه بیشتری از شما دریافت کند و غیره. اما در آن صورت، لازم نیست خودتان پروکسی پایان‌دهی TLS را تنظیم کنید.
 
-I'll show you some concrete examples in the next chapters.
+در فصل‌های بعدی نمونه‌های عملی به شما نشان خواهم داد.
 
 ---
 
-Then the next concepts to consider are all about the program running your actual API (e.g. Uvicorn).
+سپس مفاهیم بعدی که باید در نظر بگیرید همه درباره برنامه‌ای هستند که API واقعی شما را اجرا می‌کند (مثلاً Uvicorn).
 
-## Program and Process
+## برنامه و فرآیند
 
-We will talk a lot about the running "**process**", so it's useful to have clarity about what it means, and what's the difference with the word "**program**".
+ما زیاد درباره **"فرآیند"** در حال اجرا صحبت خواهیم کرد، بنابراین مفید است که روشنی درباره معنای آن و تفاوت آن با کلمه **"برنامه"** داشته باشیم.
 
-### What is a Program
+### برنامه چیست
 
-The word **program** is commonly used to describe many things:
+کلمه **برنامه** معمولاً برای توصیف چیزهای مختلفی استفاده می‌شود:
 
-* The **code** that you write, the **Python files**.
-* The **file** that can be **executed** by the operating system, for example: `python`, `python.exe` or `uvicorn`.
-* A particular program while it is **running** on the operating system, using the CPU, and storing things on memory. This is also called a **process**.
+* **کدی** که می‌نویسید، **فایل‌های Python**.
+* **فایلی** که توسط سیستم‌عامل قابل **اجرا** است، برای مثال: `python`، `python.exe` یا `uvicorn`.
+* یک برنامه خاص در حالی که **در حال اجرا** روی سیستم‌عامل است، از CPU استفاده می‌کند و چیزها را در حافظه ذخیره می‌کند. این همچنین **فرآیند** نامیده می‌شود.
 
-### What is a Process
+### فرآیند چیست
 
-The word **process** is normally used in a more specific way, only referring to the thing that is running in the operating system (like in the last point above):
+کلمه **فرآیند** معمولاً به شکل خاص‌تری استفاده می‌شود و فقط به چیزی اشاره دارد که در سیستم‌عامل اجرا می‌شود (مانند آخرین نکته بالا):
 
-* A particular program while it is **running** on the operating system.
-    * This doesn't refer to the file, nor to the code, it refers **specifically** to the thing that is being **executed** and managed by the operating system.
-* Any program, any code, **can only do things** when it is being **executed**. So, when there's a **process running**.
-* The process can be **terminated** (or "killed") by you, or by the operating system. At that point, it stops running/being executed, and it can **no longer do things**.
-* Each application that you have running on your computer has some process behind it, each running program, each window, etc. And there are normally many processes running **at the same time** while a computer is on.
-* There can be **multiple processes** of the **same program** running at the same time.
+* یک برنامه خاص در حالی که **در حال اجرا** روی سیستم‌عامل است.
+    * این به فایل یا کد اشاره نمی‌کند، بلکه **مشخصاً** به چیزی اشاره دارد که توسط سیستم‌عامل **اجرا و مدیریت** می‌شود.
+* هر برنامه، هر کد، **فقط زمانی می‌تواند کارها را انجام دهد** که **در حال اجرا** باشد. بنابراین، زمانی که یک **فرآیند در حال اجرا** باشد.
+* فرآیند می‌تواند توسط شما یا سیستم‌عامل **پایان یابد** (یا "کشته شود"). در آن نقطه، اجرا/فعالیت آن متوقف می‌شود و دیگر **نمی‌تواند کاری انجام دهد**.
+* هر برنامه‌ای که روی رایانه شما در حال اجراست، فرآیندی پشت آن دارد، هر برنامه در حال اجرا، هر پنجره و غیره. و معمولاً فرآیندهای زیادی **همزمان** در حال اجرا هستند در حالی که رایانه روشن است.
+* می‌تواند **چندین فرآیند** از **همان برنامه** همزمان در حال اجرا باشد.
 
-If you check out the "task manager" or "system monitor" (or similar tools) in your operating system, you will be able to see many of those processes running.
+اگر "مدیر وظایف" یا "مانیتور سیستم" (یا ابزارهای مشابه) در سیستم‌عامل خود را بررسی کنید، قادر خواهید بود بسیاری از آن فرآیندهای در حال اجرا را ببینید.
 
-And, for example, you will probably see that there are multiple processes running the same browser program (Firefox, Chrome, Edge, etc). They normally run one process per tab, plus some other extra processes.
+و، برای مثال، احتمالاً خواهید دید که چندین فرآیند در حال اجرای همان برنامه مرورگر (Firefox، Chrome، Edge و غیره) هستند. آنها معمولاً یک فرآیند برای هر تب، به علاوه برخی فرآیندهای اضافی دیگر اجرا می‌کنند.
 
 <img class="shadow" src="/img/deployment/concepts/image01.png">
 
 ---
 
-Now that we know the difference between the terms **process** and **program**, let's continue talking about deployments.
+حال که تفاوت بین اصطلاحات **فرآیند** و **برنامه** را می‌دانیم، بیایید به صحبت درباره استقرار ادامه دهیم.
 
-## Running on Startup
+## اجرا در هنگام راه‌اندازی
 
-In most cases, when you create a web API, you want it to be **always running**, uninterrupted, so that your clients can always access it. This is of course, unless you have a specific reason why you want it to run only in certain situations, but most of the time you want it constantly running and **available**.
+در بیشتر موارد، وقتی یک API وب ایجاد می‌کنید، می‌خواهید **همیشه در حال اجرا** باشد، بدون وقفه، تا مشتریان شما همیشه بتوانند به آن دسترسی داشته باشند. البته مگر اینکه دلیل خاصی داشته باشید که فقط در شرایط خاصی اجرا شود، اما بیشتر اوقات می‌خواهید دائماً در حال اجرا و **در دسترس** باشد.
 
-### In a Remote Server
+### در یک سرور راه دور
 
-When you set up a remote server (a cloud server, a virtual machine, etc.) the simplest thing you can do is use `fastapi run` (which uses Uvicorn) or something  similar, manually, the same way you do when developing locally.
+وقتی یک سرور راه دور (سرور ابری، ماشین مجازی و غیره) تنظیم می‌کنید، ساده‌ترین کاری که می‌توانید انجام دهید استفاده از `fastapi run` (که از Uvicorn استفاده می‌کند) یا چیز مشابه به صورت دستی است، همانطور که هنگام توسعه محلی انجام می‌دهید.
 
-And it will work and will be useful **during development**.
+و کار خواهد کرد و **در حین توسعه** مفید خواهد بود.
 
-But if your connection to the server is lost, the **running process** will probably die.
+اما اگر اتصال شما به سرور قطع شود، **فرآیند در حال اجرا** احتمالاً خواهد مرد.
 
-And if the server is restarted (for example after updates, or migrations from the cloud provider) you probably **won't notice it**. And because of that, you won't even know that you have to restart the process manually. So, your API will just stay dead. 😱
+و اگر سرور مجدداً راه‌اندازی شود (برای مثال پس از به‌روزرسانی‌ها یا مهاجرت‌های ارائه‌دهنده ابری) احتمالاً **متوجه نخواهید شد**. و به همین دلیل، حتی نمی‌دانید که باید فرآیند را به صورت دستی مجدداً راه‌اندازی کنید. بنابراین، API شما فقط مرده باقی خواهد ماند. 😱
 
-### Run Automatically on Startup
+### اجرای خودکار در هنگام راه‌اندازی
 
-In general, you will probably want the server program (e.g. Uvicorn) to be started automatically on server startup, and without needing any **human intervention**, to have a process always running with your API (e.g. Uvicorn running your FastAPI app).
+به طور کلی، احتمالاً می‌خواهید برنامه سرور (مثلاً Uvicorn) به طور خودکار هنگام راه‌اندازی سرور شروع شود و بدون نیاز به **مداخله انسانی**، تا همیشه فرآیندی با API شما در حال اجرا باشد (مثلاً Uvicorn که برنامه FastAPI شما را اجرا می‌کند).
 
-### Separate Program
+### برنامه جداگانه
 
-To achieve this, you will normally have a **separate program** that would make sure your application is run on startup. And in many cases, it would also make sure other components or applications are also run, for example, a database.
+برای رسیدن به این هدف، معمولاً یک **برنامه جداگانه** خواهید داشت که مطمئن می‌شود برنامه شما هنگام راه‌اندازی اجرا می‌شود. و در بسیاری از موارد، همچنین مطمئن می‌شود مؤلفه‌ها یا برنامه‌های دیگر نیز اجرا می‌شوند، برای مثال یک پایگاه داده.
 
-### Example Tools to Run at Startup
+### ابزارهای نمونه برای اجرا در هنگام راه‌اندازی
 
-Some examples of the tools that can do this job are:
+برخی نمونه‌های ابزارهایی که می‌توانند این کار را انجام دهند عبارتند از:
 
 * Docker
 * Kubernetes
@@ -120,52 +120,52 @@ Some examples of the tools that can do this job are:
 * Docker in Swarm Mode
 * Systemd
 * Supervisor
-* Handled internally by a cloud provider as part of their services
-* Others...
+* به صورت داخلی توسط یک ارائه‌دهنده ابری به عنوان بخشی از خدمات آنها مدیریت می‌شود
+* سایر موارد...
 
-I'll give you more concrete examples in the next chapters.
+در فصل‌های بعدی نمونه‌های عملی‌تری به شما خواهم داد.
 
-## Restarts
+## راه‌اندازی مجدد
 
-Similar to making sure your application is run on startup, you probably also want to make sure it is **restarted** after failures.
+مشابه اطمینان از اجرای برنامه در هنگام راه‌اندازی، احتمالاً همچنین می‌خواهید مطمئن شوید که پس از خرابی‌ها **مجدداً راه‌اندازی** می‌شود.
 
-### We Make Mistakes
+### ما اشتباه می‌کنیم
 
-We, as humans, make **mistakes**, all the time. Software almost *always* has **bugs** hidden in different places. 🐛
+ما به عنوان انسان، **اشتباه می‌کنیم**، همیشه. نرم‌افزار تقریباً *همیشه* **باگ‌هایی** در مکان‌های مختلف پنهان دارد. 🐛
 
-And we as developers keep improving the code as we find those bugs and as we implement new features (possibly adding new bugs too 😅).
+و ما به عنوان توسعه‌دهندگان به بهبود کد ادامه می‌دهیم وقتی آن باگ‌ها را پیدا می‌کنیم و ویژگی‌های جدید پیاده‌سازی می‌کنیم (احتمالاً باگ‌های جدیدی هم اضافه می‌کنیم 😅).
 
-### Small Errors Automatically Handled
+### خطاهای کوچک به طور خودکار مدیریت می‌شوند
 
-When building web APIs with FastAPI, if there's an error in our code, FastAPI will normally contain it to the single request that triggered the error. 🛡
+هنگام ساخت APIهای وب با FastAPI، اگر خطایی در کد ما وجود داشته باشد، FastAPI معمولاً آن را به درخواست واحدی که خطا را ایجاد کرده محدود می‌کند. 🛡
 
-The client will get a **500 Internal Server Error** for that request, but the application will continue working for the next requests instead of just crashing completely.
+مشتری یک **خطای 500 Internal Server Error** برای آن درخواست دریافت خواهد کرد، اما برنامه به کار خود برای درخواست‌های بعدی ادامه می‌دهد به جای اینکه کاملاً از کار بیفتد.
 
-### Bigger Errors - Crashes
+### خطاهای بزرگ‌تر - خرابی‌ها
 
-Nevertheless, there might be cases where we write some code that **crashes the entire application** making Uvicorn and Python crash. 💥
+با این حال، ممکن است مواردی وجود داشته باشد که کدی بنویسیم که **کل برنامه را خراب کند** و باعث شود Uvicorn و Python کرش کنند. 💥
 
-And still, you would probably not want the application to stay dead because there was an error in one place, you probably want it to **continue running** at least for the *path operations* that are not broken.
+و باز هم، احتمالاً نمی‌خواهید برنامه مرده بماند چون خطایی در یک مکان وجود داشت، احتمالاً می‌خواهید حداقل برای *عملیات‌های مسیر* که خراب نیستند **به اجرا ادامه دهد**.
 
-### Restart After Crash
+### راه‌اندازی مجدد پس از خرابی
 
-But in those cases with really bad errors that crash the running **process**, you would want an external component that is in charge of **restarting** the process, at least a couple of times...
+اما در آن موارد با خطاهای واقعاً بد که **فرآیند** در حال اجرا را خراب می‌کنند، شما یک مؤلفه خارجی می‌خواهید که مسئول **راه‌اندازی مجدد** فرآیند باشد، حداقل چند بار...
 
 /// tip
 
-...Although if the whole application is just **crashing immediately** it probably doesn't make sense to keep restarting it forever. But in those cases, you will probably notice it during development, or at least right after deployment.
+...اگرچه اگر کل برنامه **فوراً خراب می‌شود** احتمالاً منطقی نیست که برای همیشه راه‌اندازی مجدد کنید. اما در آن موارد، احتمالاً در حین توسعه یا حداقل بلافاصله پس از استقرار متوجه خواهید شد.
 
-So let's focus on the main cases, where it could crash entirely in some particular cases **in the future**, and it still makes sense to restart it.
+بنابراین بیایید روی موارد اصلی تمرکز کنیم، جایی که ممکن است در برخی موارد خاص **در آینده** کاملاً خراب شود و هنوز منطقی است که مجدداً راه‌اندازی شود.
 
 ///
 
-You would probably want to have the thing in charge of restarting your application as an **external component**, because by that point, the same application with Uvicorn and Python already crashed, so there's nothing in the same code of the same app that could do anything about it.
+احتمالاً می‌خواهید چیزی که مسئول راه‌اندازی مجدد برنامه شماست به عنوان یک **مؤلفه خارجی** باشد، زیرا در آن نقطه، همان برنامه با Uvicorn و Python قبلاً خراب شده است، بنابراین هیچ چیزی در همان کد همان برنامه نمی‌تواند کاری درباره آن انجام دهد.
 
-### Example Tools to Restart Automatically
+### ابزارهای نمونه برای راه‌اندازی مجدد خودکار
 
-In most cases, the same tool that is used to **run the program on startup** is also used to handle automatic **restarts**.
+در بیشتر موارد، همان ابزاری که برای **اجرای برنامه در هنگام راه‌اندازی** استفاده می‌شود، همچنین برای مدیریت **راه‌اندازی مجدد** خودکار استفاده می‌شود.
 
-For example, this could be handled by:
+برای مثال، این می‌تواند توسط:
 
 * Docker
 * Kubernetes
@@ -173,149 +173,149 @@ For example, this could be handled by:
 * Docker in Swarm Mode
 * Systemd
 * Supervisor
-* Handled internally by a cloud provider as part of their services
-* Others...
+* به صورت داخلی توسط یک ارائه‌دهنده ابری به عنوان بخشی از خدمات آنها مدیریت شود
+* سایر موارد...
 
-## Replication - Processes and Memory
+## تکثیر - فرآیندها و حافظه
 
-With a FastAPI application, using a server program like the `fastapi` command that runs Uvicorn, running it once in **one process** can serve multiple clients concurrently.
+با یک برنامه FastAPI، استفاده از یک برنامه سرور مانند دستور `fastapi` که Uvicorn را اجرا می‌کند، اجرای آن یک بار در **یک فرآیند** می‌تواند چندین مشتری را به طور همزمان سرویس دهد.
 
-But in many cases, you will want to run several worker processes at the same time.
+اما در بسیاری از موارد، می‌خواهید چندین فرآیند کارگر را همزمان اجرا کنید.
 
-### Multiple Processes - Workers
+### چندین فرآیند - کارگرها
 
-If you have more clients than what a single process can handle (for example if the virtual machine is not too big) and you have **multiple cores** in the server's CPU, then you could have **multiple processes** running with the same application at the same time, and distribute all the requests among them.
+اگر مشتریان بیشتری از آنچه یک فرآیند واحد می‌تواند مدیریت کند دارید (برای مثال اگر ماشین مجازی خیلی بزرگ نباشد) و **چندین هسته** در CPU سرور دارید، آنگاه می‌توانید **چندین فرآیند** با همان برنامه همزمان در حال اجرا داشته باشید و تمام درخواست‌ها را بین آنها توزیع کنید.
 
-When you run **multiple processes** of the same API program, they are commonly called **workers**.
+وقتی **چندین فرآیند** از همان برنامه API اجرا می‌کنید، آنها معمولاً **کارگرها** نامیده می‌شوند.
 
-### Worker Processes and Ports
+### فرآیندهای کارگر و پورت‌ها
 
-Remember from the docs [About HTTPS](https.md){.internal-link target=_blank} that only one process can be listening on one combination of port and IP address in a server?
+به خاطر دارید از مستندات [درباره HTTPS](https.md){.internal-link target=_blank} که فقط یک فرآیند می‌تواند روی یک ترکیب پورت و آدرس IP در یک سرور گوش دهد؟
 
-This is still true.
+این هنوز درست است.
 
-So, to be able to have **multiple processes** at the same time, there has to be a **single process listening on a port** that then transmits the communication to each worker process in some way.
+بنابراین، برای داشتن **چندین فرآیند** همزمان، باید یک **فرآیند واحد روی یک پورت گوش دهد** که سپس ارتباط را به نحوی به هر فرآیند کارگر منتقل کند.
 
-### Memory per Process
+### حافظه به ازای هر فرآیند
 
-Now, when the program loads things in memory, for example, a machine learning model in a variable, or the contents of a large file in a variable, all that **consumes a bit of the memory (RAM)** of the server.
+حال، وقتی برنامه چیزهایی را در حافظه بارگذاری می‌کند، برای مثال یک مدل یادگیری ماشین در یک متغیر، یا محتویات یک فایل بزرگ در یک متغیر، همه اینها **مقداری از حافظه (RAM)** سرور را مصرف می‌کنند.
 
-And multiple processes normally **don't share any memory**. This means that each running process has its own things, variables, and memory. And if you are consuming a large amount of memory in your code, **each process** will consume an equivalent amount of memory.
+و چندین فرآیند معمولاً **هیچ حافظه‌ای را به اشتراک نمی‌گذارند**. این بدان معناست که هر فرآیند در حال اجرا چیزها، متغیرها و حافظه خود را دارد. و اگر مقدار زیادی حافظه در کد خود مصرف می‌کنید، **هر فرآیند** مقدار معادلی حافظه مصرف خواهد کرد.
 
-### Server Memory
+### حافظه سرور
 
-For example, if your code loads a Machine Learning model with **1 GB in size**, when you run one process with your API, it will consume at least 1 GB of RAM. And if you start **4 processes** (4 workers), each will consume 1 GB of RAM. So in total, your API will consume **4 GB of RAM**.
+برای مثال، اگر کد شما یک مدل یادگیری ماشین با **حجم ۱ گیگابایت** بارگذاری می‌کند، وقتی یک فرآیند با API خود اجرا می‌کنید، حداقل ۱ گیگابایت RAM مصرف خواهد کرد. و اگر **۴ فرآیند** (۴ کارگر) شروع کنید، هر کدام ۱ گیگابایت RAM مصرف خواهد کرد. بنابراین در مجموع، API شما **۴ گیگابایت RAM** مصرف خواهد کرد.
 
-And if your remote server or virtual machine only has 3 GB of RAM, trying to load more than 4 GB of RAM will cause problems. 🚨
+و اگر سرور راه دور یا ماشین مجازی شما فقط ۳ گیگابایت RAM دارد، تلاش برای بارگذاری بیش از ۴ گیگابایت RAM مشکل ایجاد خواهد کرد. 🚨
 
-### Multiple Processes - An Example
+### چندین فرآیند - یک مثال
 
-In this example, there's a **Manager Process** that starts and controls two **Worker Processes**.
+در این مثال، یک **فرآیند مدیر** وجود دارد که دو **فرآیند کارگر** را شروع و کنترل می‌کند.
 
-This Manager Process would probably be the one listening on the **port** in the IP. And it would transmit all the communication to the worker processes.
+این فرآیند مدیر احتمالاً همان فرآیندی است که روی **پورت** در IP گوش می‌دهد. و تمام ارتباطات را به فرآیندهای کارگر منتقل می‌کند.
 
-Those worker processes would be the ones running your application, they would perform the main computations to receive a **request** and return a **response**, and they would load anything you put in variables in RAM.
+آن فرآیندهای کارگر همان‌هایی هستند که برنامه شما را اجرا می‌کنند، محاسبات اصلی برای دریافت یک **درخواست** و برگرداندن یک **پاسخ** را انجام می‌دهند و هر چیزی که در متغیرها در RAM قرار دهید بارگذاری می‌کنند.
 
 <img src="/img/deployment/concepts/process-ram.svg">
 
-And of course, the same machine would probably have **other processes** running as well, apart from your application.
+و البته، همان ماشین احتمالاً **فرآیندهای دیگری** نیز علاوه بر برنامه شما در حال اجرا خواهد داشت.
 
-An interesting detail is that the percentage of the **CPU used** by each process can **vary** a lot over time, but the **memory (RAM)** normally stays more or less **stable**.
+یک جزئیات جالب این است که درصد **CPU استفاده شده** توسط هر فرآیند می‌تواند در طول زمان **بسیار متغیر** باشد، اما **حافظه (RAM)** معمولاً کم و بیش **پایدار** باقی می‌ماند.
 
-If you have an API that does a comparable amount of computations every time and you have a lot of clients, then the **CPU utilization** will probably *also be stable* (instead of constantly going up and down quickly).
+اگر API‌ای دارید که هر بار مقدار قابل مقایسه‌ای محاسبات انجام می‌دهد و مشتریان زیادی دارید، آنگاه **استفاده از CPU** احتمالاً *نیز پایدار* خواهد بود (به جای بالا و پایین رفتن مداوم و سریع).
 
-### Examples of Replication Tools and Strategies
+### نمونه‌هایی از ابزارها و استراتژی‌های تکثیر
 
-There can be several approaches to achieve this, and I'll tell you more about specific strategies in the next chapters, for example when talking about Docker and containers.
+رویکردهای مختلفی برای رسیدن به این هدف وجود دارد و در فصل‌های بعدی درباره استراتژی‌های خاص بیشتر به شما خواهم گفت، برای مثال هنگام صحبت درباره Docker و کانتینرها.
 
-The main constraint to consider is that there has to be a **single** component handling the **port** in the **public IP**. And then it has to have a way to **transmit** the communication to the replicated **processes/workers**.
+محدودیت اصلی که باید در نظر بگیرید این است که باید یک مؤلفه **واحد** وجود داشته باشد که **پورت** در **IP عمومی** را مدیریت کند. و سپس باید راهی برای **انتقال** ارتباط به **فرآیندها/کارگرهای** تکثیر شده داشته باشد.
 
-Here are some possible combinations and strategies:
+اینجا برخی ترکیبات و استراتژی‌های ممکن آورده شده‌اند:
 
-* **Uvicorn** with `--workers`
-    * One Uvicorn **process manager** would listen on the **IP** and **port**, and it would start **multiple Uvicorn worker processes**.
-* **Kubernetes** and other distributed **container systems**
-    * Something in the **Kubernetes** layer would listen on the **IP** and **port**. The replication would be by having **multiple containers**, each with **one Uvicorn process** running.
-* **Cloud services** that handle this for you
-    * The cloud service will probably **handle replication for you**. It would possibly let you define **a process to run**, or a **container image** to use, in any case, it would most probably be **a single Uvicorn process**, and the cloud service would be in charge of replicating it.
-
-/// tip
-
-Don't worry if some of these items about **containers**, Docker, or Kubernetes don't make a lot of sense yet.
-
-I'll tell you more about container images, Docker, Kubernetes, etc. in a future chapter: [FastAPI in Containers - Docker](docker.md){.internal-link target=_blank}.
-
-///
-
-## Previous Steps Before Starting
-
-There are many cases where you want to perform some steps **before starting** your application.
-
-For example, you might want to run **database migrations**.
-
-But in most cases, you will want to perform these steps only **once**.
-
-So, you will want to have a **single process** to perform those **previous steps**, before starting the application.
-
-And you will have to make sure that it's a single process running those previous steps *even* if afterwards, you start **multiple processes** (multiple workers) for the application itself. If those steps were run by **multiple processes**, they would **duplicate** the work by running it in **parallel**, and if the steps were something delicate like a database migration, they could cause conflicts with each other.
-
-Of course, there are some cases where there's no problem in running the previous steps multiple times, in that case, it's a lot easier to handle.
+* **Uvicorn** با `--workers`
+    * یک **مدیر فرآیند** Uvicorn روی **IP** و **پورت** گوش می‌دهد و **چندین فرآیند کارگر** Uvicorn شروع می‌کند.
+* **Kubernetes** و سایر سیستم‌های **کانتینری** توزیع شده
+    * چیزی در لایه **Kubernetes** روی **IP** و **پورت** گوش می‌دهد. تکثیر با داشتن **چندین کانتینر**، هر کدام با **یک فرآیند Uvicorn** در حال اجرا انجام می‌شود.
+* **سرویس‌های ابری** که این کار را برای شما مدیریت می‌کنند
+    * سرویس ابری احتمالاً **تکثیر را برای شما مدیریت** خواهد کرد. احتمالاً به شما اجازه می‌دهد **یک فرآیند برای اجرا** یا یک **تصویر کانتینر** برای استفاده تعریف کنید، در هر صورت، احتمالاً **یک فرآیند واحد Uvicorn** خواهد بود و سرویس ابری مسئول تکثیر آن خواهد بود.
 
 /// tip
 
-Also, keep in mind that depending on your setup, in some cases you **might not even need any previous steps** before starting your application.
+نگران نباشید اگر برخی از این موارد درباره **کانتینرها**، Docker یا Kubernetes هنوز معنای زیادی ندارند.
 
-In that case, you wouldn't have to worry about any of this. 🤷
+در فصل آینده بیشتر درباره تصاویر کانتینر، Docker، Kubernetes و غیره به شما خواهم گفت: [FastAPI در کانتینرها - Docker](docker.md){.internal-link target=_blank}.
 
 ///
 
-### Examples of Previous Steps Strategies
+## مراحل قبلی قبل از شروع
 
-This will **depend heavily** on the way you **deploy your system**, and it would probably be connected to the way you start programs, handling restarts, etc.
+موارد بسیاری وجود دارد که می‌خواهید برخی مراحل را **قبل از شروع** برنامه خود انجام دهید.
 
-Here are some possible ideas:
+برای مثال، ممکن است بخواهید **مهاجرت‌های پایگاه داده** را اجرا کنید.
 
-* An "Init Container" in Kubernetes that runs before your app container
-* A bash script that runs the previous steps and then starts your application
-    * You would still need a way to start/restart *that* bash script, detect errors, etc.
+اما در بیشتر موارد، می‌خواهید این مراحل را فقط **یک بار** انجام دهید.
+
+بنابراین، یک **فرآیند واحد** می‌خواهید که آن **مراحل قبلی** را قبل از شروع برنامه انجام دهد.
+
+و باید مطمئن شوید که یک فرآیند واحد آن مراحل قبلی را اجرا می‌کند *حتی* اگر بعد از آن، **چندین فرآیند** (چندین کارگر) برای خود برنامه شروع کنید. اگر آن مراحل توسط **چندین فرآیند** اجرا شوند، کار را با اجرای **موازی** **تکرار** می‌کنند و اگر مراحل چیز حساسی مانند مهاجرت پایگاه داده باشند، ممکن است با یکدیگر تداخل ایجاد کنند.
+
+البته، مواردی وجود دارد که مشکلی در اجرای مراحل قبلی چندین بار نیست، در آن صورت مدیریت آن بسیار آسان‌تر است.
 
 /// tip
 
-I'll give you more concrete examples for doing this with containers in a future chapter: [FastAPI in Containers - Docker](docker.md){.internal-link target=_blank}.
+همچنین، به خاطر داشته باشید که بسته به تنظیمات شما، در برخی موارد ممکن است **حتی به هیچ مرحله قبلی** قبل از شروع برنامه نیاز نداشته باشید.
+
+در آن صورت، لازم نیست نگران هیچ‌یک از اینها باشید. 🤷
 
 ///
 
-## Resource Utilization
+### نمونه‌هایی از استراتژی‌های مراحل قبلی
 
-Your server(s) is (are) a **resource**, you can consume or **utilize**, with your programs, the computation time on the CPUs, and the RAM memory available.
+این **به شدت بستگی** به نحوه **استقرار سیستم** شما دارد و احتمالاً به نحوه شروع برنامه‌ها، مدیریت راه‌اندازی مجدد و غیره مرتبط است.
 
-How much of the system resources do you want to be consuming/utilizing? It might be easy to think "not much", but in reality, you will probably want to consume **as much as possible without crashing**.
+اینجا برخی ایده‌های ممکن آورده شده‌اند:
 
-If you are paying for 3 servers but you are using only a little bit of their RAM and CPU, you are probably **wasting money** 💸, and probably **wasting server electric power** 🌎, etc.
+* یک "Init Container" در Kubernetes که قبل از کانتینر برنامه شما اجرا می‌شود
+* یک اسکریپت bash که مراحل قبلی را اجرا می‌کند و سپس برنامه شما را شروع می‌کند
+    * هنوز به راهی برای شروع/راه‌اندازی مجدد *آن* اسکریپت bash، تشخیص خطاها و غیره نیاز دارید.
 
-In that case, it could be better to have only 2 servers and use a higher percentage of their resources (CPU, memory, disk, network bandwidth, etc).
+/// tip
 
-On the other hand, if you have 2 servers and you are using **100% of their CPU and RAM**, at some point one process will ask for more memory, and the server will have to use the disk as "memory" (which can be thousands of times slower), or even **crash**. Or one process might need to do some computation and would have to wait until the CPU is free again.
+در فصل آینده نمونه‌های عملی‌تری برای انجام این کار با کانتینرها به شما خواهم داد: [FastAPI در کانتینرها - Docker](docker.md){.internal-link target=_blank}.
 
-In this case, it would be better to get **one extra server** and run some processes on it so that they all have **enough RAM and CPU time**.
+///
 
-There's also the chance that for some reason you have a **spike** of usage of your API. Maybe it went viral, or maybe some other services or bots start using it. And you might want to have extra resources to be safe in those cases.
+## استفاده از منابع
 
-You could put an **arbitrary number** to target, for example, something **between 50% to 90%** of resource utilization. The point is that those are probably the main things you will want to measure and use to tweak your deployments.
+سرور(های) شما یک **منبع** است (هستند) که می‌توانید با برنامه‌های خود مصرف یا **استفاده** کنید، زمان محاسبات CPUها و حافظه RAM موجود.
 
-You can use simple tools like `htop` to see the CPU and RAM used in your server or the amount used by each process. Or you can use more complex monitoring tools, which may be distributed across servers, etc.
+چقدر از منابع سیستم می‌خواهید مصرف/استفاده کنید؟ ممکن است فکر کردن "نه زیاد" آسان باشد، اما در واقعیت، احتمالاً می‌خواهید **تا حد امکان بدون خرابی** مصرف کنید.
 
-## Recap
+اگر برای ۳ سرور پول می‌پردازید اما فقط کمی از RAM و CPU آنها را استفاده می‌کنید، احتمالاً **پول هدر می‌دهید** 💸 و احتمالاً **برق سرور را هدر می‌دهید** 🌎 و غیره.
 
-You have been reading here some of the main concepts that you would probably need to keep in mind when deciding how to deploy your application:
+در آن صورت، بهتر است فقط ۲ سرور داشته باشید و درصد بالاتری از منابع آنها (CPU، حافظه، دیسک، پهنای باند شبکه و غیره) را استفاده کنید.
 
-* Security - HTTPS
-* Running on startup
-* Restarts
-* Replication (the number of processes running)
-* Memory
-* Previous steps before starting
+از طرف دیگر، اگر ۲ سرور دارید و **۱۰۰٪ CPU و RAM** آنها را استفاده می‌کنید، در برخی نقاط یک فرآیند حافظه بیشتری درخواست خواهد کرد و سرور مجبور خواهد شد از دیسک به عنوان "حافظه" استفاده کند (که می‌تواند هزاران بار کندتر باشد) یا حتی **خراب شود**. یا یک فرآیند ممکن است نیاز به انجام محاسباتی داشته باشد و باید صبر کند تا CPU دوباره آزاد شود.
 
-Understanding these ideas and how to apply them should give you the intuition necessary to take any decisions when configuring and tweaking your deployments. 🤓
+در این صورت، بهتر است **یک سرور اضافی** بگیرید و برخی فرآیندها را روی آن اجرا کنید تا همه آنها **RAM و زمان CPU کافی** داشته باشند.
 
-In the next sections, I'll give you more concrete examples of possible strategies you can follow. 🚀
+همچنین احتمالی وجود دارد که به دلایلی **جهش** در استفاده از API شما داشته باشید. شاید وایرال شده باشد، یا شاید سرویس‌ها یا ربات‌های دیگر شروع به استفاده از آن کنند. و ممکن است بخواهید منابع اضافی داشته باشید تا در آن موارد امن باشید.
+
+می‌توانید یک **عدد دلخواه** برای هدف قرار دهید، برای مثال، چیزی **بین ۵۰٪ تا ۹۰٪** استفاده از منابع. نکته این است که اینها احتمالاً چیزهای اصلی هستند که می‌خواهید اندازه‌گیری کنید و برای تنظیم استقرارهای خود استفاده کنید.
+
+می‌توانید از ابزارهای ساده‌ای مانند `htop` برای دیدن CPU و RAM استفاده شده در سرور خود یا مقدار استفاده شده توسط هر فرآیند استفاده کنید. یا می‌توانید از ابزارهای مانیتورینگ پیچیده‌تری استفاده کنید که ممکن است در سرورها توزیع شده باشند و غیره.
+
+## خلاصه
+
+شما اینجا درباره برخی از مفاهیم اصلی خوانده‌اید که احتمالاً باید هنگام تصمیم‌گیری درباره نحوه استقرار برنامه خود به خاطر داشته باشید:
+
+* امنیت - HTTPS
+* اجرا در هنگام راه‌اندازی
+* راه‌اندازی مجدد
+* تکثیر (تعداد فرآیندهای در حال اجرا)
+* حافظه
+* مراحل قبلی قبل از شروع
+
+درک این ایده‌ها و نحوه اعمال آنها باید شهود لازم برای تصمیم‌گیری‌ها هنگام پیکربندی و تنظیم استقرارهای شما را بدهد. 🤓
+
+در بخش‌های بعدی، نمونه‌های عملی‌تری از استراتژی‌های ممکن را به شما خواهم داد. 🚀
