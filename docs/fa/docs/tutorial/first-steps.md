@@ -1,12 +1,12 @@
-# First Steps
+# اولین قدم‌ها
 
-The simplest FastAPI file could look like this:
+ساده‌ترین فایل FastAPI می‌تواند به این شکل باشد:
 
 {* ../../docs_src/first_steps/tutorial001.py *}
 
-Copy that to a file `main.py`.
+آن را در فایلی به نام `main.py` کپی کنید.
 
-Run the live server:
+سرور زنده را اجرا کنید:
 
 <div class="termy">
 
@@ -48,71 +48,71 @@ $ <font color="#4E9A06">fastapi</font> dev <u style="text-decoration-style:solid
 
 </div>
 
-In the output, there's a line with something like:
+در خروجی، خطی وجود دارد شبیه به:
 
 ```hl_lines="4"
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
-That line shows the URL where your app is being served, in your local machine.
+آن خط URL جایی که برنامه شما سرویس‌دهی می‌شود را در ماشین محلی شما نشان می‌دهد.
 
-### Check it
+### بررسی کنید
 
-Open your browser at <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000</a>.
+مرورگر خود را در <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000</a> باز کنید.
 
-You will see the JSON response as:
+پاسخ JSON را به این شکل خواهید دید:
 
 ```JSON
 {"message": "Hello World"}
 ```
 
-### Interactive API docs
+### مستندات تعاملی API
 
-Now go to <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>.
+حال به <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a> بروید.
 
-You will see the automatic interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>):
+مستندات تعاملی خودکار API را خواهید دید (ارائه شده توسط <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>):
 
 ![Swagger UI](https://fastapi.tiangolo.com/img/index/index-01-swagger-ui-simple.png)
 
-### Alternative API docs
+### مستندات جایگزین API
 
-And now, go to <a href="http://127.0.0.1:8000/redoc" class="external-link" target="_blank">http://127.0.0.1:8000/redoc</a>.
+و حال، به <a href="http://127.0.0.1:8000/redoc" class="external-link" target="_blank">http://127.0.0.1:8000/redoc</a> بروید.
 
-You will see the alternative automatic documentation (provided by <a href="https://github.com/Rebilly/ReDoc" class="external-link" target="_blank">ReDoc</a>):
+مستندات جایگزین خودکار را خواهید دید (ارائه شده توسط <a href="https://github.com/Rebilly/ReDoc" class="external-link" target="_blank">ReDoc</a>):
 
 ![ReDoc](https://fastapi.tiangolo.com/img/index/index-02-redoc-simple.png)
 
 ### OpenAPI
 
-**FastAPI** generates a "schema" with all your API using the **OpenAPI** standard for defining APIs.
+**FastAPI** یک "اسکیما" با تمام API شما با استفاده از استاندارد **OpenAPI** برای تعریف APIها تولید می‌کند.
 
-#### "Schema"
+#### "اسکیما"
 
-A "schema" is a definition or description of something. Not the code that implements it, but just an abstract description.
+یک "اسکیما" تعریف یا توصیف چیزی است. نه کدی که آن را پیاده‌سازی می‌کند، بلکه فقط یک توصیف انتزاعی.
 
-#### API "schema"
+#### اسکیمای API
 
-In this case, <a href="https://github.com/OAI/OpenAPI-Specification" class="external-link" target="_blank">OpenAPI</a> is a specification that dictates how to define a schema of your API.
+در این مورد، <a href="https://github.com/OAI/OpenAPI-Specification" class="external-link" target="_blank">OpenAPI</a> مشخصه‌ای است که نحوه تعریف اسکیمای API شما را تعیین می‌کند.
 
-This schema definition includes your API paths, the possible parameters they take, etc.
+این تعریف اسکیما شامل مسیرهای API شما، پارامترهای احتمالی آنها و غیره می‌شود.
 
-#### Data "schema"
+#### اسکیمای داده
 
-The term "schema" might also refer to the shape of some data, like a JSON content.
+اصطلاح "اسکیما" ممکن است به شکل داده‌ها هم اشاره داشته باشد، مانند محتوای JSON.
 
-In that case, it would mean the JSON attributes, and data types they have, etc.
+در آن صورت، به معنای ویژگی‌های JSON و انواع داده‌ای آنها و غیره خواهد بود.
 
-#### OpenAPI and JSON Schema
+#### OpenAPI و JSON Schema
 
-OpenAPI defines an API schema for your API. And that schema includes definitions (or "schemas") of the data sent and received by your API using **JSON Schema**, the standard for JSON data schemas.
+OpenAPI اسکیمایی برای API شما تعریف می‌کند. و آن اسکیما شامل تعاریف (یا "اسکیماهای") داده‌های ارسال و دریافت شده توسط API شما با استفاده از **JSON Schema**، استاندارد اسکیماهای داده JSON است.
 
-#### Check the `openapi.json`
+#### بررسی `openapi.json`
 
-If you are curious about how the raw OpenAPI schema looks like, FastAPI automatically generates a JSON (schema) with the descriptions of all your API.
+اگر کنجکاو هستید که اسکیمای خام OpenAPI چگونه به نظر می‌رسد، FastAPI به طور خودکار یک JSON (اسکیما) با توضیحات تمام API شما تولید می‌کند.
 
-You can see it directly at: <a href="http://127.0.0.1:8000/openapi.json" class="external-link" target="_blank">http://127.0.0.1:8000/openapi.json</a>.
+می‌توانید آن را مستقیماً در: <a href="http://127.0.0.1:8000/openapi.json" class="external-link" target="_blank">http://127.0.0.1:8000/openapi.json</a> ببینید.
 
-It will show a JSON starting with something like:
+یک JSON را نشان خواهد داد که با چیزی شبیه به این شروع می‌شود:
 
 ```JSON
 {
@@ -135,51 +135,51 @@ It will show a JSON starting with something like:
 ...
 ```
 
-#### What is OpenAPI for
+#### OpenAPI برای چیست
 
-The OpenAPI schema is what powers the two interactive documentation systems included.
+اسکیمای OpenAPI چیزی است که دو سیستم مستندات تعاملی شامل شده را تقویت می‌کند.
 
-And there are dozens of alternatives, all based on OpenAPI. You could easily add any of those alternatives to your application built with **FastAPI**.
+و ده‌ها جایگزین وجود دارد، همه بر اساس OpenAPI. شما می‌توانید به راحتی هر یک از آن جایگزین‌ها را به برنامه ساخته شده با **FastAPI** اضافه کنید.
 
-You could also use it to generate code automatically, for clients that communicate with your API. For example, frontend, mobile or IoT applications.
+همچنین می‌توانید از آن برای تولید خودکار کد برای کلاینت‌هایی که با API شما ارتباط برقرار می‌کنند استفاده کنید. برای مثال، برنامه‌های فرانت‌اند، موبایل یا IoT.
 
-## Recap, step by step
+## خلاصه، قدم به قدم
 
-### Step 1: import `FastAPI`
+### مرحله ۱: وارد کردن `FastAPI`
 
 {* ../../docs_src/first_steps/tutorial001.py hl[1] *}
 
-`FastAPI` is a Python class that provides all the functionality for your API.
+`FastAPI` یک کلاس پایتون است که تمام عملکرد API شما را فراهم می‌کند.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-`FastAPI` is a class that inherits directly from `Starlette`.
+`FastAPI` کلاسی است که مستقیماً از `Starlette` ارث‌بری می‌کند.
 
-You can use all the <a href="https://www.starlette.io/" class="external-link" target="_blank">Starlette</a> functionality with `FastAPI` too.
+شما می‌توانید از تمام عملکرد <a href="https://www.starlette.io/" class="external-link" target="_blank">Starlette</a> نیز با `FastAPI` استفاده کنید.
 
 ///
 
-### Step 2: create a `FastAPI` "instance"
+### مرحله ۲: ایجاد یک "نمونه" `FastAPI`
 
 {* ../../docs_src/first_steps/tutorial001.py hl[3] *}
 
-Here the `app` variable will be an "instance" of the class `FastAPI`.
+اینجا متغیر `app` یک "نمونه" از کلاس `FastAPI` خواهد بود.
 
-This will be the main point of interaction to create all your API.
+این نقطه اصلی تعامل برای ایجاد تمام API شما خواهد بود.
 
-### Step 3: create a *path operation*
+### مرحله ۳: ایجاد یک *عملیات مسیر*
 
-#### Path
+#### مسیر
 
-"Path" here refers to the last part of the URL starting from the first `/`.
+"مسیر" اینجا به آخرین بخش URL از اولین `/` اشاره دارد.
 
-So, in a URL like:
+بنابراین، در URL مانند:
 
 ```
 https://example.com/items/foo
 ```
 
-...the path would be:
+...مسیر خواهد بود:
 
 ```
 /items/foo
@@ -187,77 +187,81 @@ https://example.com/items/foo
 
 /// info
 
-A "path" is also commonly called an "endpoint" or a "route".
+"مسیر" همچنین معمولاً "endpoint" یا "route" نامیده می‌شود.
 
 ///
 
-While building an API, the "path" is the main way to separate "concerns" and "resources".
+هنگام ساخت یک API، "مسیر" راه اصلی برای جداسازی "دغدغه‌ها" و "منابع" است.
 
-#### Operation
+#### عملیات
 
-"Operation" here refers to one of the HTTP "methods".
+"عملیات" اینجا به یکی از "متدهای" HTTP اشاره دارد.
 
-One of:
+یکی از:
 
 * `POST`
 * `GET`
 * `PUT`
 * `DELETE`
 
-...and the more exotic ones:
+...و موارد کمتر رایج:
 
 * `OPTIONS`
 * `HEAD`
 * `PATCH`
 * `TRACE`
 
-In the HTTP protocol, you can communicate to each path using one (or more) of these "methods".
+در پروتکل HTTP، می‌توانید با هر مسیر با استفاده از یکی (یا بیشتر) از این "متدها" ارتباط برقرار کنید.
 
 ---
 
-When building APIs, you normally use these specific HTTP methods to perform a specific action.
+هنگام ساخت APIها، معمولاً از این متدهای HTTP خاص برای انجام یک عمل خاص استفاده می‌کنید.
 
-Normally you use:
+معمولاً از:
 
-* `POST`: to create data.
-* `GET`: to read data.
-* `PUT`: to update data.
-* `DELETE`: to delete data.
+* `POST`: برای ایجاد داده.
+* `GET`: برای خواندن داده.
+* `PUT`: برای به‌روزرسانی داده.
+* `DELETE`: برای حذف داده.
 
-So, in OpenAPI, each of the HTTP methods is called an "operation".
+استفاده می‌کنید.
 
-We are going to call them "**operations**" too.
+بنابراین، در OpenAPI، هر یک از متدهای HTTP یک "عملیات" نامیده می‌شود.
 
-#### Define a *path operation decorator*
+ما نیز آنها را "**عملیات**" خواهیم نامید.
+
+#### تعریف یک *دکوراتور عملیات مسیر*
 
 {* ../../docs_src/first_steps/tutorial001.py hl[6] *}
 
-The `@app.get("/")` tells **FastAPI** that the function right below is in charge of handling requests that go to:
+`@app.get("/")` به **FastAPI** می‌گوید که تابع زیر مسئول مدیریت درخواست‌هایی است که به:
 
-* the path `/`
-* using a <abbr title="an HTTP GET method"><code>get</code> operation</abbr>
+* مسیر `/`
+* با استفاده از <abbr title="متد HTTP GET"><code>get</code> عملیات</abbr>
 
-/// info | `@decorator` Info
+می‌آیند.
 
-That `@something` syntax in Python is called a "decorator".
+/// info | اطلاعات `@decorator`
 
-You put it on top of a function. Like a pretty decorative hat (I guess that's where the term came from).
+آن سینتکس `@something` در پایتون "دکوراتور" نامیده می‌شود.
 
-A "decorator" takes the function below and does something with it.
+شما آن را بالای یک تابع قرار می‌دهید. مانند یک کلاه تزئینی زیبا (حدس می‌زنم اصطلاح از اینجا آمده است).
 
-In our case, this decorator tells **FastAPI** that the function below corresponds to the **path** `/` with an **operation** `get`.
+یک "دکوراتور" تابع زیر را می‌گیرد و کاری با آن انجام می‌دهد.
 
-It is the "**path operation decorator**".
+در مورد ما، این دکوراتور به **FastAPI** می‌گوید که تابع زیر مربوط به **مسیر** `/` با **عملیات** `get` است.
+
+این "**دکوراتور عملیات مسیر**" است.
 
 ///
 
-You can also use the other operations:
+شما همچنین می‌توانید از سایر عملیات‌ها استفاده کنید:
 
 * `@app.post()`
 * `@app.put()`
 * `@app.delete()`
 
-And the more exotic ones:
+و موارد کمتر رایج:
 
 * `@app.options()`
 * `@app.head()`
@@ -266,58 +270,58 @@ And the more exotic ones:
 
 /// tip
 
-You are free to use each operation (HTTP method) as you wish.
+شما آزاد هستید هر عملیات (متد HTTP) را همانطور که می‌خواهید استفاده کنید.
 
-**FastAPI** doesn't enforce any specific meaning.
+**FastAPI** هیچ معنای خاصی را اجبار نمی‌کند.
 
-The information here is presented as a guideline, not a requirement.
+اطلاعات اینجا به عنوان یک راهنما ارائه شده، نه یک الزام.
 
-For example, when using GraphQL you normally perform all the actions using only `POST` operations.
+برای مثال، هنگام استفاده از GraphQL معمولاً تمام اعمال را فقط با استفاده از عملیات‌های `POST` انجام می‌دهید.
 
 ///
 
-### Step 4: define the **path operation function**
+### مرحله ۴: تعریف **تابع عملیات مسیر**
 
-This is our "**path operation function**":
+این "**تابع عملیات مسیر**" ماست:
 
-* **path**: is `/`.
-* **operation**: is `get`.
-* **function**: is the function below the "decorator" (below `@app.get("/")`).
+* **مسیر**: `/` است.
+* **عملیات**: `get` است.
+* **تابع**: تابع زیر "دکوراتور" است (زیر `@app.get("/")`).
 
 {* ../../docs_src/first_steps/tutorial001.py hl[7] *}
 
-This is a Python function.
+این یک تابع پایتون است.
 
-It will be called by **FastAPI** whenever it receives a request to the URL "`/`" using a `GET` operation.
+هر زمان که درخواستی به URL "`/`" با عملیات `GET` دریافت کند، توسط **FastAPI** فراخوانی خواهد شد.
 
-In this case, it is an `async` function.
+در این مورد، یک تابع `async` است.
 
 ---
 
-You could also define it as a normal function instead of `async def`:
+شما همچنین می‌توانید آن را به جای `async def` به عنوان یک تابع معمولی تعریف کنید:
 
 {* ../../docs_src/first_steps/tutorial003.py hl[7] *}
 
 /// note
 
-If you don't know the difference, check the [Async: *"In a hurry?"*](../async.md#in-a-hurry){.internal-link target=_blank}.
+اگر تفاوت را نمی‌دانید، [Async: *"عجله دارید؟"*](../async.md#in-a-hurry){.internal-link target=_blank} را بررسی کنید.
 
 ///
 
-### Step 5: return the content
+### مرحله ۵: برگرداندن محتوا
 
 {* ../../docs_src/first_steps/tutorial001.py hl[8] *}
 
-You can return a `dict`, `list`, singular values as `str`, `int`, etc.
+شما می‌توانید یک `dict`، `list`، مقادیر تکی مانند `str`، `int` و غیره برگردانید.
 
-You can also return Pydantic models (you'll see more about that later).
+همچنین می‌توانید مدل‌های Pydantic برگردانید (بعداً بیشتر درباره آن خواهید دید).
 
-There are many other objects and models that will be automatically converted to JSON (including ORMs, etc). Try using your favorite ones, it's highly probable that they are already supported.
+بسیاری از اشیاء و مدل‌های دیگر وجود دارند که به طور خودکار به JSON تبدیل خواهند شد (از جمله ORMها و غیره). سعی کنید از مورد علاقه‌های خود استفاده کنید، به احتمال زیاد از قبل پشتیبانی می‌شوند.
 
-## Recap
+## خلاصه
 
-* Import `FastAPI`.
-* Create an `app` instance.
-* Write a **path operation decorator** using decorators like `@app.get("/")`.
-* Define a **path operation function**; for example, `def root(): ...`.
-* Run the development server using the command `fastapi dev`.
+* `FastAPI` را وارد کنید.
+* یک نمونه `app` ایجاد کنید.
+* یک **دکوراتور عملیات مسیر** با استفاده از دکوراتورهایی مانند `@app.get("/")` بنویسید.
+* یک **تابع عملیات مسیر** تعریف کنید؛ برای مثال، `def root(): ...`.
+* سرور توسعه را با دستور `fastapi dev` اجرا کنید.

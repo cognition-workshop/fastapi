@@ -1,34 +1,34 @@
-# Path Parameters
+# پارامترهای مسیر
 
-You can declare path "parameters" or "variables" with the same syntax used by Python format strings:
+شما می‌توانید "پارامترها" یا "متغیرهای" مسیر را با همان سینتکسی که در رشته‌های فرمت پایتون استفاده می‌شود، اعلان کنید:
 
 {* ../../docs_src/path_params/tutorial001.py hl[6:7] *}
 
-The value of the path parameter `item_id` will be passed to your function as the argument `item_id`.
+مقدار پارامتر مسیر `item_id` به تابع شما به عنوان آرگومان `item_id` ارسال خواهد شد.
 
-So, if you run this example and go to <a href="http://127.0.0.1:8000/items/foo" class="external-link" target="_blank">http://127.0.0.1:8000/items/foo</a>, you will see a response of:
+بنابراین، اگر این مثال را اجرا کنید و به <a href="http://127.0.0.1:8000/items/foo" class="external-link" target="_blank">http://127.0.0.1:8000/items/foo</a> بروید، پاسخی خواهید دید:
 
 ```JSON
 {"item_id":"foo"}
 ```
 
-## Path parameters with types
+## پارامترهای مسیر با تایپ‌ها
 
-You can declare the type of a path parameter in the function, using standard Python type annotations:
+شما می‌توانید تایپ یک پارامتر مسیر را در تابع، با استفاده از حاشیه‌نویسی تایپ استاندارد پایتون اعلان کنید:
 
 {* ../../docs_src/path_params/tutorial002.py hl[7] *}
 
-In this case, `item_id` is declared to be an `int`.
+در این مورد، `item_id` به عنوان `int` اعلان شده است.
 
 /// check
 
-This will give you editor support inside of your function, with error checks, completion, etc.
+این پشتیبانی ویرایشگر درون تابع شما، با بررسی خطاها، تکمیل خودکار و غیره را فراهم می‌کند.
 
 ///
 
-## Data <abbr title="also known as: serialization, parsing, marshalling">conversion</abbr>
+## <abbr title="همچنین شناخته شده به عنوان: سریالیزاسیون، تجزیه، مارشالینگ">تبدیل</abbr> داده
 
-If you run this example and open your browser at <a href="http://127.0.0.1:8000/items/3" class="external-link" target="_blank">http://127.0.0.1:8000/items/3</a>, you will see a response of:
+اگر این مثال را اجرا کنید و مرورگر خود را در <a href="http://127.0.0.1:8000/items/3" class="external-link" target="_blank">http://127.0.0.1:8000/items/3</a> باز کنید، پاسخی خواهید دید:
 
 ```JSON
 {"item_id":3}
@@ -36,15 +36,15 @@ If you run this example and open your browser at <a href="http://127.0.0.1:8000/
 
 /// check
 
-Notice that the value your function received (and returned) is `3`, as a Python `int`, not a string `"3"`.
+توجه کنید که مقداری که تابع شما دریافت (و برگردانده) کرد `3` است، به عنوان یک `int` پایتون، نه رشته `"3"`.
 
-So, with that type declaration, **FastAPI** gives you automatic request <abbr title="converting the string that comes from an HTTP request into Python data">"parsing"</abbr>.
+بنابراین، با آن اعلان تایپ، **FastAPI** <abbr title="تبدیل رشته‌ای که از یک درخواست HTTP می‌آید به داده پایتون">"تجزیه"</abbr> خودکار درخواست را به شما می‌دهد.
 
 ///
 
-## Data validation
+## اعتبارسنجی داده
 
-But if you go to the browser at <a href="http://127.0.0.1:8000/items/foo" class="external-link" target="_blank">http://127.0.0.1:8000/items/foo</a>, you will see a nice HTTP error of:
+اما اگر به مرورگر بروید و <a href="http://127.0.0.1:8000/items/foo" class="external-link" target="_blank">http://127.0.0.1:8000/items/foo</a> را باز کنید، یک خطای HTTP زیبا خواهید دید:
 
 ```JSON
 {
@@ -63,141 +63,141 @@ But if you go to the browser at <a href="http://127.0.0.1:8000/items/foo" class=
 }
 ```
 
-because the path parameter `item_id` had a value of `"foo"`, which is not an `int`.
+زیرا پارامتر مسیر `item_id` مقدار `"foo"` داشت که یک `int` نیست.
 
-The same error would appear if you provided a `float` instead of an `int`, as in: <a href="http://127.0.0.1:8000/items/4.2" class="external-link" target="_blank">http://127.0.0.1:8000/items/4.2</a>
+همان خطا ظاهر می‌شد اگر به جای `int`، یک `float` ارائه می‌دادید، مانند: <a href="http://127.0.0.1:8000/items/4.2" class="external-link" target="_blank">http://127.0.0.1:8000/items/4.2</a>
 
 /// check
 
-So, with the same Python type declaration, **FastAPI** gives you data validation.
+بنابراین، با همان اعلان تایپ پایتون، **FastAPI** اعتبارسنجی داده به شما می‌دهد.
 
-Notice that the error also clearly states exactly the point where the validation didn't pass.
+توجه کنید که خطا همچنین به وضوح نقطه دقیقی را که اعتبارسنجی عبور نکرد بیان می‌کند.
 
-This is incredibly helpful while developing and debugging code that interacts with your API.
+این هنگام توسعه و اشکال‌زدایی کدی که با API شما تعامل دارد بسیار مفید است.
 
 ///
 
-## Documentation
+## مستندات
 
-And when you open your browser at <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>, you will see an automatic, interactive, API documentation like:
+و وقتی مرورگر خود را در <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a> باز می‌کنید، مستندات تعاملی خودکار API را خواهید دید:
 
 <img src="/img/tutorial/path-params/image01.png">
 
 /// check
 
-Again, just with that same Python type declaration, **FastAPI** gives you automatic, interactive documentation (integrating Swagger UI).
+دوباره، فقط با همان اعلان تایپ پایتون، **FastAPI** مستندات تعاملی خودکار (با ادغام Swagger UI) به شما می‌دهد.
 
-Notice that the path parameter is declared to be an integer.
+توجه کنید که پارامتر مسیر به عنوان عدد صحیح اعلان شده است.
 
 ///
 
-## Standards-based benefits, alternative documentation
+## مزایای مبتنی بر استاندارد، مستندات جایگزین
 
-And because the generated schema is from the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md" class="external-link" target="_blank">OpenAPI</a> standard, there are many compatible tools.
+و چون اسکیمای تولید شده از استاندارد <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.1.0.md" class="external-link" target="_blank">OpenAPI</a> است، ابزارهای سازگار بسیاری وجود دارند.
 
-Because of this, **FastAPI** itself provides an alternative API documentation (using ReDoc), which you can access at <a href="http://127.0.0.1:8000/redoc" class="external-link" target="_blank">http://127.0.0.1:8000/redoc</a>:
+به همین دلیل، **FastAPI** خودش یک مستندات جایگزین API (با استفاده از ReDoc) ارائه می‌دهد، که می‌توانید در <a href="http://127.0.0.1:8000/redoc" class="external-link" target="_blank">http://127.0.0.1:8000/redoc</a> به آن دسترسی داشته باشید:
 
 <img src="/img/tutorial/path-params/image02.png">
 
-The same way, there are many compatible tools. Including code generation tools for many languages.
+به همین ترتیب، ابزارهای سازگار بسیاری وجود دارند. از جمله ابزارهای تولید کد برای زبان‌های بسیاری.
 
 ## Pydantic
 
-All the data validation is performed under the hood by <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a>, so you get all the benefits from it. And you know you are in good hands.
+تمام اعتبارسنجی داده‌ها در پشت صحنه توسط <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a> انجام می‌شود، بنابراین تمام مزایای آن را دریافت می‌کنید. و می‌دانید که در دستان خوبی هستید.
 
-You can use the same type declarations with `str`, `float`, `bool` and many other complex data types.
+شما می‌توانید از همان اعلان‌های تایپ با `str`، `float`، `bool` و بسیاری دیگر از انواع داده پیچیده استفاده کنید.
 
-Several of these are explored in the next chapters of the tutorial.
+چندین مورد از اینها در فصل‌های بعدی آموزش بررسی می‌شوند.
 
-## Order matters
+## ترتیب مهم است
 
-When creating *path operations*, you can find situations where you have a fixed path.
+هنگام ایجاد *عملیات‌های مسیر*، ممکن است با شرایطی مواجه شوید که یک مسیر ثابت دارید.
 
-Like `/users/me`, let's say that it's to get data about the current user.
+مانند `/users/me`، فرض کنید برای دریافت داده‌های کاربر فعلی است.
 
-And then you can also have a path `/users/{user_id}` to get data about a specific user by some user ID.
+و سپس می‌توانید مسیر `/users/{user_id}` را نیز برای دریافت داده‌های یک کاربر خاص با شناسه کاربر داشته باشید.
 
-Because *path operations* are evaluated in order, you need to make sure that the path for `/users/me` is declared before the one for `/users/{user_id}`:
+چون *عملیات‌های مسیر* به ترتیب ارزیابی می‌شوند، باید مطمئن شوید که مسیر `/users/me` قبل از مسیر `/users/{user_id}` اعلان شده است:
 
 {* ../../docs_src/path_params/tutorial003.py hl[6,11] *}
 
-Otherwise, the path for `/users/{user_id}` would match also for `/users/me`, "thinking" that it's receiving a parameter `user_id` with a value of `"me"`.
+در غیر این صورت، مسیر `/users/{user_id}` برای `/users/me` نیز مطابقت خواهد داشت، "فکر می‌کند" که پارامتر `user_id` با مقدار `"me"` دریافت می‌کند.
 
-Similarly, you cannot redefine a path operation:
+به همین ترتیب، نمی‌توانید یک عملیات مسیر را دوباره تعریف کنید:
 
 {* ../../docs_src/path_params/tutorial003b.py hl[6,11] *}
 
-The first one will always be used since the path matches first.
+اولین مورد همیشه استفاده خواهد شد چون مسیر ابتدا مطابقت پیدا می‌کند.
 
-## Predefined values
+## مقادیر از پیش تعریف شده
 
-If you have a *path operation* that receives a *path parameter*, but you want the possible valid *path parameter* values to be predefined, you can use a standard Python <abbr title="Enumeration">`Enum`</abbr>.
+اگر *عملیات مسیری* دارید که یک *پارامتر مسیر* دریافت می‌کند، اما می‌خواهید مقادیر معتبر ممکن *پارامتر مسیر* از پیش تعریف شده باشند، می‌توانید از یک <abbr title="شمارش">`Enum`</abbr> استاندارد پایتون استفاده کنید.
 
-### Create an `Enum` class
+### ایجاد یک کلاس `Enum`
 
-Import `Enum` and create a sub-class that inherits from `str` and from `Enum`.
+`Enum` را وارد کنید و یک زیرکلاس ایجاد کنید که از `str` و از `Enum` ارث‌بری می‌کند.
 
-By inheriting from `str` the API docs will be able to know that the values must be of type `string` and will be able to render correctly.
+با ارث‌بری از `str` مستندات API قادر خواهند بود بدانند که مقادیر باید از نوع `string` باشند و به درستی رندر خواهند شد.
 
-Then create class attributes with fixed values, which will be the available valid values:
+سپس ویژگی‌های کلاس با مقادیر ثابت ایجاد کنید، که مقادیر معتبر موجود خواهند بود:
 
 {* ../../docs_src/path_params/tutorial005.py hl[1,6:9] *}
 
 /// info
 
-<a href="https://docs.python.org/3/library/enum.html" class="external-link" target="_blank">Enumerations (or enums) are available in Python</a> since version 3.4.
+<a href="https://docs.python.org/3/library/enum.html" class="external-link" target="_blank">شمارش‌ها (یا enumها) از نسخه ۳.۴ در پایتون موجود هستند</a>.
 
 ///
 
 /// tip
 
-If you are wondering, "AlexNet", "ResNet", and "LeNet" are just names of Machine Learning <abbr title="Technically, Deep Learning model architectures">models</abbr>.
+اگر تعجب می‌کنید، "AlexNet"، "ResNet" و "LeNet" فقط نام‌های <abbr title="از نظر فنی، معماری‌های مدل یادگیری عمیق">مدل‌های</abbr> یادگیری ماشین هستند.
 
 ///
 
-### Declare a *path parameter*
+### اعلان یک *پارامتر مسیر*
 
-Then create a *path parameter* with a type annotation using the enum class you created (`ModelName`):
+سپس یک *پارامتر مسیر* با حاشیه‌نویسی تایپ با استفاده از کلاس enum که ایجاد کردید (`ModelName`) بسازید:
 
 {* ../../docs_src/path_params/tutorial005.py hl[16] *}
 
-### Check the docs
+### بررسی مستندات
 
-Because the available values for the *path parameter* are predefined, the interactive docs can show them nicely:
+چون مقادیر موجود برای *پارامتر مسیر* از پیش تعریف شده هستند، مستندات تعاملی می‌توانند آنها را به خوبی نشان دهند:
 
 <img src="/img/tutorial/path-params/image03.png">
 
-### Working with Python *enumerations*
+### کار با *شمارش‌های* پایتون
 
-The value of the *path parameter* will be an *enumeration member*.
+مقدار *پارامتر مسیر* یک *عضو شمارش* خواهد بود.
 
-#### Compare *enumeration members*
+#### مقایسه *اعضای شمارش*
 
-You can compare it with the *enumeration member* in your created enum `ModelName`:
+شما می‌توانید آن را با *عضو شمارش* در enum ایجاد شده `ModelName` مقایسه کنید:
 
 {* ../../docs_src/path_params/tutorial005.py hl[17] *}
 
-#### Get the *enumeration value*
+#### دریافت *مقدار شمارش*
 
-You can get the actual value (a `str` in this case) using `model_name.value`, or in general, `your_enum_member.value`:
+شما می‌توانید مقدار واقعی (در این مورد یک `str`) را با استفاده از `model_name.value`، یا به طور کلی `your_enum_member.value` دریافت کنید:
 
 {* ../../docs_src/path_params/tutorial005.py hl[20] *}
 
 /// tip
 
-You could also access the value `"lenet"` with `ModelName.lenet.value`.
+همچنین می‌توانید مقدار `"lenet"` را با `ModelName.lenet.value` دسترسی پیدا کنید.
 
 ///
 
-#### Return *enumeration members*
+#### برگرداندن *اعضای شمارش*
 
-You can return *enum members* from your *path operation*, even nested in a JSON body (e.g. a `dict`).
+شما می‌توانید *اعضای enum* را از *عملیات مسیر* خود برگردانید، حتی تو در تو در یک بدنه JSON (مثلاً یک `dict`).
 
-They will be converted to their corresponding values (strings in this case) before returning them to the client:
+آنها قبل از برگرداندن به مشتری به مقادیر متناظر خود (در این مورد رشته‌ها) تبدیل خواهند شد:
 
 {* ../../docs_src/path_params/tutorial005.py hl[18,21,23] *}
 
-In your client you will get a JSON response like:
+در مشتری خود یک پاسخ JSON مانند این دریافت خواهید کرد:
 
 ```JSON
 {
@@ -206,53 +206,55 @@ In your client you will get a JSON response like:
 }
 ```
 
-## Path parameters containing paths
+## پارامترهای مسیر حاوی مسیرها
 
-Let's say you have a *path operation* with a path `/files/{file_path}`.
+فرض کنید یک *عملیات مسیر* با مسیر `/files/{file_path}` دارید.
 
-But you need `file_path` itself to contain a *path*, like `home/johndoe/myfile.txt`.
+اما نیاز دارید `file_path` خودش حاوی یک *مسیر* باشد، مانند `home/johndoe/myfile.txt`.
 
-So, the URL for that file would be something like: `/files/home/johndoe/myfile.txt`.
+بنابراین، URL آن فایل چیزی شبیه به: `/files/home/johndoe/myfile.txt` خواهد بود.
 
-### OpenAPI support
+### پشتیبانی OpenAPI
 
-OpenAPI doesn't support a way to declare a *path parameter* to contain a *path* inside, as that could lead to scenarios that are difficult to test and define.
+OpenAPI راهی برای اعلان یک *پارامتر مسیر* که حاوی یک *مسیر* در داخل باشد پشتیبانی نمی‌کند، زیرا ممکن است به سناریوهایی منجر شود که تست و تعریف آنها دشوار است.
 
-Nevertheless, you can still do it in **FastAPI**, using one of the internal tools from Starlette.
+با این حال، هنوز می‌توانید این کار را در **FastAPI** انجام دهید، با استفاده از یکی از ابزارهای داخلی Starlette.
 
-And the docs would still work, although not adding any documentation telling that the parameter should contain a path.
+و مستندات هنوز کار خواهند کرد، اگرچه هیچ مستنداتی اضافه نمی‌کنند که به پارامتر بگوید باید حاوی یک مسیر باشد.
 
-### Path convertor
+### مبدل مسیر
 
-Using an option directly from Starlette you can declare a *path parameter* containing a *path* using a URL like:
+با استفاده از گزینه‌ای مستقیماً از Starlette می‌توانید یک *پارامتر مسیر* حاوی یک *مسیر* با استفاده از URL مانند:
 
 ```
 /files/{file_path:path}
 ```
 
-In this case, the name of the parameter is `file_path`, and the last part, `:path`, tells it that the parameter should match any *path*.
+اعلان کنید.
 
-So, you can use it with:
+در این مورد، نام پارامتر `file_path` است و بخش آخر، `:path`، به آن می‌گوید که پارامتر باید با هر *مسیری* مطابقت داشته باشد.
+
+بنابراین، می‌توانید از آن استفاده کنید:
 
 {* ../../docs_src/path_params/tutorial004.py hl[6] *}
 
 /// tip
 
-You could need the parameter to contain `/home/johndoe/myfile.txt`, with a leading slash (`/`).
+ممکن است نیاز داشته باشید پارامتر حاوی `/home/johndoe/myfile.txt` باشد، با یک اسلش پیشرو (`/`).
 
-In that case, the URL would be: `/files//home/johndoe/myfile.txt`, with a double slash (`//`) between `files` and `home`.
+در آن صورت، URL خواهد بود: `/files//home/johndoe/myfile.txt`، با دو اسلش (`//`) بین `files` و `home`.
 
 ///
 
-## Recap
+## خلاصه
 
-With **FastAPI**, by using short, intuitive and standard Python type declarations, you get:
+با **FastAPI**، با استفاده از اعلان‌های تایپ پایتون کوتاه، شهودی و استاندارد، دریافت می‌کنید:
 
-* Editor support: error checks, autocompletion, etc.
-* Data "<abbr title="converting the string that comes from an HTTP request into Python data">parsing</abbr>"
-* Data validation
-* API annotation and automatic documentation
+* پشتیبانی ویرایشگر: بررسی خطاها، تکمیل خودکار و غیره.
+* <abbr title="تبدیل رشته‌ای که از یک درخواست HTTP می‌آید به داده پایتون">"تجزیه"</abbr> داده
+* اعتبارسنجی داده
+* حاشیه‌نویسی API و مستندات خودکار
 
-And you only have to declare them once.
+و فقط باید آنها را یک بار اعلان کنید.
 
-That's probably the main visible advantage of **FastAPI** compared to alternative frameworks (apart from the raw performance).
+این احتمالاً مهم‌ترین مزیت قابل مشاهده **FastAPI** در مقایسه با فریمورک‌های جایگزین است (جدای از عملکرد خام).
