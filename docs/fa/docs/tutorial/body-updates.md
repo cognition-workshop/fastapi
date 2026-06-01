@@ -1,18 +1,18 @@
-# Body - Updates
+# بدنه - به‌روزرسانی‌ها
 
-## Update replacing with `PUT`
+## به‌روزرسانی جایگزینی با `PUT`
 
-To update an item you can use the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT" class="external-link" target="_blank">HTTP `PUT`</a> operation.
+برای به‌روزرسانی یک آیتم می‌توانید از عملیات <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT" class="external-link" target="_blank">HTTP `PUT`</a> استفاده کنید.
 
-You can use the `jsonable_encoder` to convert the input data to data that can be stored as JSON (e.g. with a NoSQL database). For example, converting `datetime` to `str`.
+می‌توانید از `jsonable_encoder` برای تبدیل داده ورودی به داده‌ای که قابل ذخیره به عنوان JSON باشد استفاده کنید (مثلاً با یک پایگاه داده NoSQL). برای مثال، تبدیل `datetime` به `str`.
 
 {* ../../docs_src/body_updates/tutorial001_py310.py hl[28:33] *}
 
-`PUT` is used to receive data that should replace the existing data.
+`PUT` برای دریافت داده‌ای استفاده می‌شود که باید جایگزین داده موجود شود.
 
-### Warning about replacing
+### هشدار درباره جایگزینی
 
-That means that if you want to update the item `bar` using `PUT` with a body containing:
+این به این معناست که اگر بخواهید آیتم `bar` را با استفاده از `PUT` با بدنه‌ای حاوی:
 
 ```Python
 {
@@ -22,95 +22,95 @@ That means that if you want to update the item `bar` using `PUT` with a body con
 }
 ```
 
-because it doesn't include the already stored attribute `"tax": 20.2`, the input model would take the default value of `"tax": 10.5`.
+به‌روزرسانی کنید، چون ویژگی ذخیره شده `"tax": 20.2` را شامل نمی‌شود، مدل ورودی مقدار پیش‌فرض `"tax": 10.5` را خواهد گرفت.
 
-And the data would be saved with that "new" `tax` of `10.5`.
+و داده با آن `tax` "جدید" `10.5` ذخیره خواهد شد.
 
-## Partial updates with `PATCH`
+## به‌روزرسانی‌های جزئی با `PATCH`
 
-You can also use the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH" class="external-link" target="_blank">HTTP `PATCH`</a> operation to *partially* update data.
+همچنین می‌توانید از عملیات <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH" class="external-link" target="_blank">HTTP `PATCH`</a> برای به‌روزرسانی *جزئی* داده استفاده کنید.
 
-This means that you can send only the data that you want to update, leaving the rest intact.
+این به این معناست که فقط می‌توانید داده‌ای را که می‌خواهید به‌روزرسانی کنید ارسال کنید، و بقیه را دست‌نخورده بگذارید.
 
 /// note
 
-`PATCH` is less commonly used and known than `PUT`.
+`PATCH` نسبت به `PUT` کمتر استفاده و شناخته شده است.
 
-And many teams use only `PUT`, even for partial updates.
+و بسیاری از تیم‌ها فقط از `PUT` استفاده می‌کنند، حتی برای به‌روزرسانی‌های جزئی.
 
-You are **free** to use them however you want, **FastAPI** doesn't impose any restrictions.
+شما **آزاد** هستید که از آنها هرطور می‌خواهید استفاده کنید، **FastAPI** هیچ محدودیتی اعمال نمی‌کند.
 
-But this guide shows you, more or less, how they are intended to be used.
+اما این راهنما به شما نشان می‌دهد، کم و بیش، نحوه استفاده مورد نظر آنها.
 
 ///
 
-### Using Pydantic's `exclude_unset` parameter
+### استفاده از پارامتر `exclude_unset` از Pydantic
 
-If you want to receive partial updates, it's very useful to use the parameter `exclude_unset` in Pydantic's model's `.model_dump()`.
+اگر می‌خواهید به‌روزرسانی‌های جزئی دریافت کنید، استفاده از پارامتر `exclude_unset` در `.model_dump()` مدل Pydantic بسیار مفید است.
 
-Like `item.model_dump(exclude_unset=True)`.
+مانند `item.model_dump(exclude_unset=True)`.
 
 /// info
 
-In Pydantic v1 the method was called `.dict()`, it was deprecated (but still supported) in Pydantic v2, and renamed to `.model_dump()`.
+در Pydantic v1 متد `.dict()` نامیده می‌شد، در Pydantic v2 منسوخ شد (اما همچنان پشتیبانی می‌شود) و به `.model_dump()` تغییر نام داد.
 
-The examples here use `.dict()` for compatibility with Pydantic v1, but you should use `.model_dump()` instead if you can use Pydantic v2.
+مثال‌های اینجا از `.dict()` برای سازگاری با Pydantic v1 استفاده می‌کنند، اما اگر می‌توانید از Pydantic v2 استفاده کنید، باید از `.model_dump()` استفاده کنید.
 
 ///
 
-That would generate a `dict` with only the data that was set when creating the `item` model, excluding default values.
+این یک `dict` فقط با داده‌هایی که هنگام ایجاد مدل `item` تنظیم شده تولید می‌کند، به استثنای مقادیر پیش‌فرض.
 
-Then you can use this to generate a `dict` with only the data that was set (sent in the request), omitting default values:
+سپس می‌توانید از این برای تولید یک `dict` فقط با داده‌هایی که تنظیم شده (در درخواست ارسال شده) استفاده کنید، و مقادیر پیش‌فرض را حذف کنید:
 
 {* ../../docs_src/body_updates/tutorial002_py310.py hl[32] *}
 
-### Using Pydantic's `update` parameter
+### استفاده از پارامتر `update` از Pydantic
 
-Now, you can create a copy of the existing model using `.model_copy()`, and pass the `update` parameter with a `dict` containing the data to update.
+اکنون، می‌توانید یک کپی از مدل موجود با استفاده از `.model_copy()` ایجاد کنید و پارامتر `update` را با یک `dict` حاوی داده‌های به‌روزرسانی ارسال کنید.
 
 /// info
 
-In Pydantic v1 the method was called `.copy()`, it was deprecated (but still supported) in Pydantic v2, and renamed to `.model_copy()`.
+در Pydantic v1 متد `.copy()` نامیده می‌شد، در Pydantic v2 منسوخ شد (اما همچنان پشتیبانی می‌شود) و به `.model_copy()` تغییر نام داد.
 
-The examples here use `.copy()` for compatibility with Pydantic v1, but you should use `.model_copy()` instead if you can use Pydantic v2.
+مثال‌های اینجا از `.copy()` برای سازگاری با Pydantic v1 استفاده می‌کنند، اما اگر می‌توانید از Pydantic v2 استفاده کنید، باید از `.model_copy()` استفاده کنید.
 
 ///
 
-Like `stored_item_model.model_copy(update=update_data)`:
+مانند `stored_item_model.model_copy(update=update_data)`:
 
 {* ../../docs_src/body_updates/tutorial002_py310.py hl[33] *}
 
-### Partial updates recap
+### خلاصه به‌روزرسانی‌های جزئی
 
-In summary, to apply partial updates you would:
+به طور خلاصه، برای اعمال به‌روزرسانی‌های جزئی:
 
-* (Optionally) use `PATCH` instead of `PUT`.
-* Retrieve the stored data.
-* Put that data in a Pydantic model.
-* Generate a `dict` without default values from the input model (using `exclude_unset`).
-    * This way you can update only the values actually set by the user, instead of overriding values already stored with default values in your model.
-* Create a copy of the stored model, updating its attributes with the received partial updates (using the `update` parameter).
-* Convert the copied model to something that can be stored in your DB (for example, using the `jsonable_encoder`).
-    * This is comparable to using the model's `.model_dump()` method again, but it makes sure (and converts) the values to data types that can be converted to JSON, for example, `datetime` to `str`.
-* Save the data to your DB.
-* Return the updated model.
+* (به طور اختیاری) از `PATCH` به جای `PUT` استفاده کنید.
+* داده ذخیره شده را بازیابی کنید.
+* آن داده را در یک مدل Pydantic قرار دهید.
+* یک `dict` بدون مقادیر پیش‌فرض از مدل ورودی تولید کنید (با استفاده از `exclude_unset`).
+    * به این ترتیب فقط مقادیری که واقعاً توسط کاربر تنظیم شده به‌روزرسانی می‌شوند، به جای بازنویسی مقادیر ذخیره شده با مقادیر پیش‌فرض در مدل.
+* یک کپی از مدل ذخیره شده ایجاد کنید، ویژگی‌های آن را با به‌روزرسانی‌های جزئی دریافتی به‌روزرسانی کنید (با استفاده از پارامتر `update`).
+* مدل کپی شده را به چیزی تبدیل کنید که بتوان در پایگاه داده ذخیره کرد (برای مثال، با استفاده از `jsonable_encoder`).
+    * این قابل مقایسه با استفاده دوباره از متد `.model_dump()` مدل است، اما مطمئن می‌شود (و تبدیل می‌کند) مقادیر به تایپ‌های داده‌ای که قابل تبدیل به JSON هستند، برای مثال، `datetime` به `str`.
+* داده را در پایگاه داده ذخیره کنید.
+* مدل به‌روزرسانی شده را برگردانید.
 
 {* ../../docs_src/body_updates/tutorial002_py310.py hl[28:35] *}
 
 /// tip
 
-You can actually use this same technique with an HTTP `PUT` operation.
+شما در واقع می‌توانید از همین تکنیک با عملیات HTTP `PUT` استفاده کنید.
 
-But the example here uses `PATCH` because it was created for these use cases.
+اما مثال اینجا از `PATCH` استفاده می‌کند زیرا برای این موارد استفاده ایجاد شده است.
 
 ///
 
 /// note
 
-Notice that the input model is still validated.
+توجه کنید که مدل ورودی همچنان اعتبارسنجی می‌شود.
 
-So, if you want to receive partial updates that can omit all the attributes, you need to have a model with all the attributes marked as optional (with default values or `None`).
+بنابراین، اگر می‌خواهید به‌روزرسانی‌های جزئی دریافت کنید که بتوانند تمام ویژگی‌ها را حذف کنند، باید مدلی با تمام ویژگی‌ها به عنوان اختیاری (با مقادیر پیش‌فرض یا `None`) داشته باشید.
 
-To distinguish from the models with all optional values for **updates** and models with required values for **creation**, you can use the ideas described in [Extra Models](extra-models.md){.internal-link target=_blank}.
+برای تمایز بین مدل‌هایی با تمام مقادیر اختیاری برای **به‌روزرسانی‌ها** و مدل‌هایی با مقادیر الزامی برای **ایجاد**، می‌توانید از ایده‌های توضیح داده شده در [مدل‌های اضافی](extra-models.md){.internal-link target=_blank} استفاده کنید.
 
 ///

@@ -1,41 +1,41 @@
-# Body - Nested Models
+# بدنه - مدل‌های تو در تو
 
-With **FastAPI**, you can define, validate, document, and use arbitrarily deeply nested models (thanks to Pydantic).
+با **FastAPI**، می‌توانید مدل‌های تو در توی عمیق دلخواه را تعریف، اعتبارسنجی، مستندسازی و استفاده کنید (به لطف Pydantic).
 
-## List fields
+## فیلدهای لیست
 
-You can define an attribute to be a subtype. For example, a Python `list`:
+می‌توانید یک ویژگی را به عنوان زیرتایپ تعریف کنید. برای مثال، یک `list` پایتون:
 
 {* ../../docs_src/body_nested_models/tutorial001_py310.py hl[12] *}
 
-This will make `tags` be a list, although it doesn't declare the type of the elements of the list.
+این `tags` را یک لیست می‌کند، اگرچه تایپ عناصر لیست را اعلان نمی‌کند.
 
-## List fields with type parameter
+## فیلدهای لیست با پارامتر تایپ
 
-But Python has a specific way to declare lists with internal types, or "type parameters":
+اما پایتون روش خاصی برای اعلان لیست‌ها با تایپ‌های داخلی، یا "پارامترهای تایپ" دارد:
 
-### Import typing's `List`
+### وارد کردن `List` از typing
 
-In Python 3.9 and above you can use the standard `list` to declare these type annotations as we'll see below. 💡
+در پایتون 3.9 و بالاتر می‌توانید از `list` استاندارد برای اعلان این حاشیه‌نویسی‌های تایپ استفاده کنید همانطور که در زیر خواهیم دید. 💡
 
-But in Python versions before 3.9 (3.6 and above), you first need to import `List` from standard Python's `typing` module:
+اما در نسخه‌های پایتون قبل از 3.9 (3.6 و بالاتر)، ابتدا باید `List` را از ماژول `typing` استاندارد پایتون وارد کنید:
 
 {* ../../docs_src/body_nested_models/tutorial002.py hl[1] *}
 
-### Declare a `list` with a type parameter
+### اعلان یک `list` با پارامتر تایپ
 
-To declare types that have type parameters (internal types), like `list`, `dict`, `tuple`:
+برای اعلان تایپ‌هایی که پارامترهای تایپ (تایپ‌های داخلی) دارند، مانند `list`، `dict`، `tuple`:
 
-* If you are in a Python version lower than 3.9, import their equivalent version from the `typing` module
-* Pass the internal type(s) as "type parameters" using square brackets: `[` and `]`
+* اگر در نسخه پایتون کمتر از 3.9 هستید، نسخه معادل آنها را از ماژول `typing` وارد کنید
+* تایپ(های) داخلی را به عنوان "پارامترهای تایپ" با استفاده از براکت: `[` و `]` ارسال کنید
 
-In Python 3.9 it would be:
+در پایتون 3.9 به این صورت خواهد بود:
 
 ```Python
 my_list: list[str]
 ```
 
-In versions of Python before 3.9, it would be:
+در نسخه‌های پایتون قبل از 3.9، به این صورت خواهد بود:
 
 ```Python
 from typing import List
@@ -43,53 +43,53 @@ from typing import List
 my_list: List[str]
 ```
 
-That's all standard Python syntax for type declarations.
+این همه سینتکس استاندارد پایتون برای اعلان‌های تایپ است.
 
-Use that same standard syntax for model attributes with internal types.
+از همان سینتکس استاندارد برای ویژگی‌های مدل با تایپ‌های داخلی استفاده کنید.
 
-So, in our example, we can make `tags` be specifically a "list of strings":
+بنابراین، در مثال ما، می‌توانیم `tags` را به طور خاص یک "لیست از رشته‌ها" کنیم:
 
 {* ../../docs_src/body_nested_models/tutorial002_py310.py hl[12] *}
 
-## Set types
+## تایپ‌های مجموعه
 
-But then we think about it, and realize that tags shouldn't repeat, they would probably be unique strings.
+اما بعد فکر می‌کنیم و متوجه می‌شویم که تگ‌ها نباید تکرار شوند، احتمالاً رشته‌های یکتا خواهند بود.
 
-And Python has a special data type for sets of unique items, the `set`.
+و پایتون یک تایپ داده خاص برای مجموعه‌های آیتم‌های یکتا دارد، `set`.
 
-Then we can declare `tags` as a set of strings:
+سپس می‌توانیم `tags` را به عنوان مجموعه‌ای از رشته‌ها اعلان کنیم:
 
 {* ../../docs_src/body_nested_models/tutorial003_py310.py hl[12] *}
 
-With this, even if you receive a request with duplicate data, it will be converted to a set of unique items.
+با این، حتی اگر درخواستی با داده‌های تکراری دریافت کنید، به مجموعه‌ای از آیتم‌های یکتا تبدیل خواهد شد.
 
-And whenever you output that data, even if the source had duplicates, it will be output as a set of unique items.
+و هر زمان که آن داده را خروجی دهید، حتی اگر منبع تکراری داشته، به عنوان مجموعه‌ای از آیتم‌های یکتا خروجی داده خواهد شد.
 
-And it will be annotated / documented accordingly too.
+و بر اساس آن نیز حاشیه‌نویسی / مستندسازی خواهد شد.
 
-## Nested Models
+## مدل‌های تو در تو
 
-Each attribute of a Pydantic model has a type.
+هر ویژگی یک مدل Pydantic یک تایپ دارد.
 
-But that type can itself be another Pydantic model.
+اما آن تایپ خود می‌تواند یک مدل Pydantic دیگر باشد.
 
-So, you can declare deeply nested JSON "objects" with specific attribute names, types and validations.
+بنابراین، می‌توانید "اشیاء" JSON عمیقاً تو در تو با نام ویژگی‌ها، تایپ‌ها و اعتبارسنجی‌های خاص اعلان کنید.
 
-All that, arbitrarily nested.
+همه اینها، به طور دلخواه تو در تو.
 
-### Define a submodel
+### تعریف یک زیرمدل
 
-For example, we can define an `Image` model:
+برای مثال، می‌توانیم یک مدل `Image` تعریف کنیم:
 
 {* ../../docs_src/body_nested_models/tutorial004_py310.py hl[7:9] *}
 
-### Use the submodel as a type
+### استفاده از زیرمدل به عنوان تایپ
 
-And then we can use it as the type of an attribute:
+و سپس می‌توانیم آن را به عنوان تایپ یک ویژگی استفاده کنیم:
 
 {* ../../docs_src/body_nested_models/tutorial004_py310.py hl[18] *}
 
-This would mean that **FastAPI** would expect a body similar to:
+این به این معناست که **FastAPI** بدنه‌ای مشابه این انتظار خواهد داشت:
 
 ```JSON
 {
@@ -105,32 +105,32 @@ This would mean that **FastAPI** would expect a body similar to:
 }
 ```
 
-Again, doing just that declaration, with **FastAPI** you get:
+دوباره، فقط با همین اعلان، با **FastAPI** دریافت می‌کنید:
 
-* Editor support (completion, etc.), even for nested models
-* Data conversion
-* Data validation
-* Automatic documentation
+* پشتیبانی ویرایشگر (تکمیل خودکار و غیره)، حتی برای مدل‌های تو در تو
+* تبدیل داده
+* اعتبارسنجی داده
+* مستندات خودکار
 
-## Special types and validation
+## تایپ‌ها و اعتبارسنجی خاص
 
-Apart from normal singular types like `str`, `int`, `float`, etc. you can use more complex singular types that inherit from `str`.
+جدا از تایپ‌های تکی عادی مانند `str`، `int`، `float` و غیره، می‌توانید از تایپ‌های تکی پیچیده‌تر که از `str` ارث‌بری می‌کنند استفاده کنید.
 
-To see all the options you have, checkout <a href="https://docs.pydantic.dev/latest/concepts/types/" class="external-link" target="_blank">Pydantic's Type Overview</a>. You will see some examples in the next chapter.
+برای دیدن تمام گزینه‌هایی که دارید، <a href="https://docs.pydantic.dev/latest/concepts/types/" class="external-link" target="_blank">نمای کلی تایپ‌های Pydantic</a> را بررسی کنید. مثال‌هایی را در فصل بعدی خواهید دید.
 
-For example, as in the `Image` model we have a `url` field, we can declare it to be an instance of Pydantic's `HttpUrl` instead of a `str`:
+برای مثال، همانطور که در مدل `Image` فیلد `url` داریم، می‌توانیم آن را به جای `str` به عنوان نمونه‌ای از `HttpUrl` از Pydantic اعلان کنیم:
 
 {* ../../docs_src/body_nested_models/tutorial005_py310.py hl[2,8] *}
 
-The string will be checked to be a valid URL, and documented in JSON Schema / OpenAPI as such.
+رشته بررسی خواهد شد که یک URL معتبر باشد و در JSON Schema / OpenAPI به همین شکل مستند خواهد شد.
 
-## Attributes with lists of submodels
+## ویژگی‌ها با لیست‌هایی از زیرمدل‌ها
 
-You can also use Pydantic models as subtypes of `list`, `set`, etc.:
+همچنین می‌توانید از مدل‌های Pydantic به عنوان زیرتایپ‌های `list`، `set` و غیره استفاده کنید:
 
 {* ../../docs_src/body_nested_models/tutorial006_py310.py hl[18] *}
 
-This will expect (convert, validate, document, etc.) a JSON body like:
+این انتظار (تبدیل، اعتبارسنجی، مستندسازی و غیره) یک بدنه JSON مانند این را خواهد داشت:
 
 ```JSON hl_lines="11"
 {
@@ -158,90 +158,90 @@ This will expect (convert, validate, document, etc.) a JSON body like:
 
 /// info
 
-Notice how the `images` key now has a list of image objects.
+توجه کنید که کلید `images` اکنون لیستی از اشیاء تصویر دارد.
 
 ///
 
-## Deeply nested models
+## مدل‌های عمیقاً تو در تو
 
-You can define arbitrarily deeply nested models:
+می‌توانید مدل‌های تو در توی عمیق دلخواه تعریف کنید:
 
 {* ../../docs_src/body_nested_models/tutorial007_py310.py hl[7,12,18,21,25] *}
 
 /// info
 
-Notice how `Offer` has a list of `Item`s, which in turn have an optional list of `Image`s
+توجه کنید که `Offer` لیستی از `Item`ها دارد، که هر کدام به نوبه خود لیست اختیاری از `Image`ها دارند
 
 ///
 
-## Bodies of pure lists
+## بدنه‌های لیست خالص
 
-If the top level value of the JSON body you expect is a JSON `array` (a Python `list`), you can declare the type in the parameter of the function, the same as in Pydantic models:
+اگر مقدار سطح بالای بدنه JSON مورد انتظار شما یک `array` JSON (یک `list` پایتون) باشد، می‌توانید تایپ را در پارامتر تابع اعلان کنید، مانند مدل‌های Pydantic:
 
 ```Python
 images: List[Image]
 ```
 
-or in Python 3.9 and above:
+یا در پایتون 3.9 و بالاتر:
 
 ```Python
 images: list[Image]
 ```
 
-as in:
+مانند:
 
 {* ../../docs_src/body_nested_models/tutorial008_py39.py hl[13] *}
 
-## Editor support everywhere
+## پشتیبانی ویرایشگر در همه جا
 
-And you get editor support everywhere.
+و پشتیبانی ویرایشگر را در همه جا دریافت می‌کنید.
 
-Even for items inside of lists:
+حتی برای آیتم‌های درون لیست‌ها:
 
 <img src="/img/tutorial/body-nested-models/image01.png">
 
-You couldn't get this kind of editor support if you were working directly with `dict` instead of Pydantic models.
+اگر مستقیماً با `dict` به جای مدل‌های Pydantic کار می‌کردید، نمی‌توانستید این نوع پشتیبانی ویرایشگر را داشته باشید.
 
-But you don't have to worry about them either, incoming dicts are converted automatically and your output is converted automatically to JSON too.
+اما لازم نیست نگران آنها هم باشید، دیکشنری‌های ورودی به طور خودکار تبدیل می‌شوند و خروجی شما نیز به طور خودکار به JSON تبدیل می‌شود.
 
-## Bodies of arbitrary `dict`s
+## بدنه‌های `dict` دلخواه
 
-You can also declare a body as a `dict` with keys of some type and values of some other type.
+همچنین می‌توانید یک بدنه را به عنوان `dict` با کلیدهایی از یک تایپ و مقادیری از تایپ دیگر اعلان کنید.
 
-This way, you don't have to know beforehand what the valid field/attribute names are (as would be the case with Pydantic models).
+به این ترتیب، لازم نیست از قبل بدانید نام فیلد/ویژگی‌های معتبر چیست (همانطور که در مورد مدل‌های Pydantic خواهد بود).
 
-This would be useful if you want to receive keys that you don't already know.
+اگر بخواهید کلیدهایی دریافت کنید که از قبل آنها را نمی‌شناسید، این مفید خواهد بود.
 
 ---
 
-Another useful case is when you want to have keys of another type (e.g., `int`).
+مورد مفید دیگر زمانی است که می‌خواهید کلیدهایی از تایپ دیگر داشته باشید (مثلاً `int`).
 
-That's what we are going to see here.
+این چیزی است که اینجا خواهیم دید.
 
-In this case, you would accept any `dict` as long as it has `int` keys with `float` values:
+در این مورد، هر `dict` را قبول می‌کنید به شرطی که کلیدهای `int` با مقادیر `float` داشته باشد:
 
 {* ../../docs_src/body_nested_models/tutorial009_py39.py hl[7] *}
 
 /// tip
 
-Keep in mind that JSON only supports `str` as keys.
+به خاطر داشته باشید که JSON فقط از `str` به عنوان کلید پشتیبانی می‌کند.
 
-But Pydantic has automatic data conversion.
+اما Pydantic تبدیل خودکار داده دارد.
 
-This means that, even though your API clients can only send strings as keys, as long as those strings contain pure integers, Pydantic will convert them and validate them.
+این به این معناست که، حتی اگرچه کلاینت‌های API شما فقط می‌توانند رشته‌ها را به عنوان کلید ارسال کنند، تا زمانی که آن رشته‌ها حاوی اعداد صحیح خالص باشند، Pydantic آنها را تبدیل و اعتبارسنجی خواهد کرد.
 
-And the `dict` you receive as `weights` will actually have `int` keys and `float` values.
+و `dict` که به عنوان `weights` دریافت می‌کنید در واقع کلیدهای `int` و مقادیر `float` خواهد داشت.
 
 ///
 
-## Recap
+## خلاصه
 
-With **FastAPI** you have the maximum flexibility provided by Pydantic models, while keeping your code simple, short and elegant.
+با **FastAPI** حداکثر انعطاف‌پذیری ارائه شده توسط مدل‌های Pydantic را دارید، در حالی که کد شما ساده، کوتاه و زیبا باقی می‌ماند.
 
-But with all the benefits:
+اما با تمام مزایا:
 
-* Editor support (completion everywhere!)
-* Data conversion (a.k.a. parsing / serialization)
-* Data validation
-* Schema documentation
-* Automatic docs
+* پشتیبانی ویرایشگر (تکمیل خودکار در همه جا!)
+* تبدیل داده (معروف به تجزیه / سریال‌سازی)
+* اعتبارسنجی داده
+* مستندات اسکیما
+* مستندات خودکار

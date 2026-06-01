@@ -1,61 +1,61 @@
-# Body - Fields
+# بدنه - فیلدها
 
-The same way you can declare additional validation and metadata in *path operation function* parameters with `Query`, `Path` and `Body`, you can declare validation and metadata inside of Pydantic models using Pydantic's `Field`.
+به همان شکلی که می‌توانید اعتبارسنجی و متاداده اضافی در پارامترهای *تابع عملیات مسیر* با `Query`، `Path` و `Body` اعلان کنید، می‌توانید اعتبارسنجی و متاداده را درون مدل‌های Pydantic با استفاده از `Field` از Pydantic اعلان کنید.
 
-## Import `Field`
+## وارد کردن `Field`
 
-First, you have to import it:
+ابتدا، باید آن را وارد کنید:
 
 {* ../../docs_src/body_fields/tutorial001_an_py310.py hl[4] *}
 
 
 /// warning
 
-Notice that `Field` is imported directly from `pydantic`, not from `fastapi` as are all the rest (`Query`, `Path`, `Body`, etc).
+توجه کنید که `Field` مستقیماً از `pydantic` وارد می‌شود، نه از `fastapi` مانند بقیه (`Query`، `Path`، `Body` و غیره).
 
 ///
 
-## Declare model attributes
+## اعلان ویژگی‌های مدل
 
-You can then use `Field` with model attributes:
+سپس می‌توانید از `Field` با ویژگی‌های مدل استفاده کنید:
 
 {* ../../docs_src/body_fields/tutorial001_an_py310.py hl[11:14] *}
 
-`Field` works the same way as `Query`, `Path` and `Body`, it has all the same parameters, etc.
+`Field` به همان شکل `Query`، `Path` و `Body` کار می‌کند، تمام پارامترهای یکسان و غیره را دارد.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-Actually, `Query`, `Path` and others you'll see next create objects of subclasses of a common `Param` class, which is itself a subclass of Pydantic's `FieldInfo` class.
+در واقع، `Query`، `Path` و دیگرانی که بعداً خواهید دید، اشیایی از زیرکلاس‌های یک کلاس مشترک `Param` ایجاد می‌کنند، که خود زیرکلاس `FieldInfo` از Pydantic است.
 
-And Pydantic's `Field` returns an instance of `FieldInfo` as well.
+و `Field` از Pydantic نیز یک نمونه از `FieldInfo` برمی‌گرداند.
 
-`Body` also returns objects of a subclass of `FieldInfo` directly. And there are others you will see later that are subclasses of the `Body` class.
+`Body` نیز مستقیماً اشیایی از یک زیرکلاس `FieldInfo` برمی‌گرداند. و موارد دیگری وجود دارد که بعداً خواهید دید که زیرکلاس‌های کلاس `Body` هستند.
 
-Remember that when you import `Query`, `Path`, and others from `fastapi`, those are actually functions that return special classes.
+به یاد داشته باشید که وقتی `Query`، `Path` و دیگران را از `fastapi` وارد می‌کنید، آنها در واقع توابعی هستند که کلاس‌های خاصی برمی‌گردانند.
 
 ///
 
 /// tip
 
-Notice how each model's attribute with a type, default value and `Field` has the same structure as a *path operation function's* parameter, with `Field` instead of `Path`, `Query` and `Body`.
+توجه کنید که هر ویژگی مدل با تایپ، مقدار پیش‌فرض و `Field` همان ساختار پارامتر *تابع عملیات مسیر* را دارد، با `Field` به جای `Path`، `Query` و `Body`.
 
 ///
 
-## Add extra information
+## افزودن اطلاعات اضافی
 
-You can declare extra information in `Field`, `Query`, `Body`, etc. And it will be included in the generated JSON Schema.
+می‌توانید اطلاعات اضافی در `Field`، `Query`، `Body` و غیره اعلان کنید. و در JSON Schema تولید شده گنجانده خواهد شد.
 
-You will learn more about adding extra information later in the docs, when learning to declare examples.
+بیشتر درباره افزودن اطلاعات اضافی بعداً در مستندات، هنگام یادگیری اعلان مثال‌ها خواهید آموخت.
 
 /// warning
 
-Extra keys passed to `Field` will also be present in the resulting OpenAPI schema for your application.
-As these keys may not necessarily be part of the OpenAPI specification, some OpenAPI tools, for example [the OpenAPI validator](https://validator.swagger.io/), may not work with your generated schema.
+کلیدهای اضافی ارسال شده به `Field` در اسکیمای OpenAPI نتیجه برنامه شما نیز وجود خواهند داشت.
+از آنجا که این کلیدها لزوماً بخشی از مشخصه OpenAPI نیستند، برخی ابزارهای OpenAPI، برای مثال [اعتبارسنج OpenAPI](https://validator.swagger.io/)، ممکن است با اسکیمای تولید شده شما کار نکنند.
 
 ///
 
-## Recap
+## خلاصه
 
-You can use Pydantic's `Field` to declare extra validations and metadata for model attributes.
+می‌توانید از `Field` از Pydantic برای اعلان اعتبارسنجی‌ها و متاداده اضافی برای ویژگی‌های مدل استفاده کنید.
 
-You can also use the extra keyword arguments to pass additional JSON Schema metadata.
+همچنین می‌توانید از آرگومان‌های کلیدواژه‌ای اضافی برای ارسال متاداده اضافی JSON Schema استفاده کنید.

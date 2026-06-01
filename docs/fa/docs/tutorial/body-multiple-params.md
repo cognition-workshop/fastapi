@@ -1,24 +1,24 @@
-# Body - Multiple Parameters
+# بدنه - پارامترهای چندگانه
 
-Now that we have seen how to use `Path` and `Query`, let's see more advanced uses of request body declarations.
+حالا که دیدیم چگونه از `Path` و `Query` استفاده کنیم، بیایید استفاده‌های پیشرفته‌تر اعلان بدنه درخواست را ببینیم.
 
-## Mix `Path`, `Query` and body parameters
+## ترکیب پارامترهای `Path`، `Query` و بدنه
 
-First, of course, you can mix `Path`, `Query` and request body parameter declarations freely and **FastAPI** will know what to do.
+البته، ابتدا می‌توانید اعلان‌های پارامترهای `Path`، `Query` و بدنه درخواست را آزادانه ترکیب کنید و **FastAPI** خواهد دانست چه کار کند.
 
-And you can also declare body parameters as optional, by setting the default to `None`:
+و همچنین می‌توانید پارامترهای بدنه را به عنوان اختیاری اعلان کنید، با تنظیم پیش‌فرض به `None`:
 
 {* ../../docs_src/body_multiple_params/tutorial001_an_py310.py hl[18:20] *}
 
 /// note
 
-Notice that, in this case, the `item` that would be taken from the body is optional. As it has a `None` default value.
+توجه کنید که، در این مورد، `item` که از بدنه گرفته می‌شود اختیاری است. زیرا مقدار پیش‌فرض `None` دارد.
 
 ///
 
-## Multiple body parameters
+## پارامترهای بدنه چندگانه
 
-In the previous example, the *path operations* would expect a JSON body with the attributes of an `Item`, like:
+در مثال قبلی، *عملیات‌های مسیر* یک بدنه JSON با ویژگی‌های یک `Item` انتظار داشتند، مانند:
 
 ```JSON
 {
@@ -29,14 +29,14 @@ In the previous example, the *path operations* would expect a JSON body with the
 }
 ```
 
-But you can also declare multiple body parameters, e.g. `item` and `user`:
+اما می‌توانید چندین پارامتر بدنه نیز اعلان کنید، مثلاً `item` و `user`:
 
 {* ../../docs_src/body_multiple_params/tutorial002_py310.py hl[20] *}
 
 
-In this case, **FastAPI** will notice that there is more than one body parameter in the function (there are two parameters that are Pydantic models).
+در این مورد، **FastAPI** متوجه خواهد شد که بیش از یک پارامتر بدنه در تابع وجود دارد (دو پارامتر وجود دارد که مدل‌های Pydantic هستند).
 
-So, it will then use the parameter names as keys (field names) in the body, and expect a body like:
+بنابراین، سپس از نام پارامترها به عنوان کلید (نام فیلد) در بدنه استفاده خواهد کرد و بدنه‌ای مانند این انتظار خواهد داشت:
 
 ```JSON
 {
@@ -55,28 +55,28 @@ So, it will then use the parameter names as keys (field names) in the body, and 
 
 /// note
 
-Notice that even though the `item` was declared the same way as before, it is now expected to be inside of the body with a key `item`.
+توجه کنید که حتی اگرچه `item` به همان شکل قبل اعلان شده، اکنون انتظار می‌رود درون بدنه با کلید `item` باشد.
 
 ///
 
-**FastAPI** will do the automatic conversion from the request, so that the parameter `item` receives its specific content and the same for `user`.
+**FastAPI** تبدیل خودکار از درخواست را انجام می‌دهد، به طوری که پارامتر `item` محتوای خاص خود را دریافت کند و همینطور برای `user`.
 
-It will perform the validation of the compound data, and will document it like that for the OpenAPI schema and automatic docs.
+اعتبارسنجی داده‌های ترکیبی را انجام خواهد داد و آن را به همین شکل برای اسکیمای OpenAPI و مستندات خودکار مستند خواهد کرد.
 
-## Singular values in body
+## مقادیر تکی در بدنه
 
-The same way there is a `Query` and `Path` to define extra data for query and path parameters, **FastAPI** provides an equivalent `Body`.
+به همان شکلی که `Query` و `Path` برای تعریف داده اضافی برای پارامترهای کوئری و مسیر وجود دارد، **FastAPI** معادل `Body` را ارائه می‌دهد.
 
-For example, extending the previous model, you could decide that you want to have another key `importance` in the same body, besides the `item` and `user`.
+برای مثال، با گسترش مدل قبلی، ممکن است تصمیم بگیرید که یک کلید دیگر `importance` در همان بدنه، علاوه بر `item` و `user`، داشته باشید.
 
-If you declare it as is, because it is a singular value, **FastAPI** will assume that it is a query parameter.
+اگر آن را همانطور که هست اعلان کنید، چون یک مقدار تکی است، **FastAPI** فرض خواهد کرد که یک پارامتر کوئری است.
 
-But you can instruct **FastAPI** to treat it as another body key using `Body`:
+اما می‌توانید به **FastAPI** دستور دهید آن را به عنوان یک کلید بدنه دیگر با استفاده از `Body` رفتار دهد:
 
 {* ../../docs_src/body_multiple_params/tutorial003_an_py310.py hl[23] *}
 
 
-In this case, **FastAPI** will expect a body like:
+در این مورد، **FastAPI** بدنه‌ای مانند این انتظار خواهد داشت:
 
 ```JSON
 {
@@ -94,53 +94,53 @@ In this case, **FastAPI** will expect a body like:
 }
 ```
 
-Again, it will convert the data types, validate, document, etc.
+دوباره، تبدیل تایپ‌های داده، اعتبارسنجی، مستندسازی و غیره را انجام خواهد داد.
 
-## Multiple body params and query
+## پارامترهای بدنه چندگانه و کوئری
 
-Of course, you can also declare additional query parameters whenever you need, additional to any body parameters.
+البته، هر زمان که نیاز داشتید، می‌توانید علاوه بر هر پارامتر بدنه، پارامترهای کوئری اضافی نیز اعلان کنید.
 
-As, by default, singular values are interpreted as query parameters, you don't have to explicitly add a `Query`, you can just do:
+از آنجا که به طور پیش‌فرض، مقادیر تکی به عنوان پارامترهای کوئری تفسیر می‌شوند، لازم نیست صریحاً `Query` اضافه کنید، فقط می‌توانید بنویسید:
 
 ```Python
 q: Union[str, None] = None
 ```
 
-Or in Python 3.10 and above:
+یا در پایتون 3.10 و بالاتر:
 
 ```Python
 q: str | None = None
 ```
 
-For example:
+برای مثال:
 
 {* ../../docs_src/body_multiple_params/tutorial004_an_py310.py hl[28] *}
 
 
 /// info
 
-`Body` also has all the same extra validation and metadata parameters as `Query`,`Path` and others you will see later.
+`Body` نیز تمام پارامترهای اعتبارسنجی و متاداده اضافی مشابه `Query`، `Path` و موارد دیگری که بعداً خواهید دید را دارد.
 
 ///
 
-## Embed a single body parameter
+## جاسازی یک پارامتر بدنه تکی
 
-Let's say you only have a single `item` body parameter from a Pydantic model `Item`.
+فرض کنید فقط یک پارامتر بدنه `item` از یک مدل Pydantic `Item` دارید.
 
-By default, **FastAPI** will then expect its body directly.
+به طور پیش‌فرض، **FastAPI** سپس انتظار بدنه آن را مستقیماً خواهد داشت.
 
-But if you want it to expect a JSON with a key `item` and inside of it the model contents, as it does when you declare extra body parameters, you can use the special `Body` parameter `embed`:
+اما اگر می‌خواهید انتظار داشته باشد یک JSON با کلید `item` و درون آن محتوای مدل، همانطور که وقتی پارامترهای بدنه اضافی اعلان می‌کنید، می‌توانید از پارامتر خاص `Body` یعنی `embed` استفاده کنید:
 
 ```Python
 item: Item = Body(embed=True)
 ```
 
-as in:
+مانند:
 
 {* ../../docs_src/body_multiple_params/tutorial005_an_py310.py hl[17] *}
 
 
-In this case **FastAPI** will expect a body like:
+در این مورد **FastAPI** بدنه‌ای مانند این انتظار خواهد داشت:
 
 ```JSON hl_lines="2"
 {
@@ -153,7 +153,7 @@ In this case **FastAPI** will expect a body like:
 }
 ```
 
-instead of:
+به جای:
 
 ```JSON
 {
@@ -164,12 +164,12 @@ instead of:
 }
 ```
 
-## Recap
+## خلاصه
 
-You can add multiple body parameters to your *path operation function*, even though a request can only have a single body.
+می‌توانید چندین پارامتر بدنه به *تابع عملیات مسیر* خود اضافه کنید، حتی اگرچه یک درخواست فقط می‌تواند یک بدنه واحد داشته باشد.
 
-But **FastAPI** will handle it, give you the correct data in your function, and validate and document the correct schema in the *path operation*.
+اما **FastAPI** آن را مدیریت می‌کند، داده صحیح را در تابع شما می‌دهد، و اسکیمای صحیح را در *عملیات مسیر* اعتبارسنجی و مستند می‌کند.
 
-You can also declare singular values to be received as part of the body.
+همچنین می‌توانید مقادیر تکی را به عنوان بخشی از بدنه برای دریافت اعلان کنید.
 
-And you can instruct **FastAPI** to embed the body in a key even when there is only a single parameter declared.
+و می‌توانید به **FastAPI** دستور دهید بدنه را در یک کلید جاسازی کند حتی وقتی فقط یک پارامتر واحد اعلان شده است.
