@@ -1,32 +1,32 @@
-# Cookie Parameter Models
+# مدل‌های پارامتر کوکی
 
-If you have a group of **cookies** that are related, you can create a **Pydantic model** to declare them. 🍪
+اگر گروهی از **کوکی‌ها** دارید که مرتبط هستند، می‌توانید یک **مدل Pydantic** برای اعلان آنها ایجاد کنید. 🍪
 
-This would allow you to **re-use the model** in **multiple places** and also to declare validations and metadata for all the parameters at once. 😎
+این به شما امکان می‌دهد **مدل را مجدداً** در **چندین مکان** استفاده کنید و همچنین اعتبارسنجی‌ها و متاداده را برای تمام پارامترها یکجا اعلان کنید. 😎
 
 /// note
 
-This is supported since FastAPI version `0.115.0`. 🤓
+این از نسخه FastAPI `0.115.0` پشتیبانی می‌شود. 🤓
 
 ///
 
 /// tip
 
-This same technique applies to `Query`, `Cookie`, and `Header`. 😎
+همین تکنیک برای `Query`، `Cookie` و `Header` نیز اعمال می‌شود. 😎
 
 ///
 
-## Cookies with a Pydantic Model
+## کوکی‌ها با یک مدل Pydantic
 
-Declare the **cookie** parameters that you need in a **Pydantic model**, and then declare the parameter as `Cookie`:
+پارامترهای **کوکی** مورد نیاز خود را در یک **مدل Pydantic** اعلان کنید و سپس پارامتر را به عنوان `Cookie` اعلان کنید:
 
 {* ../../docs_src/cookie_param_models/tutorial001_an_py310.py hl[9:12,16] *}
 
-**FastAPI** will **extract** the data for **each field** from the **cookies** received in the request and give you the Pydantic model you defined.
+**FastAPI** داده‌ها را برای **هر فیلد** از **کوکی‌های** دریافتی در درخواست **استخراج** کرده و مدل Pydantic تعریف شده را به شما می‌دهد.
 
-## Check the Docs
+## بررسی مستندات
 
-You can see the defined cookies in the docs UI at `/docs`:
+می‌توانید کوکی‌های تعریف شده را در رابط مستندات در `/docs` ببینید:
 
 <div class="screenshot">
 <img src="/img/tutorial/cookie-param-models/image01.png">
@@ -34,29 +34,27 @@ You can see the defined cookies in the docs UI at `/docs`:
 
 /// info
 
-Have in mind that, as **browsers handle cookies** in special ways and behind the scenes, they **don't** easily allow **JavaScript** to touch them.
+به خاطر داشته باشید که، از آنجا که **مرورگرها کوکی‌ها را** به روش‌های خاص و در پشت صحنه مدیریت می‌کنند، به راحتی اجازه نمی‌دهند **جاوااسکریپت** به آنها دسترسی داشته باشد.
 
-If you go to the **API docs UI** at `/docs` you will be able to see the **documentation** for cookies for your *path operations*.
+اگر به **رابط مستندات API** در `/docs` بروید، می‌توانید **مستندات** کوکی‌ها را برای *عملیات‌های مسیر* خود ببینید.
 
-But even if you **fill the data** and click "Execute", because the docs UI works with **JavaScript**, the cookies won't be sent, and you will see an **error** message as if you didn't write any values.
+اما حتی اگر **داده‌ها را پر کنید** و "Execute" را کلیک کنید، چون رابط مستندات با **جاوااسکریپت** کار می‌کند، کوکی‌ها ارسال نخواهند شد و یک پیام **خطا** خواهید دید انگار هیچ مقداری ننوشته‌اید.
 
 ///
 
-## Forbid Extra Cookies
+## ممنوع کردن کوکی‌های اضافی
 
-In some special use cases (probably not very common), you might want to **restrict** the cookies that you want to receive.
+در برخی موارد خاص (احتمالاً خیلی رایج نیست)، ممکن است بخواهید کوکی‌هایی که می‌خواهید دریافت کنید را **محدود** کنید.
 
-Your API now has the power to control its own <abbr title="This is a joke, just in case. It has nothing to do with cookie consents, but it's funny that even the API can now reject the poor cookies. Have a cookie. 🍪">cookie consent</abbr>. 🤪🍪
+API شما اکنون قدرت کنترل <abbr title="این یک شوخی است. ربطی به رضایت کوکی ندارد، اما خنده‌دار است که حتی API هم می‌تواند کوکی‌های بیچاره را رد کند. یک کوکی بخورید. 🍪">رضایت کوکی</abbr> خود را دارد. 🤪🍪
 
-You can use Pydantic's model configuration to `forbid` any `extra` fields:
+می‌توانید از پیکربندی مدل Pydantic برای `forbid` کردن هر فیلد `extra` استفاده کنید:
 
 {* ../../docs_src/cookie_param_models/tutorial002_an_py39.py hl[10] *}
 
-If a client tries to send some **extra cookies**, they will receive an **error** response.
+اگر کلاینتی تلاش کند **کوکی‌های اضافی** ارسال کند، یک پاسخ **خطا** دریافت خواهد کرد.
 
-Poor cookie banners with all their effort to get your consent for the <abbr title="This is another joke. Don't pay attention to me. Have some coffee for your cookie. ☕">API to reject it</abbr>. 🍪
-
-For example, if the client tries to send a `santa_tracker` cookie with a value of `good-list-please`, the client will receive an **error** response telling them that the `santa_tracker` <abbr title="Santa disapproves the lack of cookies. 🎅 Okay, no more cookie jokes.">cookie is not allowed</abbr>:
+برای مثال، اگر کلاینت تلاش کند کوکی `santa_tracker` با مقدار `good-list-please` ارسال کند، کلاینت یک پاسخ **خطا** دریافت خواهد کرد که به او می‌گوید کوکی `santa_tracker` مجاز نیست:
 
 ```json
 {
@@ -71,6 +69,6 @@ For example, if the client tries to send a `santa_tracker` cookie with a value o
 }
 ```
 
-## Summary
+## خلاصه
 
-You can use **Pydantic models** to declare <abbr title="Have a last cookie before you go. 🍪">**cookies**</abbr> in **FastAPI**. 😎
+می‌توانید از **مدل‌های Pydantic** برای اعلان <abbr title="یک کوکی آخر قبل از رفتن بخورید. 🍪">**کوکی‌ها**</abbr> در **FastAPI** استفاده کنید. 😎

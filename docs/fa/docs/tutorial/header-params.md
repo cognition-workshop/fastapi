@@ -1,79 +1,79 @@
-# Header Parameters
+# پارامترهای هدر
 
-You can define Header parameters the same way you define `Query`, `Path` and `Cookie` parameters.
+شما می‌توانید پارامترهای هدر را به همان شکلی که پارامترهای `Query`، `Path` و `Cookie` تعریف می‌کنید، تعریف کنید.
 
-## Import `Header`
+## وارد کردن `Header`
 
-First import `Header`:
+ابتدا `Header` را وارد کنید:
 
 {* ../../docs_src/header_params/tutorial001_an_py310.py hl[3] *}
 
-## Declare `Header` parameters
+## اعلان پارامترهای `Header`
 
-Then declare the header parameters using the same structure as with `Path`, `Query` and `Cookie`.
+سپس پارامترهای هدر را با استفاده از همان ساختار `Path`، `Query` و `Cookie` اعلان کنید.
 
-You can define the default value as well as all the extra validation or annotation parameters:
+می‌توانید مقدار پیش‌فرض و همچنین تمام پارامترهای اعتبارسنجی یا حاشیه‌نویسی اضافی را تعریف کنید:
 
 {* ../../docs_src/header_params/tutorial001_an_py310.py hl[9] *}
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-`Header` is a "sister" class of `Path`, `Query` and `Cookie`. It also inherits from the same common `Param` class.
+`Header` یک کلاس "خواهر" از `Path`، `Query` و `Cookie` است. همچنین از همان کلاس مشترک `Param` ارث‌بری می‌کند.
 
-But remember that when you import `Query`, `Path`, `Header`, and others from `fastapi`, those are actually functions that return special classes.
+اما به یاد داشته باشید که وقتی `Query`، `Path`، `Header` و دیگران را از `fastapi` وارد می‌کنید، آنها در واقع توابعی هستند که کلاس‌های خاصی برمی‌گردانند.
 
 ///
 
 /// info
 
-To declare headers, you need to use `Header`, because otherwise the parameters would be interpreted as query parameters.
+برای اعلان هدرها، باید از `Header` استفاده کنید، زیرا در غیر این صورت پارامترها به عنوان پارامترهای کوئری تفسیر خواهند شد.
 
 ///
 
-## Automatic conversion
+## تبدیل خودکار
 
-`Header` has a little extra functionality on top of what `Path`, `Query` and `Cookie` provide.
+`Header` عملکرد اضافی کمی فراتر از آنچه `Path`، `Query` و `Cookie` ارائه می‌دهند دارد.
 
-Most of the standard headers are separated by a "hyphen" character, also known as the "minus symbol" (`-`).
+بیشتر هدرهای استاندارد با کاراکتر "خط تیره"، همچنین شناخته شده به عنوان "نماد منها" (`-`) جدا شده‌اند.
 
-But a variable like `user-agent` is invalid in Python.
+اما متغیری مانند `user-agent` در پایتون نامعتبر است.
 
-So, by default, `Header` will convert the parameter names characters from underscore (`_`) to hyphen (`-`) to extract and document the headers.
+بنابراین، به طور پیش‌فرض، `Header` کاراکترهای نام پارامتر را از زیرخط (`_`) به خط تیره (`-`) تبدیل می‌کند تا هدرها را استخراج و مستند کند.
 
-Also, HTTP headers are case-insensitive, so, you can declare them with standard Python style (also known as "snake_case").
+همچنین، هدرهای HTTP به حروف بزرگ و کوچک حساس نیستند، بنابراین می‌توانید آنها را با سبک استاندارد پایتون (همچنین شناخته شده به عنوان "snake_case") اعلان کنید.
 
-So, you can use `user_agent` as you normally would in Python code, instead of needing to capitalize the first letters as `User_Agent` or something similar.
+بنابراین، می‌توانید از `user_agent` همانطور که معمولاً در کد پایتون استفاده می‌کنید، به جای نیاز به بزرگ کردن حروف اول مانند `User_Agent` یا چیز مشابه استفاده کنید.
 
-If for some reason you need to disable automatic conversion of underscores to hyphens, set the parameter `convert_underscores` of `Header` to `False`:
+اگر به دلایلی نیاز دارید تبدیل خودکار زیرخط‌ها به خط تیره‌ها را غیرفعال کنید، پارامتر `convert_underscores` از `Header` را به `False` تنظیم کنید:
 
 {* ../../docs_src/header_params/tutorial002_an_py310.py hl[10] *}
 
 /// warning
 
-Before setting `convert_underscores` to `False`, bear in mind that some HTTP proxies and servers disallow the usage of headers with underscores.
+قبل از تنظیم `convert_underscores` به `False`، به خاطر داشته باشید که برخی پروکسی‌ها و سرورهای HTTP استفاده از هدرهای با زیرخط را ممنوع می‌کنند.
 
 ///
 
-## Duplicate headers
+## هدرهای تکراری
 
-It is possible to receive duplicate headers. That means, the same header with multiple values.
+امکان دریافت هدرهای تکراری وجود دارد. یعنی، همان هدر با مقادیر متعدد.
 
-You can define those cases using a list in the type declaration.
+می‌توانید آن موارد را با استفاده از لیست در اعلان تایپ تعریف کنید.
 
-You will receive all the values from the duplicate header as a Python `list`.
+تمام مقادیر هدر تکراری را به عنوان `list` پایتون دریافت خواهید کرد.
 
-For example, to declare a header of `X-Token` that can appear more than once, you can write:
+برای مثال، برای اعلان هدر `X-Token` که می‌تواند بیش از یک بار ظاهر شود، می‌توانید بنویسید:
 
 {* ../../docs_src/header_params/tutorial003_an_py310.py hl[9] *}
 
-If you communicate with that *path operation* sending two HTTP headers like:
+اگر با آن *عملیات مسیر* با ارسال دو هدر HTTP مانند این ارتباط برقرار کنید:
 
 ```
 X-Token: foo
 X-Token: bar
 ```
 
-The response would be like:
+پاسخ مانند این خواهد بود:
 
 ```JSON
 {
@@ -84,8 +84,8 @@ The response would be like:
 }
 ```
 
-## Recap
+## خلاصه
 
-Declare headers with `Header`, using the same common pattern as `Query`, `Path` and `Cookie`.
+هدرها را با `Header` اعلان کنید، با استفاده از همان الگوی مشترک `Query`، `Path` و `Cookie`.
 
-And don't worry about underscores in your variables, **FastAPI** will take care of converting them.
+و نگران زیرخط‌ها در متغیرهای خود نباشید، **FastAPI** تبدیل آنها را انجام خواهد داد.

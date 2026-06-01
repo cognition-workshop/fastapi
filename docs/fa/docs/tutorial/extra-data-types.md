@@ -1,62 +1,62 @@
-# Extra Data Types
+# تایپ‌های داده اضافی
 
-Up to now, you have been using common data types, like:
+تا الان، از تایپ‌های داده رایج استفاده کرده‌اید، مانند:
 
 * `int`
 * `float`
 * `str`
 * `bool`
 
-But you can also use more complex data types.
+اما می‌توانید از تایپ‌های داده پیچیده‌تر نیز استفاده کنید.
 
-And you will still have the same features as seen up to now:
+و همچنان همان ویژگی‌هایی که تا الان دیدید را خواهید داشت:
 
-* Great editor support.
-* Data conversion from incoming requests.
-* Data conversion for response data.
-* Data validation.
-* Automatic annotation and documentation.
+* پشتیبانی عالی ویرایشگر.
+* تبدیل داده از درخواست‌های ورودی.
+* تبدیل داده برای داده‌های پاسخ.
+* اعتبارسنجی داده.
+* حاشیه‌نویسی و مستندات خودکار.
 
-## Other data types
+## سایر تایپ‌های داده
 
-Here are some of the additional data types you can use:
+در اینجا برخی از تایپ‌های داده اضافی که می‌توانید استفاده کنید آمده است:
 
 * `UUID`:
-    * A standard "Universally Unique Identifier", common as an ID in many databases and systems.
-    * In requests and responses will be represented as a `str`.
+    * یک "شناسه یکتای جهانی" استاندارد، رایج به عنوان شناسه در بسیاری از پایگاه‌های داده و سیستم‌ها.
+    * در درخواست‌ها و پاسخ‌ها به عنوان `str` نمایش داده خواهد شد.
 * `datetime.datetime`:
-    * A Python `datetime.datetime`.
-    * In requests and responses will be represented as a `str` in ISO 8601 format, like: `2008-09-15T15:53:00+05:00`.
+    * یک `datetime.datetime` پایتون.
+    * در درخواست‌ها و پاسخ‌ها به عنوان `str` در فرمت ISO 8601 نمایش داده خواهد شد، مانند: `2008-09-15T15:53:00+05:00`.
 * `datetime.date`:
-    * Python `datetime.date`.
-    * In requests and responses will be represented as a `str` in ISO 8601 format, like: `2008-09-15`.
+    * `datetime.date` پایتون.
+    * در درخواست‌ها و پاسخ‌ها به عنوان `str` در فرمت ISO 8601 نمایش داده خواهد شد، مانند: `2008-09-15`.
 * `datetime.time`:
-    * A Python `datetime.time`.
-    * In requests and responses will be represented as a `str` in ISO 8601 format, like: `14:23:55.003`.
+    * یک `datetime.time` پایتون.
+    * در درخواست‌ها و پاسخ‌ها به عنوان `str` در فرمت ISO 8601 نمایش داده خواهد شد، مانند: `14:23:55.003`.
 * `datetime.timedelta`:
-    * A Python `datetime.timedelta`.
-    * In requests and responses will be represented as a `float` of total seconds.
-    * Pydantic also allows representing it as a "ISO 8601 time diff encoding", <a href="https://docs.pydantic.dev/latest/concepts/serialization/#custom-serializers" class="external-link" target="_blank">see the docs for more info</a>.
+    * یک `datetime.timedelta` پایتون.
+    * در درخواست‌ها و پاسخ‌ها به عنوان `float` از کل ثانیه‌ها نمایش داده خواهد شد.
+    * Pydantic همچنین اجازه نمایش آن را به عنوان "رمزگذاری تفاوت زمانی ISO 8601" می‌دهد، <a href="https://docs.pydantic.dev/latest/concepts/serialization/#custom-serializers" class="external-link" target="_blank">مستندات را برای اطلاعات بیشتر ببینید</a>.
 * `frozenset`:
-    * In requests and responses, treated the same as a `set`:
-        * In requests, a list will be read, eliminating duplicates and converting it to a `set`.
-        * In responses, the `set` will be converted to a `list`.
-        * The generated schema will specify that the `set` values are unique (using JSON Schema's `uniqueItems`).
+    * در درخواست‌ها و پاسخ‌ها، مانند `set` رفتار می‌شود:
+        * در درخواست‌ها، لیست خوانده شده، مقادیر تکراری حذف و به `set` تبدیل خواهد شد.
+        * در پاسخ‌ها، `set` به `list` تبدیل خواهد شد.
+        * اسکیمای تولید شده مشخص خواهد کرد که مقادیر `set` یکتا هستند (با استفاده از `uniqueItems` در JSON Schema).
 * `bytes`:
-    * Standard Python `bytes`.
-    * In requests and responses will be treated as `str`.
-    * The generated schema will specify that it's a `str` with `binary` "format".
+    * `bytes` استاندارد پایتون.
+    * در درخواست‌ها و پاسخ‌ها به عنوان `str` رفتار خواهد شد.
+    * اسکیمای تولید شده مشخص خواهد کرد که یک `str` با "فرمت" `binary` است.
 * `Decimal`:
-    * Standard Python `Decimal`.
-    * In requests and responses, handled the same as a `float`.
-* You can check all the valid Pydantic data types here: <a href="https://docs.pydantic.dev/latest/usage/types/types/" class="external-link" target="_blank">Pydantic data types</a>.
+    * `Decimal` استاندارد پایتون.
+    * در درخواست‌ها و پاسخ‌ها، مانند `float` رفتار می‌شود.
+* شما می‌توانید تمام تایپ‌های داده معتبر Pydantic را اینجا بررسی کنید: <a href="https://docs.pydantic.dev/latest/usage/types/types/" class="external-link" target="_blank">تایپ‌های داده Pydantic</a>.
 
-## Example
+## مثال
 
-Here's an example *path operation* with parameters using some of the above types.
+اینجا یک مثال *عملیات مسیر* با پارامترهایی با استفاده از برخی از تایپ‌های بالا آمده.
 
 {* ../../docs_src/extra_data_types/tutorial001_an_py310.py hl[1,3,12:16] *}
 
-Note that the parameters inside the function have their natural data type, and you can, for example, perform normal date manipulations, like:
+توجه کنید که پارامترهای داخل تابع تایپ داده طبیعی خود را دارند و می‌توانید، برای مثال، عملیات عادی تاریخ انجام دهید، مانند:
 
 {* ../../docs_src/extra_data_types/tutorial001_an_py310.py hl[18:19] *}

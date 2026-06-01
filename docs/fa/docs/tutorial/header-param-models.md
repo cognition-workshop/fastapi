@@ -1,42 +1,42 @@
-# Header Parameter Models
+# مدل‌های پارامتر هدر
 
-If you have a group of related **header parameters**, you can create a **Pydantic model** to declare them.
+اگر گروهی از **پارامترهای هدر** مرتبط دارید، می‌توانید یک **مدل Pydantic** برای اعلان آنها ایجاد کنید.
 
-This would allow you to **re-use the model** in **multiple places** and also to declare validations and metadata for all the parameters at once. 😎
+این به شما امکان می‌دهد **مدل را مجدداً** در **چندین مکان** استفاده کنید و همچنین اعتبارسنجی‌ها و متاداده را برای تمام پارامترها یکجا اعلان کنید. 😎
 
 /// note
 
-This is supported since FastAPI version `0.115.0`. 🤓
+این از نسخه FastAPI `0.115.0` پشتیبانی می‌شود. 🤓
 
 ///
 
-## Header Parameters with a Pydantic Model
+## پارامترهای هدر با یک مدل Pydantic
 
-Declare the **header parameters** that you need in a **Pydantic model**, and then declare the parameter as `Header`:
+**پارامترهای هدر** مورد نیاز خود را در یک **مدل Pydantic** اعلان کنید و سپس پارامتر را به عنوان `Header` اعلان کنید:
 
 {* ../../docs_src/header_param_models/tutorial001_an_py310.py hl[9:14,18] *}
 
-**FastAPI** will **extract** the data for **each field** from the **headers** in the request and give you the Pydantic model you defined.
+**FastAPI** داده‌ها را برای **هر فیلد** از **هدرهای** درخواست **استخراج** کرده و مدل Pydantic تعریف شده را به شما می‌دهد.
 
-## Check the Docs
+## بررسی مستندات
 
-You can see the required headers in the docs UI at `/docs`:
+می‌توانید هدرهای مورد نیاز را در رابط مستندات در `/docs` ببینید:
 
 <div class="screenshot">
 <img src="/img/tutorial/header-param-models/image01.png">
 </div>
 
-## Forbid Extra Headers
+## ممنوع کردن هدرهای اضافی
 
-In some special use cases (probably not very common), you might want to **restrict** the headers that you want to receive.
+در برخی موارد خاص (احتمالاً خیلی رایج نیست)، ممکن است بخواهید هدرهایی که می‌خواهید دریافت کنید را **محدود** کنید.
 
-You can use Pydantic's model configuration to `forbid` any `extra` fields:
+می‌توانید از پیکربندی مدل Pydantic برای `forbid` کردن هر فیلد `extra` استفاده کنید:
 
 {* ../../docs_src/header_param_models/tutorial002_an_py310.py hl[10] *}
 
-If a client tries to send some **extra headers**, they will receive an **error** response.
+اگر کلاینتی تلاش کند **هدرهای اضافی** ارسال کند، یک پاسخ **خطا** دریافت خواهد کرد.
 
-For example, if the client tries to send a `tool` header with a value of `plumbus`, they will receive an **error** response telling them that the header parameter `tool` is not allowed:
+برای مثال، اگر کلاینت تلاش کند هدر `tool` با مقدار `plumbus` ارسال کند، یک پاسخ **خطا** دریافت خواهد کرد که به او می‌گوید پارامتر هدر `tool` مجاز نیست:
 
 ```json
 {
@@ -51,22 +51,22 @@ For example, if the client tries to send a `tool` header with a value of `plumbu
 }
 ```
 
-## Disable Convert Underscores
+## غیرفعال کردن تبدیل زیرخط‌ها
 
-The same way as with regular header parameters, when you have underscore characters in the parameter names, they are **automatically converted to hyphens**.
+مانند پارامترهای هدر معمولی، وقتی کاراکترهای زیرخط در نام پارامترها دارید، آنها **به طور خودکار به خط تیره تبدیل می‌شوند**.
 
-For example, if you have a header parameter `save_data` in the code, the expected HTTP header will be `save-data`, and it will show up like that in the docs.
+برای مثال، اگر پارامتر هدر `save_data` در کد دارید، هدر HTTP مورد انتظار `save-data` خواهد بود و در مستندات همینطور نمایش داده خواهد شد.
 
-If for some reason you need to disable this automatic conversion, you can do it as well for Pydantic models for header parameters.
+اگر به دلایلی نیاز دارید این تبدیل خودکار را غیرفعال کنید، می‌توانید این کار را برای مدل‌های Pydantic پارامترهای هدر نیز انجام دهید.
 
 {* ../../docs_src/header_param_models/tutorial003_an_py310.py hl[19] *}
 
 /// warning
 
-Before setting `convert_underscores` to `False`, bear in mind that some HTTP proxies and servers disallow the usage of headers with underscores.
+قبل از تنظیم `convert_underscores` به `False`، به خاطر داشته باشید که برخی پروکسی‌ها و سرورهای HTTP استفاده از هدرهای با زیرخط را ممنوع می‌کنند.
 
 ///
 
-## Summary
+## خلاصه
 
-You can use **Pydantic models** to declare **headers** in **FastAPI**. 😎
+می‌توانید از **مدل‌های Pydantic** برای اعلان **هدرها** در **FastAPI** استفاده کنید. 😎
