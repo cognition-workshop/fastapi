@@ -1,10 +1,10 @@
 # WebSockets
 
-You can use <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" class="external-link" target="_blank">WebSockets</a> with **FastAPI**.
+می‌توانید از <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" class="external-link" target="_blank">WebSockets</a> با **FastAPI** استفاده کنید.
 
-## Install `WebSockets`
+## نصب `WebSockets`
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and install `websockets`:
+مطمئن شوید که یک [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} ایجاد کرده‌اید، آن را فعال کنید و `websockets` را نصب کنید:
 
 <div class="termy">
 
@@ -16,55 +16,55 @@ $ pip install websockets
 
 </div>
 
-## WebSockets client
+## کلاینت WebSockets
 
-### In production
+### در محیط تولید
 
-In your production system, you probably have a frontend created with a modern framework like React, Vue.js or Angular.
+در سیستم تولید شما، احتمالاً یک فرانت‌اند با یک فریمورک مدرن مانند React، Vue.js یا Angular ایجاد کرده‌اید.
 
-And to communicate using WebSockets with your backend you would probably use your frontend's utilities.
+و برای ارتباط با استفاده از WebSockets با بک‌اند خود، احتمالاً از ابزارهای فرانت‌اند خود استفاده خواهید کرد.
 
-Or you might have a native mobile application that communicates with your WebSocket backend directly, in native code.
+یا ممکن است یک برنامه موبایل بومی داشته باشید که مستقیماً با بک‌اند WebSocket شما در کد بومی ارتباط برقرار می‌کند.
 
-Or you might have any other way to communicate with the WebSocket endpoint.
+یا ممکن است هر روش دیگری برای ارتباط با اندپوینت WebSocket داشته باشید.
 
 ---
 
-But for this example, we'll use a very simple HTML document with some JavaScript, all inside a long string.
+اما برای این مثال، ما از یک سند HTML بسیار ساده با کمی JavaScript استفاده خواهیم کرد، همه در یک رشته بلند.
 
-This, of course, is not optimal and you wouldn't use it for production.
+البته، این بهینه نیست و در محیط تولید از آن استفاده نمی‌کنید.
 
-In production you would have one of the options above.
+در محیط تولید یکی از گزینه‌های بالا را خواهید داشت.
 
-But it's the simplest way to focus on the server-side of WebSockets and have a working example:
+اما ساده‌ترین راه برای تمرکز بر سمت سرور WebSockets و داشتن یک مثال کاری است:
 
 {* ../../docs_src/websockets/tutorial001.py hl[2,6:38,41:43] *}
 
-## Create a `websocket`
+## ایجاد یک `websocket`
 
-In your **FastAPI** application, create a `websocket`:
+در برنامه **FastAPI** خود، یک `websocket` ایجاد کنید:
 
 {* ../../docs_src/websockets/tutorial001.py hl[1,46:47] *}
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette.websockets import WebSocket`.
+شما همچنین می‌توانید از `from starlette.websockets import WebSocket` استفاده کنید.
 
-**FastAPI** provides the same `WebSocket` directly just as a convenience for you, the developer. But it comes directly from Starlette.
+**FastAPI** همان `WebSocket` را مستقیماً فقط به عنوان یک سهولت برای شما به عنوان برنامه‌نویس فراهم می‌کند. اما مستقیماً از Starlette می‌آید.
 
 ///
 
-## Await for messages and send messages
+## انتظار برای پیام‌ها و ارسال پیام‌ها
 
-In your WebSocket route you can `await` for messages and send messages.
+در مسیر WebSocket خود می‌توانید برای پیام‌ها `await` کنید و پیام ارسال کنید.
 
 {* ../../docs_src/websockets/tutorial001.py hl[48:52] *}
 
-You can receive and send binary, text, and JSON data.
+می‌توانید داده‌های باینری، متنی و JSON دریافت و ارسال کنید.
 
-## Try it
+## امتحان کنید
 
-If your file is named `main.py`, run your application with:
+اگر فایل شما `main.py` نام دارد، برنامه خود را با دستور زیر اجرا کنید:
 
 <div class="termy">
 
@@ -76,29 +76,29 @@ $ fastapi dev main.py
 
 </div>
 
-Open your browser at <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000</a>.
+مرورگر خود را در <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000</a> باز کنید.
 
-You will see a simple page like:
+یک صفحه ساده مانند زیر خواهید دید:
 
 <img src="/img/tutorial/websockets/image01.png">
 
-You can type messages in the input box, and send them:
+می‌توانید پیام‌ها را در کادر ورودی تایپ و ارسال کنید:
 
 <img src="/img/tutorial/websockets/image02.png">
 
-And your **FastAPI** application with WebSockets will respond back:
+و برنامه **FastAPI** شما با WebSockets پاسخ خواهد داد:
 
 <img src="/img/tutorial/websockets/image03.png">
 
-You can send (and receive) many messages:
+می‌توانید پیام‌های زیادی ارسال (و دریافت) کنید:
 
 <img src="/img/tutorial/websockets/image04.png">
 
-And all of them will use the same WebSocket connection.
+و همه آنها از یک اتصال WebSocket استفاده خواهند کرد.
 
-## Using `Depends` and others
+## استفاده از `Depends` و دیگران
 
-In WebSocket endpoints you can import from `fastapi` and use:
+در اندپوینت‌های WebSocket می‌توانید از `fastapi` وارد کنید و استفاده کنید:
 
 * `Depends`
 * `Security`
@@ -107,21 +107,21 @@ In WebSocket endpoints you can import from `fastapi` and use:
 * `Path`
 * `Query`
 
-They work the same way as for other FastAPI endpoints/*path operations*:
+آنها به همان روش سایر اندپوینت‌های FastAPI/*عملیات‌های مسیر* کار می‌کنند:
 
 {* ../../docs_src/websockets/tutorial002_an_py310.py hl[68:69,82] *}
 
 /// info
 
-As this is a WebSocket it doesn't really make sense to raise an `HTTPException`, instead we raise a `WebSocketException`.
+از آنجا که این یک WebSocket است، واقعاً معنی ندارد که `HTTPException` ایجاد کنید، در عوض `WebSocketException` ایجاد می‌کنیم.
 
-You can use a closing code from the <a href="https://tools.ietf.org/html/rfc6455#section-7.4.1" class="external-link" target="_blank">valid codes defined in the specification</a>.
+می‌توانید از کد بستن از <a href="https://tools.ietf.org/html/rfc6455#section-7.4.1" class="external-link" target="_blank">کدهای معتبر تعریف شده در مشخصات</a> استفاده کنید.
 
 ///
 
-### Try the WebSockets with dependencies
+### امتحان WebSockets با وابستگی‌ها
 
-If your file is named `main.py`, run your application with:
+اگر فایل شما `main.py` نام دارد، برنامه خود را با دستور زیر اجرا کنید:
 
 <div class="termy">
 
@@ -133,36 +133,36 @@ $ fastapi dev main.py
 
 </div>
 
-Open your browser at <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000</a>.
+مرورگر خود را در <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000</a> باز کنید.
 
-There you can set:
+در آنجا می‌توانید تنظیم کنید:
 
-* The "Item ID", used in the path.
-* The "Token" used as a query parameter.
+* "Item ID"، استفاده شده در مسیر.
+* "Token" استفاده شده به عنوان پارامتر query.
 
 /// tip
 
-Notice that the query `token` will be handled by a dependency.
+توجه کنید که query `token` توسط یک وابستگی مدیریت خواهد شد.
 
 ///
 
-With that you can connect the WebSocket and then send and receive messages:
+با آن می‌توانید WebSocket را متصل کنید و سپس پیام ارسال و دریافت کنید:
 
 <img src="/img/tutorial/websockets/image05.png">
 
-## Handling disconnections and multiple clients
+## مدیریت قطع اتصال و چندین کلاینت
 
-When a WebSocket connection is closed, the `await websocket.receive_text()` will raise a `WebSocketDisconnect` exception, which you can then catch and handle like in this example.
+هنگامی که یک اتصال WebSocket بسته می‌شود، `await websocket.receive_text()` یک استثنای `WebSocketDisconnect` ایجاد می‌کند که سپس می‌توانید آن را مانند این مثال بگیرید و مدیریت کنید.
 
 {* ../../docs_src/websockets/tutorial003_py39.py hl[79:81] *}
 
-To try it out:
+برای امتحان:
 
-* Open the app with several browser tabs.
-* Write messages from them.
-* Then close one of the tabs.
+* برنامه را در چندین تب مرورگر باز کنید.
+* پیام‌هایی از آنها بنویسید.
+* سپس یکی از تب‌ها را ببندید.
 
-That will raise the `WebSocketDisconnect` exception, and all the other clients will receive a message like:
+این استثنای `WebSocketDisconnect` را ایجاد می‌کند و تمام کلاینت‌های دیگر پیامی مانند زیر دریافت خواهند کرد:
 
 ```
 Client #1596980209979 left the chat
@@ -170,17 +170,10 @@ Client #1596980209979 left the chat
 
 /// tip
 
-The app above is a minimal and simple example to demonstrate how to handle and broadcast messages to several WebSocket connections.
+برنامه بالا یک مثال حداقلی و ساده برای نشان دادن نحوه مدیریت و پخش پیام‌ها به چندین اتصال WebSocket است.
 
-But keep in mind that, as everything is handled in memory, in a single list, it will only work while the process is running, and will only work with a single process.
+اما به خاطر داشته باشید که، از آنجا که همه چیز در حافظه مدیریت می‌شود، در یک لیست واحد، فقط تا زمانی که فرآیند در حال اجراست کار خواهد کرد و فقط با یک فرآیند واحد کار خواهد کرد.
 
-If you need something easy to integrate with FastAPI but that is more robust, supported by Redis, PostgreSQL or others, check <a href="https://github.com/encode/broadcaster" class="external-link" target="_blank">encode/broadcaster</a>.
+اگر نیاز به چیزی دارید که به راحتی با FastAPI یکپارچه شود اما قوی‌تر است، پشتیبانی از Redis، PostgreSQL یا موارد دیگر دارد، <a href="https://github.com/encode/broadcaster" class="external-link" target="_blank">encode/broadcaster</a> را بررسی کنید.
 
 ///
-
-## More info
-
-To learn more about the options, check Starlette's documentation for:
-
-* <a href="https://www.starlette.io/websockets/" class="external-link" target="_blank">The `WebSocket` class</a>.
-* <a href="https://www.starlette.io/endpoints/#websocketendpoint" class="external-link" target="_blank">Class-based WebSocket handling</a>.

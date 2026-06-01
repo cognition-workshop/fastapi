@@ -1,86 +1,84 @@
-# Background Tasks
+# وظایف پس‌زمینه
 
-You can define background tasks to be run *after* returning a response.
+می‌توانید وظایف پس‌زمینه‌ای تعریف کنید که *پس از* برگرداندن پاسخ اجرا شوند.
 
-This is useful for operations that need to happen after a request, but that the client doesn't really have to be waiting for the operation to complete before receiving the response.
+این برای عملیاتی مفید است که باید پس از یک درخواست اتفاق بیفتند، اما کلاینت واقعاً نیاز ندارد منتظر تکمیل عملیات قبل از دریافت پاسخ باشد.
 
-This includes, for example:
+این شامل، برای مثال:
 
-* Email notifications sent after performing an action:
-    * As connecting to an email server and sending an email tends to be "slow" (several seconds), you can return the response right away and send the email notification in the background.
-* Processing data:
-    * For example, let's say you receive a file that must go through a slow process, you can return a response of "Accepted" (HTTP 202) and process the file in the background.
+* اعلان‌های ایمیل ارسال شده پس از انجام یک عمل:
+    * از آنجا که اتصال به سرور ایمیل و ارسال ایمیل معمولاً "کند" است (چندین ثانیه)، می‌توانید پاسخ را فوراً برگردانید و اعلان ایمیل را در پس‌زمینه ارسال کنید.
+* پردازش داده‌ها:
+    * برای مثال، فرض کنید فایلی دریافت می‌کنید که باید از یک فرآیند کند عبور کند، می‌توانید پاسخ "Accepted" (HTTP 202) برگردانید و فایل را در پس‌زمینه پردازش کنید.
 
-## Using `BackgroundTasks`
+## استفاده از `BackgroundTasks`
 
-First, import `BackgroundTasks` and define a parameter in your *path operation function* with a type declaration of `BackgroundTasks`:
+ابتدا، `BackgroundTasks` را وارد کنید و یک پارامتر در *تابع عملیات مسیر* خود با تعریف تایپ `BackgroundTasks` تعریف کنید:
 
 {* ../../docs_src/background_tasks/tutorial001.py hl[1,13] *}
 
-**FastAPI** will create the object of type `BackgroundTasks` for you and pass it as that parameter.
+**FastAPI** شیء تایپ `BackgroundTasks` را برای شما ایجاد خواهد کرد و آن را به عنوان آن پارامتر ارسال خواهد کرد.
 
-## Create a task function
+## ایجاد یک تابع وظیفه
 
-Create a function to be run as the background task.
+یک تابع ایجاد کنید تا به عنوان وظیفه پس‌زمینه اجرا شود.
 
-It is just a standard function that can receive parameters.
+این فقط یک تابع استاندارد است که می‌تواند پارامتر دریافت کند.
 
-It can be an `async def` or normal `def` function, **FastAPI** will know how to handle it correctly.
+می‌تواند یک تابع `async def` یا `def` معمولی باشد، **FastAPI** نحوه مدیریت صحیح آن را می‌داند.
 
-In this case, the task function will write to a file (simulating sending an email).
+در این مورد، تابع وظیفه در یک فایل می‌نویسد (شبیه‌سازی ارسال ایمیل).
 
-And as the write operation doesn't use `async` and `await`, we define the function with normal `def`:
+و از آنجا که عملیات نوشتن از `async` و `await` استفاده نمی‌کند، تابع را با `def` معمولی تعریف می‌کنیم:
 
 {* ../../docs_src/background_tasks/tutorial001.py hl[6:9] *}
 
-## Add the background task
+## اضافه کردن وظیفه پس‌زمینه
 
-Inside of your *path operation function*, pass your task function to the *background tasks* object with the method `.add_task()`:
+در داخل *تابع عملیات مسیر* خود، تابع وظیفه را با متد `.add_task()` به شیء *وظایف پس‌زمینه* ارسال کنید:
 
 {* ../../docs_src/background_tasks/tutorial001.py hl[14] *}
 
-`.add_task()` receives as arguments:
+`.add_task()` به عنوان آرگومان دریافت می‌کند:
 
-* A task function to be run in the background (`write_notification`).
-* Any sequence of arguments that should be passed to the task function in order (`email`).
-* Any keyword arguments that should be passed to the task function (`message="some notification"`).
+* یک تابع وظیفه برای اجرا در پس‌زمینه (`write_notification`).
+* هر دنباله‌ای از آرگومان‌ها که باید به ترتیب به تابع وظیفه ارسال شوند (`email`).
+* هر آرگومان کلمه کلیدی که باید به تابع وظیفه ارسال شود (`message="some notification"`).
 
-## Dependency Injection
+## تزریق وابستگی
 
-Using `BackgroundTasks` also works with the dependency injection system, you can declare a parameter of type `BackgroundTasks` at multiple levels: in a *path operation function*, in a dependency (dependable), in a sub-dependency, etc.
+استفاده از `BackgroundTasks` همچنین با سیستم تزریق وابستگی کار می‌کند، می‌توانید پارامتری از تایپ `BackgroundTasks` در سطوح مختلف تعریف کنید: در *تابع عملیات مسیر*، در یک وابستگی (dependable)، در یک زیر-وابستگی و غیره.
 
-**FastAPI** knows what to do in each case and how to reuse the same object, so that all the background tasks are merged together and are run in the background afterwards:
-
+**FastAPI** می‌داند در هر مورد چه کار کند و چگونه همان شیء را مجدداً استفاده کند، به طوری که تمام وظایف پس‌زمینه با هم ادغام شده و بعداً در پس‌زمینه اجرا شوند:
 
 {* ../../docs_src/background_tasks/tutorial002_an_py310.py hl[13,15,22,25] *}
 
+در این مثال، پیام‌ها *پس از* ارسال پاسخ در فایل `log.txt` نوشته خواهند شد.
 
-In this example, the messages will be written to the `log.txt` file *after* the response is sent.
+اگر یک query در درخواست وجود داشته باشد، در یک وظیفه پس‌زمینه در لاگ نوشته خواهد شد.
 
-If there was a query in the request, it will be written to the log in a background task.
+و سپس یک وظیفه پس‌زمینه دیگر تولید شده در *تابع عملیات مسیر* یک پیام با استفاده از پارامتر مسیر `email` خواهد نوشت.
 
-And then another background task generated at the *path operation function* will write a message using the `email` path parameter.
+## جزئیات فنی
 
-## Technical Details
+کلاس `BackgroundTasks` مستقیماً از <a href="https://www.starlette.io/background/" class="external-link" target="_blank">`starlette.background`</a> می‌آید.
 
-The class `BackgroundTasks` comes directly from <a href="https://www.starlette.io/background/" class="external-link" target="_blank">`starlette.background`</a>.
+مستقیماً در FastAPI وارد/گنجانده شده است تا بتوانید آن را از `fastapi` وارد کنید و از وارد کردن تصادفی `BackgroundTask` جایگزین (بدون `s` در انتها) از `starlette.background` جلوگیری کنید.
 
-It is imported/included directly into FastAPI so that you can import it from `fastapi` and avoid accidentally importing the alternative `BackgroundTask` (without the `s` at the end) from `starlette.background`.
+فقط با استفاده از `BackgroundTasks` (و نه `BackgroundTask`)، امکان استفاده از آن به عنوان پارامتر *تابع عملیات مسیر* فراهم می‌شود و **FastAPI** بقیه کار را برای شما انجام می‌دهد، درست مانند استفاده مستقیم از شیء `Request`.
 
-By only using `BackgroundTasks` (and not `BackgroundTask`), it's then possible to use it as a *path operation function* parameter and have **FastAPI** handle the rest for you, just like when using the `Request` object directly.
+همچنان امکان استفاده از `BackgroundTask` به تنهایی در FastAPI وجود دارد، اما باید شیء را در کد خود ایجاد کنید و یک `Response` از Starlette شامل آن برگردانید.
 
-It's still possible to use `BackgroundTask` alone in FastAPI, but you have to create the object in your code and return a Starlette `Response` including it.
+می‌توانید جزئیات بیشتر را در <a href="https://www.starlette.io/background/" class="external-link" target="_blank">مستندات رسمی Starlette برای وظایف پس‌زمینه</a> ببینید.
 
-You can see more details in <a href="https://www.starlette.io/background/" class="external-link" target="_blank">Starlette's official docs for Background Tasks</a>.
+## هشدار
 
-## Caveat
+اگر نیاز به محاسبات سنگین پس‌زمینه دارید و لزوماً نیاز ندارد توسط همان فرآیند اجرا شود (برای مثال، نیاز به اشتراک‌گذاری حافظه، متغیرها و غیره ندارید)، ممکن است از استفاده ابزارهای بزرگ‌تر دیگر مانند <a href="https://docs.celeryq.dev" class="external-link" target="_blank">Celery</a> بهره‌مند شوید.
 
-If you need to perform heavy background computation and you don't necessarily need it to be run by the same process (for example, you don't need to share memory, variables, etc), you might benefit from using other bigger tools like <a href="https://docs.celeryq.dev" class="external-link" target="_blank">Celery</a>.
+آنها معمولاً نیاز به پیکربندی‌های پیچیده‌تر، یک مدیر صف پیام/وظیفه مانند RabbitMQ یا Redis دارند، اما به شما اجازه می‌دهند وظایف پس‌زمینه را در چندین فرآیند و به ویژه در چندین سرور اجرا کنید.
 
-They tend to require more complex configurations, a message/job queue manager, like RabbitMQ or Redis, but they allow you to run background tasks in multiple processes, and especially, in multiple servers.
+اما اگر نیاز به دسترسی به متغیرها و اشیاء از همان برنامه **FastAPI** دارید یا نیاز به انجام وظایف پس‌زمینه کوچک (مانند ارسال اعلان ایمیل) دارید، می‌توانید به سادگی از `BackgroundTasks` استفاده کنید.
 
-But if you need to access variables and objects from the same **FastAPI** app, or you need to perform small background tasks (like sending an email notification), you can simply just use `BackgroundTasks`.
+## خلاصه
 
-## Recap
-
-Import and use `BackgroundTasks` with parameters in *path operation functions* and dependencies to add background tasks.
+`BackgroundTasks` را وارد کنید و با پارامترها در *توابع عملیات مسیر* و وابستگی‌ها برای اضافه کردن وظایف پس‌زمینه استفاده کنید.

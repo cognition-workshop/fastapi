@@ -1,86 +1,86 @@
-# CORS (Cross-Origin Resource Sharing)
+# CORS (اشتراک منابع متقاطع)
 
-<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" class="external-link" target="_blank">CORS or "Cross-Origin Resource Sharing"</a> refers to the situations when a frontend running in a browser has JavaScript code that communicates with a backend, and the backend is in a different "origin" than the frontend.
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" class="external-link" target="_blank">CORS یا "اشتراک منابع متقاطع"</a> به شرایطی اشاره دارد که یک فرانت‌اند در حال اجرا در مرورگر کد JavaScript دارد که با بک‌اند ارتباط برقرار می‌کند و بک‌اند در "مبدأ" متفاوتی نسبت به فرانت‌اند قرار دارد.
 
-## Origin
+## مبدأ
 
-An origin is the combination of protocol (`http`, `https`), domain (`myapp.com`, `localhost`, `localhost.tiangolo.com`), and port (`80`, `443`, `8080`).
+مبدأ ترکیب پروتکل (`http`، `https`)، دامنه (`myapp.com`، `localhost`، `localhost.tiangolo.com`) و پورت (`80`، `443`، `8080`) است.
 
-So, all these are different origins:
+بنابراین، همه اینها مبدأهای متفاوتی هستند:
 
 * `http://localhost`
 * `https://localhost`
 * `http://localhost:8080`
 
-Even if they are all in `localhost`, they use different protocols or ports, so, they are different "origins".
+حتی اگر همه در `localhost` هستند، از پروتکل‌ها یا پورت‌های متفاوت استفاده می‌کنند، بنابراین "مبدأ"های متفاوتی هستند.
 
-## Steps
+## مراحل
 
-So, let's say you have a frontend running in your browser at `http://localhost:8080`, and its JavaScript is trying to communicate with a backend running at `http://localhost` (because we don't specify a port, the browser will assume the default port `80`).
+بنابراین، فرض کنید یک فرانت‌اند دارید که در مرورگر شما در `http://localhost:8080` اجرا می‌شود و JavaScript آن سعی دارد با بک‌اندی که در `http://localhost` اجرا می‌شود ارتباط برقرار کند (چون پورت مشخص نکرده‌ایم، مرورگر پورت پیش‌فرض `80` را فرض می‌کند).
 
-Then, the browser will send an HTTP `OPTIONS` request to the `:80`-backend, and if the backend sends the appropriate headers authorizing the communication from this different origin (`http://localhost:8080`) then the `:8080`-browser will let the JavaScript in the frontend send its request to the `:80`-backend.
+سپس، مرورگر یک درخواست HTTP `OPTIONS` به بک‌اند `:80` ارسال خواهد کرد و اگر بک‌اند هدرهای مناسب برای مجاز کردن ارتباط از این مبدأ متفاوت (`http://localhost:8080`) ارسال کند، مرورگر `:8080` به JavaScript در فرانت‌اند اجازه می‌دهد درخواست خود را به بک‌اند `:80` ارسال کند.
 
-To achieve this, the `:80`-backend must have a list of "allowed origins".
+برای دستیابی به این، بک‌اند `:80` باید لیستی از "مبدأهای مجاز" داشته باشد.
 
-In this case, the list would have to include `http://localhost:8080` for the `:8080`-frontend to work correctly.
+در این مورد، لیست باید شامل `http://localhost:8080` باشد تا فرانت‌اند `:8080` به درستی کار کند.
 
 ## Wildcards
 
-It's also possible to declare the list as `"*"` (a "wildcard") to say that all are allowed.
+همچنین می‌توان لیست را به عنوان `"*"` (یک "wildcard") تعریف کرد تا بگوییم همه مجاز هستند.
 
-But that will only allow certain types of communication, excluding everything that involves credentials: Cookies, Authorization headers like those used with Bearer Tokens, etc.
+اما این فقط انواع خاصی از ارتباط را مجاز می‌کند، به استثنای هر چیزی که شامل اعتبارنامه‌ها باشد: کوکی‌ها، هدرهای Authorization مانند آنهایی که با Bearer Tokens استفاده می‌شوند و غیره.
 
-So, for everything to work correctly, it's better to specify explicitly the allowed origins.
+بنابراین، برای اینکه همه چیز به درستی کار کند، بهتر است مبدأهای مجاز را به صراحت مشخص کنید.
 
-## Use `CORSMiddleware`
+## استفاده از `CORSMiddleware`
 
-You can configure it in your **FastAPI** application using the `CORSMiddleware`.
+می‌توانید آن را در برنامه **FastAPI** خود با استفاده از `CORSMiddleware` پیکربندی کنید.
 
-* Import `CORSMiddleware`.
-* Create a list of allowed origins (as strings).
-* Add it as a "middleware" to your **FastAPI** application.
+* `CORSMiddleware` را وارد کنید.
+* لیستی از مبدأهای مجاز (به عنوان رشته) ایجاد کنید.
+* آن را به عنوان "میان‌افزار" به برنامه **FastAPI** خود اضافه کنید.
 
-You can also specify whether your backend allows:
+همچنین می‌توانید مشخص کنید آیا بک‌اند شما موارد زیر را مجاز می‌کند:
 
-* Credentials (Authorization headers, Cookies, etc).
-* Specific HTTP methods (`POST`, `PUT`) or all of them with the wildcard `"*"`.
-* Specific HTTP headers or all of them with the wildcard `"*"`.
+* اعتبارنامه‌ها (هدرهای Authorization، کوکی‌ها و غیره).
+* متدهای HTTP خاص (`POST`، `PUT`) یا همه آنها با wildcard `"*"`.
+* هدرهای HTTP خاص یا همه آنها با wildcard `"*"`.
 
 {* ../../docs_src/cors/tutorial001.py hl[2,6:11,13:19] *}
 
 
-The default parameters used by the `CORSMiddleware` implementation are restrictive by default, so you'll need to explicitly enable particular origins, methods, or headers, in order for browsers to be permitted to use them in a Cross-Domain context.
+پارامترهای پیش‌فرض استفاده شده توسط پیاده‌سازی `CORSMiddleware` به طور پیش‌فرض محدودکننده هستند، بنابراین باید به صراحت مبدأها، متدها یا هدرهای خاص را فعال کنید تا مرورگرها مجاز به استفاده از آنها در زمینه بین دامنه‌ای باشند.
 
-The following arguments are supported:
+آرگومان‌های زیر پشتیبانی می‌شوند:
 
-* `allow_origins` - A list of origins that should be permitted to make cross-origin requests. E.g. `['https://example.org', 'https://www.example.org']`. You can use `['*']` to allow any origin.
-* `allow_origin_regex` - A regex string to match against origins that should be permitted to make cross-origin requests. e.g. `'https://.*\.example\.org'`.
-* `allow_methods` - A list of HTTP methods that should be allowed for cross-origin requests. Defaults to `['GET']`. You can use `['*']` to allow all standard methods.
-* `allow_headers` - A list of HTTP request headers that should be supported for cross-origin requests. Defaults to `[]`. You can use `['*']` to allow all headers. The `Accept`, `Accept-Language`, `Content-Language` and `Content-Type` headers are always allowed for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests" class="external-link" rel="noopener" target="_blank">simple CORS requests</a>.
-* `allow_credentials` - Indicate that cookies should be supported for cross-origin requests. Defaults to `False`. Also, `allow_origins` cannot be set to `['*']` for credentials to be allowed, origins must be specified.
-* `expose_headers` - Indicate any response headers that should be made accessible to the browser. Defaults to `[]`.
-* `max_age` - Sets a maximum time in seconds for browsers to cache CORS responses. Defaults to `600`.
+* `allow_origins` - لیستی از مبدأهایی که باید مجاز به ارسال درخواست‌های بین مبدأ باشند. مثلاً `['https://example.org', 'https://www.example.org']`. می‌توانید از `['*']` برای مجاز کردن هر مبدأ استفاده کنید.
+* `allow_origin_regex` - یک رشته regex برای تطبیق با مبدأهایی که باید مجاز به ارسال درخواست‌های بین مبدأ باشند. مثلاً `'https://.*\.example\.org'`.
+* `allow_methods` - لیستی از متدهای HTTP که باید برای درخواست‌های بین مبدأ مجاز باشند. پیش‌فرض `['GET']` است. می‌توانید از `['*']` برای مجاز کردن همه متدهای استاندارد استفاده کنید.
+* `allow_headers` - لیستی از هدرهای درخواست HTTP که باید برای درخواست‌های بین مبدأ پشتیبانی شوند. پیش‌فرض `[]` است. می‌توانید از `['*']` برای مجاز کردن همه هدرها استفاده کنید. هدرهای `Accept`، `Accept-Language`، `Content-Language` و `Content-Type` همیشه برای <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests" class="external-link" rel="noopener" target="_blank">درخواست‌های CORS ساده</a> مجاز هستند.
+* `allow_credentials` - نشان می‌دهد که کوکی‌ها باید برای درخواست‌های بین مبدأ پشتیبانی شوند. پیش‌فرض `False` است. همچنین، `allow_origins` نمی‌تواند روی `['*']` تنظیم شود تا اعتبارنامه‌ها مجاز باشند، مبدأها باید مشخص شوند.
+* `expose_headers` - هر هدر پاسخی که باید برای مرورگر قابل دسترسی باشد را نشان می‌دهد. پیش‌فرض `[]` است.
+* `max_age` - حداکثر زمان به ثانیه برای ذخیره‌سازی پاسخ‌های CORS در حافظه مرورگر را تنظیم می‌کند. پیش‌فرض `600` است.
 
-The middleware responds to two particular types of HTTP request...
+میان‌افزار به دو نوع خاص درخواست HTTP پاسخ می‌دهد...
 
-### CORS preflight requests
+### درخواست‌های پیش‌پرواز CORS
 
-These are any `OPTIONS` request with `Origin` and `Access-Control-Request-Method` headers.
+اینها هر درخواست `OPTIONS` با هدرهای `Origin` و `Access-Control-Request-Method` هستند.
 
-In this case the middleware will intercept the incoming request and respond with appropriate CORS headers, and either a `200` or `400` response for informational purposes.
+در این مورد میان‌افزار درخواست ورودی را رهگیری می‌کند و با هدرهای CORS مناسب و یک پاسخ `200` یا `400` برای اهداف اطلاع‌رسانی پاسخ می‌دهد.
 
-### Simple requests
+### درخواست‌های ساده
 
-Any request with an `Origin` header. In this case the middleware will pass the request through as normal, but will include appropriate CORS headers on the response.
+هر درخواستی با هدر `Origin`. در این مورد میان‌افزار درخواست را به صورت عادی عبور می‌دهد، اما هدرهای CORS مناسب را در پاسخ قرار می‌دهد.
 
-## More info
+## اطلاعات بیشتر
 
-For more info about <abbr title="Cross-Origin Resource Sharing">CORS</abbr>, check the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" class="external-link" target="_blank">Mozilla CORS documentation</a>.
+برای اطلاعات بیشتر درباره <abbr title="اشتراک منابع متقاطع">CORS</abbr>، <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" class="external-link" target="_blank">مستندات CORS موزیلا</a> را بررسی کنید.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette.middleware.cors import CORSMiddleware`.
+شما همچنین می‌توانید از `from starlette.middleware.cors import CORSMiddleware` استفاده کنید.
 
-**FastAPI** provides several middlewares in `fastapi.middleware` just as a convenience for you, the developer. But most of the available middlewares come directly from Starlette.
+**FastAPI** چندین میان‌افزار در `fastapi.middleware` فقط به عنوان یک سهولت برای شما به عنوان برنامه‌نویس فراهم می‌کند. اما بیشتر میان‌افزارهای موجود مستقیماً از Starlette می‌آیند.
 
 ///
