@@ -1,60 +1,60 @@
-# Generate Clients
+# تولید کلاینت‌ها
 
-As **FastAPI** is based on the OpenAPI specification, you get automatic compatibility with many tools, including the automatic API docs (provided by Swagger UI).
+از آنجا که **FastAPI** بر اساس مشخصه OpenAPI است، سازگاری خودکار با ابزارهای بسیاری دارید، از جمله مستندات خودکار API (ارائه شده توسط Swagger UI).
 
-One particular advantage that is not necessarily obvious is that you can **generate clients** (sometimes called <abbr title="Software Development Kits">**SDKs**</abbr> ) for your API, for many different **programming languages**.
+یک مزیت خاص که لزوماً واضح نیست این است که می‌توانید **کلاینت‌ها** (گاهی <abbr title="کیت‌های توسعه نرم‌افزار">**SDK**</abbr> نامیده می‌شوند) را برای API خود، برای بسیاری از **زبان‌های برنامه‌نویسی** مختلف تولید کنید.
 
-## OpenAPI Client Generators
+## تولیدکننده‌های کلاینت OpenAPI
 
-There are many tools to generate clients from **OpenAPI**.
+ابزارهای بسیاری برای تولید کلاینت از **OpenAPI** وجود دارد.
 
-A common tool is <a href="https://openapi-generator.tech/" class="external-link" target="_blank">OpenAPI Generator</a>.
+یک ابزار رایج <a href="https://openapi-generator.tech/" class="external-link" target="_blank">OpenAPI Generator</a> است.
 
-If you are building a **frontend**, a very interesting alternative is <a href="https://github.com/hey-api/openapi-ts" class="external-link" target="_blank">openapi-ts</a>.
+اگر در حال ساخت **فرانت‌اند** هستید، یک جایگزین بسیار جالب <a href="https://github.com/hey-api/openapi-ts" class="external-link" target="_blank">openapi-ts</a> است.
 
-## Client and SDK Generators - Sponsor
+## تولیدکننده‌های کلاینت و SDK - اسپانسر
 
-There are also some **company-backed** Client and SDK generators based on OpenAPI (FastAPI), in some cases they can offer you **additional features** on top of high-quality generated SDKs/clients.
+همچنین برخی تولیدکننده‌های کلاینت و SDK **با پشتیبانی شرکتی** بر اساس OpenAPI (FastAPI) وجود دارند که در برخی موارد می‌توانند **ویژگی‌های اضافی** بر روی SDKها/کلاینت‌های با کیفیت بالا ارائه دهند.
 
-Some of them also ✨ [**sponsor FastAPI**](../help-fastapi.md#sponsor-the-author){.internal-link target=_blank} ✨, this ensures the continued and healthy **development** of FastAPI and its **ecosystem**.
+برخی از آنها همچنین ✨ [**FastAPI را اسپانسر می‌کنند**](../help-fastapi.md#sponsor-the-author){.internal-link target=_blank} ✨، این توسعه مداوم و سالم FastAPI و **اکوسیستم** آن را تضمین می‌کند.
 
-And it shows their true commitment to FastAPI and its **community** (you), as they not only want to provide you a **good service** but also want to make sure you have a **good and healthy framework**, FastAPI. 🙇
+و تعهد واقعی آنها به FastAPI و **جامعه** آن (شما) را نشان می‌دهد، زیرا نه تنها می‌خواهند **خدمات خوبی** ارائه دهند بلکه می‌خواهند مطمئن شوند شما یک **فریمورک خوب و سالم** دارید، FastAPI. 🙇
 
-For example, you might want to try:
+برای مثال، ممکن است بخواهید امتحان کنید:
 
 * <a href="https://speakeasy.com/?utm_source=fastapi+repo&utm_medium=github+sponsorship" class="external-link" target="_blank">Speakeasy</a>
 * <a href="https://www.stainlessapi.com/?utm_source=fastapi&utm_medium=referral" class="external-link" target="_blank">Stainless</a>
 * <a href="https://developers.liblab.com/tutorials/sdk-for-fastapi/?utm_source=fastapi" class="external-link" target="_blank">liblab</a>
 
-There are also several other companies offering similar services that you can search and find online. 🤓
+همچنین شرکت‌های دیگری هستند که خدمات مشابهی ارائه می‌دهند که می‌توانید به صورت آنلاین جستجو و پیدا کنید. 🤓
 
-## Generate a TypeScript Frontend Client
+## تولید کلاینت فرانت‌اند TypeScript
 
-Let's start with a simple FastAPI application:
+بیایید با یک برنامه ساده FastAPI شروع کنیم:
 
 {* ../../docs_src/generate_clients/tutorial001_py39.py hl[7:9,12:13,16:17,21] *}
 
-Notice that the *path operations* define the models they use for request payload and response payload, using the models `Item` and `ResponseMessage`.
+توجه کنید که *عملیات‌های مسیر* مدل‌هایی که برای payload درخواست و payload پاسخ استفاده می‌کنند را تعریف می‌کنند، با استفاده از مدل‌های `Item` و `ResponseMessage`.
 
-### API Docs
+### مستندات API
 
-If you go to the API docs, you will see that it has the **schemas** for the data to be sent in requests and received in responses:
+اگر به مستندات API بروید، خواهید دید که **اسکیماها** برای داده‌هایی که در درخواست‌ها ارسال و در پاسخ‌ها دریافت می‌شوند وجود دارد:
 
 <img src="/img/tutorial/generate-clients/image01.png">
 
-You can see those schemas because they were declared with the models in the app.
+می‌توانید آن اسکیماها را ببینید زیرا با مدل‌ها در برنامه اعلان شده‌اند.
 
-That information is available in the app's **OpenAPI schema**, and then shown in the API docs (by Swagger UI).
+آن اطلاعات در **اسکیمای OpenAPI** برنامه موجود است و سپس در مستندات API نمایش داده می‌شود (توسط Swagger UI).
 
-And that same information from the models that is included in OpenAPI is what can be used to **generate the client code**.
+و همان اطلاعات از مدل‌ها که در OpenAPI گنجانده شده می‌تواند برای **تولید کد کلاینت** استفاده شود.
 
-### Generate a TypeScript Client
+### تولید کلاینت TypeScript
 
-Now that we have the app with the models, we can generate the client code for the frontend.
+حالا که برنامه با مدل‌ها داریم، می‌توانیم کد کلاینت را برای فرانت‌اند تولید کنیم.
 
-#### Install `openapi-ts`
+#### نصب `openapi-ts`
 
-You can install `openapi-ts` in your frontend code with:
+می‌توانید `openapi-ts` را در کد فرانت‌اند خود نصب کنید با:
 
 <div class="termy">
 
@@ -66,13 +66,13 @@ $ npm install @hey-api/openapi-ts --save-dev
 
 </div>
 
-#### Generate Client Code
+#### تولید کد کلاینت
 
-To generate the client code you can use the command line application `openapi-ts` that would now be installed.
+برای تولید کد کلاینت می‌توانید از برنامه خط فرمان `openapi-ts` که اکنون نصب شده استفاده کنید.
 
-Because it is installed in the local project, you probably wouldn't be able to call that command directly, but you would put it on your `package.json` file.
+چون در پروژه محلی نصب شده، احتمالاً نمی‌توانید آن دستور را مستقیماً فراخوانی کنید، اما آن را در فایل `package.json` خود قرار می‌دهید.
 
-It could look like this:
+می‌تواند اینطور باشد:
 
 ```JSON  hl_lines="7"
 {
@@ -92,7 +92,7 @@ It could look like this:
 }
 ```
 
-After having that NPM `generate-client` script there, you can run it with:
+پس از داشتن آن اسکریپت NPM `generate-client`، می‌توانید آن را اجرا کنید با:
 
 <div class="termy">
 
@@ -105,106 +105,106 @@ frontend-app@1.0.0 generate-client /home/user/code/frontend-app
 
 </div>
 
-That command will generate code in `./src/client` and will use `axios` (the frontend HTTP library) internally.
+آن دستور کد را در `./src/client` تولید خواهد کرد و از `axios` (کتابخانه HTTP فرانت‌اند) به صورت داخلی استفاده خواهد کرد.
 
-### Try Out the Client Code
+### امتحان کد کلاینت
 
-Now you can import and use the client code, it could look like this, notice that you get autocompletion for the methods:
+حالا می‌توانید کد کلاینت را وارد و استفاده کنید، به تکمیل خودکار متدها توجه کنید:
 
 <img src="/img/tutorial/generate-clients/image02.png">
 
-You will also get autocompletion for the payload to send:
+همچنین تکمیل خودکار برای payload ارسالی دریافت خواهید کرد:
 
 <img src="/img/tutorial/generate-clients/image03.png">
 
 /// tip
 
-Notice the autocompletion for `name` and `price`, that was defined in the FastAPI application, in the `Item` model.
+توجه کنید تکمیل خودکار برای `name` و `price` که در برنامه FastAPI، در مدل `Item` تعریف شده.
 
 ///
 
-You will have inline errors for the data that you send:
+خطاهای درون‌خطی برای داده‌هایی که ارسال می‌کنید خواهید داشت:
 
 <img src="/img/tutorial/generate-clients/image04.png">
 
-The response object will also have autocompletion:
+شیء پاسخ نیز تکمیل خودکار خواهد داشت:
 
 <img src="/img/tutorial/generate-clients/image05.png">
 
-## FastAPI App with Tags
+## برنامه FastAPI با تگ‌ها
 
-In many cases your FastAPI app will be bigger, and you will probably use tags to separate different groups of *path operations*.
+در بسیاری از موارد برنامه FastAPI شما بزرگ‌تر خواهد بود و احتمالاً از تگ‌ها برای جدا کردن گروه‌های مختلف *عملیات‌های مسیر* استفاده خواهید کرد.
 
-For example, you could have a section for **items** and another section for **users**, and they could be separated by tags:
+برای مثال، می‌توانید بخشی برای **آیتم‌ها** و بخش دیگری برای **کاربران** داشته باشید و آنها با تگ‌ها جدا شوند:
 
 {* ../../docs_src/generate_clients/tutorial002_py39.py hl[21,26,34] *}
 
-### Generate a TypeScript Client with Tags
+### تولید کلاینت TypeScript با تگ‌ها
 
-If you generate a client for a FastAPI app using tags, it will normally also separate the client code based on the tags.
+اگر کلاینتی برای برنامه FastAPI با استفاده از تگ‌ها تولید کنید، معمولاً کد کلاینت را نیز بر اساس تگ‌ها جدا خواهد کرد.
 
-This way you will be able to have things ordered and grouped correctly for the client code:
+به این ترتیب می‌توانید چیزها را به درستی برای کد کلاینت مرتب و گروه‌بندی کنید:
 
 <img src="/img/tutorial/generate-clients/image06.png">
 
-In this case you have:
+در این مورد دارید:
 
 * `ItemsService`
 * `UsersService`
 
-### Client Method Names
+### نام متدهای کلاینت
 
-Right now the generated method names like `createItemItemsPost` don't look very clean:
+الان نام‌های متد تولید شده مانند `createItemItemsPost` خیلی تمیز به نظر نمی‌رسند:
 
 ```TypeScript
 ItemsService.createItemItemsPost({name: "Plumbus", price: 5})
 ```
 
-...that's because the client generator uses the OpenAPI internal **operation ID** for each *path operation*.
+...این به این دلیل است که تولیدکننده کلاینت از **شناسه عملیات** داخلی OpenAPI برای هر *عملیات مسیر* استفاده می‌کند.
 
-OpenAPI requires that each operation ID is unique across all the *path operations*, so FastAPI uses the **function name**, the **path**, and the **HTTP method/operation** to generate that operation ID, because that way it can make sure that the operation IDs are unique.
+OpenAPI نیاز دارد هر شناسه عملیات در تمام *عملیات‌های مسیر* یکتا باشد، بنابراین FastAPI از **نام تابع**، **مسیر** و **متد/عملیات HTTP** برای تولید آن شناسه عملیات استفاده می‌کند، زیرا به این ترتیب می‌تواند مطمئن شود شناسه‌های عملیات یکتا هستند.
 
-But I'll show you how to improve that next. 🤓
+اما در ادامه نشان خواهم داد چگونه آن را بهبود دهید. 🤓
 
-## Custom Operation IDs and Better Method Names
+## شناسه‌های عملیات سفارشی و نام‌های متد بهتر
 
-You can **modify** the way these operation IDs are **generated** to make them simpler and have **simpler method names** in the clients.
+می‌توانید نحوه **تولید** این شناسه‌های عملیات را **تغییر** دهید تا ساده‌تر شوند و **نام‌های متد ساده‌تری** در کلاینت‌ها داشته باشند.
 
-In this case you will have to ensure that each operation ID is **unique** in some other way.
+در این مورد باید مطمئن شوید هر شناسه عملیات به روش دیگری **یکتا** باشد.
 
-For example, you could make sure that each *path operation* has a tag, and then generate the operation ID based on the **tag** and the *path operation* **name** (the function name).
+برای مثال، می‌توانید مطمئن شوید هر *عملیات مسیر* تگی دارد و سپس شناسه عملیات را بر اساس **تگ** و **نام** *عملیات مسیر* (نام تابع) تولید کنید.
 
-### Custom Generate Unique ID Function
+### تابع تولید شناسه یکتای سفارشی
 
-FastAPI uses a **unique ID** for each *path operation*, it is used for the **operation ID** and also for the names of any needed custom models, for requests or responses.
+FastAPI از یک **شناسه یکتا** برای هر *عملیات مسیر* استفاده می‌کند، برای **شناسه عملیات** و همچنین نام مدل‌های سفارشی مورد نیاز، برای درخواست‌ها یا پاسخ‌ها.
 
-You can customize that function. It takes an `APIRoute` and outputs a string.
+می‌توانید آن تابع را سفارشی کنید. یک `APIRoute` دریافت و یک رشته خروجی می‌دهد.
 
-For example, here it is using the first tag (you will probably have only one tag) and the *path operation* name (the function name).
+برای مثال، اینجا از اولین تگ (احتمالاً فقط یک تگ خواهید داشت) و نام *عملیات مسیر* (نام تابع) استفاده می‌کند.
 
-You can then pass that custom function to **FastAPI** as the `generate_unique_id_function` parameter:
+سپس می‌توانید آن تابع سفارشی را به **FastAPI** به عنوان پارامتر `generate_unique_id_function` ارسال کنید:
 
 {* ../../docs_src/generate_clients/tutorial003_py39.py hl[6:7,10] *}
 
-### Generate a TypeScript Client with Custom Operation IDs
+### تولید کلاینت TypeScript با شناسه‌های عملیات سفارشی
 
-Now if you generate the client again, you will see that it has the improved method names:
+حالا اگر دوباره کلاینت را تولید کنید، خواهید دید که نام‌های متد بهبود یافته‌اند:
 
 <img src="/img/tutorial/generate-clients/image07.png">
 
-As you see, the method names now have the tag and then the function name, now they don't include information from the URL path and the HTTP operation.
+همانطور که می‌بینید، نام‌های متد اکنون تگ و سپس نام تابع دارند، دیگر شامل اطلاعات مسیر URL و عملیات HTTP نیستند.
 
-### Preprocess the OpenAPI Specification for the Client Generator
+### پیش‌پردازش مشخصه OpenAPI برای تولیدکننده کلاینت
 
-The generated code still has some **duplicated information**.
+کد تولید شده همچنان **اطلاعات تکراری** دارد.
 
-We already know that this method is related to the **items** because that word is in the `ItemsService` (taken from the tag), but we still have the tag name prefixed in the method name too. 😕
+می‌دانیم این متد مربوط به **آیتم‌ها** است زیرا آن کلمه در `ItemsService` است (از تگ گرفته شده)، اما همچنان نام تگ به عنوان پیشوند در نام متد وجود دارد. 😕
 
-We will probably still want to keep it for OpenAPI in general, as that will ensure that the operation IDs are **unique**.
+احتمالاً همچنان می‌خواهیم آن را برای OpenAPI به طور کلی نگه داریم، زیرا تضمین می‌کند شناسه‌های عملیات **یکتا** هستند.
 
-But for the generated client we could **modify** the OpenAPI operation IDs right before generating the clients, just to make those method names nicer and **cleaner**.
+اما برای کلاینت تولید شده می‌توانیم شناسه‌های عملیات OpenAPI را دقیقاً قبل از تولید کلاینت‌ها **تغییر** دهیم، فقط برای تمیزتر و **ساده‌تر** کردن نام‌های متد.
 
-We could download the OpenAPI JSON to a file `openapi.json` and then we could **remove that prefixed tag** with a script like this:
+می‌توانیم JSON OpenAPI را به فایل `openapi.json` دانلود و سپس آن **پیشوند تگ** را با اسکریپتی مانند این **حذف** کنیم:
 
 {* ../../docs_src/generate_clients/tutorial004.py *}
 
@@ -216,11 +216,11 @@ We could download the OpenAPI JSON to a file `openapi.json` and then we could **
 
 ////
 
-With that, the operation IDs would be renamed from things like `items-get_items` to just `get_items`, that way the client generator can generate simpler method names.
+با این، شناسه‌های عملیات از چیزهایی مانند `items-get_items` به فقط `get_items` تغییر نام خواهند یافت، به این ترتیب تولیدکننده کلاینت می‌تواند نام‌های متد ساده‌تری تولید کند.
 
-### Generate a TypeScript Client with the Preprocessed OpenAPI
+### تولید کلاینت TypeScript با OpenAPI پیش‌پردازش شده
 
-Now as the end result is in a file `openapi.json`, you would modify the `package.json` to use that local file, for example:
+حالا چون نتیجه نهایی در فایل `openapi.json` است، `package.json` را برای استفاده از آن فایل محلی تغییر می‌دهید، برای مثال:
 
 ```JSON  hl_lines="7"
 {
@@ -240,22 +240,22 @@ Now as the end result is in a file `openapi.json`, you would modify the `package
 }
 ```
 
-After generating the new client, you would now have **clean method names**, with all the **autocompletion**, **inline errors**, etc:
+پس از تولید کلاینت جدید، اکنون **نام‌های متد تمیز** خواهید داشت، با تمام **تکمیل خودکار**، **خطاهای درون‌خطی** و غیره:
 
 <img src="/img/tutorial/generate-clients/image08.png">
 
-## Benefits
+## مزایا
 
-When using the automatically generated clients you would get **autocompletion** for:
+هنگام استفاده از کلاینت‌های تولید شده خودکار **تکمیل خودکار** برای موارد زیر خواهید داشت:
 
-* Methods.
-* Request payloads in the body, query parameters, etc.
-* Response payloads.
+* متدها.
+* Payloadهای درخواست در بدنه، پارامترهای کوئری و غیره.
+* Payloadهای پاسخ.
 
-You would also have **inline errors** for everything.
+همچنین **خطاهای درون‌خطی** برای همه چیز خواهید داشت.
 
-And whenever you update the backend code, and **regenerate** the frontend, it would have any new *path operations* available as methods, the old ones removed, and any other change would be reflected on the generated code. 🤓
+و هر زمان که کد بک‌اند را به‌روز و فرانت‌اند را **دوباره تولید** کنید، هر *عملیات مسیر* جدید به عنوان متد موجود خواهد بود، قدیمی‌ها حذف و هر تغییر دیگری در کد تولید شده منعکس خواهد شد. 🤓
 
-This also means that if something changed it will be **reflected** on the client code automatically. And if you **build** the client it will error out if you have any **mismatch** in the data used.
+این همچنین به این معنی است که اگر چیزی تغییر کند به طور خودکار در کد کلاینت **منعکس** خواهد شد. و اگر کلاینت را **بسازید** در صورت وجود هر **عدم تطابق** در داده‌های استفاده شده خطا خواهد داد.
 
-So, you would **detect many errors** very early in the development cycle instead of having to wait for the errors to show up to your final users in production and then trying to debug where the problem is. ✨
+بنابراین، **خطاهای بسیاری** را خیلی زود در چرخه توسعه **تشخیص** خواهید داد به جای اینکه منتظر بمانید خطاها به کاربران نهایی در production نشان داده شوند و سپس سعی کنید مشکل را پیدا کنید. ✨

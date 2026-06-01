@@ -1,274 +1,270 @@
-# OAuth2 scopes
+# محدوده‌های OAuth2
 
-You can use OAuth2 scopes directly with **FastAPI**, they are integrated to work seamlessly.
+می‌توانید مستقیماً از محدوده‌های OAuth2 در **FastAPI** استفاده کنید، آنها به صورت یکپارچه عمل می‌کنند.
 
-This would allow you to have a more fine-grained permission system, following the OAuth2 standard, integrated into your OpenAPI application (and the API docs).
+این اجازه می‌دهد سیستم مجوزهای دقیق‌تری داشته باشید، از استاندارد OAuth2 پیروی کنید و در مستندات OpenAPI (و مستندات API) شما یکپارچه شود.
 
-OAuth2 with scopes is the mechanism used by many big authentication providers, like Facebook, Google, GitHub, Microsoft, Twitter, etc. They use it to provide specific permissions to users and applications.
+OAuth2 با محدوده‌ها مکانیزمی است که توسط بسیاری از ارائه‌دهندگان بزرگ احراز هویت استفاده می‌شود، مانند Facebook، Google، GitHub، Microsoft، Twitter و غیره. آنها هر بار که برنامه‌ای از شما می‌خواهد وارد شوید با استفاده از یکی از آن ارائه‌دهندگان، از آن استفاده می‌کنند. هر بار که با Facebook، Google، GitHub، Microsoft، Twitter وارد می‌شوید، آن برنامه از OAuth2 با محدوده‌ها استفاده می‌کند.
 
-Every time you "log in with" Facebook, Google, GitHub, Microsoft, Twitter, that application is using OAuth2 with scopes.
-
-In this section you will see how to manage authentication and authorization with the same OAuth2 with scopes in your **FastAPI** application.
+در این بخش خواهید دید چگونه احراز هویت و مجوزدهی را با همان OAuth2 با محدوده‌ها در برنامه **FastAPI** خود مدیریت کنید.
 
 /// warning
 
-This is a more or less advanced section. If you are just starting, you can skip it.
+این یک بخش کمی پیشرفته‌تر است. اگر تازه شروع کرده‌اید، می‌توانید از آن رد شوید.
 
-You don't necessarily need OAuth2 scopes, and you can handle authentication and authorization however you want.
+لزوماً به محدوده‌های OAuth2 نیاز ندارید و می‌توانید احراز هویت و مجوزدهی را هر طور که می‌خواهید مدیریت کنید.
 
-But OAuth2 with scopes can be nicely integrated into your API (with OpenAPI) and your API docs.
+اما OAuth2 با محدوده‌ها می‌تواند به راحتی در API شما (با OpenAPI) و مستندات API شما یکپارچه شود.
 
-Nevertheless, you still enforce those scopes, or any other security/authorization requirement, however you need, in your code.
+با این حال، شما همچنان آن محدوده‌ها یا هر نیاز امنیتی/مجوز دیگری را در کد خود، هر طور که نیاز دارید، اعمال می‌کنید.
 
-In many cases, OAuth2 with scopes can be an overkill.
+در بسیاری از موارد، OAuth2 با محدوده‌ها بیش از حد نیاز است.
 
-But if you know you need it, or you are curious, keep reading.
+اما اگر می‌دانید به آن نیاز دارید یا کنجکاو هستید، به خواندن ادامه دهید.
 
 ///
 
-## OAuth2 scopes and OpenAPI
+## محدوده‌های OAuth2 و OpenAPI
 
-The OAuth2 specification defines "scopes" as a list of strings separated by spaces.
+مشخصه OAuth2 "محدوده‌ها" را به عنوان لیستی از رشته‌های جدا شده با فاصله تعریف می‌کند.
 
-The content of each of these strings can have any format, but should not contain spaces.
+محتوای هر یک از این رشته‌ها می‌تواند هر فرمتی داشته باشد، اما نباید شامل فاصله باشد.
 
-These scopes represent "permissions".
+این محدوده‌ها نمایانگر "مجوزها" هستند.
 
-In OpenAPI (e.g. the API docs), you can define "security schemes".
+در OpenAPI (مثلاً مستندات API)، می‌توانید "طرح‌های امنیتی" تعریف کنید.
 
-When one of these security schemes uses OAuth2, you can also declare and use scopes.
+وقتی یکی از این طرح‌های امنیتی از OAuth2 استفاده کند، می‌توانید محدوده‌ها را نیز اعلان و استفاده کنید.
 
-Each "scope" is just a string (without spaces).
+هر "محدوده" فقط یک رشته (بدون فاصله) است.
 
-They are normally used to declare specific security permissions, for example:
+معمولاً برای اعلان مجوزهای امنیتی خاص استفاده می‌شوند، برای مثال:
 
-* `users:read` or `users:write` are common examples.
-* `instagram_basic` is used by Facebook / Instagram.
-* `https://www.googleapis.com/auth/drive` is used by Google.
+* `users:read` یا `users:write` نمونه‌های رایج هستند.
+* `instagram_basic` توسط Facebook / Instagram استفاده می‌شود.
+* `https://www.googleapis.com/auth/drive` توسط Google استفاده می‌شود.
 
 /// info
 
-In OAuth2 a "scope" is just a string that declares a specific permission required.
+در OAuth2 یک "محدوده" فقط یک رشته است که مجوز خاصی را اعلان می‌کند.
 
-It doesn't matter if it has other characters like `:` or if it is a URL.
+مهم نیست کاراکترهای دیگری مانند `:` داشته باشد یا URL باشد.
 
-Those details are implementation specific.
+این جزئیات مختص پیاده‌سازی هستند.
 
-For OAuth2 they are just strings.
+برای OAuth2 آنها فقط رشته هستند.
 
 ///
 
-## Global view
+## دید کلی
 
-First, let's quickly see the parts that change from the examples in the main **Tutorial - User Guide** for [OAuth2 with Password (and hashing), Bearer with JWT tokens](../../tutorial/security/oauth2-jwt.md){.internal-link target=_blank}. Now using OAuth2 scopes:
+ابتدا، بیایید سریع بخش‌هایی را که نسبت به مثال‌های فصل اصلی **آموزش - راهنمای کاربر** تغییر کرده‌اند ببینیم. این بار از محدوده‌های OAuth2 استفاده می‌کنیم:
 
-{* ../../docs_src/security/tutorial005_an_py310.py hl[5,9,13,47,65,106,108:116,122:125,129:135,140,156] *}
+{* ../../docs_src/security/tutorial005_an_py310.py hl[5,9,13,47,65,106,108:116,122,140,171] *}
 
-Now let's review those changes step by step.
+حالا بیایید آن تغییرات را گام به گام بررسی کنیم.
 
-## OAuth2 Security scheme
+## طرح OAuth2 با محدوده‌ها
 
-The first change is that now we are declaring the OAuth2 security scheme with two available scopes, `me` and `items`.
+اولین تغییر این است که اکنون طرح OAuth2 را با دو محدوده موجود `me` و `items` اعلان می‌کنیم.
 
-The `scopes` parameter receives a `dict` with each scope as a key and the description as the value:
+پارامتر `scopes` یک `dict` با هر محدوده به عنوان کلید و توضیح به عنوان مقدار دریافت می‌کند:
 
 {* ../../docs_src/security/tutorial005_an_py310.py hl[63:66] *}
 
-Because we are now declaring those scopes, they will show up in the API docs when you log-in/authorize.
+چون اکنون محدوده‌ها اعلان می‌کنیم، وقتی وارد/مجوزدهی می‌کنید در مستندات API نمایش داده خواهند شد.
 
-And you will be able to select which scopes you want to give access to: `me` and `items`.
-
-This is the same mechanism used when you give permissions while logging in with Facebook, Google, GitHub, etc:
+و شما می‌توانید انتخاب کنید کدام محدوده‌ها دسترسی دهید: `me` و `items`. این همان مکانیزمی است که هنگام دادن مجوز وقتی با Facebook، Google، GitHub و غیره وارد می‌شوید استفاده می‌شود.
 
 <img src="/img/tutorial/security/image11.png">
 
-## JWT token with scopes
+## توکن JWT با محدوده‌ها
 
-Now, modify the token *path operation* to return the scopes requested.
+حالا، *عملیات مسیر* توکن را تغییر دهید تا محدوده‌های درخواست شده را برگرداند.
 
-We are still using the same `OAuth2PasswordRequestForm`. It includes a property `scopes` with a `list` of `str`, with each scope it received in the request.
+ما همچنان از همان `OAuth2PasswordRequestForm` استفاده می‌کنیم. شامل ویژگی `scopes` با `list` از `str` است، با هر محدوده‌ای که در درخواست دریافت کرده.
 
-And we return the scopes as part of the JWT token.
+و محدوده‌ها را به عنوان بخشی از توکن JWT برمی‌گردانیم.
 
 /// danger
 
-For simplicity, here we are just adding the scopes received directly to the token.
+برای سادگی، اینجا فقط محدوده‌های دریافت شده را مستقیماً به توکن اضافه می‌کنیم.
 
-But in your application, for security, you should make sure you only add the scopes that the user is actually able to have, or the ones you have predefined.
+اما در برنامه خود، برای امنیت، باید مطمئن شوید فقط محدوده‌هایی را اضافه کنید که کاربر واقعاً قادر به داشتن آنها باشد، یا آنهایی که شما از پیش تعریف کرده‌اید.
 
 ///
 
-{* ../../docs_src/security/tutorial005_an_py310.py hl[156] *}
+{* ../../docs_src/security/tutorial005_an_py310.py hl[155] *}
 
-## Declare scopes in *path operations* and dependencies
+## اعلان محدوده‌ها در *عملیات‌های مسیر* و وابستگی‌ها
 
-Now we declare that the *path operation* for `/users/me/items/` requires the scope `items`.
+حالا یک *عملیات مسیر* اعلان می‌کنیم که نیاز به محدوده `items` دارد.
 
-For this, we import and use `Security` from `fastapi`.
+برای این کار، `Security` را از `fastapi` وارد می‌کنیم.
 
-You can use `Security` to declare dependencies (just like `Depends`), but `Security` also receives a parameter `scopes` with a list of scopes (strings).
+می‌توانید از `Security` برای اعلان وابستگی‌ها استفاده کنید (دقیقاً مانند `Depends`)، اما `Security` یک پارامتر `scopes` نیز دریافت می‌کند با لیستی از محدوده‌ها (رشته‌ها).
 
-In this case, we pass a dependency function `get_current_active_user` to `Security` (the same way we would do with `Depends`).
+در این مورد، تابع وابستگی `get_current_active_user` را به `Security` ارسال می‌کنیم (همانطور که با `Depends` انجام می‌دادیم).
 
-But we also pass a `list` of scopes, in this case with just one scope: `items` (it could have more).
+اما همچنین یک `list` از محدوده‌ها ارسال می‌کنیم، در این مورد با فقط یک محدوده: `items` (می‌توانست بیشتر هم باشد).
 
-And the dependency function `get_current_active_user` can also declare sub-dependencies, not only with `Depends` but also with `Security`. Declaring its own sub-dependency function (`get_current_user`), and more scope requirements.
+و تابع وابستگی `get_current_active_user` نیز می‌تواند زیر-وابستگی‌ها را نه تنها با `Depends` بلکه با `Security` اعلان کند. تابع زیر-وابستگی خود (`get_current_user`) و الزامات محدوده بیشتری را اعلان می‌کند.
 
-In this case, it requires the scope `me` (it could require more than one scope).
+در این مورد، به محدوده `me` نیاز دارد (می‌تواند بیش از یک محدوده نیاز داشته باشد).
 
 /// note
 
-You don't necessarily need to add different scopes in different places.
+لزوماً لازم نیست محدوده‌های مختلف در مکان‌های مختلف اضافه کنید.
 
-We are doing it here to demonstrate how **FastAPI** handles scopes declared at different levels.
+ما این کار را اینجا انجام می‌دهیم تا نشان دهیم **FastAPI** چگونه محدوده‌های اعلان شده در سطوح مختلف را مدیریت می‌کند.
 
 ///
 
 {* ../../docs_src/security/tutorial005_an_py310.py hl[5,140,171] *}
 
-/// info | Technical Details
+/// info | جزئیات فنی
 
-`Security` is actually a subclass of `Depends`, and it has just one extra parameter that we'll see later.
+`Security` در واقع زیرکلاس `Depends` است و فقط یک پارامتر اضافی دارد که بعداً خواهیم دید.
 
-But by using `Security` instead of `Depends`, **FastAPI** will know that it can declare security scopes, use them internally, and document the API with OpenAPI.
+اما با استفاده از `Security` به جای `Depends`، **FastAPI** می‌داند که می‌تواند محدوده‌های امنیتی را اعلان، به صورت داخلی استفاده و API را با OpenAPI مستند کند.
 
-But when you import `Query`, `Path`, `Depends`, `Security` and others from `fastapi`, those are actually functions that return special classes.
+اما وقتی `Query`، `Path`، `Depends`، `Security` و غیره را از `fastapi` وارد می‌کنید، آنها در واقع توابعی هستند که کلاس‌های خاصی برمی‌گردانند.
 
 ///
 
-## Use `SecurityScopes`
+## استفاده از `SecurityScopes`
 
-Now update the dependency `get_current_user`.
+حالا وابستگی `get_current_user` را به‌روز کنید.
 
-This is the one used by the dependencies above.
+این همان وابستگی است که توسط وابستگی‌های بالا استفاده می‌شود.
 
-Here's where we are using the same OAuth2 scheme we created before, declaring it as a dependency: `oauth2_scheme`.
+اینجا از همان طرح OAuth2 که قبلاً ایجاد کردیم استفاده و آن را به عنوان وابستگی اعلان می‌کنیم: `oauth2_scheme`.
 
-Because this dependency function doesn't have any scope requirements itself, we can use `Depends` with `oauth2_scheme`, we don't have to use `Security` when we don't need to specify security scopes.
+چون این تابع وابستگی خودش هیچ الزام محدوده‌ای ندارد، می‌توانیم از `Depends` با `oauth2_scheme` استفاده کنیم، نیازی نیست وقتی نیاز به مشخص کردن محدوده‌های امنیتی ندارید از `Security` استفاده کنید.
 
-We also declare a special parameter of type `SecurityScopes`, imported from `fastapi.security`.
+همچنین پارامتر خاصی از تایپ `SecurityScopes` که از `fastapi.security` وارد شده اعلان می‌کنیم.
 
-This `SecurityScopes` class is similar to `Request` (`Request` was used to get the request object directly).
+این کلاس `SecurityScopes` مشابه `Request` است (`Request` برای دریافت مستقیم شیء درخواست استفاده می‌شد).
 
 {* ../../docs_src/security/tutorial005_an_py310.py hl[9,106] *}
 
-## Use the `scopes`
+## استفاده از `scopes`
 
-The parameter `security_scopes` will be of type `SecurityScopes`.
+پارامتر `security_scopes` از تایپ `SecurityScopes` خواهد بود.
 
-It will have a property `scopes` with a list containing all the scopes required by itself and all the dependencies that use this as a sub-dependency. That means, all the "dependants"... this might sound confusing, it is explained again later below.
+ویژگی `scopes` با لیستی شامل تمام محدوده‌های مورد نیاز خودش و تمام وابستگی‌هایی که از آن به عنوان زیر-وابستگی استفاده می‌کنند خواهد داشت. یعنی تمام "وابسته‌ها"... این ممکن است گیج‌کننده باشد، در ادامه دوباره توضیح داده شده.
 
-The `security_scopes` object (of class `SecurityScopes`) also provides a `scope_str` attribute with a single string, containing those scopes separated by spaces (we are going to use it).
+شیء `security_scopes` (از کلاس `SecurityScopes`) همچنین ویژگی `scope_str` با یک رشته واحد شامل آن محدوده‌ها جدا شده با فاصله ارائه می‌دهد (ما قصد داریم از آن استفاده کنیم).
 
-We create an `HTTPException` that we can reuse (`raise`) later at several points.
+یک `HTTPException` ایجاد می‌کنیم که می‌توانیم بعداً در چندین نقطه مجدداً استفاده (`raise`) کنیم.
 
-In this exception, we include the scopes required (if any) as a string separated by spaces (using `scope_str`). We put that string containing the scopes in the `WWW-Authenticate` header (this is part of the spec).
+در این استثنا، محدوده‌های مورد نیاز (در صورت وجود) را به عنوان رشته جدا شده با فاصله (با استفاده از `scope_str`) قرار می‌دهیم. آن رشته شامل محدوده‌ها را در هدر `WWW-Authenticate` قرار می‌دهیم (این بخشی از مشخصه است).
 
 {* ../../docs_src/security/tutorial005_an_py310.py hl[106,108:116] *}
 
-## Verify the `username` and data shape
+## تأیید `username` و شکل داده
 
-We verify that we get a `username`, and extract the scopes.
+تأیید می‌کنیم که `username` دریافت می‌کنیم و محدوده‌ها را استخراج می‌کنیم.
 
-And then we validate that data with the Pydantic model (catching the `ValidationError` exception), and if we get an error reading the JWT token or validating the data with Pydantic, we raise the `HTTPException` we created before.
+و سپس آن داده را با مدل Pydantic اعتبارسنجی می‌کنیم (با گرفتن استثنای `ValidationError`)، و اگر خطایی در خواندن توکن JWT یا اعتبارسنجی داده با Pydantic دریافت کنیم، `HTTPException` که قبلاً ایجاد کردیم را raise می‌کنیم.
 
-For that, we update the Pydantic model `TokenData` with a new property `scopes`.
+برای این کار، مدل Pydantic `TokenData` را با ویژگی جدید `scopes` به‌روز می‌کنیم.
 
-By validating the data with Pydantic we can make sure that we have, for example, exactly a `list` of `str` with the scopes and a `str` with the `username`.
+با اعتبارسنجی داده با Pydantic می‌توانیم مطمئن شویم که برای مثال، دقیقاً یک `list` از `str` با محدوده‌ها و یک `str` با `username` داریم.
 
-Instead of, for example, a `dict`, or something else, as it could break the application at some point later, making it a security risk.
+به جای مثلاً یک `dict` یا چیز دیگری، که ممکن است برنامه را در نقطه‌ای بعداً خراب کند و آن را به یک ریسک امنیتی تبدیل کند.
 
-We also verify that we have a user with that username, and if not, we raise that same exception we created before.
+همچنین تأیید می‌کنیم کاربری با آن نام کاربری داریم و اگر نه، همان استثنایی که قبلاً ایجاد کردیم را raise می‌کنیم.
 
 {* ../../docs_src/security/tutorial005_an_py310.py hl[47,117:128] *}
 
-## Verify the `scopes`
+## تأیید `scopes`
 
-We now verify that all the scopes required, by this dependency and all the dependants (including *path operations*), are included in the scopes provided in the token received, otherwise raise an `HTTPException`.
+حالا تأیید می‌کنیم تمام محدوده‌های مورد نیاز، توسط این وابستگی و تمام وابسته‌ها (شامل *عملیات‌های مسیر*)، در محدوده‌های ارائه شده در توکن دریافتی گنجانده شده‌اند، در غیر این صورت یک `HTTPException` raise می‌کنیم.
 
-For this, we use `security_scopes.scopes`, that contains a `list` with all these scopes as `str`.
+برای این کار، از `security_scopes.scopes` استفاده می‌کنیم که شامل یک `list` با تمام این محدوده‌ها به صورت `str` است.
 
 {* ../../docs_src/security/tutorial005_an_py310.py hl[129:135] *}
 
-## Dependency tree and scopes
+## درخت وابستگی و محدوده‌ها
 
-Let's review again this dependency tree and the scopes.
+بیایید دوباره این درخت وابستگی و محدوده‌ها را بررسی کنیم.
 
-As the `get_current_active_user` dependency has as a sub-dependency on `get_current_user`, the scope `"me"` declared at `get_current_active_user` will be included in the list of required scopes in the `security_scopes.scopes` passed to `get_current_user`.
+چون وابستگی `get_current_active_user` یک زیر-وابستگی روی `get_current_user` دارد، محدوده `"me"` اعلان شده در `get_current_active_user` در لیست محدوده‌های مورد نیاز در `security_scopes.scopes` ارسال شده به `get_current_user` گنجانده خواهد شد.
 
-The *path operation* itself also declares a scope, `"items"`, so this will also be in the list of `security_scopes.scopes` passed to `get_current_user`.
+خود *عملیات مسیر* نیز محدوده `"items"` اعلان می‌کند، بنابراین این نیز در لیست `security_scopes.scopes` ارسال شده به `get_current_user` خواهد بود.
 
-Here's how the hierarchy of dependencies and scopes looks like:
+سلسله‌مراتب وابستگی‌ها و محدوده‌ها اینطور به نظر می‌رسد:
 
-* The *path operation* `read_own_items` has:
-    * Required scopes `["items"]` with the dependency:
+* *عملیات مسیر* `read_own_items` دارد:
+    * محدوده‌های مورد نیاز `["items"]` با وابستگی:
     * `get_current_active_user`:
-        *  The dependency function `get_current_active_user` has:
-            * Required scopes `["me"]` with the dependency:
+        * تابع وابستگی `get_current_active_user` دارد:
+            * محدوده‌های مورد نیاز `["me"]` با وابستگی:
             * `get_current_user`:
-                * The dependency function `get_current_user` has:
-                    * No scopes required by itself.
-                    * A dependency using `oauth2_scheme`.
-                    * A `security_scopes` parameter of type `SecurityScopes`:
-                        * This `security_scopes` parameter has a property `scopes` with a `list` containing all these scopes declared above, so:
-                            * `security_scopes.scopes` will contain `["me", "items"]` for the *path operation* `read_own_items`.
-                            * `security_scopes.scopes` will contain `["me"]` for the *path operation* `read_users_me`, because it is declared in the dependency `get_current_active_user`.
-                            * `security_scopes.scopes` will contain `[]` (nothing) for the *path operation* `read_system_status`, because it didn't declare any `Security` with `scopes`, and its dependency, `get_current_user`, doesn't declare any `scopes` either.
+                * تابع وابستگی `get_current_user` دارد:
+                    * بدون محدوده مورد نیاز خودش.
+                    * وابستگی با استفاده از `oauth2_scheme`.
+                    * پارامتر `security_scopes` از تایپ `SecurityScopes`:
+                        * این پارامتر `security_scopes` ویژگی `scopes` با `list` شامل تمام محدوده‌های اعلان شده بالا دارد، بنابراین:
+                            * `security_scopes.scopes` شامل `["me", "items"]` برای *عملیات مسیر* `read_own_items` خواهد بود.
+                            * `security_scopes.scopes` شامل `["me"]` برای *عملیات مسیر* `read_users_me` خواهد بود، زیرا در وابستگی `get_current_active_user` اعلان شده.
+                            * `security_scopes.scopes` شامل `[]` (هیچ‌چیز) برای *عملیات مسیر* `read_system_status` خواهد بود، زیرا هیچ `Security` با `scopes` اعلان نکرده و وابستگی‌اش `get_current_user` نیز هیچ `scopes` اعلان نمی‌کند.
 
 /// tip
 
-The important and "magic" thing here is that `get_current_user` will have a different list of `scopes` to check for each *path operation*.
+چیز مهم و "جادویی" اینجا این است که `get_current_user` لیست متفاوتی از `scopes` برای بررسی هر *عملیات مسیر* خواهد داشت.
 
-All depending on the `scopes` declared in each *path operation* and each dependency in the dependency tree for that specific *path operation*.
+همه بسته به `scopes` اعلان شده در هر *عملیات مسیر* و هر وابستگی در درخت وابستگی آن *عملیات مسیر* خاص.
 
 ///
 
-## More details about `SecurityScopes`
+## جزئیات بیشتر درباره `SecurityScopes`
 
-You can use `SecurityScopes` at any point, and in multiple places, it doesn't have to be at the "root" dependency.
+می‌توانید از `SecurityScopes` در هر نقطه و در مکان‌های متعدد استفاده کنید، نباید لزوماً در وابستگی "ریشه" باشد.
 
-It will always have the security scopes declared in the current `Security` dependencies and all the dependants for **that specific** *path operation* and **that specific** dependency tree.
+همیشه محدوده‌های امنیتی اعلان شده در وابستگی‌های `Security` فعلی و تمام وابسته‌ها برای **آن** *عملیات مسیر* خاص و **آن** درخت وابستگی خاص را خواهد داشت.
 
-Because the `SecurityScopes` will have all the scopes declared by dependants, you can use it to verify that a token has the required scopes in a central dependency function, and then declare different scope requirements in different *path operations*.
+چون `SecurityScopes` تمام محدوده‌های اعلان شده توسط وابسته‌ها را خواهد داشت، می‌توانید از آن برای تأیید اینکه توکن محدوده‌های مورد نیاز را دارد در یک تابع وابستگی مرکزی استفاده و سپس الزامات محدوده متفاوت را در *عملیات‌های مسیر* مختلف اعلان کنید.
 
-They will be checked independently for each *path operation*.
+آنها به طور مستقل برای هر *عملیات مسیر* بررسی خواهند شد.
 
-## Check it
+## بررسی کنید
 
-If you open the API docs, you can authenticate and specify which scopes you want to authorize.
+اگر مستندات API را باز کنید، می‌توانید احراز هویت و مشخص کنید کدام محدوده‌ها را می‌خواهید مجوز دهید.
 
 <img src="/img/tutorial/security/image11.png">
 
-If you don't select any scope, you will be "authenticated", but when you try to access `/users/me/` or `/users/me/items/` you will get an error saying that you don't have enough permissions. You will still be able to access `/status/`.
+اگر هیچ محدوده‌ای انتخاب نکنید، "احراز هویت" خواهید شد، اما وقتی سعی کنید به `/users/me/` یا `/users/me/items/` دسترسی پیدا کنید خطایی دریافت خواهید کرد که می‌گوید مجوزهای کافی ندارید. همچنان قادر به دسترسی به `/status/` خواهید بود.
 
-And if you select the scope `me` but not the scope `items`, you will be able to access `/users/me/` but not `/users/me/items/`.
+و اگر محدوده `me` را انتخاب کنید اما نه محدوده `items`، قادر به دسترسی به `/users/me/` خواهید بود اما نه `/users/me/items/`.
 
-That's what would happen to a third party application that tried to access one of these *path operations* with a token provided by a user, depending on how many permissions the user gave the application.
+این چیزی است که به یک برنامه شخص ثالث اتفاق می‌افتد که سعی دارد به یکی از این *عملیات‌های مسیر* با توکنی ارائه شده توسط کاربر دسترسی پیدا کند، بسته به اینکه کاربر چه تعداد مجوز به برنامه داده.
 
-## About third party integrations
+## درباره ادغام‌های شخص ثالث
 
-In this example we are using the OAuth2 "password" flow.
+در این مثال از جریان "رمز عبور" OAuth2 استفاده می‌کنیم.
 
-This is appropriate when we are logging in to our own application, probably with our own frontend.
+این مناسب است وقتی به برنامه خودمان وارد می‌شویم، احتمالاً با فرانت‌اند خودمان.
 
-Because we can trust it to receive the `username` and `password`, as we control it.
+زیرا می‌توانیم به آن اعتماد کنیم که `username` و `password` را دریافت کند، چون ما آن را کنترل می‌کنیم.
 
-But if you are building an OAuth2 application that others would connect to (i.e., if you are building an authentication provider equivalent to Facebook, Google, GitHub, etc.) you should use one of the other flows.
+اما اگر در حال ساخت برنامه OAuth2 هستید که دیگران به آن متصل شوند (یعنی اگر در حال ساخت ارائه‌دهنده احراز هویت معادل Facebook، Google، GitHub و غیره هستید) باید از یکی از جریان‌های دیگر استفاده کنید.
 
-The most common is the implicit flow.
+رایج‌ترین آن جریان implicit است.
 
-The most secure is the code flow, but it's more complex to implement as it requires more steps. As it is more complex, many providers end up suggesting the implicit flow.
+امن‌ترین آن جریان code است، اما پیاده‌سازی آن پیچیده‌تر است زیرا مراحل بیشتری نیاز دارد. چون پیچیده‌تر است، بسیاری از ارائه‌دهندگان در نهایت جریان implicit را پیشنهاد می‌دهند.
 
 /// note
 
-It's common that each authentication provider names their flows in a different way, to make it part of their brand.
+رایج است که هر ارائه‌دهنده احراز هویت جریان‌های خود را به نام‌های متفاوتی نام‌گذاری می‌کند تا بخشی از برند خود کند.
 
-But in the end, they are implementing the same OAuth2 standard.
+اما در نهایت، آنها همان استاندارد OAuth2 را پیاده‌سازی می‌کنند.
 
 ///
 
-**FastAPI** includes utilities for all these OAuth2 authentication flows in `fastapi.security.oauth2`.
+**FastAPI** ابزارهایی برای تمام این جریان‌های احراز هویت OAuth2 در `fastapi.security.oauth2` شامل می‌شود.
 
-## `Security` in decorator `dependencies`
+## `Security` در `dependencies` دکوراتور
 
-The same way you can define a `list` of `Depends` in the decorator's `dependencies` parameter (as explained in [Dependencies in path operation decorators](../../tutorial/dependencies/dependencies-in-path-operation-decorators.md){.internal-link target=_blank}), you could also use `Security` with `scopes` there.
+به همان شکل که می‌توانید `list` از `Depends` را در پارامتر `dependencies` دکوراتور تعریف کنید (همانطور که در [وابستگی‌ها در دکوراتورهای عملیات مسیر](../../tutorial/dependencies/dependencies-in-path-operation-decorators.md){.internal-link target=_blank} توضیح داده شد)، می‌توانید از `Security` با `scopes` نیز در آنجا استفاده کنید.

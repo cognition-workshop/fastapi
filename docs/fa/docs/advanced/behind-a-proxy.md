@@ -1,34 +1,34 @@
-# Behind a Proxy
+# پشت پروکسی
 
-In some situations, you might need to use a **proxy** server like Traefik or Nginx with a configuration that adds an extra path prefix that is not seen by your application.
+در برخی شرایط، ممکن است نیاز به استفاده از سرور **پروکسی** مانند Traefik یا Nginx با تنظیماتی داشته باشید که پیشوند مسیر اضافی‌ای اضافه می‌کند که توسط برنامه شما دیده نمی‌شود.
 
-In these cases you can use `root_path` to configure your application.
+در این موارد می‌توانید از `root_path` برای پیکربندی برنامه خود استفاده کنید.
 
-The `root_path` is a mechanism provided by the ASGI specification (that FastAPI is built on, through Starlette).
+`root_path` مکانیزمی است که توسط مشخصه ASGI (که FastAPI بر اساس آن ساخته شده، از طریق Starlette) ارائه می‌شود.
 
-The `root_path` is used to handle these specific cases.
+`root_path` برای مدیریت این موارد خاص استفاده می‌شود.
 
-And it's also used internally when mounting sub-applications.
+و همچنین به صورت داخلی هنگام mount کردن زیر-برنامه‌ها استفاده می‌شود.
 
-## Proxy with a stripped path prefix
+## پروکسی با پیشوند مسیر حذف شده
 
-Having a proxy with a stripped path prefix, in this case, means that you could declare a path at `/app` in your code, but then, you add a layer on top (the proxy) that would put your **FastAPI** application under a path like `/api/v1`.
+داشتن پروکسی با پیشوند مسیر حذف شده، در این مورد، به این معنی است که می‌توانید مسیری در `/app` در کد خود اعلان کنید، اما سپس لایه‌ای روی آن اضافه کنید (پروکسی) که برنامه **FastAPI** شما را زیر مسیری مانند `/api/v1` قرار دهد.
 
-In this case, the original path `/app` would actually be served at `/api/v1/app`.
+در این مورد، مسیر اصلی `/app` در واقع در `/api/v1/app` سرو خواهد شد.
 
-Even though all your code is written assuming there's just `/app`.
+حتی اگر همه کد شما با فرض اینکه فقط `/app` وجود دارد نوشته شده.
 
 {* ../../docs_src/behind_a_proxy/tutorial001.py hl[6] *}
 
-And the proxy would be **"stripping"** the **path prefix** on the fly before transmitting the request to the app server (probably Uvicorn via FastAPI CLI), keeping your application convinced that it is being served at `/app`, so that you don't have to update all your code to include the prefix `/api/v1`.
+و پروکسی **پیشوند مسیر** را قبل از ارسال درخواست به سرور برنامه (احتمالاً Uvicorn از طریق FastAPI CLI) به صورت پویا **"حذف"** خواهد کرد، و برنامه شما را متقاعد نگه می‌دارد که در `/app` سرو می‌شود، تا نیازی نباشد همه کد خود را برای شامل کردن پیشوند `/api/v1` به‌روز کنید.
 
-Up to here, everything would work as normally.
+تا اینجا، همه چیز عادی کار خواهد کرد.
 
-But then, when you open the integrated docs UI (the frontend), it would expect to get the OpenAPI schema at `/openapi.json`, instead of `/api/v1/openapi.json`.
+اما سپس، وقتی رابط کاربری مستندات یکپارچه (فرانت‌اند) را باز می‌کنید، انتظار دارد اسکیمای OpenAPI را در `/openapi.json` دریافت کند، به جای `/api/v1/openapi.json`.
 
-So, the frontend (that runs in the browser) would try to reach `/openapi.json` and wouldn't be able to get the OpenAPI schema.
+بنابراین، فرانت‌اند (که در مرورگر اجرا می‌شود) سعی خواهد کرد به `/openapi.json` دسترسی پیدا کند و قادر به دریافت اسکیمای OpenAPI نخواهد بود.
 
-Because we have a proxy with a path prefix of `/api/v1` for our app, the frontend needs to fetch the OpenAPI schema at `/api/v1/openapi.json`.
+چون ما پروکسی با پیشوند مسیر `/api/v1` برای برنامه خود داریم، فرانت‌اند باید اسکیمای OpenAPI را در `/api/v1/openapi.json` دریافت کند.
 
 ```mermaid
 graph LR
@@ -43,11 +43,11 @@ proxy --> server
 
 /// tip
 
-The IP `0.0.0.0` is commonly used to mean that the program listens on all the IPs available in that machine/server.
+IP `0.0.0.0` معمولاً به این معنی است که برنامه روی تمام IPهای موجود در آن ماشین/سرور گوش می‌دهد.
 
 ///
 
-The docs UI would also need the OpenAPI schema to declare that this API `server` is located at `/api/v1` (behind the proxy). For example:
+رابط کاربری مستندات همچنین نیاز دارد اسکیمای OpenAPI اعلان کند که این `server` API در `/api/v1` (پشت پروکسی) قرار دارد. برای مثال:
 
 ```JSON hl_lines="4-8"
 {
@@ -64,11 +64,11 @@ The docs UI would also need the OpenAPI schema to declare that this API `server`
 }
 ```
 
-In this example, the "Proxy" could be something like **Traefik**. And the server would be something like FastAPI CLI with **Uvicorn**, running your FastAPI application.
+در این مثال، "پروکسی" می‌تواند چیزی مانند **Traefik** باشد. و سرور می‌تواند چیزی مانند FastAPI CLI با **Uvicorn** باشد که برنامه FastAPI شما را اجرا می‌کند.
 
-### Providing the `root_path`
+### ارائه `root_path`
 
-To achieve this, you can use the command line option `--root-path` like:
+برای رسیدن به این هدف، می‌توانید از گزینه خط فرمان `--root-path` اینطور استفاده کنید:
 
 <div class="termy">
 
@@ -80,25 +80,25 @@ $ fastapi run main.py --root-path /api/v1
 
 </div>
 
-If you use Hypercorn, it also has the option `--root-path`.
+اگر از Hypercorn استفاده می‌کنید، آن هم گزینه `--root-path` دارد.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-The ASGI specification defines a `root_path` for this use case.
+مشخصه ASGI یک `root_path` برای این مورد استفاده تعریف می‌کند.
 
-And the `--root-path` command line option provides that `root_path`.
+و گزینه خط فرمان `--root-path` آن `root_path` را ارائه می‌دهد.
 
 ///
 
-### Checking the current `root_path`
+### بررسی `root_path` فعلی
 
-You can get the current `root_path` used by your application for each request, it is part of the `scope` dictionary (that's part of the ASGI spec).
+می‌توانید `root_path` فعلی مورد استفاده برنامه خود را برای هر درخواست دریافت کنید، بخشی از دیکشنری `scope` است (بخشی از مشخصه ASGI).
 
-Here we are including it in the message just for demonstration purposes.
+اینجا آن را فقط برای نمایش در پیام قرار می‌دهیم.
 
 {* ../../docs_src/behind_a_proxy/tutorial001.py hl[8] *}
 
-Then, if you start Uvicorn with:
+سپس، اگر Uvicorn را اینطور شروع کنید:
 
 <div class="termy">
 
@@ -110,7 +110,7 @@ $ fastapi run main.py --root-path /api/v1
 
 </div>
 
-The response would be something like:
+پاسخ چیزی شبیه به این خواهد بود:
 
 ```JSON
 {
@@ -119,19 +119,19 @@ The response would be something like:
 }
 ```
 
-### Setting the `root_path` in the FastAPI app
+### تنظیم `root_path` در برنامه FastAPI
 
-Alternatively, if you don't have a way to provide a command line option like `--root-path` or equivalent, you can set the `root_path` parameter when creating your FastAPI app:
+به عنوان جایگزین، اگر راهی برای ارائه گزینه خط فرمان مانند `--root-path` یا معادل آن ندارید، می‌توانید پارامتر `root_path` را هنگام ایجاد برنامه FastAPI تنظیم کنید:
 
 {* ../../docs_src/behind_a_proxy/tutorial002.py hl[3] *}
 
-Passing the `root_path` to `FastAPI` would be the equivalent of passing the `--root-path` command line option to Uvicorn or Hypercorn.
+ارسال `root_path` به `FastAPI` معادل ارسال گزینه خط فرمان `--root-path` به Uvicorn یا Hypercorn خواهد بود.
 
-### About `root_path`
+### درباره `root_path`
 
-Keep in mind that the server (Uvicorn) won't use that `root_path` for anything else than passing it to the app.
+به خاطر داشته باشید که سرور (Uvicorn) از آن `root_path` برای هیچ چیز دیگری جز ارسال آن به برنامه استفاده نخواهد کرد.
 
-But if you go with your browser to <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000/app</a> you will see the normal response:
+اما اگر با مرورگر خود به <a href="http://127.0.0.1:8000" class="external-link" target="_blank">http://127.0.0.1:8000/app</a> بروید، پاسخ عادی را خواهید دید:
 
 ```JSON
 {
@@ -140,25 +140,25 @@ But if you go with your browser to <a href="http://127.0.0.1:8000" class="extern
 }
 ```
 
-So, it won't expect to be accessed at `http://127.0.0.1:8000/api/v1/app`.
+بنابراین، انتظار نخواهد داشت در `http://127.0.0.1:8000/api/v1/app` دسترسی پیدا شود.
 
-Uvicorn will expect the proxy to access Uvicorn at `http://127.0.0.1:8000/app`, and then it would be the proxy's responsibility to add the extra `/api/v1` prefix on top.
+Uvicorn انتظار خواهد داشت پروکسی به Uvicorn در `http://127.0.0.1:8000/app` دسترسی پیدا کند، و سپس مسئولیت اضافه کردن پیشوند اضافی `/api/v1` بر عهده پروکسی خواهد بود.
 
-## About proxies with a stripped path prefix
+## درباره پروکسی‌ها با پیشوند مسیر حذف شده
 
-Keep in mind that a proxy with stripped path prefix is only one of the ways to configure it.
+به خاطر داشته باشید که پروکسی با پیشوند مسیر حذف شده فقط یکی از راه‌های پیکربندی آن است.
 
-Probably in many cases the default will be that the proxy doesn't have a stripped path prefix.
+احتمالاً در بسیاری از موارد پیش‌فرض این خواهد بود که پروکسی پیشوند مسیر حذف شده‌ای نداشته باشد.
 
-In a case like that (without a stripped path prefix), the proxy would listen on something like `https://myawesomeapp.com`, and then if the browser goes to `https://myawesomeapp.com/api/v1/app` and your server (e.g. Uvicorn) listens on `http://127.0.0.1:8000` the proxy (without a stripped path prefix) would access Uvicorn at the same path: `http://127.0.0.1:8000/api/v1/app`.
+در چنین مواردی (بدون پیشوند مسیر حذف شده)، پروکسی روی چیزی مانند `https://myawesomeapp.com` گوش خواهد داد، و اگر مرورگر به `https://myawesomeapp.com/api/v1/app` برود و سرور شما (مثلاً Uvicorn) روی `http://127.0.0.1:8000` گوش دهد، پروکسی (بدون پیشوند مسیر حذف شده) به Uvicorn در همان مسیر دسترسی پیدا خواهد کرد: `http://127.0.0.1:8000/api/v1/app`.
 
-## Testing locally with Traefik
+## تست محلی با Traefik
 
-You can easily run the experiment locally with a stripped path prefix using <a href="https://docs.traefik.io/" class="external-link" target="_blank">Traefik</a>.
+می‌توانید به راحتی آزمایش را به صورت محلی با پیشوند مسیر حذف شده با استفاده از <a href="https://docs.traefik.io/" class="external-link" target="_blank">Traefik</a> اجرا کنید.
 
-<a href="https://github.com/containous/traefik/releases" class="external-link" target="_blank">Download Traefik</a>, it's a single binary, you can extract the compressed file and run it directly from the terminal.
+<a href="https://github.com/containous/traefik/releases" class="external-link" target="_blank">Traefik را دانلود کنید</a>، یک فایل باینری تکی است، می‌توانید فایل فشرده را استخراج و مستقیماً از ترمینال اجرا کنید.
 
-Then create a file `traefik.toml` with:
+سپس فایل `traefik.toml` با محتوای زیر ایجاد کنید:
 
 ```TOML hl_lines="3"
 [entryPoints]
@@ -170,15 +170,15 @@ Then create a file `traefik.toml` with:
     filename = "routes.toml"
 ```
 
-This tells Traefik to listen on port 9999 and to use another file `routes.toml`.
+این به Traefik می‌گوید روی پورت 9999 گوش دهد و از فایل دیگری `routes.toml` استفاده کند.
 
 /// tip
 
-We are using port 9999 instead of the standard HTTP port 80 so that you don't have to run it with admin (`sudo`) privileges.
+از پورت 9999 به جای پورت استاندارد HTTP 80 استفاده می‌کنیم تا نیازی به اجرا با دسترسی مدیر (`sudo`) نداشته باشید.
 
 ///
 
-Now create that other file `routes.toml`:
+حالا آن فایل دیگر `routes.toml` را ایجاد کنید:
 
 ```TOML hl_lines="5  12  20"
 [http]
@@ -203,11 +203,11 @@ Now create that other file `routes.toml`:
           url = "http://127.0.0.1:8000"
 ```
 
-This file configures Traefik to use the path prefix `/api/v1`.
+این فایل Traefik را برای استفاده از پیشوند مسیر `/api/v1` پیکربندی می‌کند.
 
-And then Traefik will redirect its requests to your Uvicorn running on `http://127.0.0.1:8000`.
+و سپس Traefik درخواست‌های خود را به Uvicorn در حال اجرا روی `http://127.0.0.1:8000` هدایت خواهد کرد.
 
-Now start Traefik:
+حالا Traefik را شروع کنید:
 
 <div class="termy">
 
@@ -219,7 +219,7 @@ INFO[0000] Configuration loaded from file: /home/user/awesomeapi/traefik.toml
 
 </div>
 
-And now start your app, using the `--root-path` option:
+و حالا برنامه خود را با استفاده از گزینه `--root-path` شروع کنید:
 
 <div class="termy">
 
@@ -231,9 +231,9 @@ $ fastapi run main.py --root-path /api/v1
 
 </div>
 
-### Check the responses
+### بررسی پاسخ‌ها
 
-Now, if you go to the URL with the port for Uvicorn: <a href="http://127.0.0.1:8000/app" class="external-link" target="_blank">http://127.0.0.1:8000/app</a>, you will see the normal response:
+حالا، اگر به URL با پورت Uvicorn بروید: <a href="http://127.0.0.1:8000/app" class="external-link" target="_blank">http://127.0.0.1:8000/app</a>، پاسخ عادی را خواهید دید:
 
 ```JSON
 {
@@ -244,13 +244,13 @@ Now, if you go to the URL with the port for Uvicorn: <a href="http://127.0.0.1:8
 
 /// tip
 
-Notice that even though you are accessing it at `http://127.0.0.1:8000/app` it shows the `root_path` of `/api/v1`, taken from the option `--root-path`.
+توجه کنید حتی اگر در `http://127.0.0.1:8000/app` به آن دسترسی پیدا می‌کنید، `root_path` برابر `/api/v1` را نشان می‌دهد که از گزینه `--root-path` گرفته شده.
 
 ///
 
-And now open the URL with the port for Traefik, including the path prefix: <a href="http://127.0.0.1:9999/api/v1/app" class="external-link" target="_blank">http://127.0.0.1:9999/api/v1/app</a>.
+و حالا URL با پورت Traefik شامل پیشوند مسیر را باز کنید: <a href="http://127.0.0.1:9999/api/v1/app" class="external-link" target="_blank">http://127.0.0.1:9999/api/v1/app</a>.
 
-We get the same response:
+همان پاسخ را دریافت می‌کنیم:
 
 ```JSON
 {
@@ -259,53 +259,53 @@ We get the same response:
 }
 ```
 
-but this time at the URL with the prefix path provided by the proxy: `/api/v1`.
+اما این بار در URL با مسیر پیشوند ارائه شده توسط پروکسی: `/api/v1`.
 
-Of course, the idea here is that everyone would access the app through the proxy, so the version with the path prefix `/api/v1` is the "correct" one.
+البته، ایده اینجا این است که همه از طریق پروکسی به برنامه دسترسی پیدا کنند، بنابراین نسخه با پیشوند مسیر `/api/v1` نسخه "صحیح" است.
 
-And the version without the path prefix (`http://127.0.0.1:8000/app`), provided by Uvicorn directly, would be exclusively for the _proxy_ (Traefik) to access it.
+و نسخه بدون پیشوند مسیر (`http://127.0.0.1:8000/app`)، ارائه شده مستقیماً توسط Uvicorn، منحصراً برای دسترسی _پروکسی_ (Traefik) به آن خواهد بود.
 
-That demonstrates how the Proxy (Traefik) uses the path prefix and how the server (Uvicorn) uses the `root_path` from the option `--root-path`.
+این نشان می‌دهد چگونه پروکسی (Traefik) از پیشوند مسیر استفاده می‌کند و چگونه سرور (Uvicorn) از `root_path` گزینه `--root-path` استفاده می‌کند.
 
-### Check the docs UI
+### بررسی رابط کاربری مستندات
 
-But here's the fun part. ✨
+اما اینجا بخش جالب است. ✨
 
-The "official" way to access the app would be through the proxy with the path prefix that we defined. So, as we would expect, if you try the docs UI served by Uvicorn directly, without the path prefix in the URL, it won't work, because it expects to be accessed through the proxy.
+راه "رسمی" دسترسی به برنامه از طریق پروکسی با پیشوند مسیر تعریف شده خواهد بود. بنابراین، همانطور که انتظار داریم، اگر رابط کاربری مستندات سرو شده مستقیماً توسط Uvicorn را بدون پیشوند مسیر در URL امتحان کنید، کار نخواهد کرد، زیرا انتظار دارد از طریق پروکسی دسترسی پیدا شود.
 
-You can check it at <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>:
+می‌توانید آن را در <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a> بررسی کنید:
 
 <img src="/img/tutorial/behind-a-proxy/image01.png">
 
-But if we access the docs UI at the "official" URL using the proxy with port `9999`, at `/api/v1/docs`, it works correctly! 🎉
+اما اگر رابط کاربری مستندات را در URL "رسمی" با استفاده از پروکسی با پورت `9999`، در `/api/v1/docs` باز کنیم، به درستی کار می‌کند! 🎉
 
-You can check it at <a href="http://127.0.0.1:9999/api/v1/docs" class="external-link" target="_blank">http://127.0.0.1:9999/api/v1/docs</a>:
+می‌توانید آن را در <a href="http://127.0.0.1:9999/api/v1/docs" class="external-link" target="_blank">http://127.0.0.1:9999/api/v1/docs</a> بررسی کنید:
 
 <img src="/img/tutorial/behind-a-proxy/image02.png">
 
-Right as we wanted it. ✔️
+دقیقاً همانطور که می‌خواستیم. ✔️
 
-This is because FastAPI uses this `root_path` to create the default `server` in OpenAPI with the URL provided by `root_path`.
+این به این دلیل است که FastAPI از این `root_path` برای ایجاد `server` پیش‌فرض در OpenAPI با URL ارائه شده توسط `root_path` استفاده می‌کند.
 
-## Additional servers
+## سرورهای اضافی
 
 /// warning
 
-This is a more advanced use case. Feel free to skip it.
+این یک مورد استفاده پیشرفته‌تر است. خیالتان راحت باشد و رد شوید.
 
 ///
 
-By default, **FastAPI** will create a `server` in the OpenAPI schema with the URL for the `root_path`.
+به طور پیش‌فرض، **FastAPI** یک `server` در اسکیمای OpenAPI با URL مربوط به `root_path` ایجاد خواهد کرد.
 
-But you can also provide other alternative `servers`, for example if you want *the same* docs UI to interact with both a staging and a production environment.
+اما می‌توانید `server`های جایگزین دیگری نیز ارائه دهید، برای مثال اگر بخواهید *همان* رابط کاربری مستندات با محیط‌های staging و production تعامل داشته باشد.
 
-If you pass a custom list of `servers` and there's a `root_path` (because your API lives behind a proxy), **FastAPI** will insert a "server" with this `root_path` at the beginning of the list.
+اگر لیست سفارشی `servers` ارسال کنید و `root_path` وجود داشته باشد (زیرا API شما پشت پروکسی است)، **FastAPI** یک "server" با این `root_path` در ابتدای لیست درج خواهد کرد.
 
-For example:
+برای مثال:
 
 {* ../../docs_src/behind_a_proxy/tutorial003.py hl[4:7] *}
 
-Will generate an OpenAPI schema like:
+اسکیمای OpenAPI زیر را تولید خواهد کرد:
 
 ```JSON hl_lines="5-7"
 {
@@ -332,30 +332,30 @@ Will generate an OpenAPI schema like:
 
 /// tip
 
-Notice the auto-generated server with a `url` value of `/api/v1`, taken from the `root_path`.
+توجه کنید سرور تولید شده خودکار با مقدار `url` برابر `/api/v1` که از `root_path` گرفته شده.
 
 ///
 
-In the docs UI at <a href="http://127.0.0.1:9999/api/v1/docs" class="external-link" target="_blank">http://127.0.0.1:9999/api/v1/docs</a> it would look like:
+در رابط کاربری مستندات در <a href="http://127.0.0.1:9999/api/v1/docs" class="external-link" target="_blank">http://127.0.0.1:9999/api/v1/docs</a> اینطور خواهد بود:
 
 <img src="/img/tutorial/behind-a-proxy/image03.png">
 
 /// tip
 
-The docs UI will interact with the server that you select.
+رابط کاربری مستندات با سروری که انتخاب می‌کنید تعامل خواهد داشت.
 
 ///
 
-### Disable automatic server from `root_path`
+### غیرفعال کردن سرور خودکار از `root_path`
 
-If you don't want **FastAPI** to include an automatic server using the `root_path`, you can use the parameter `root_path_in_servers=False`:
+اگر نمی‌خواهید **FastAPI** سرور خودکار با استفاده از `root_path` اضافه کند، می‌توانید از پارامتر `root_path_in_servers=False` استفاده کنید:
 
 {* ../../docs_src/behind_a_proxy/tutorial004.py hl[9] *}
 
-and then it won't include it in the OpenAPI schema.
+و سپس در اسکیمای OpenAPI گنجانده نخواهد شد.
 
-## Mounting a sub-application
+## Mount کردن زیر-برنامه
 
-If you need to mount a sub-application (as described in [Sub Applications - Mounts](sub-applications.md){.internal-link target=_blank}) while also using a proxy with `root_path`, you can do it normally, as you would expect.
+اگر نیاز به mount کردن زیر-برنامه دارید (همانطور که در [زیر-برنامه‌ها - Mounts](sub-applications.md){.internal-link target=_blank} توضیح داده شده) در حالی که از پروکسی با `root_path` نیز استفاده می‌کنید، می‌توانید به طور عادی انجام دهید، همانطور که انتظار دارید.
 
-FastAPI will internally use the `root_path` smartly, so it will just work. ✨
+FastAPI به صورت داخلی از `root_path` به طور هوشمندانه استفاده خواهد کرد، بنابراین فقط کار خواهد کرد. ✨
