@@ -1,35 +1,35 @@
-# Çerez (Cookie) Parametreleri
+# Çerez Parametreleri
 
-`Query` (Sorgu) ve `Path` (Yol) parametrelerini tanımladığınız şekilde çerez parametreleri tanımlayabilirsiniz.
+Çerez parametrelerini `Query` ve `Path` parametrelerini tanımladığınız şekilde tanımlayabilirsiniz.
 
-## Import `Cookie`
+## `Cookie`'yi içe aktarın
 
-Öncelikle, `Cookie`'yi projenize dahil edin:
+Öncelikle `Cookie`'yi içe aktarın:
 
 {* ../../docs_src/cookie_params/tutorial001_an_py310.py hl[3] *}
 
-## `Cookie` Parametrelerini Tanımlayın
+## `Cookie` parametrelerini bildirin
 
-Çerez parametrelerini `Path` veya `Query` tanımlaması yapar gibi tanımlayın.
+Ardından çerez parametrelerini `Path` ve `Query` ile aynı yapıyı kullanarak bildirin.
 
-İlk değer varsayılan değerdir; tüm ekstra doğrulama veya belirteç parametrelerini kullanabilirsiniz:
+Varsayılan değeri ve tüm ek doğrulama veya açıklama parametrelerini tanımlayabilirsiniz:
 
 {* ../../docs_src/cookie_params/tutorial001_an_py310.py hl[9] *}
 
 /// note | Teknik Detaylar
 
-`Cookie` sınıfı `Path` ve `Query` sınıflarının kardeşidir. Diğerleri gibi `Param` sınıfını miras alan bir sınıftır.
+`Cookie`, `Path` ve `Query`'nin bir "kardeş" sınıfıdır. Aynı ortak `Param` sınıfından miras alır.
 
-Ancak `fastapi`'dan projenize dahil ettiğiniz `Query`, `Path`, `Cookie` ve diğerleri aslında özel sınıflar döndüren birer fonksiyondur.
+Ancak `fastapi`'den `Query`, `Path`, `Cookie` ve diğerlerini içe aktardığınızda, bunların aslında özel sınıflar döndüren fonksiyonlar olduğunu unutmayın.
 
 ///
 
-/// info | Bilgi
+/// info
 
-Çerez tanımlamak için `Cookie` sınıfını kullanmanız gerekmektedir, aksi taktirde parametreler sorgu parametreleri olarak yorumlanır.
+Çerezleri bildirmek için `Cookie` kullanmanız gerekir, aksi takdirde parametreler sorgu parametreleri olarak yorumlanır.
 
 ///
 
 ## Özet
 
-Çerez tanımlamalarını `Cookie` sınıfını kullanarak `Query` ve `Path` tanımlar gibi tanımlayın.
+Çerezleri `Cookie` ile bildirin, `Query` ve `Path` ile aynı ortak kalıbı kullanarak.

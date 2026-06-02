@@ -1,12 +1,12 @@
 # Sorgu Parametreleri
 
-Fonksiyonda yol parametrelerinin parçası olmayan diğer tanımlamalar otomatik olarak "sorgu" parametresi olarak yorumlanır.
+Yol parametrelerinin bir parçası olmayan diğer fonksiyon parametrelerini bildirdiğinizde, bunlar otomatik olarak "sorgu" parametreleri olarak yorumlanır.
 
 {* ../../docs_src/query_params/tutorial001.py hl[9] *}
 
-Sorgu, bağlantıdaki `?` kısmından sonra gelen ve `&` işareti ile ayrılan anahtar-değer çiftlerinin oluşturduğu bir kümedir.
+Sorgu, URL'de `?` işaretinden sonra gelen ve `&` karakterleriyle ayrılan anahtar-değer çiftleri kümesidir.
 
-Örneğin, aşağıdaki bağlantıda:
+Örneğin, şu URL'de:
 
 ```
 http://127.0.0.1:8000/items/?skip=0&limit=10
@@ -14,70 +14,70 @@ http://127.0.0.1:8000/items/?skip=0&limit=10
 
 ...sorgu parametreleri şunlardır:
 
-* `skip`: değeri `0`'dır
-* `limit`: değeri `10`'dır
+* `skip`: `0` değerine sahip
+* `limit`: `10` değerine sahip
 
-Parametreler bağlantının bir parçası oldukları için doğal olarak string olarak değerlendirilirler.
+URL'nin bir parçası oldukları için "doğal olarak" stringdirler.
 
-Fakat, Python tipleri ile tanımlandıkları zaman (yukarıdaki örnekte `int` oldukları gibi), parametreler o tiplere dönüştürülür ve o tipler çerçevesinde doğrulanırlar.
+Ancak Python tipleriyle bildirdiğinizde (yukarıdaki örnekte `int` olarak), o tipe dönüştürülür ve ona göre doğrulanır.
 
-Yol parametreleri için geçerli olan her türlü işlem aynı şekilde sorgu parametreleri için de geçerlidir:
+Yol parametreleri için geçerli olan aynı süreç sorgu parametreleri için de geçerlidir:
 
-* Editör desteği (şüphesiz)
-* Veri "<abbr title="HTTP isteği ile birlikte gelen string'i Python verisine dönüştürme">ayrıştırma</abbr>"
+* Editör desteği (açıkçası)
+* Veri <abbr title="HTTP isteğinden gelen stringi Python verisine dönüştürme">"ayrıştırma"</abbr>
 * Veri doğrulama
-* Otomatik dokümantasyon
+* Otomatik belgelendirme
 
 ## Varsayılanlar
 
-Sorgu parametreleri, adres yolunun sabit bir parçası olmadıklarından dolayı isteğe bağlı ve varsayılan değere sahip olabilirler.
+Sorgu parametreleri yolun sabit bir parçası olmadığından, isteğe bağlı olabilir ve varsayılan değerlere sahip olabilir.
 
-Yukarıdaki örnekte `skip=0` ve `limit=10` varsayılan değere sahiplerdir.
+Yukarıdaki örnekte `skip=0` ve `limit=10` varsayılan değerlerine sahiptirler.
 
-Yani, aşağıdaki bağlantıya gitmek:
+Yani, şu URL'ye gitmek:
 
 ```
 http://127.0.0.1:8000/items/
 ```
 
-şu adrese gitmek ile aynı etkiye sahiptir:
+şu URL'ye gitmekle aynı olurdu:
 
 ```
 http://127.0.0.1:8000/items/?skip=0&limit=10
 ```
 
-Ancak, mesela şöyle bir adresi ziyaret ederseniz:
+Ancak örneğin şu adrese giderseniz:
 
 ```
 http://127.0.0.1:8000/items/?skip=20
 ```
 
-Fonksiyonunuzdaki parametre değerleri aşağıdaki gibi olacaktır:
+Fonksiyonunuzdaki parametre değerleri şöyle olacaktır:
 
-* `skip=20`: çünkü bağlantıda böyle tanımlandı.
-* `limit=10`: çünkü varsayılan değer buydu.
+* `skip=20`: çünkü URL'de ayarladınız
+* `limit=10`: çünkü bu varsayılan değerdi
 
-## İsteğe Bağlı Parametreler
+## İsteğe bağlı parametreler
 
-Aynı şekilde, varsayılan değerlerini `None` olarak atayarak isteğe bağlı parametreler tanımlayabilirsiniz:
+Aynı şekilde, varsayılanlarını `None` olarak ayarlayarak isteğe bağlı sorgu parametreleri bildirebilirsiniz:
 
 {* ../../docs_src/query_params/tutorial002_py310.py hl[7] *}
 
-Bu durumda, `q` fonksiyon parametresi isteğe bağlı olacak ve varsayılan değer olarak `None` alacaktır.
+Bu durumda, `q` fonksiyon parametresi isteğe bağlı olacak ve varsayılan olarak `None` olacaktır.
 
-/// check | Ek bilgi
+/// check
 
-Ayrıca, dikkatinizi çekerim ki; **FastAPI**, `item_id` parametresinin bir yol parametresi olduğunu ve `q` parametresinin yol değil bir sorgu parametresi olduğunu fark edecek kadar beceriklidir.
+Ayrıca **FastAPI**'nin `item_id` yol parametresinin bir yol parametresi olduğunu ve `q`'nun olmadığını, dolayısıyla bir sorgu parametresi olduğunu fark edecek kadar akıllı olduğuna dikkat edin.
 
 ///
 
-## Sorgu Parametresi Tip Dönüşümü
+## Sorgu parametresi tip dönüşümü
 
-Aşağıda görüldüğü gibi dönüştürülmek üzere `bool` tipleri de tanımlayabilirsiniz:
+`bool` tipleri de bildirebilirsiniz ve bunlar dönüştürülecektir:
 
 {* ../../docs_src/query_params/tutorial003_py310.py hl[7] *}
 
-Bu durumda, eğer şu adrese giderseniz:
+Bu durumda, şu adrese giderseniz:
 
 ```
 http://127.0.0.1:8000/items/foo?short=1
@@ -107,38 +107,38 @@ veya
 http://127.0.0.1:8000/items/foo?short=yes
 ```
 
-veya adres, herhangi farklı bir harf varyasyonu içermesi durumuna rağmen (büyük harf, sadece baş harfi büyük kelime, vb.) fonksiyonunuz, `bool` tipli `short` parametresini `True` olarak algılayacaktır. Aksi halde `False` olarak algılanacaktır.
+veya herhangi bir başka büyük/küçük harf varyasyonunda (büyük harf, ilk harf büyük vb.), fonksiyonunuz `short` parametresini `True` `bool` değeriyle görecektir. Aksi takdirde `False` olarak.
 
 
-## Çoklu Yol ve Sorgu Parametreleri
+## Birden fazla yol ve sorgu parametresi
 
-**FastAPI** neyin ne olduğunu ayırt edebileceğinden dolayı aynı anda birden fazla yol ve sorgu parametresi tanımlayabilirsiniz.
+Birden fazla yol parametresi ve sorgu parametresini aynı anda bildirebilirsiniz, **FastAPI** hangisinin hangisi olduğunu bilir.
 
-Ve parametreleri, herhangi bir sıraya koymanıza da gerek yoktur.
+Ve bunları belirli bir sırada bildirmeniz gerekmez.
 
-İsimlerine göre belirleneceklerdir:
+İsimlerine göre tespit edilecektir:
 
 {* ../../docs_src/query_params/tutorial004_py310.py hl[6,8] *}
 
-## Zorunlu Sorgu Parametreleri
+## Zorunlu sorgu parametreleri
 
-Türü yol olmayan bir parametre (şu ana kadar sadece sorgu parametrelerini gördük) için varsayılan değer tanımlarsanız o parametre zorunlu olmayacaktır.
+Yol olmayan parametreler için bir varsayılan değer bildirdiğinizde (şu anda yalnızca sorgu parametrelerini gördük), o zaman zorunlu değildir.
 
-Parametre için belirli bir değer atamak istemeyip parametrenin sadece isteğe bağlı olmasını istiyorsanız değerini `None` olarak atayabilirsiniz.
+Belirli bir değer eklemek istemeyip sadece isteğe bağlı yapmak istiyorsanız, varsayılanı `None` olarak ayarlayın.
 
-Fakat, bir sorgu parametresini zorunlu yapmak istiyorsanız varsayılan bir değer atamamanız yeterli olacaktır:
+Ancak bir sorgu parametresini zorunlu yapmak istediğinizde, herhangi bir varsayılan değer bildirmeyebilirsiniz:
 
 {* ../../docs_src/query_params/tutorial005.py hl[6:7] *}
 
-Burada `needy` parametresi `str` tipinden oluşan zorunlu bir sorgu parametresidir.
+Burada `needy` sorgu parametresi, `str` tipinde zorunlu bir sorgu parametresidir.
 
-Eğer tarayıcınızda şu bağlantıyı:
+Tarayıcınızda şöyle bir URL açarsanız:
 
 ```
 http://127.0.0.1:8000/items/foo-item
 ```
 
-...`needy` parametresini eklemeden açarsanız şuna benzer bir hata ile karşılaşırsınız:
+...zorunlu `needy` parametresini eklemeden, şöyle bir hata göreceksiniz:
 
 ```JSON
 {
@@ -157,13 +157,13 @@ http://127.0.0.1:8000/items/foo-item
 }
 ```
 
-`needy` zorunlu bir parametre olduğundan dolayı bağlantıda tanımlanması gerekir:
+`needy` zorunlu bir parametre olduğundan, URL'de ayarlamanız gerekir:
 
 ```
 http://127.0.0.1:8000/items/foo-item?needy=sooooneedy
 ```
 
-...bu iş görür:
+...bu çalışır:
 
 ```JSON
 {
@@ -172,18 +172,18 @@ http://127.0.0.1:8000/items/foo-item?needy=sooooneedy
 }
 ```
 
-Ve elbette, bazı parametreleri zorunlu, bazılarını varsayılan değerli ve bazılarını tamamen opsiyonel olarak tanımlayabilirsiniz:
+Ve elbette, bazı parametreleri zorunlu, bazılarını varsayılan değere sahip ve bazılarını tamamen isteğe bağlı olarak tanımlayabilirsiniz:
 
 {* ../../docs_src/query_params/tutorial006_py310.py hl[8] *}
 
-Bu durumda, 3 tane sorgu parametresi var olacaktır:
+Bu durumda, 3 sorgu parametresi vardır:
 
 * `needy`, zorunlu bir `str`.
 * `skip`, varsayılan değeri `0` olan bir `int`.
 * `limit`, isteğe bağlı bir `int`.
 
-/// tip | İpucu
+/// tip
 
-Ayrıca, [Yol Parametrelerinde](path-params.md#on-tanml-degerler){.internal-link target=_blank} de kullanıldığı şekilde `Enum` sınıfından faydalanabilirsiniz.
+`Enum`'ları da [Yol Parametreleri](path-params.md#onceden-tanimlanmis-degerler){.internal-link target=_blank} ile aynı şekilde kullanabilirsiniz.
 
 ///

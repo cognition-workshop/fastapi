@@ -1,39 +1,39 @@
 # Genel - Nasıl Yapılır - Tarifler
 
-Bu sayfada genel ve sıkça sorulan sorular için dokümantasyonun diğer sayfalarına yönlendirmeler bulunmaktadır.
+Burada, genel veya sık sorulan sorular için belgelerdeki diğer yerlere çeşitli işaretçiler bulunmaktadır.
 
-## Veri Filtreleme - Güvenlik
+## Verileri Filtreleme - Güvenlik
 
-Döndürmeniz gereken veriden fazlasını döndürmediğinizden emin olmak için, [Tutorial - Response Model - Return Type](../tutorial/response-model.md){.internal-link target=_blank} sayfasını okuyun.
+Olması gerekenden daha fazla veri döndürmediğinizden emin olmak için [Öğretici - Yanıt Modeli - Dönüş Türü](../tutorial/response-model.md){.internal-link target=_blank} belgelerini okuyun.
 
-## Dokümantasyon Etiketleri - OpenAPI
+## Belgeleme Etiketleri - OpenAPI
 
-*Yol operasyonlarınıza* etiketler ekleyerek dokümantasyon arayüzünde gruplar halinde görünmesini sağlamak için, [Tutorial - Path Operation Configurations - Tags](../tutorial/path-operation-configuration.md#tags){.internal-link target=_blank} sayfasını okuyun.
+*Yol operasyonlarınıza* etiketler eklemek ve bunları belge arayüzünde gruplamak için [Öğretici - Yol Operasyonu Yapılandırması - Etiketler](../tutorial/path-operation-configuration.md#tags){.internal-link target=_blank} belgelerini okuyun.
 
-## Dokümantasyon Özeti ve Açıklaması - OpenAPI
+## Belgeleme Özeti ve Açıklaması - OpenAPI
 
-*Yol operasyonlarınıza* özet ve açıklama ekleyip dokümantasyon arayüzünde görünmesini sağlamak için, [Tutorial - Path Operation Configurations - Summary and Description](../tutorial/path-operation-configuration.md#summary-and-description){.internal-link target=_blank} sayfasını okuyun.
+*Yol operasyonlarınıza* özet ve açıklama eklemek ve bunları belge arayüzünde göstermek için [Öğretici - Yol Operasyonu Yapılandırması - Özet ve Açıklama](../tutorial/path-operation-configuration.md#summary-and-description){.internal-link target=_blank} belgelerini okuyun.
 
-## Yanıt Açıklaması Dokümantasyonu - OpenAPI
+## Belgeleme Yanıt Açıklaması - OpenAPI
 
-Dokümantasyon arayüzünde yer alan yanıt açıklamasını tanımlamak için, [Tutorial - Path Operation Configurations - Response description](../tutorial/path-operation-configuration.md#response-description){.internal-link target=_blank} sayfasını okuyun.
+Belge arayüzünde gösterilen yanıtın açıklamasını tanımlamak için [Öğretici - Yol Operasyonu Yapılandırması - Yanıt Açıklaması](../tutorial/path-operation-configuration.md#response-description){.internal-link target=_blank} belgelerini okuyun.
 
-## *Yol Operasyonunu* Kullanımdan Kaldırma - OpenAPI
+## Belgeleme *Yol Operasyonunu* Kullanımdan Kaldırma - OpenAPI
 
-Bir *yol işlemi*ni kullanımdan kaldırmak ve bunu dokümantasyon arayüzünde göstermek için, [Tutorial - Path Operation Configurations - Deprecation](../tutorial/path-operation-configuration.md#deprecate-a-path-operation){.internal-link target=_blank} sayfasını okuyun.
+Bir *yol operasyonunu* kullanımdan kaldırmak ve belge arayüzünde göstermek için [Öğretici - Yol Operasyonu Yapılandırması - Kullanımdan Kaldırma](../tutorial/path-operation-configuration.md#deprecate-a-path-operation){.internal-link target=_blank} belgelerini okuyun.
 
-## Herhangi Bir Veriyi JSON Uyumlu Hale Getirme
+## Herhangi Bir Veriyi JSON Uyumluya Dönüştürme
 
-Herhangi bir veriyi JSON uyumlu hale getirmek için, [Tutorial - JSON Compatible Encoder](../tutorial/encoder.md){.internal-link target=_blank} sayfasını okuyun.
+Herhangi bir veriyi JSON uyumluya dönüştürmek için [Öğretici - JSON Uyumlu Kodlayıcı](../tutorial/encoder.md){.internal-link target=_blank} belgelerini okuyun.
 
-## OpenAPI Meta Verileri - Dokümantasyon
+## OpenAPI Meta Verileri - Belgeler
 
-OpenAPI şemanıza lisans, sürüm, iletişim vb. meta veriler eklemek için, [Tutorial - Metadata and Docs URLs](../tutorial/metadata.md){.internal-link target=_blank} sayfasını okuyun.
+OpenAPI şemanıza lisans, sürüm, iletişim vb. dahil meta veriler eklemek için [Öğretici - Meta Veriler ve Belge URL'leri](../tutorial/metadata.md){.internal-link target=_blank} belgelerini okuyun.
 
-## OpenAPI Bağlantı Özelleştirme
+## OpenAPI Özel URL
 
-OpenAPI bağlantısını özelleştirmek (veya kaldırmak) için, [Tutorial - Metadata and Docs URLs](../tutorial/metadata.md#openapi-url){.internal-link target=_blank} sayfasını okuyun.
+OpenAPI URL'sini özelleştirmek (veya kaldırmak) için [Öğretici - Meta Veriler ve Belge URL'leri](../tutorial/metadata.md#openapi-url){.internal-link target=_blank} belgelerini okuyun.
 
-## OpenAPI Dokümantasyon Bağlantıları
+## OpenAPI Belge URL'leri
 
-Dokümantasyonu arayüzünde kullanılan bağlantıları güncellemek için, [Tutorial - Metadata and Docs URLs](../tutorial/metadata.md#docs-urls){.internal-link target=_blank} sayfasını okuyun.
+Otomatik oluşturulan belgeler kullanıcı arayüzleri için kullanılan URL'leri güncellemek için [Öğretici - Meta Veriler ve Belge URL'leri](../tutorial/metadata.md#docs-urls){.internal-link target=_blank} belgelerini okuyun.
