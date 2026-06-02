@@ -1,132 +1,136 @@
-# Python Types Intro
+# معرفی انواع پایتون
 
-Python has support for optional "type hints" (also called "type annotations").
+پایتون از "type hintها" اختیاری (که "حاشیه‌نویسی نوع" نیز نامیده می‌شوند) پشتیبانی می‌کند.
 
-These **"type hints"** or annotations are a special syntax that allow declaring the <abbr title="for example: str, int, float, bool">type</abbr> of a variable.
+این **"type hintها"** یا حاشیه‌نویسی‌ها سینتکس خاصی هستند که امکان اعلان <abbr title="به عنوان مثال: str, int, float, bool">نوع</abbr> یک متغیر را فراهم می‌کنند.
 
-By declaring types for your variables, editors and tools can give you better support.
+با اعلان انواع برای متغیرهایتان، ویرایشگرها و ابزارها می‌توانند پشتیبانی بهتری ارائه دهند.
 
-This is just a **quick tutorial / refresher** about Python type hints. It covers only the minimum necessary to use them with **FastAPI**... which is actually very little.
+این فقط یک **آموزش سریع / مرور** درباره type hintهای پایتون است. فقط حداقل‌های لازم برای استفاده از آنها با **FastAPI** را پوشش می‌دهد... که در واقع بسیار کم است.
 
-**FastAPI** is all based on these type hints, they give it many advantages and benefits.
+**FastAPI** کاملاً بر اساس این type hintها ساخته شده است، آنها مزایا و فواید زیادی به آن می‌دهند.
 
-But even if you never use **FastAPI**, you would benefit from learning a bit about them.
+اما حتی اگر هرگز از **FastAPI** استفاده نکنید، از یادگیری کمی درباره آنها بهره‌مند خواهید شد.
 
 /// note
 
-If you are a Python expert, and you already know everything about type hints, skip to the next chapter.
+اگر متخصص پایتون هستید و همه چیز درباره type hintها را از قبل می‌دانید، به فصل بعدی بروید.
 
 ///
 
-## Motivation
+## انگیزه
 
-Let's start with a simple example:
+بیایید با یک مثال ساده شروع کنیم:
 
 {* ../../docs_src/python_types/tutorial001.py *}
 
-Calling this program outputs:
+فراخوانی این برنامه خروجی زیر را تولید می‌کند:
 
 ```
 John Doe
 ```
 
-The function does the following:
+تابع کارهای زیر را انجام می‌دهد:
 
-* Takes a `first_name` and `last_name`.
-* Converts the first letter of each one to upper case with `title()`.
-* <abbr title="Puts them together, as one. With the contents of one after the other.">Concatenates</abbr> them with a space in the middle.
+* یک `first_name` و `last_name` می‌گیرد.
+* حرف اول هر کدام را با `title()` به حروف بزرگ تبدیل می‌کند.
+* آنها را با یک فاصله در وسط <abbr title="آنها را کنار هم قرار می‌دهد، یکی پس از دیگری.">الحاق</abbr> می‌کند.
 
 {* ../../docs_src/python_types/tutorial001.py hl[2] *}
 
-### Edit it
+### ویرایش آن
 
-It's a very simple program.
+یک برنامه بسیار ساده است.
 
-But now imagine that you were writing it from scratch.
+اما حالا تصور کنید که آن را از ابتدا می‌نوشتید.
 
-At some point you would have started the definition of the function, you had the parameters ready...
+در نقطه‌ای تعریف تابع را شروع کرده بودید، پارامترها آماده بودند...
 
-But then you have to call "that method that converts the first letter to upper case".
+اما بعد باید "آن متدی که حرف اول را به حروف بزرگ تبدیل می‌کند" را فراخوانی کنید.
 
-Was it `upper`? Was it `uppercase`? `first_uppercase`? `capitalize`?
+آیا `upper` بود؟ `uppercase`؟ `first_uppercase`؟ `capitalize`؟
 
-Then, you try with the old programmer's friend, editor autocompletion.
+سپس، با دوست قدیمی برنامه‌نویس، تکمیل خودکار ویرایشگر امتحان می‌کنید.
 
-You type the first parameter of the function, `first_name`, then a dot (`.`) and then hit `Ctrl+Space` to trigger the completion.
+اولین پارامتر تابع `first_name` را تایپ می‌کنید، سپس یک نقطه (`.`) و `Ctrl+Space` را برای فعال‌سازی تکمیل خودکار فشار می‌دهید.
 
-But, sadly, you get nothing useful:
+اما متأسفانه چیز مفیدی دریافت نمی‌کنید:
 
 <img src="/img/python-types/image01.png">
 
-### Add types
+### افزودن انواع
 
-Let's modify a single line from the previous version.
+بیایید یک خط از نسخه قبلی را تغییر دهیم.
 
-We will change exactly this fragment, the parameters of the function, from:
+دقیقاً این بخش، پارامترهای تابع، را از:
 
 ```Python
     first_name, last_name
 ```
 
-to:
+به:
 
 ```Python
     first_name: str, last_name: str
 ```
 
-That's it.
+تغییر خواهیم داد.
 
-Those are the "type hints":
+همین.
+
+اینها "type hintها" هستند:
 
 {* ../../docs_src/python_types/tutorial002.py hl[1] *}
 
-That is not the same as declaring default values like would be with:
+این مانند اعلان مقادیر پیش‌فرض نیست که با:
 
 ```Python
     first_name="john", last_name="doe"
 ```
 
-It's a different thing.
+خواهد بود.
 
-We are using colons (`:`), not equals (`=`).
+چیز متفاوتی است.
 
-And adding type hints normally doesn't change what happens from what would happen without them.
+ما از دو نقطه (`:`) استفاده می‌کنیم، نه مساوی (`=`).
 
-But now, imagine you are again in the middle of creating that function, but with type hints.
+و افزودن type hintها معمولاً آنچه بدون آنها اتفاق می‌افتد را تغییر نمی‌دهد.
 
-At the same point, you try to trigger the autocomplete with `Ctrl+Space` and you see:
+اما حالا تصور کنید دوباره در حال ایجاد آن تابع هستید، اما با type hintها.
+
+در همان نقطه، سعی می‌کنید تکمیل خودکار را با `Ctrl+Space` فعال کنید و می‌بینید:
 
 <img src="/img/python-types/image02.png">
 
-With that, you can scroll, seeing the options, until you find the one that "rings a bell":
+با آن، می‌توانید پیمایش کنید و گزینه‌ها را ببینید، تا آنی را که "زنگ می‌زند" پیدا کنید:
 
 <img src="/img/python-types/image03.png">
 
-## More motivation
+## انگیزه بیشتر
 
-Check this function, it already has type hints:
+این تابع را بررسی کنید، از قبل type hintها دارد:
 
 {* ../../docs_src/python_types/tutorial003.py hl[1] *}
 
-Because the editor knows the types of the variables, you don't only get completion, you also get error checks:
+چون ویرایشگر انواع متغیرها را می‌داند، نه فقط تکمیل خودکار، بلکه بررسی خطا نیز دریافت می‌کنید:
 
 <img src="/img/python-types/image04.png">
 
-Now you know that you have to fix it, convert `age` to a string with `str(age)`:
+حالا می‌دانید باید آن را رفع کنید، `age` را با `str(age)` به رشته تبدیل کنید:
 
 {* ../../docs_src/python_types/tutorial004.py hl[2] *}
 
-## Declaring types
+## اعلان انواع
 
-You just saw the main place to declare type hints. As function parameters.
+همین الان محل اصلی اعلان type hintها را دیدید. به عنوان پارامترهای تابع.
 
-This is also the main place you would use them with **FastAPI**.
+این همچنین محل اصلی‌ای است که آنها را با **FastAPI** استفاده خواهید کرد.
 
-### Simple types
+### انواع ساده
 
-You can declare all the standard Python types, not only `str`.
+می‌توانید تمام انواع استاندارد پایتون را اعلان کنید، نه فقط `str`.
 
-You can use, for example:
+می‌توانید به عنوان مثال استفاده کنید:
 
 * `int`
 * `float`
@@ -135,39 +139,39 @@ You can use, for example:
 
 {* ../../docs_src/python_types/tutorial005.py hl[1] *}
 
-### Generic types with type parameters
+### انواع جنریک با پارامترهای نوع
 
-There are some data structures that can contain other values, like `dict`, `list`, `set` and `tuple`. And the internal values can have their own type too.
+برخی ساختارهای داده وجود دارند که می‌توانند مقادیر دیگری را شامل شوند، مانند `dict`، `list`، `set` و `tuple`. و مقادیر داخلی می‌توانند نوع خود را نیز داشته باشند.
 
-These types that have internal types are called "**generic**" types. And it's possible to declare them, even with their internal types.
+این انواع که دارای انواع داخلی هستند "**جنریک**" نامیده می‌شوند. و امکان اعلان آنها، حتی با انواع داخلی‌شان وجود دارد.
 
-To declare those types and the internal types, you can use the standard Python module `typing`. It exists specifically to support these type hints.
+برای اعلان آن انواع و انواع داخلی، می‌توانید از ماژول استاندارد پایتون `typing` استفاده کنید. این ماژول به طور خاص برای پشتیبانی از این type hintها وجود دارد.
 
-#### Newer versions of Python
+#### نسخه‌های جدیدتر پایتون
 
-The syntax using `typing` is **compatible** with all versions, from Python 3.6 to the latest ones, including Python 3.9, Python 3.10, etc.
+سینتکس استفاده از `typing` با تمام نسخه‌ها **سازگار** است، از Python 3.6 تا جدیدترین‌ها، از جمله Python 3.9، Python 3.10 و غیره.
 
-As Python advances, **newer versions** come with improved support for these type annotations and in many cases you won't even need to import and use the `typing` module to declare the type annotations.
+با پیشرفت پایتون، **نسخه‌های جدیدتر** با پشتیبانی بهبودیافته از این حاشیه‌نویسی‌های نوع عرضه می‌شوند و در بسیاری از موارد حتی نیازی به import و استفاده از ماژول `typing` برای اعلان حاشیه‌نویسی‌های نوع نخواهید داشت.
 
-If you can choose a more recent version of Python for your project, you will be able to take advantage of that extra simplicity.
+اگر می‌توانید نسخه جدیدتری از پایتون را برای پروژه‌تان انتخاب کنید، قادر خواهید بود از آن سادگی اضافی بهره ببرید.
 
-In all the docs there are examples compatible with each version of Python (when there's a difference).
+در تمام مستندات مثال‌هایی سازگار با هر نسخه پایتون وجود دارد (وقتی تفاوتی وجود دارد).
 
-For example "**Python 3.6+**" means it's compatible with Python 3.6 or above (including 3.7, 3.8, 3.9, 3.10, etc). And "**Python 3.9+**" means it's compatible with Python 3.9 or above (including 3.10, etc).
+به عنوان مثال "**Python 3.6+**" یعنی با Python 3.6 یا بالاتر (از جمله 3.7، 3.8، 3.9، 3.10 و غیره) سازگار است. و "**Python 3.9+**" یعنی با Python 3.9 یا بالاتر (از جمله 3.10 و غیره) سازگار است.
 
-If you can use the **latest versions of Python**, use the examples for the latest version, those will have the **best and simplest syntax**, for example, "**Python 3.10+**".
+اگر می‌توانید از **جدیدترین نسخه‌های پایتون** استفاده کنید، از مثال‌های جدیدترین نسخه استفاده کنید، آنها **بهترین و ساده‌ترین سینتکس** را خواهند داشت، به عنوان مثال، "**Python 3.10+**".
 
 #### List
 
-For example, let's define a variable to be a `list` of `str`.
+به عنوان مثال، بیایید یک متغیر را به عنوان `list` از `str` تعریف کنیم.
 
 //// tab | Python 3.9+
 
-Declare the variable, with the same colon (`:`) syntax.
+متغیر را با همان سینتکس دو نقطه (`:`) اعلان کنید.
 
-As the type, put `list`.
+به عنوان نوع، `list` قرار دهید.
 
-As the list is a type that contains some internal types, you put them in square brackets:
+از آنجا که لیست نوعی است که شامل انواع داخلی است، آنها را در براکت‌های مربعی قرار دهید:
 
 ```Python hl_lines="1"
 {!> ../../docs_src/python_types/tutorial006_py39.py!}
@@ -177,17 +181,17 @@ As the list is a type that contains some internal types, you put them in square 
 
 //// tab | Python 3.8+
 
-From `typing`, import `List` (with a capital `L`):
+از `typing`، `List` (با حرف بزرگ `L`) را import کنید:
 
 ```Python hl_lines="1"
 {!> ../../docs_src/python_types/tutorial006.py!}
 ```
 
-Declare the variable, with the same colon (`:`) syntax.
+متغیر را با همان سینتکس دو نقطه (`:`) اعلان کنید.
 
-As the type, put the `List` that you imported from `typing`.
+به عنوان نوع، `List` که از `typing` import کرده‌اید قرار دهید.
 
-As the list is a type that contains some internal types, you put them in square brackets:
+از آنجا که لیست نوعی است که شامل انواع داخلی است، آنها را در براکت‌های مربعی قرار دهید:
 
 ```Python hl_lines="4"
 {!> ../../docs_src/python_types/tutorial006.py!}
@@ -197,33 +201,33 @@ As the list is a type that contains some internal types, you put them in square 
 
 /// info
 
-Those internal types in the square brackets are called "type parameters".
+آن انواع داخلی در براکت‌های مربعی "پارامترهای نوع" نامیده می‌شوند.
 
-In this case, `str` is the type parameter passed to `List` (or `list` in Python 3.9 and above).
+در این مورد، `str` پارامتر نوعی است که به `List` (یا `list` در Python 3.9 و بالاتر) داده می‌شود.
 
 ///
 
-That means: "the variable `items` is a `list`, and each of the items in this list is a `str`".
+یعنی: "متغیر `items` یک `list` است و هر یک از آیتم‌های این لیست یک `str` است".
 
 /// tip
 
-If you use Python 3.9 or above, you don't have to import `List` from `typing`, you can use the same regular `list` type instead.
+اگر از Python 3.9 یا بالاتر استفاده می‌کنید، نیازی به import کردن `List` از `typing` ندارید، می‌توانید از همان نوع `list` عادی استفاده کنید.
 
 ///
 
-By doing that, your editor can provide support even while processing items from the list:
+با انجام این کار، ویرایشگر شما حتی هنگام پردازش آیتم‌های لیست می‌تواند پشتیبانی ارائه دهد:
 
 <img src="/img/python-types/image05.png">
 
-Without types, that's almost impossible to achieve.
+بدون انواع، دستیابی به این تقریباً غیرممکن است.
 
-Notice that the variable `item` is one of the elements in the list `items`.
+توجه کنید که متغیر `item` یکی از عناصر لیست `items` است.
 
-And still, the editor knows it is a `str`, and provides support for that.
+و همچنان، ویرایشگر می‌داند آن یک `str` است و پشتیبانی برای آن ارائه می‌دهد.
 
-#### Tuple and Set
+#### Tuple و Set
 
-You would do the same to declare `tuple`s and `set`s:
+همین کار را برای اعلان `tuple`ها و `set`ها انجام می‌دهید:
 
 //// tab | Python 3.9+
 
@@ -241,18 +245,18 @@ You would do the same to declare `tuple`s and `set`s:
 
 ////
 
-This means:
+یعنی:
 
-* The variable `items_t` is a `tuple` with 3 items, an `int`, another `int`, and a `str`.
-* The variable `items_s` is a `set`, and each of its items is of type `bytes`.
+* متغیر `items_t` یک `tuple` با ۳ آیتم است، یک `int`، یک `int` دیگر و یک `str`.
+* متغیر `items_s` یک `set` است و هر یک از آیتم‌های آن از نوع `bytes` است.
 
 #### Dict
 
-To define a `dict`, you pass 2 type parameters, separated by commas.
+برای تعریف یک `dict`، ۲ پارامتر نوع جدا شده با کاما ارسال می‌کنید.
 
-The first type parameter is for the keys of the `dict`.
+اولین پارامتر نوع برای کلیدهای `dict` است.
 
-The second type parameter is for the values of the `dict`:
+دومین پارامتر نوع برای مقادیر `dict` است:
 
 //// tab | Python 3.9+
 
@@ -270,19 +274,19 @@ The second type parameter is for the values of the `dict`:
 
 ////
 
-This means:
+یعنی:
 
-* The variable `prices` is a `dict`:
-    * The keys of this `dict` are of type `str` (let's say, the name of each item).
-    * The values of this `dict` are of type `float` (let's say, the price of each item).
+* متغیر `prices` یک `dict` است:
+    * کلیدهای این `dict` از نوع `str` هستند (مثلاً نام هر آیتم).
+    * مقادیر این `dict` از نوع `float` هستند (مثلاً قیمت هر آیتم).
 
 #### Union
 
-You can declare that a variable can be any of **several types**, for example, an `int` or a `str`.
+می‌توانید اعلان کنید که یک متغیر می‌تواند هر یک از **چندین نوع** باشد، به عنوان مثال، یک `int` یا یک `str`.
 
-In Python 3.6 and above (including Python 3.10) you can use the `Union` type from `typing` and put inside the square brackets the possible types to accept.
+در Python 3.6 و بالاتر (از جمله Python 3.10) می‌توانید از نوع `Union` از `typing` استفاده کنید و انواع ممکن را درون براکت‌های مربعی قرار دهید.
 
-In Python 3.10 there's also a **new syntax** where you can put the possible types separated by a <abbr title='also called "bitwise or operator", but that meaning is not relevant here'>vertical bar (`|`)</abbr>.
+در Python 3.10 یک **سینتکس جدید** نیز وجود دارد که می‌توانید انواع ممکن را جدا شده با <abbr title='همچنین "عملگر بیتی or" نامیده می‌شود، اما آن معنی اینجا مرتبط نیست'>خط عمودی (`|`)</abbr> قرار دهید.
 
 //// tab | Python 3.10+
 
@@ -300,23 +304,23 @@ In Python 3.10 there's also a **new syntax** where you can put the possible type
 
 ////
 
-In both cases this means that `item` could be an `int` or a `str`.
+در هر دو مورد این بدان معنی است که `item` می‌تواند یک `int` یا یک `str` باشد.
 
-#### Possibly `None`
+#### احتمالاً `None`
 
-You can declare that a value could have a type, like `str`, but that it could also be `None`.
+می‌توانید اعلان کنید که یک مقدار می‌تواند نوعی داشته باشد، مانند `str`، اما می‌تواند `None` نیز باشد.
 
-In Python 3.6 and above (including Python 3.10) you can declare it by importing and using `Optional` from the `typing` module.
+در Python 3.6 و بالاتر (از جمله Python 3.10) می‌توانید آن را با import و استفاده از `Optional` از ماژول `typing` اعلان کنید.
 
 ```Python hl_lines="1  4"
 {!../../docs_src/python_types/tutorial009.py!}
 ```
 
-Using `Optional[str]` instead of just `str` will let the editor help you detect errors where you could be assuming that a value is always a `str`, when it could actually be `None` too.
+استفاده از `Optional[str]` به جای فقط `str` به ویرایشگر کمک می‌کند خطاهایی را شناسایی کند که ممکن است فرض کنید مقدار همیشه `str` است، در حالی که در واقع می‌تواند `None` نیز باشد.
 
-`Optional[Something]` is actually a shortcut for `Union[Something, None]`, they are equivalent.
+`Optional[Something]` در واقع میانبری برای `Union[Something, None]` است، آنها معادل هستند.
 
-This also means that in Python 3.10, you can use `Something | None`:
+این همچنین بدان معنی است که در Python 3.10 می‌توانید از `Something | None` استفاده کنید:
 
 //// tab | Python 3.10+
 
@@ -342,78 +346,78 @@ This also means that in Python 3.10, you can use `Something | None`:
 
 ////
 
-#### Using `Union` or `Optional`
+#### استفاده از `Union` یا `Optional`
 
-If you are using a Python version below 3.10, here's a tip from my very **subjective** point of view:
+اگر از نسخه پایتون زیر 3.10 استفاده می‌کنید، نکته‌ای از دیدگاه بسیار **شخصی** من:
 
-* 🚨 Avoid using `Optional[SomeType]`
-* Instead ✨ **use `Union[SomeType, None]`** ✨.
+* 🚨 از استفاده `Optional[SomeType]` اجتناب کنید
+* در عوض ✨ **از `Union[SomeType, None]` استفاده کنید** ✨.
 
-Both are equivalent and underneath they are the same, but I would recommend `Union` instead of `Optional` because the word "**optional**" would seem to imply that the value is optional, and it actually means "it can be `None`", even if it's not optional and is still required.
+هر دو معادل هستند و در زیرساخت یکسان هستند، اما `Union` را به جای `Optional` توصیه می‌کنم زیرا کلمه "**optional**" ممکن است به نظر برسد مقدار اختیاری است، در حالی که در واقع به معنای "می‌تواند `None` باشد" است، حتی اگر اختیاری نیست و همچنان الزامی است.
 
-I think `Union[SomeType, None]` is more explicit about what it means.
+فکر می‌کنم `Union[SomeType, None]` درباره معنایش صریح‌تر است.
 
-It's just about the words and names. But those words can affect how you and your teammates think about the code.
+فقط درباره کلمات و نام‌ها است. اما آن کلمات می‌توانند بر نحوه فکر کردن شما و هم‌تیمی‌هایتان درباره کد تأثیر بگذارند.
 
-As an example, let's take this function:
+به عنوان مثال، این تابع را در نظر بگیرید:
 
 {* ../../docs_src/python_types/tutorial009c.py hl[1,4] *}
 
-The parameter `name` is defined as `Optional[str]`, but it is **not optional**, you cannot call the function without the parameter:
+پارامتر `name` به عنوان `Optional[str]` تعریف شده، اما **اختیاری نیست**، نمی‌توانید تابع را بدون پارامتر فراخوانی کنید:
 
 ```Python
 say_hi()  # Oh, no, this throws an error! 😱
 ```
 
-The `name` parameter is **still required** (not *optional*) because it doesn't have a default value. Still, `name` accepts `None` as the value:
+پارامتر `name` همچنان **الزامی** است (نه *اختیاری*) زیرا مقدار پیش‌فرض ندارد. با این حال، `name` مقدار `None` را می‌پذیرد:
 
 ```Python
 say_hi(name=None)  # This works, None is valid 🎉
 ```
 
-The good news is, once you are on Python 3.10 you won't have to worry about that, as you will be able to simply use `|` to define unions of types:
+خبر خوب این است که وقتی روی Python 3.10 باشید، نگران آن نخواهید بود، زیرا قادر خواهید بود به سادگی از `|` برای تعریف unionهای انواع استفاده کنید:
 
 {* ../../docs_src/python_types/tutorial009c_py310.py hl[1,4] *}
 
-And then you won't have to worry about names like `Optional` and `Union`. 😎
+و سپس نگران نام‌هایی مانند `Optional` و `Union` نخواهید بود. 😎
 
-#### Generic types
+#### انواع جنریک
 
-These types that take type parameters in square brackets are called **Generic types** or **Generics**, for example:
+این انواع که پارامترهای نوع در براکت‌های مربعی می‌گیرند **انواع جنریک** یا **Generics** نامیده می‌شوند، به عنوان مثال:
 
 //// tab | Python 3.10+
 
-You can use the same builtin types as generics (with square brackets and types inside):
+می‌توانید از همان انواع داخلی به عنوان جنریک (با براکت‌های مربعی و انواع درون آنها) استفاده کنید:
 
 * `list`
 * `tuple`
 * `set`
 * `dict`
 
-And the same as with Python 3.8, from the `typing` module:
+و مانند Python 3.8، از ماژول `typing`:
 
 * `Union`
-* `Optional` (the same as with Python 3.8)
-* ...and others.
+* `Optional` (مانند Python 3.8)
+* ...و دیگران.
 
-In Python 3.10, as an alternative to using the generics `Union` and `Optional`, you can use the <abbr title='also called "bitwise or operator", but that meaning is not relevant here'>vertical bar (`|`)</abbr> to declare unions of types, that's a lot better and simpler.
+در Python 3.10، به عنوان جایگزین استفاده از جنریک‌های `Union` و `Optional`، می‌توانید از <abbr title='همچنین "عملگر بیتی or" نامیده می‌شود، اما آن معنی اینجا مرتبط نیست'>خط عمودی (`|`)</abbr> برای اعلان unionهای انواع استفاده کنید، این بسیار بهتر و ساده‌تر است.
 
 ////
 
 //// tab | Python 3.9+
 
-You can use the same builtin types as generics (with square brackets and types inside):
+می‌توانید از همان انواع داخلی به عنوان جنریک (با براکت‌های مربعی و انواع درون آنها) استفاده کنید:
 
 * `list`
 * `tuple`
 * `set`
 * `dict`
 
-And the same as with Python 3.8, from the `typing` module:
+و مانند Python 3.8، از ماژول `typing`:
 
 * `Union`
 * `Optional`
-* ...and others.
+* ...و دیگران.
 
 ////
 
@@ -425,43 +429,43 @@ And the same as with Python 3.8, from the `typing` module:
 * `Dict`
 * `Union`
 * `Optional`
-* ...and others.
+* ...و دیگران.
 
 ////
 
-### Classes as types
+### کلاس‌ها به عنوان انواع
 
-You can also declare a class as the type of a variable.
+همچنین می‌توانید یک کلاس را به عنوان نوع یک متغیر اعلان کنید.
 
-Let's say you have a class `Person`, with a name:
+فرض کنید کلاس `Person` با یک نام دارید:
 
 {* ../../docs_src/python_types/tutorial010.py hl[1:3] *}
 
-Then you can declare a variable to be of type `Person`:
+سپس می‌توانید یک متغیر را از نوع `Person` اعلان کنید:
 
 {* ../../docs_src/python_types/tutorial010.py hl[6] *}
 
-And then, again, you get all the editor support:
+و سپس دوباره تمام پشتیبانی ویرایشگر را دریافت می‌کنید:
 
 <img src="/img/python-types/image06.png">
 
-Notice that this means "`one_person` is an **instance** of the class `Person`".
+توجه کنید این به معنای "`one_person` یک **نمونه** از کلاس `Person` است" می‌باشد.
 
-It doesn't mean "`one_person` is the **class** called `Person`".
+به معنای "`one_person` **کلاسی** به نام `Person` است" نیست.
 
-## Pydantic models
+## مدل‌های Pydantic
 
-<a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a> is a Python library to perform data validation.
+<a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a> یک کتابخانه پایتون برای انجام اعتبارسنجی داده است.
 
-You declare the "shape" of the data as classes with attributes.
+"شکل" داده‌ها را به عنوان کلاس‌هایی با ویژگی‌ها اعلان می‌کنید.
 
-And each attribute has a type.
+و هر ویژگی یک نوع دارد.
 
-Then you create an instance of that class with some values and it will validate the values, convert them to the appropriate type (if that's the case) and give you an object with all the data.
+سپس یک نمونه از آن کلاس با برخی مقادیر ایجاد می‌کنید و مقادیر را اعتبارسنجی می‌کند، آنها را به نوع مناسب تبدیل می‌کند (در صورت نیاز) و یک شیء با تمام داده‌ها به شما می‌دهد.
 
-And you get all the editor support with that resulting object.
+و تمام پشتیبانی ویرایشگر را با آن شیء حاصل دریافت می‌کنید.
 
-An example from the official Pydantic docs:
+یک مثال از مستندات رسمی Pydantic:
 
 //// tab | Python 3.10+
 
@@ -489,27 +493,27 @@ An example from the official Pydantic docs:
 
 /// info
 
-To learn more about <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic, check its docs</a>.
+برای یادگیری بیشتر درباره <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic، مستندات آن را بررسی کنید</a>.
 
 ///
 
-**FastAPI** is all based on Pydantic.
+**FastAPI** کاملاً بر اساس Pydantic ساخته شده است.
 
-You will see a lot more of all this in practice in the [Tutorial - User Guide](tutorial/index.md){.internal-link target=_blank}.
+بسیار بیشتر از همه اینها را در عمل در [آموزش - راهنمای کاربر](tutorial/index.md){.internal-link target=_blank} خواهید دید.
 
 /// tip
 
-Pydantic has a special behavior when you use `Optional` or `Union[Something, None]` without a default value, you can read more about it in the Pydantic docs about <a href="https://docs.pydantic.dev/2.3/usage/models/#required-fields" class="external-link" target="_blank">Required Optional fields</a>.
+Pydantic رفتار خاصی دارد وقتی از `Optional` یا `Union[Something, None]` بدون مقدار پیش‌فرض استفاده می‌کنید، می‌توانید بیشتر درباره آن در مستندات Pydantic درباره <a href="https://docs.pydantic.dev/2.3/usage/models/#required-fields" class="external-link" target="_blank">فیلدهای Required Optional</a> بخوانید.
 
 ///
 
-## Type Hints with Metadata Annotations
+## Type Hintها با حاشیه‌نویسی‌های متادیتا
 
-Python also has a feature that allows putting **additional <abbr title="Data about the data, in this case, information about the type, e.g. a description.">metadata</abbr>** in these type hints using `Annotated`.
+پایتون همچنین ویژگی‌ای دارد که امکان قرار دادن **<abbr title="داده درباره داده، در اینجا، اطلاعات درباره نوع، مثلاً توضیحات.">متادیتای</abbr> اضافی** در این type hintها با استفاده از `Annotated` را فراهم می‌کند.
 
 //// tab | Python 3.9+
 
-In Python 3.9, `Annotated` is part of the standard library, so you can import it from `typing`.
+در Python 3.9، `Annotated` بخشی از کتابخانه استاندارد است، بنابراین می‌توانید آن را از `typing` import کنید.
 
 ```Python hl_lines="1  4"
 {!> ../../docs_src/python_types/tutorial013_py39.py!}
@@ -519,9 +523,9 @@ In Python 3.9, `Annotated` is part of the standard library, so you can import it
 
 //// tab | Python 3.8+
 
-In versions below Python 3.9, you import `Annotated` from `typing_extensions`.
+در نسخه‌های زیر Python 3.9، `Annotated` را از `typing_extensions` import می‌کنید.
 
-It will already be installed with **FastAPI**.
+از قبل با **FastAPI** نصب خواهد شد.
 
 ```Python hl_lines="1  4"
 {!> ../../docs_src/python_types/tutorial013.py!}
@@ -529,48 +533,48 @@ It will already be installed with **FastAPI**.
 
 ////
 
-Python itself doesn't do anything with this `Annotated`. And for editors and other tools, the type is still `str`.
+خود پایتون کاری با این `Annotated` نمی‌کند. و برای ویرایشگرها و سایر ابزارها، نوع همچنان `str` است.
 
-But you can use this space in `Annotated` to provide **FastAPI** with additional metadata about how you want your application to behave.
+اما می‌توانید از این فضا در `Annotated` برای ارائه **متادیتای اضافی** به **FastAPI** درباره نحوه رفتار برنامه‌تان استفاده کنید.
 
-The important thing to remember is that **the first *type parameter*** you pass to `Annotated` is the **actual type**. The rest, is just metadata for other tools.
+نکته مهمی که باید به خاطر بسپارید این است که **اولین *پارامتر نوع*** که به `Annotated` ارسال می‌کنید **نوع واقعی** است. بقیه فقط متادیتا برای سایر ابزارها است.
 
-For now, you just need to know that `Annotated` exists, and that it's standard Python. 😎
+فعلاً فقط باید بدانید که `Annotated` وجود دارد و پایتون استاندارد است. 😎
 
-Later you will see how **powerful** it can be.
+بعداً خواهید دید که چقدر **قدرتمند** می‌تواند باشد.
 
 /// tip
 
-The fact that this is **standard Python** means that you will still get the **best possible developer experience** in your editor, with the tools you use to analyze and refactor your code, etc. ✨
+این واقعیت که این **پایتون استاندارد** است به این معنی است که همچنان **بهترین تجربه ممکن توسعه‌دهنده** را در ویرایشگر، با ابزارهایی که برای تحلیل و بازآرایی کدتان استفاده می‌کنید و غیره دریافت خواهید کرد. ✨
 
-And also that your code will be very compatible with many other Python tools and libraries. 🚀
+و همچنین کدتان با بسیاری از ابزارها و کتابخانه‌های دیگر پایتون بسیار سازگار خواهد بود. 🚀
 
 ///
 
-## Type hints in **FastAPI**
+## Type hintها در **FastAPI**
 
-**FastAPI** takes advantage of these type hints to do several things.
+**FastAPI** از این type hintها برای انجام چندین کار بهره می‌برد.
 
-With **FastAPI** you declare parameters with type hints and you get:
+با **FastAPI** پارامترها را با type hintها اعلان می‌کنید و دریافت می‌کنید:
 
-* **Editor support**.
-* **Type checks**.
+* **پشتیبانی ویرایشگر**.
+* **بررسی نوع**.
 
-...and **FastAPI** uses the same declarations to:
+...و **FastAPI** از همان اعلان‌ها استفاده می‌کند برای:
 
-* **Define requirements**: from request path parameters, query parameters, headers, bodies, dependencies, etc.
-* **Convert data**: from the request to the required type.
-* **Validate data**: coming from each request:
-    * Generating **automatic errors** returned to the client when the data is invalid.
-* **Document** the API using OpenAPI:
-    * which is then used by the automatic interactive documentation user interfaces.
+* **تعریف الزامات**: از پارامترهای مسیر درخواست، پارامترهای کوئری، هدرها، بدنه‌ها، وابستگی‌ها و غیره.
+* **تبدیل داده**: از درخواست به نوع مورد نیاز.
+* **اعتبارسنجی داده**: از هر درخواست:
+    * تولید **خطاهای خودکار** برگردانده شده به کلاینت وقتی داده‌ها نامعتبر هستند.
+* **مستندسازی** API با استفاده از OpenAPI:
+    * که سپس توسط رابط‌های کاربری مستندسازی تعاملی خودکار استفاده می‌شود.
 
-This might all sound abstract. Don't worry. You'll see all this in action in the [Tutorial - User Guide](tutorial/index.md){.internal-link target=_blank}.
+همه اینها ممکن است انتزاعی به نظر برسد. نگران نباشید. همه اینها را در عمل در [آموزش - راهنمای کاربر](tutorial/index.md){.internal-link target=_blank} خواهید دید.
 
-The important thing is that by using standard Python types, in a single place (instead of adding more classes, decorators, etc), **FastAPI** will do a lot of the work for you.
+نکته مهم این است که با استفاده از انواع استاندارد پایتون، در یک مکان (به جای افزودن کلاس‌ها، دکوراتورها و غیره بیشتر)، **FastAPI** بسیاری از کارها را برای شما انجام خواهد داد.
 
 /// info
 
-If you already went through all the tutorial and came back to see more about types, a good resource is <a href="https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html" class="external-link" target="_blank">the "cheat sheet" from `mypy`</a>.
+اگر قبلاً تمام آموزش را طی کرده‌اید و برگشته‌اید تا بیشتر درباره انواع ببینید، یک منبع خوب <a href="https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html" class="external-link" target="_blank">برگه تقلب از `mypy`</a> است.
 
 ///

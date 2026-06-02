@@ -1,38 +1,38 @@
-# Virtual Environments
+# محیط‌های مجازی
 
-When you work in Python projects you probably should use a **virtual environment** (or a similar mechanism) to isolate the packages you install for each project.
+وقتی روی پروژه‌های پایتون کار می‌کنید، احتمالاً باید از یک **محیط مجازی** (یا مکانیزم مشابه) برای جداسازی پکیج‌هایی که برای هر پروژه نصب می‌کنید استفاده کنید.
 
 /// info
 
-If you already know about virtual environments, how to create them and use them, you might want to skip this section. 🤓
+اگر از قبل درباره محیط‌های مجازی می‌دانید، نحوه ایجاد و استفاده از آنها را بلد هستید، ممکن است بخواهید از این بخش رد شوید. 🤓
 
 ///
 
 /// tip
 
-A **virtual environment** is different than an **environment variable**.
+یک **محیط مجازی** با یک **متغیر محیطی** متفاوت است.
 
-An **environment variable** is a variable in the system that can be used by programs.
+یک **متغیر محیطی** یک متغیر در سیستم است که می‌تواند توسط برنامه‌ها استفاده شود.
 
-A **virtual environment** is a directory with some files in it.
+یک **محیط مجازی** یک دایرکتوری با برخی فایل‌ها در آن است.
 
 ///
 
 /// info
 
-This page will teach you how to use **virtual environments** and how they work.
+این صفحه نحوه استفاده از **محیط‌های مجازی** و نحوه کار آنها را به شما آموزش خواهد داد.
 
-If you are ready to adopt a **tool that manages everything** for you (including installing Python), try <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">uv</a>.
+اگر آماده‌اید ابزاری که **همه چیز را مدیریت می‌کند** (از جمله نصب پایتون) را بپذیرید، <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">uv</a> را امتحان کنید.
 
 ///
 
-## Create a Project
+## ایجاد یک پروژه
 
-First, create a directory for your project.
+ابتدا، یک دایرکتوری برای پروژه‌تان ایجاد کنید.
 
-What I normally do is that I create a directory named `code` inside my home/user directory.
+آنچه معمولاً انجام می‌دهم ایجاد یک دایرکتوری به نام `code` درون دایرکتوری home/user است.
 
-And inside of that I create one directory per project.
+و درون آن یک دایرکتوری برای هر پروژه ایجاد می‌کنم.
 
 <div class="termy">
 
@@ -51,19 +51,19 @@ $ cd awesome-project
 
 </div>
 
-## Create a Virtual Environment
+## ایجاد یک محیط مجازی
 
-When you start working on a Python project **for the first time**, create a virtual environment **<abbr title="there are other options, this is a simple guideline">inside your project</abbr>**.
+وقتی شروع به کار روی یک پروژه پایتون **برای اولین بار** می‌کنید، یک محیط مجازی **<abbr title="گزینه‌های دیگری هم وجود دارد، این یک راهنمای ساده است">درون پروژه‌تان</abbr>** ایجاد کنید.
 
 /// tip
 
-You only need to do this **once per project**, not every time you work.
+فقط باید این کار را **یک بار برای هر پروژه** انجام دهید، نه هر بار که کار می‌کنید.
 
 ///
 
 //// tab | `venv`
 
-To create a virtual environment, you can use the `venv` module that comes with Python.
+برای ایجاد یک محیط مجازی، می‌توانید از ماژول `venv` که همراه پایتون ارائه می‌شود استفاده کنید.
 
 <div class="termy">
 
@@ -73,12 +73,12 @@ $ python -m venv .venv
 
 </div>
 
-/// details | What that command means
+/// details | معنی آن دستور
 
-* `python`: use the program called `python`
-* `-m`: call a module as a script, we'll tell it which module next
-* `venv`: use the module called `venv` that normally comes installed with Python
-* `.venv`: create the virtual environment in the new directory `.venv`
+* `python`: از برنامه‌ای به نام `python` استفاده کنید
+* `-m`: یک ماژول را به عنوان اسکریپت فراخوانی کنید، در ادامه ماژول را مشخص خواهیم کرد
+* `venv`: از ماژولی به نام `venv` استفاده کنید که معمولاً همراه پایتون نصب می‌شود
+* `.venv`: محیط مجازی را در دایرکتوری جدید `.venv` ایجاد کنید
 
 ///
 
@@ -86,7 +86,7 @@ $ python -m venv .venv
 
 //// tab | `uv`
 
-If you have <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> installed, you can use it to create a virtual environment.
+اگر <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> نصب دارید، می‌توانید از آن برای ایجاد یک محیط مجازی استفاده کنید.
 
 <div class="termy">
 
@@ -98,29 +98,29 @@ $ uv venv
 
 /// tip
 
-By default, `uv` will create a virtual environment in a directory called `.venv`.
+به طور پیش‌فرض، `uv` محیط مجازی را در دایرکتوری‌ای به نام `.venv` ایجاد خواهد کرد.
 
-But you could customize it passing an additional argument with the directory name.
+اما می‌توانید آن را با ارسال یک آرگومان اضافی با نام دایرکتوری سفارشی کنید.
 
 ///
 
 ////
 
-That command creates a new virtual environment in a directory called `.venv`.
+آن دستور یک محیط مجازی جدید در دایرکتوری‌ای به نام `.venv` ایجاد می‌کند.
 
-/// details | `.venv` or other name
+/// details | `.venv` یا نام دیگر
 
-You could create the virtual environment in a different directory, but there's a convention of calling it `.venv`.
+می‌توانید محیط مجازی را در دایرکتوری دیگری ایجاد کنید، اما یک قرارداد وجود دارد که آن را `.venv` بنامید.
 
 ///
 
-## Activate the Virtual Environment
+## فعال‌سازی محیط مجازی
 
-Activate the new virtual environment so that any Python command you run or package you install uses it.
+محیط مجازی جدید را فعال کنید تا هر دستور پایتون یا پکیجی که نصب می‌کنید از آن استفاده کند.
 
 /// tip
 
-Do this **every time** you start a **new terminal session** to work on the project.
+این کار را **هر بار** که یک **جلسه ترمینال جدید** برای کار روی پروژه شروع می‌کنید انجام دهید.
 
 ///
 
@@ -150,7 +150,7 @@ $ .venv\Scripts\Activate.ps1
 
 //// tab | Windows Bash
 
-Or if you use Bash for Windows (e.g. <a href="https://gitforwindows.org/" class="external-link" target="_blank">Git Bash</a>):
+یا اگر از Bash برای ویندوز استفاده می‌کنید (مثلاً <a href="https://gitforwindows.org/" class="external-link" target="_blank">Git Bash</a>):
 
 <div class="termy">
 
@@ -164,19 +164,19 @@ $ source .venv/Scripts/activate
 
 /// tip
 
-Every time you install a **new package** in that environment, **activate** the environment again.
+هر بار که یک **پکیج جدید** در آن محیط نصب می‌کنید، محیط را دوباره **فعال** کنید.
 
-This makes sure that if you use a **terminal (<abbr title="command line interface">CLI</abbr>) program** installed by that package, you use the one from your virtual environment and not any other that could be installed globally, probably with a different version than what you need.
+این اطمینان می‌دهد که اگر از یک **برنامه ترمینال (<abbr title="command line interface">CLI</abbr>)** نصب‌شده توسط آن پکیج استفاده کنید، از نسخه محیط مجازی خود استفاده می‌کنید و نه نسخه دیگری که ممکن است به صورت سراسری نصب شده باشد، احتمالاً با نسخه متفاوتی از آنچه نیاز دارید.
 
 ///
 
-## Check the Virtual Environment is Active
+## بررسی فعال بودن محیط مجازی
 
-Check that the virtual environment is active (the previous command worked).
+بررسی کنید که محیط مجازی فعال است (دستور قبلی کار کرده است).
 
 /// tip
 
-This is **optional**, but it's a good way to **check** that everything is working as expected and you are using the virtual environment you intended.
+این **اختیاری** است، اما راه خوبی برای **بررسی** اینکه همه چیز همانطور که انتظار می‌رود کار می‌کند و از محیط مجازی مورد نظرتان استفاده می‌کنید.
 
 ///
 
@@ -192,7 +192,7 @@ $ which python
 
 </div>
 
-If it shows the `python` binary at `.venv/bin/python`, inside of your project (in this case `awesome-project`), then it worked. 🎉
+اگر باینری `python` را در `.venv/bin/python` نشان دهد، درون پروژه شما (در اینجا `awesome-project`)، کار کرده است. 🎉
 
 ////
 
@@ -208,29 +208,29 @@ C:\Users\user\code\awesome-project\.venv\Scripts\python
 
 </div>
 
-If it shows the `python` binary at `.venv\Scripts\python`, inside of your project (in this case `awesome-project`), then it worked. 🎉
+اگر باینری `python` را در `.venv\Scripts\python` نشان دهد، درون پروژه شما (در اینجا `awesome-project`)، کار کرده است. 🎉
 
 ////
 
-## Upgrade `pip`
+## ارتقاء `pip`
 
 /// tip
 
-If you use <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> you would use it to install things instead of `pip`, so you don't need to upgrade `pip`. 😎
+اگر از <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> استفاده می‌کنید، از آن برای نصب چیزها به جای `pip` استفاده خواهید کرد، بنابراین نیازی به ارتقاء `pip` ندارید. 😎
 
 ///
 
-If you are using `pip` to install packages (it comes by default with Python), you should **upgrade** it to the latest version.
+اگر از `pip` برای نصب پکیج‌ها استفاده می‌کنید (به طور پیش‌فرض همراه پایتون ارائه می‌شود)، باید آن را به آخرین نسخه **ارتقاء** دهید.
 
-Many exotic errors while installing a package are solved by just upgrading `pip` first.
+بسیاری از خطاهای عجیب هنگام نصب پکیج با ارتقاء `pip` ابتدا حل می‌شوند.
 
 /// tip
 
-You would normally do this **once**, right after you create the virtual environment.
+معمولاً این کار را **یک بار** انجام می‌دهید، درست بعد از ایجاد محیط مجازی.
 
 ///
 
-Make sure the virtual environment is active (with the command above) and then run:
+مطمئن شوید محیط مجازی فعال است (با دستور بالا) و سپس اجرا کنید:
 
 <div class="termy">
 
@@ -242,19 +242,19 @@ $ python -m pip install --upgrade pip
 
 </div>
 
-## Add `.gitignore`
+## افزودن `.gitignore`
 
-If you are using **Git** (you should), add a `.gitignore` file to exclude everything in your `.venv` from Git.
+اگر از **Git** استفاده می‌کنید (که باید)، یک فایل `.gitignore` اضافه کنید تا همه چیز در `.venv` از Git خارج شود.
 
 /// tip
 
-If you used <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> to create the virtual environment, it already did this for you, you can skip this step. 😎
+اگر از <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> برای ایجاد محیط مجازی استفاده کردید، قبلاً این کار را برایتان انجام داده، می‌توانید از این مرحله رد شوید. 😎
 
 ///
 
 /// tip
 
-Do this **once**, right after you create the virtual environment.
+این کار را **یک بار** انجام دهید، درست بعد از ایجاد محیط مجازی.
 
 ///
 
@@ -266,15 +266,15 @@ $ echo "*" > .venv/.gitignore
 
 </div>
 
-/// details | What that command means
+/// details | معنی آن دستور
 
-* `echo "*"`: will "print" the text `*` in the terminal (the next part changes that a bit)
-* `>`: anything printed to the terminal by the command to the left of `>` should not be printed but instead written to the file that goes to the right of `>`
-* `.gitignore`: the name of the file where the text should be written
+* `echo "*"`: متن `*` را در ترمینال "چاپ" خواهد کرد (بخش بعدی آن را کمی تغییر می‌دهد)
+* `>`: هر چیزی که توسط دستور سمت چپ `>` در ترمینال چاپ شود نباید چاپ شود بلکه در عوض در فایلی که سمت راست `>` قرار دارد نوشته شود
+* `.gitignore`: نام فایلی که متن باید در آن نوشته شود
 
-And `*` for Git means "everything". So, it will ignore everything in the `.venv` directory.
+و `*` برای Git به معنی "همه چیز" است. بنابراین، همه چیز در دایرکتوری `.venv` را نادیده خواهد گرفت.
 
-That command will create a file `.gitignore` with the content:
+آن دستور فایل `.gitignore` با محتوای زیر ایجاد خواهد کرد:
 
 ```gitignore
 *
@@ -282,25 +282,25 @@ That command will create a file `.gitignore` with the content:
 
 ///
 
-## Install Packages
+## نصب پکیج‌ها
 
-After activating the environment, you can install packages in it.
+بعد از فعال‌سازی محیط، می‌توانید پکیج‌ها را در آن نصب کنید.
 
 /// tip
 
-Do this **once** when installing or upgrading the packages your project needs.
+این کار را **یک بار** هنگام نصب یا ارتقاء پکیج‌های مورد نیاز پروژه‌تان انجام دهید.
 
-If you need to upgrade a version or add a new package you would **do this again**.
+اگر نیاز به ارتقاء نسخه یا افزودن پکیج جدید دارید، **دوباره این کار را انجام می‌دهید**.
 
 ///
 
-### Install Packages Directly
+### نصب مستقیم پکیج‌ها
 
-If you're in a hurry and don't want to use a file to declare your project's package requirements, you can install them directly.
+اگر عجله دارید و نمی‌خواهید از فایلی برای اعلان نیازمندی‌های پکیج پروژه‌تان استفاده کنید، می‌توانید آنها را مستقیماً نصب کنید.
 
 /// tip
 
-It's a (very) good idea to put the packages and versions your program needs in a file (for example `requirements.txt` or `pyproject.toml`).
+قرار دادن پکیج‌ها و نسخه‌های مورد نیاز برنامه‌تان در یک فایل (مثلاً `requirements.txt` یا `pyproject.toml`) ایده (بسیار) خوبی است.
 
 ///
 
@@ -320,7 +320,7 @@ $ pip install "fastapi[standard]"
 
 //// tab | `uv`
 
-If you have <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a>:
+اگر <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> دارید:
 
 <div class="termy">
 
@@ -333,9 +333,9 @@ $ uv pip install "fastapi[standard]"
 
 ////
 
-### Install from `requirements.txt`
+### نصب از `requirements.txt`
 
-If you have a `requirements.txt`, you can now use it to install its packages.
+اگر یک `requirements.txt` دارید، اکنون می‌توانید از آن برای نصب پکیج‌هایش استفاده کنید.
 
 //// tab | `pip`
 
@@ -352,7 +352,7 @@ $ pip install -r requirements.txt
 
 //// tab | `uv`
 
-If you have <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a>:
+اگر <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">`uv`</a> دارید:
 
 <div class="termy">
 
@@ -367,7 +367,7 @@ $ uv pip install -r requirements.txt
 
 /// details | `requirements.txt`
 
-A `requirements.txt` with some packages could look like:
+یک `requirements.txt` با برخی پکیج‌ها می‌تواند مانند زیر باشد:
 
 ```requirements.txt
 fastapi[standard]==0.113.0
@@ -376,9 +376,9 @@ pydantic==2.8.0
 
 ///
 
-## Run Your Program
+## اجرای برنامه‌تان
 
-After you activated the virtual environment, you can run your program, and it will use the Python inside of your virtual environment with the packages you installed there.
+بعد از فعال‌سازی محیط مجازی، می‌توانید برنامه‌تان را اجرا کنید و از پایتون درون محیط مجازی با پکیج‌هایی که آنجا نصب کردید استفاده خواهد کرد.
 
 <div class="termy">
 
@@ -390,24 +390,24 @@ Hello World
 
 </div>
 
-## Configure Your Editor
+## پیکربندی ویرایشگر
 
-You would probably use an editor, make sure you configure it to use the same virtual environment you created (it will probably autodetect it) so that you can get autocompletion and inline errors.
+احتمالاً از یک ویرایشگر استفاده خواهید کرد، مطمئن شوید آن را برای استفاده از همان محیط مجازی که ایجاد کردید پیکربندی کنید (احتمالاً خودش آن را شناسایی خواهد کرد) تا بتوانید تکمیل خودکار و خطاهای درون‌خطی دریافت کنید.
 
-For example:
+به عنوان مثال:
 
 * <a href="https://code.visualstudio.com/docs/python/environments#_select-and-activate-an-environment" class="external-link" target="_blank">VS Code</a>
 * <a href="https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html" class="external-link" target="_blank">PyCharm</a>
 
 /// tip
 
-You normally have to do this only **once**, when you create the virtual environment.
+معمولاً فقط باید این کار را **یک بار** انجام دهید، وقتی محیط مجازی را ایجاد می‌کنید.
 
 ///
 
-## Deactivate the Virtual Environment
+## غیرفعال‌سازی محیط مجازی
 
-Once you are done working on your project you can **deactivate** the virtual environment.
+وقتی کار با پروژه‌تان تمام شد، می‌توانید محیط مجازی را **غیرفعال** کنید.
 
 <div class="termy">
 
@@ -417,55 +417,55 @@ $ deactivate
 
 </div>
 
-This way, when you run `python` it won't try to run it from that virtual environment with the packages installed there.
+به این ترتیب، وقتی `python` را اجرا کنید، سعی نخواهد کرد آن را از آن محیط مجازی با پکیج‌های نصب‌شده آنجا اجرا کند.
 
-## Ready to Work
+## آماده برای کار
 
-Now you're ready to start working on your project.
+اکنون آماده شروع کار روی پروژه‌تان هستید.
 
 
 
 /// tip
 
-Do you want to understand what's all that above?
+آیا می‌خواهید بفهمید همه آنچه بالا بود چیست؟
 
-Continue reading. 👇🤓
+ادامه بخوانید. 👇🤓
 
 ///
 
-## Why Virtual Environments
+## چرا محیط‌های مجازی
 
-To work with FastAPI you need to install <a href="https://www.python.org/" class="external-link" target="_blank">Python</a>.
+برای کار با FastAPI باید <a href="https://www.python.org/" class="external-link" target="_blank">پایتون</a> را نصب کنید.
 
-After that, you would need to **install** FastAPI and any other **packages** you want to use.
+بعد از آن، باید FastAPI و هر **پکیج** دیگری که می‌خواهید استفاده کنید را **نصب** کنید.
 
-To install packages you would normally use the `pip` command that comes with Python (or similar alternatives).
+برای نصب پکیج‌ها معمولاً از دستور `pip` که همراه پایتون ارائه می‌شود (یا جایگزین‌های مشابه) استفاده می‌کنید.
 
-Nevertheless, if you just use `pip` directly, the packages would be installed in your **global Python environment** (the global installation of Python).
+با این حال، اگر فقط `pip` را مستقیماً استفاده کنید، پکیج‌ها در **محیط پایتون سراسری** شما (نصب سراسری پایتون) نصب خواهند شد.
 
-### The Problem
+### مشکل
 
-So, what's the problem with installing packages in the global Python environment?
+بنابراین، مشکل نصب پکیج‌ها در محیط پایتون سراسری چیست؟
 
-At some point, you will probably end up writing many different programs that depend on **different packages**. And some of these projects you work on will depend on **different versions** of the same package. 😱
+در نقطه‌ای، احتمالاً برنامه‌های مختلف زیادی خواهید نوشت که به **پکیج‌های مختلف** وابسته هستند. و برخی از این پروژه‌ها به **نسخه‌های مختلف** همان پکیج وابسته خواهند بود. 😱
 
-For example, you could create a project called `philosophers-stone`, this program depends on another package called **`harry`, using the version `1`**. So, you need to install `harry`.
+به عنوان مثال، می‌توانید پروژه‌ای به نام `philosophers-stone` ایجاد کنید، این برنامه به پکیج دیگری به نام **`harry` با استفاده از نسخه `1`** وابسته است. بنابراین باید `harry` را نصب کنید.
 
 ```mermaid
 flowchart LR
     stone(philosophers-stone) -->|requires| harry-1[harry v1]
 ```
 
-Then, at some point later, you create another project called `prisoner-of-azkaban`, and this project also depends on `harry`, but this project needs **`harry` version `3`**.
+سپس، در نقطه‌ای بعداً، پروژه دیگری به نام `prisoner-of-azkaban` ایجاد می‌کنید و این پروژه نیز به `harry` وابسته است، اما به **نسخه `3` `harry`** نیاز دارد.
 
 ```mermaid
 flowchart LR
     azkaban(prisoner-of-azkaban) --> |requires| harry-3[harry v3]
 ```
 
-But now the problem is, if you install the packages globally (in the global environment) instead of in a local **virtual environment**, you will have to choose which version of `harry` to install.
+اما حالا مشکل این است که اگر پکیج‌ها را به صورت سراسری (در محیط سراسری) به جای یک **محیط مجازی** محلی نصب کنید، باید انتخاب کنید کدام نسخه `harry` را نصب کنید.
 
-If you want to run `philosophers-stone` you will need to first install `harry` version `1`, for example with:
+اگر می‌خواهید `philosophers-stone` را اجرا کنید، ابتدا باید نسخه `1` `harry` را نصب کنید، به عنوان مثال با:
 
 <div class="termy">
 
@@ -475,7 +475,7 @@ $ pip install "harry==1"
 
 </div>
 
-And then you would end up with `harry` version `1` installed in your global Python environment.
+و سپس نسخه `1` `harry` در محیط پایتون سراسری شما نصب خواهد شد.
 
 ```mermaid
 flowchart LR
@@ -487,7 +487,7 @@ flowchart LR
     end
 ```
 
-But then if you want to run `prisoner-of-azkaban`, you will need to uninstall `harry` version `1` and install `harry` version `3` (or just installing version `3` would automatically uninstall version `1`).
+اما اگر می‌خواهید `prisoner-of-azkaban` را اجرا کنید، باید نسخه `1` `harry` را حذف و نسخه `3` `harry` را نصب کنید (یا فقط نصب نسخه `3` به طور خودکار نسخه `1` را حذف خواهد کرد).
 
 <div class="termy">
 
@@ -497,9 +497,9 @@ $ pip install "harry==3"
 
 </div>
 
-And then you would end up with `harry` version `3` installed in your global Python environment.
+و سپس نسخه `3` `harry` در محیط پایتون سراسری شما نصب خواهد شد.
 
-And if you try to run `philosophers-stone` again, there's a chance it would **not work** because it needs `harry` version `1`.
+و اگر سعی کنید `philosophers-stone` را دوباره اجرا کنید، احتمالاً **کار نخواهد کرد** زیرا به نسخه `1` `harry` نیاز دارد.
 
 ```mermaid
 flowchart LR
@@ -518,21 +518,21 @@ flowchart LR
 
 /// tip
 
-It's very common in Python packages to try the best to **avoid breaking changes** in **new versions**, but it's better to be safe, and install newer versions intentionally and when you can run the tests to check everything is working correctly.
+در پکیج‌های پایتون بسیار رایج است که تلاش کنند از **تغییرات شکننده** در **نسخه‌های جدید** اجتناب کنند، اما بهتر است احتیاط کنید و نسخه‌های جدیدتر را عمداً و وقتی می‌توانید تست‌ها را اجرا کنید تا مطمئن شوید همه چیز درست کار می‌کند نصب کنید.
 
 ///
 
-Now, imagine that with **many** other **packages** that all your **projects depend on**. That's very difficult to manage. And you would probably end up running some projects with some **incompatible versions** of the packages, and not knowing why something isn't working.
+حالا تصور کنید این با **بسیاری** از **پکیج‌های** دیگری که همه **پروژه‌هایتان** به آنها وابسته هستند. مدیریت آن بسیار دشوار است. و احتمالاً برخی پروژه‌ها را با **نسخه‌های ناسازگار** پکیج‌ها اجرا خواهید کرد و نمی‌دانید چرا چیزی کار نمی‌کند.
 
-Also, depending on your operating system (e.g. Linux, Windows, macOS), it could have come with Python already installed. And in that case it probably had some packages pre-installed with some specific versions **needed by your system**. If you install packages in the global Python environment, you could end up **breaking** some of the programs that came with your operating system.
+همچنین، بسته به سیستم عامل شما (مثلاً Linux، Windows، macOS)، ممکن است پایتون از قبل نصب شده باشد. و در آن صورت احتمالاً برخی پکیج‌ها با نسخه‌های خاصی **مورد نیاز سیستم** از پیش نصب شده‌اند. اگر پکیج‌ها را در محیط پایتون سراسری نصب کنید، ممکن است برخی از برنامه‌هایی که همراه سیستم عامل آمده‌اند را **خراب** کنید.
 
-## Where are Packages Installed
+## پکیج‌ها کجا نصب می‌شوند
 
-When you install Python, it creates some directories with some files in your computer.
+وقتی پایتون را نصب می‌کنید، برخی دایرکتوری‌ها با برخی فایل‌ها در کامپیوترتان ایجاد می‌شود.
 
-Some of these directories are the ones in charge of having all the packages you install.
+برخی از این دایرکتوری‌ها مسئول داشتن تمام پکیج‌هایی هستند که نصب می‌کنید.
 
-When you run:
+وقتی اجرا می‌کنید:
 
 <div class="termy">
 
@@ -544,21 +544,21 @@ $ pip install "fastapi[standard]"
 
 </div>
 
-That will download a compressed file with the FastAPI code, normally from <a href="https://pypi.org/project/fastapi/" class="external-link" target="_blank">PyPI</a>.
+یک فایل فشرده با کد FastAPI را دانلود خواهد کرد، معمولاً از <a href="https://pypi.org/project/fastapi/" class="external-link" target="_blank">PyPI</a>.
 
-It will also **download** files for other packages that FastAPI depends on.
+همچنین فایل‌هایی را برای پکیج‌های دیگری که FastAPI به آنها وابسته است **دانلود** خواهد کرد.
 
-Then it will **extract** all those files and put them in a directory in your computer.
+سپس تمام آن فایل‌ها را **استخراج** و در دایرکتوری‌ای در کامپیوترتان قرار خواهد داد.
 
-By default, it will put those files downloaded and extracted in the directory that comes with your Python installation, that's the **global environment**.
+به طور پیش‌فرض، آن فایل‌های دانلود و استخراج شده را در دایرکتوری‌ای که همراه نصب پایتون شما ارائه می‌شود قرار خواهد داد، یعنی **محیط سراسری**.
 
-## What are Virtual Environments
+## محیط‌های مجازی چیست
 
-The solution to the problems of having all the packages in the global environment is to use a **virtual environment for each project** you work on.
+راه‌حل مشکلات داشتن همه پکیج‌ها در محیط سراسری، استفاده از یک **محیط مجازی برای هر پروژه‌ای** است که روی آن کار می‌کنید.
 
-A virtual environment is a **directory**, very similar to the global one, where you can install the packages for a project.
+یک محیط مجازی یک **دایرکتوری** است، بسیار مشابه دایرکتوری سراسری، که می‌توانید پکیج‌های یک پروژه را در آن نصب کنید.
 
-This way, each project will have its own virtual environment (`.venv` directory) with its own packages.
+به این ترتیب، هر پروژه محیط مجازی خود (دایرکتوری `.venv`) با پکیج‌های خودش را خواهد داشت.
 
 ```mermaid
 flowchart TB
@@ -577,9 +577,9 @@ flowchart TB
     stone-project ~~~ azkaban-project
 ```
 
-## What Does Activating a Virtual Environment Mean
+## فعال‌سازی محیط مجازی به چه معناست
 
-When you activate a virtual environment, for example with:
+وقتی یک محیط مجازی را فعال می‌کنید، به عنوان مثال با:
 
 //// tab | Linux, macOS
 
@@ -607,7 +607,7 @@ $ .venv\Scripts\Activate.ps1
 
 //// tab | Windows Bash
 
-Or if you use Bash for Windows (e.g. <a href="https://gitforwindows.org/" class="external-link" target="_blank">Git Bash</a>):
+یا اگر از Bash برای ویندوز استفاده می‌کنید (مثلاً <a href="https://gitforwindows.org/" class="external-link" target="_blank">Git Bash</a>):
 
 <div class="termy">
 
@@ -619,19 +619,19 @@ $ source .venv/Scripts/activate
 
 ////
 
-That command will create or modify some [environment variables](environment-variables.md){.internal-link target=_blank} that will be available for the next commands.
+آن دستور برخی [متغیرهای محیطی](environment-variables.md){.internal-link target=_blank} را ایجاد یا تغییر خواهد داد که برای دستورات بعدی در دسترس خواهند بود.
 
-One of those variables is the `PATH` variable.
+یکی از آن متغیرها متغیر `PATH` است.
 
 /// tip
 
-You can learn more about the `PATH` environment variable in the [Environment Variables](environment-variables.md#path-environment-variable){.internal-link target=_blank} section.
+می‌توانید بیشتر درباره متغیر محیطی `PATH` در بخش [متغیرهای محیطی](environment-variables.md#path-environment-variable){.internal-link target=_blank} بیاموزید.
 
 ///
 
-Activating a virtual environment adds its path `.venv/bin` (on Linux and macOS) or `.venv\Scripts` (on Windows) to the `PATH` environment variable.
+فعال‌سازی محیط مجازی مسیر `.venv/bin` (در Linux و macOS) یا `.venv\Scripts` (در Windows) را به متغیر محیطی `PATH` اضافه می‌کند.
 
-Let's say that before activating the environment, the `PATH` variable looked like this:
+فرض کنید قبل از فعال‌سازی محیط، متغیر `PATH` مانند زیر بود:
 
 //// tab | Linux, macOS
 
@@ -639,7 +639,7 @@ Let's say that before activating the environment, the `PATH` variable looked lik
 /usr/bin:/bin:/usr/sbin:/sbin
 ```
 
-That means that the system would look for programs in:
+یعنی سیستم برنامه‌ها را در دایرکتوری‌های زیر جستجو خواهد کرد:
 
 * `/usr/bin`
 * `/bin`
@@ -654,13 +654,13 @@ That means that the system would look for programs in:
 C:\Windows\System32
 ```
 
-That means that the system would look for programs in:
+یعنی سیستم برنامه‌ها را در دایرکتوری‌های زیر جستجو خواهد کرد:
 
 * `C:\Windows\System32`
 
 ////
 
-After activating the virtual environment, the `PATH` variable would look something like this:
+بعد از فعال‌سازی محیط مجازی، متغیر `PATH` چیزی شبیه زیر خواهد بود:
 
 //// tab | Linux, macOS
 
@@ -668,21 +668,21 @@ After activating the virtual environment, the `PATH` variable would look somethi
 /home/user/code/awesome-project/.venv/bin:/usr/bin:/bin:/usr/sbin:/sbin
 ```
 
-That means that the system will now start looking first for programs in:
+یعنی سیستم اکنون ابتدا برنامه‌ها را جستجو خواهد کرد در:
 
 ```plaintext
 /home/user/code/awesome-project/.venv/bin
 ```
 
-before looking in the other directories.
+قبل از جستجو در دایرکتوری‌های دیگر.
 
-So, when you type `python` in the terminal, the system will find the Python program in
+بنابراین، وقتی `python` را در ترمینال تایپ می‌کنید، سیستم برنامه پایتون را در
 
 ```plaintext
 /home/user/code/awesome-project/.venv/bin/python
 ```
 
-and use that one.
+پیدا و از آن استفاده خواهد کرد.
 
 ////
 
@@ -692,31 +692,31 @@ and use that one.
 C:\Users\user\code\awesome-project\.venv\Scripts;C:\Windows\System32
 ```
 
-That means that the system will now start looking first for programs in:
+یعنی سیستم اکنون ابتدا برنامه‌ها را جستجو خواهد کرد در:
 
 ```plaintext
 C:\Users\user\code\awesome-project\.venv\Scripts
 ```
 
-before looking in the other directories.
+قبل از جستجو در دایرکتوری‌های دیگر.
 
-So, when you type `python` in the terminal, the system will find the Python program in
+بنابراین، وقتی `python` را در ترمینال تایپ می‌کنید، سیستم برنامه پایتون را در
 
 ```plaintext
 C:\Users\user\code\awesome-project\.venv\Scripts\python
 ```
 
-and use that one.
+پیدا و از آن استفاده خواهد کرد.
 
 ////
 
-An important detail is that it will put the virtual environment path at the **beginning** of the `PATH` variable. The system will find it **before** finding any other Python available. This way, when you run `python`, it will use the Python **from the virtual environment** instead of any other `python` (for example, a `python` from a global environment).
+یک جزئیات مهم این است که مسیر محیط مجازی را در **ابتدای** متغیر `PATH` قرار می‌دهد. سیستم آن را **قبل** از یافتن هر پایتون دیگر موجود پیدا خواهد کرد. به این ترتیب، وقتی `python` را اجرا می‌کنید، از پایتون **محیط مجازی** به جای هر `python` دیگری (به عنوان مثال، `python` از محیط سراسری) استفاده خواهد کرد.
 
-Activating a virtual environment also changes a couple of other things, but this is one of the most important things it does.
+فعال‌سازی محیط مجازی چند چیز دیگر نیز تغییر می‌دهد، اما این یکی از مهم‌ترین کارهایی است که انجام می‌دهد.
 
-## Checking a Virtual Environment
+## بررسی محیط مجازی
 
-When you check if a virtual environment is active, for example with:
+وقتی بررسی می‌کنید آیا محیط مجازی فعال است، به عنوان مثال با:
 
 //// tab | Linux, macOS, Windows Bash
 
@@ -746,33 +746,33 @@ C:\Users\user\code\awesome-project\.venv\Scripts\python
 
 ////
 
-That means that the `python` program that will be used is the one **in the virtual environment**.
+یعنی برنامه `python` که استفاده خواهد شد، برنامه‌ای **در محیط مجازی** است.
 
-You use `which` in Linux and macOS and `Get-Command` in Windows PowerShell.
+در Linux و macOS از `which` و در Windows PowerShell از `Get-Command` استفاده می‌کنید.
 
-The way that command works is that it will go and check in the `PATH` environment variable, going through **each path in order**, looking for the program called `python`. Once it finds it, it will **show you the path** to that program.
+نحوه کار آن دستور این است که متغیر محیطی `PATH` را بررسی می‌کند و از **هر مسیر به ترتیب** عبور می‌کند و به دنبال برنامه‌ای به نام `python` می‌گردد. وقتی آن را پیدا کند، **مسیر** آن برنامه را نشان خواهد داد.
 
-The most important part is that when you call `python`, that is the exact "`python`" that will be executed.
+مهم‌ترین بخش این است که وقتی `python` را فراخوانی می‌کنید، دقیقاً همان "`python`" اجرا خواهد شد.
 
-So, you can confirm if you are in the correct virtual environment.
+بنابراین، می‌توانید تأیید کنید آیا در محیط مجازی درست هستید.
 
 /// tip
 
-It's easy to activate one virtual environment, get one Python, and then **go to another project**.
+فعال‌سازی یک محیط مجازی، گرفتن یک پایتون و سپس **رفتن به پروژه دیگر** آسان است.
 
-And the second project **wouldn't work** because you are using the **incorrect Python**, from a virtual environment for another project.
+و پروژه دوم **کار نخواهد کرد** زیرا از **پایتون اشتباه** از محیط مجازی پروژه دیگر استفاده می‌کنید.
 
-It's useful being able to check what `python` is being used. 🤓
+توانایی بررسی اینکه از چه `python` استفاده می‌شود مفید است. 🤓
 
 ///
 
-## Why Deactivate a Virtual Environment
+## چرا غیرفعال‌سازی محیط مجازی
 
-For example, you could be working on a project `philosophers-stone`, **activate that virtual environment**, install packages and work with that environment.
+به عنوان مثال، ممکن است روی پروژه `philosophers-stone` کار کنید، **آن محیط مجازی را فعال** کنید، پکیج‌ها را نصب و با آن محیط کار کنید.
 
-And then you want to work on **another project** `prisoner-of-azkaban`.
+و سپس می‌خواهید روی **پروژه دیگری** `prisoner-of-azkaban` کار کنید.
 
-You go to that project:
+به آن پروژه می‌روید:
 
 <div class="termy">
 
@@ -782,7 +782,7 @@ $ cd ~/code/prisoner-of-azkaban
 
 </div>
 
-If you don't deactivate the virtual environment for `philosophers-stone`, when you run `python` in the terminal, it will try to use the Python from `philosophers-stone`.
+اگر محیط مجازی `philosophers-stone` را غیرفعال نکنید، وقتی `python` را در ترمینال اجرا کنید، سعی خواهد کرد از پایتون `philosophers-stone` استفاده کند.
 
 <div class="termy">
 
@@ -799,7 +799,7 @@ Traceback (most recent call last):
 
 </div>
 
-But if you deactivate the virtual environment and activate the new one for `prisoner-of-askaban` then when you run `python` it will use the Python from the virtual environment in `prisoner-of-azkaban`.
+اما اگر محیط مجازی را غیرفعال و محیط جدید `prisoner-of-azkaban` را فعال کنید، وقتی `python` را اجرا کنید از پایتون محیط مجازی `prisoner-of-azkaban` استفاده خواهد کرد.
 
 <div class="termy">
 
@@ -820,25 +820,25 @@ I solemnly swear 🐺
 
 </div>
 
-## Alternatives
+## جایگزین‌ها
 
-This is a simple guide to get you started and teach you how everything works **underneath**.
+این یک راهنمای ساده برای شروع و آموزش نحوه کار همه چیز **در زیرساخت** است.
 
-There are many **alternatives** to managing virtual environments, package dependencies (requirements), projects.
+**جایگزین‌های** بسیاری برای مدیریت محیط‌های مجازی، وابستگی‌های پکیج (نیازمندی‌ها) و پروژه‌ها وجود دارد.
 
-Once you are ready and want to use a tool to **manage the entire project**, packages dependencies, virtual environments, etc. I would suggest you try <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">uv</a>.
+وقتی آماده شدید و می‌خواهید ابزاری برای **مدیریت کل پروژه**، وابستگی‌های پکیج، محیط‌های مجازی و غیره استفاده کنید، پیشنهاد می‌کنم <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">uv</a> را امتحان کنید.
 
-`uv` can do a lot of things, it can:
+`uv` می‌تواند کارهای زیادی انجام دهد:
 
-* **Install Python** for you, including different versions
-* Manage the **virtual environment** for your projects
-* Install **packages**
-* Manage package **dependencies and versions** for your project
-* Make sure you have an **exact** set of packages and versions to install, including their dependencies, so that you can be sure that you can run your project in production exactly the same as in your computer while developing, this is called **locking**
-* And many other things
+* **نصب پایتون** برای شما، از جمله نسخه‌های مختلف
+* مدیریت **محیط مجازی** برای پروژه‌هایتان
+* نصب **پکیج‌ها**
+* مدیریت **وابستگی‌ها و نسخه‌های** پکیج برای پروژه‌تان
+* اطمینان از اینکه مجموعه **دقیقی** از پکیج‌ها و نسخه‌ها برای نصب دارید، شامل وابستگی‌هایشان، تا بتوانید مطمئن شوید پروژه‌تان را در محیط تولید دقیقاً مانند کامپیوترتان هنگام توسعه اجرا کنید، این **قفل‌سازی** نامیده می‌شود
+* و بسیاری چیزهای دیگر
 
-## Conclusion
+## نتیجه‌گیری
 
-If you read and understood all this, now **you know much more** about virtual environments than many developers out there. 🤓
+اگر همه اینها را خواندید و درک کردید، اکنون **بسیار بیشتر** از بسیاری از توسعه‌دهندگان درباره محیط‌های مجازی می‌دانید. 🤓
 
-Knowing these details will most probably be useful in a future time when you are debugging something that seems complex, but you will know **how it all works underneath**. 😎
+دانستن این جزئیات احتمالاً در زمان آینده مفید خواهد بود وقتی چیزی را اشکال‌زدایی می‌کنید که پیچیده به نظر می‌رسد، اما می‌دانید **همه چیز در زیرساخت چگونه کار می‌کند**. 😎
