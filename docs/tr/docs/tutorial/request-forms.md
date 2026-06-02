@@ -1,69 +1,73 @@
-# Form Verisi
+# Form Verileri
 
-İstek gövdesinde JSON verisi yerine form alanlarını karşılamanız gerketiğinde `Form` sınıfını kullanabilirsiniz.
+JSON yerine form alanları almanız gerektiğinde `Form` kullanabilirsiniz.
 
-/// info | Bilgi
+/// info
 
-Formları kullanmak için öncelikle <a href="https://github.com/Kludex/python-multipart" class="external-link" target="_blank">`python-multipart`</a> paketini indirmeniz gerekmektedir.
+Formları kullanmak için önce <a href="https://github.com/Kludex/python-multipart" class="external-link" target="_blank">`python-multipart`</a>'ı yükleyin.
 
-Örneğin `pip install python-multipart`.
+Bir [sanal ortam](../virtual-environments.md){.internal-link target=_blank} oluşturduğunuzdan, etkinleştirdiğinizden ve ardından yüklediğinizden emin olun, örneğin:
+
+```console
+$ pip install python-multipart
+```
 
 ///
 
-## `Form` Sınıfını Projenize Dahil Edin
+## `Form`'u içe aktarın
 
-`Form` sınıfını `fastapi`'den projenize dahil edin:
+`fastapi`'den `Form`'u içe aktarın:
 
 {* ../../docs_src/request_forms/tutorial001_an_py39.py hl[3] *}
 
-## `Form` Parametrelerini Tanımlayın
+## `Form` parametrelerini tanımlayın
 
 Form parametrelerini `Body` veya `Query` için yaptığınız gibi oluşturun:
 
 {* ../../docs_src/request_forms/tutorial001_an_py39.py hl[9] *}
 
-Örneğin, OAuth2 spesifikasyonunun kullanılabileceği ("şifre akışı" olarak adlandırılan) yollardan birinde, form alanları olarak <abbr title="Kullanıcı Adı: Username">"username"</abbr> ve <abbr title="Şifre: Password">"password"</abbr> gönderilmesi gerekir.
+Örneğin, OAuth2 spesifikasyonunun kullanılabileceği yollardan birinde ("password flow" olarak adlandırılır) bir `username` ve `password`'ü form alanları olarak göndermeniz gerekir.
 
-Bu <abbr title="Spesifikasyon: Specification">spesifikasyon</abbr> form alanlarını adlandırırken isimlerinin birebir `username` ve `password` olmasını ve JSON verisi yerine form verisi olarak gönderilmesini gerektirir.
+<abbr title="spesifikasyon">Spec</abbr>, alanların tam olarak `username` ve `password` olarak adlandırılmasını ve JSON olarak değil form alanları olarak gönderilmesini gerektirir.
 
-`Form` sınıfıyla tanımlama yaparken `Body`, `Query`, `Path` ve `Cookie` sınıflarında kullandığınız aynı validasyon, örnekler, isimlendirme (örneğin `username` yerine `user-name` kullanımı) ve daha fazla konfigurasyonu kullanabilirsiniz.
+`Form` ile `Body` (ve `Query`, `Path`, `Cookie`) ile aynı yapılandırmaları bildirebilirsiniz, doğrulama, örnekler, bir takma ad (örneğin `username` yerine `user-name`) vb. dahil.
 
-/// info | Bilgi
+/// info
 
-`Form` doğrudan `Body` sınıfını miras alan bir sınıftır.
-
-///
-
-/// tip | İpucu
-
-Form gövdelerini tanımlamak için `Form` sınıfını kullanmanız gerekir; çünkü bu olmadan parametreler sorgu parametreleri veya gövde (JSON) parametreleri olarak yorumlanır.
+`Form`, doğrudan `Body`'den miras alan bir sınıftır.
 
 ///
 
-## "Form Alanları" Hakkında
+/// tip
 
-HTML formlarının (`<form></form>`) verileri sunucuya gönderirken JSON'dan farklı özel bir kodlama kullanır.
+Form gövdelerini bildirmek için `Form`'u açıkça kullanmanız gerekir, çünkü onsuz parametreler sorgu parametreleri veya gövde (JSON) parametreleri olarak yorumlanır.
 
-**FastAPI** bu verilerin JSON yerine doğru şekilde okunmasını sağlayacaktır.
+///
+
+## "Form Alanları" hakkında
+
+HTML formlarının (`<form></form>`) verileri sunucuya gönderme şekli normalde bu veriler için "özel" bir kodlama kullanır, JSON'dan farklıdır.
+
+**FastAPI**, bu verileri JSON yerine doğru yerden okumayı sağlayacaktır.
 
 /// note | Teknik Detaylar
 
-Form verileri normalde `application/x-www-form-urlencoded` medya tipiyle kodlanır.
+Formlardan gelen veriler normalde `application/x-www-form-urlencoded` "medya tipi" kullanılarak kodlanır.
 
-Ancak form içerisinde dosyalar yer aldığında `multipart/form-data` olarak kodlanır. Bir sonraki bölümde dosyaların işlenmesi hakkında bilgi edineceksiniz.
+Ancak form dosyalar içerdiğinde, `multipart/form-data` olarak kodlanır. Dosyaları işleme hakkında bir sonraki bölümde okuyacaksınız.
 
-Form kodlama türleri ve form alanları hakkında daha fazla bilgi edinmek istiyorsanız <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST" class="external-link" target="_blank"><abbr title="Mozilla Developer Network">MDN</abbr> web docs for <code>POST</code></a> sayfasını ziyaret edebilirsiniz.
+Bu kodlamalar ve form alanları hakkında daha fazla bilgi edinmek istiyorsanız, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST" class="external-link" target="_blank"><abbr title="Mozilla Developer Network">MDN</abbr> web belgelerinde <code>POST</code></a> sayfasına gidin.
 
 ///
 
-/// warning | Uyarı
+/// warning
 
-*Yol operasyonları* içerisinde birden fazla `Form` parametresi tanımlayabilirsiniz ancak bunlarla birlikte JSON verisi kabul eden `Body` alanları tanımlayamazsınız çünkü bu durumda istek gövdesi `application/json` yerine `application/x-www-form-urlencoded` ile kodlanmış olur.
+Bir *yol operasyonunda* birden fazla `Form` parametresi bildirebilirsiniz, ancak JSON olarak almayı beklediğiniz `Body` alanlarını da bildiremezsiniz, çünkü istek gövdesi `application/json` yerine `application/x-www-form-urlencoded` kullanılarak kodlanmış olacaktır.
 
-Bu **FastAPI**'ın getirdiği bir kısıtlama değildir, HTTP protokolünün bir parçasıdır.
+Bu **FastAPI**'nin bir sınırlaması değil, HTTP protokolünün bir parçasıdır.
 
 ///
 
 ## Özet
 
-Form verisi girdi parametreleri tanımlamak için `Form` sınıfını kullanın.
+Form veri girişi parametrelerini bildirmek için `Form` kullanın.
