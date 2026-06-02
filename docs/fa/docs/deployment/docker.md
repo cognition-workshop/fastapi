@@ -1,17 +1,17 @@
-# FastAPI in Containers - Docker
+# FastAPI در کانتینرها - Docker
 
-When deploying FastAPI applications a common approach is to build a **Linux container image**. It's normally done using <a href="https://www.docker.com/" class="external-link" target="_blank">**Docker**</a>. You can then deploy that container image in one of a few possible ways.
+هنگام استقرار برنامه‌های FastAPI یک رویکرد رایج ساخت **ایمیج کانتینر لینوکس** است. معمولاً با استفاده از <a href="https://www.docker.com/" class="external-link" target="_blank">**Docker**</a> انجام می‌شود. سپس می‌توانید آن ایمیج کانتینر را به یکی از چندین روش ممکن مستقر کنید.
 
-Using Linux containers has several advantages including **security**, **replicability**, **simplicity**, and others.
+استفاده از کانتینرهای لینوکس مزایای متعددی دارد از جمله **امنیت**، **تکرارپذیری**، **سادگی** و موارد دیگر.
 
 /// tip
 
-In a hurry and already know this stuff? Jump to the [`Dockerfile` below 👇](#build-a-docker-image-for-fastapi).
+عجله دارید و قبلاً این موارد را می‌دانید؟ به [`Dockerfile` زیر 👇](#build-a-docker-image-for-fastapi) بروید.
 
 ///
 
 <details>
-<summary>Dockerfile Preview 👀</summary>
+<summary>پیش‌نمایش Dockerfile 👀</summary>
 
 ```Dockerfile
 FROM python:3.9
@@ -32,95 +32,95 @@ CMD ["fastapi", "run", "app/main.py", "--port", "80"]
 
 </details>
 
-## What is a Container
+## کانتینر چیست
 
-Containers (mainly Linux containers) are a very **lightweight** way to package applications including all their dependencies and necessary files while keeping them isolated from other containers (other applications or components) in the same system.
+کانتینرها (عمدتاً کانتینرهای لینوکس) روشی بسیار **سبک** برای بسته‌بندی برنامه‌ها شامل تمام وابستگی‌ها و فایل‌های لازم هستند در حالی که آنها را از سایر کانتینرها (سایر برنامه‌ها یا اجزا) در همان سیستم جدا نگه می‌دارند.
 
-Linux containers run using the same Linux kernel of the host (machine, virtual machine, cloud server, etc). This just means that they are very lightweight (compared to full virtual machines emulating an entire operating system).
+کانتینرهای لینوکس با استفاده از همان هسته لینوکس میزبان (ماشین، ماشین مجازی، سرور ابری و غیره) اجرا می‌شوند. این فقط به این معنی است که بسیار سبک هستند (در مقایسه با ماشین‌های مجازی کامل که یک سیستم عامل کامل را شبیه‌سازی می‌کنند).
 
-This way, containers consume **little resources**, an amount comparable to running the processes directly (a virtual machine would consume much more).
+به این ترتیب، کانتینرها **منابع کمی** مصرف می‌کنند، مقداری قابل مقایسه با اجرای فرآیندها به صورت مستقیم (یک ماشین مجازی بسیار بیشتر مصرف خواهد کرد).
 
-Containers also have their own **isolated** running processes (commonly just one process), file system, and network, simplifying deployment, security, development, etc.
+کانتینرها همچنین فرآیندهای در حال اجرای **ایزوله** خود (معمولاً فقط یک فرآیند)، سیستم فایل و شبکه خود را دارند که استقرار، امنیت، توسعه و غیره را ساده می‌کند.
 
-## What is a Container Image
+## ایمیج کانتینر چیست
 
-A **container** is run from a **container image**.
+یک **کانتینر** از یک **ایمیج کانتینر** اجرا می‌شود.
 
-A container image is a **static** version of all the files, environment variables, and the default command/program that should be present in a container. **Static** here means that the container **image** is not running, it's not being executed, it's only the packaged files and metadata.
+ایمیج کانتینر یک نسخه **ایستا** از تمام فایل‌ها، متغیرهای محیطی و دستور/برنامه پیش‌فرض است که باید در یک کانتینر وجود داشته باشد. **ایستا** اینجا به این معنی است که **ایمیج** کانتینر در حال اجرا نیست، اجرا نمی‌شود، فقط فایل‌ها و فراداده‌های بسته‌بندی‌شده است.
 
-In contrast to a "**container image**" that is the stored static contents, a "**container**" normally refers to the running instance, the thing that is being **executed**.
+در مقابل "**ایمیج کانتینر**" که محتوای ایستای ذخیره‌شده است، یک "**کانتینر**" معمولاً به نمونه در حال اجرا اشاره دارد، چیزی که در حال **اجرا** است.
 
-When the **container** is started and running (started from a **container image**) it could create or change files, environment variables, etc. Those changes will exist only in that container, but would not persist in the underlying container image (would not be saved to disk).
+وقتی **کانتینر** شروع شده و در حال اجرا است (از یک **ایمیج کانتینر** شروع شده) می‌تواند فایل‌ها، متغیرهای محیطی و غیره ایجاد یا تغییر دهد. آن تغییرات فقط در آن کانتینر وجود خواهند داشت، اما در ایمیج کانتینر زیرین ذخیره نخواهند شد (روی دیسک ذخیره نخواهند شد).
 
-A container image is comparable to the **program** file and contents, e.g. `python` and some file `main.py`.
+ایمیج کانتینر قابل مقایسه با فایل **برنامه** و محتوا است، مثلاً `python` و یک فایل `main.py`.
 
-And the **container** itself (in contrast to the **container image**) is the actual running instance of the image, comparable to a **process**. In fact, a container is running only when it has a **process running** (and normally it's only a single process). The container stops when there's no process running in it.
+و خود **کانتینر** (در مقابل **ایمیج کانتینر**) نمونه واقعی در حال اجرای ایمیج است، قابل مقایسه با یک **فرآیند**. در واقع، یک کانتینر فقط زمانی در حال اجرا است که یک **فرآیند در حال اجرا** داشته باشد (و معمولاً فقط یک فرآیند واحد است). کانتینر زمانی متوقف می‌شود که هیچ فرآیندی در آن در حال اجرا نباشد.
 
-## Container Images
+## ایمیج‌های کانتینر
 
-Docker has been one of the main tools to create and manage **container images** and **containers**.
+Docker یکی از ابزارهای اصلی برای ایجاد و مدیریت **ایمیج‌های کانتینر** و **کانتینرها** بوده است.
 
-And there's a public <a href="https://hub.docker.com/" class="external-link" target="_blank">Docker Hub</a> with pre-made **official container images** for many tools, environments, databases, and applications.
+و یک <a href="https://hub.docker.com/" class="external-link" target="_blank">Docker Hub</a> عمومی با **ایمیج‌های کانتینر رسمی** از پیش ساخته‌شده برای بسیاری از ابزارها، محیط‌ها، پایگاه داده‌ها و برنامه‌ها وجود دارد.
 
-For example, there's an official <a href="https://hub.docker.com/_/python" class="external-link" target="_blank">Python Image</a>.
+به عنوان مثال، یک <a href="https://hub.docker.com/_/python" class="external-link" target="_blank">ایمیج رسمی Python</a> وجود دارد.
 
-And there are many other images for different things like databases, for example for:
+و بسیاری از ایمیج‌های دیگر برای چیزهای مختلف مانند پایگاه داده‌ها وجود دارد، به عنوان مثال برای:
 
 * <a href="https://hub.docker.com/_/postgres" class="external-link" target="_blank">PostgreSQL</a>
 * <a href="https://hub.docker.com/_/mysql" class="external-link" target="_blank">MySQL</a>
 * <a href="https://hub.docker.com/_/mongo" class="external-link" target="_blank">MongoDB</a>
-* <a href="https://hub.docker.com/_/redis" class="external-link" target="_blank">Redis</a>, etc.
+* <a href="https://hub.docker.com/_/redis" class="external-link" target="_blank">Redis</a> و غیره.
 
-By using a pre-made container image it's very easy to **combine** and use different tools. For example, to try out a new database. In most cases, you can use the **official images**, and just configure them with environment variables.
+با استفاده از ایمیج کانتینر از پیش ساخته‌شده **ترکیب** و استفاده از ابزارهای مختلف بسیار آسان است. به عنوان مثال، برای امتحان یک پایگاه داده جدید. در اکثر موارد، می‌توانید از **ایمیج‌های رسمی** استفاده کنید و فقط آنها را با متغیرهای محیطی پیکربندی کنید.
 
-That way, in many cases you can learn about containers and Docker and reuse that knowledge with many different tools and components.
+به این ترتیب، در بسیاری از موارد می‌توانید درباره کانتینرها و Docker بیاموزید و آن دانش را با بسیاری از ابزارها و اجزای مختلف دوباره استفاده کنید.
 
-So, you would run **multiple containers** with different things, like a database, a Python application, a web server with a React frontend application, and connect them together via their internal network.
+بنابراین، **چندین کانتینر** با چیزهای مختلف اجرا می‌کنید، مانند یک پایگاه داده، یک برنامه پایتون، یک سرور وب با یک برنامه فرانت‌اند React و آنها را از طریق شبکه داخلی‌شان به هم متصل می‌کنید.
 
-All the container management systems (like Docker or Kubernetes) have these networking features integrated into them.
+تمام سیستم‌های مدیریت کانتینر (مانند Docker یا Kubernetes) این ویژگی‌های شبکه‌ای را به صورت یکپارچه دارند.
 
-## Containers and Processes
+## کانتینرها و فرآیندها
 
-A **container image** normally includes in its metadata the default program or command that should be run when the **container** is started and the parameters to be passed to that program. Very similar to what would be if it was in the command line.
+یک **ایمیج کانتینر** معمولاً در فراداده خود برنامه یا دستور پیش‌فرضی را شامل می‌شود که باید هنگام شروع **کانتینر** اجرا شود و پارامترهایی که باید به آن برنامه پاس داده شوند. بسیار شبیه به آنچه در خط فرمان خواهد بود.
 
-When a **container** is started, it will run that command/program (although you can override it and make it run a different command/program).
+وقتی یک **کانتینر** شروع می‌شود، آن دستور/برنامه را اجرا می‌کند (اگرچه می‌توانید آن را بازنویسی کنید و دستور/برنامه متفاوتی اجرا کنید).
 
-A container is running as long as the **main process** (command or program) is running.
+یک کانتینر تا زمانی که **فرآیند اصلی** (دستور یا برنامه) در حال اجرا باشد، در حال اجرا است.
 
-A container normally has a **single process**, but it's also possible to start subprocesses from the main process, and that way you will have **multiple processes** in the same container.
+یک کانتینر معمولاً یک **فرآیند واحد** دارد، اما همچنین امکان شروع زیرفرآیندها از فرآیند اصلی وجود دارد، و به این ترتیب **چندین فرآیند** در همان کانتینر خواهید داشت.
 
-But it's not possible to have a running container without **at least one running process**. If the main process stops, the container stops.
+اما امکان داشتن یک کانتینر در حال اجرا بدون **حداقل یک فرآیند در حال اجرا** وجود ندارد. اگر فرآیند اصلی متوقف شود، کانتینر متوقف می‌شود.
 
-## Build a Docker Image for FastAPI
+## ساخت ایمیج Docker برای FastAPI
 
-Okay, let's build something now! 🚀
+خب، بیایید حالا چیزی بسازیم! 🚀
 
-I'll show you how to build a **Docker image** for FastAPI **from scratch**, based on the **official Python** image.
+به شما نشان خواهم داد چگونه یک **ایمیج Docker** برای FastAPI **از صفر** بسازید، بر اساس ایمیج **رسمی Python**.
 
-This is what you would want to do in **most cases**, for example:
+این همان چیزی است که در **اکثر موارد** می‌خواهید انجام دهید، به عنوان مثال:
 
-* Using **Kubernetes** or similar tools
-* When running on a **Raspberry Pi**
-* Using a cloud service that would run a container image for you, etc.
+* استفاده از **Kubernetes** یا ابزارهای مشابه
+* هنگام اجرا روی **Raspberry Pi**
+* استفاده از سرویس ابری که یک ایمیج کانتینر را برای شما اجرا می‌کند و غیره.
 
-### Package Requirements
+### الزامات بسته
 
-You would normally have the **package requirements** for your application in some file.
+معمولاً **الزامات بسته** برای برنامه خود را در فایلی خواهید داشت.
 
-It would depend mainly on the tool you use to **install** those requirements.
+عمدتاً بستگی به ابزاری دارد که برای **نصب** آن الزامات استفاده می‌کنید.
 
-The most common way to do it is to have a file `requirements.txt` with the package names and their versions, one per line.
+رایج‌ترین روش داشتن فایل `requirements.txt` با نام بسته‌ها و نسخه‌هایشان، هر کدام در یک خط است.
 
-You would of course use the same ideas you read in [About FastAPI versions](versions.md){.internal-link target=_blank} to set the ranges of versions.
+البته از همان ایده‌هایی استفاده خواهید کرد که در [درباره نسخه‌های FastAPI](versions.md){.internal-link target=_blank} خوانده‌اید تا محدوده نسخه‌ها را تنظیم کنید.
 
-For example, your `requirements.txt` could look like:
+به عنوان مثال، `requirements.txt` شما می‌تواند به صورت زیر باشد:
 
 ```
 fastapi[standard]>=0.113.0,<0.114.0
 pydantic>=2.7.0,<3.0.0
 ```
 
-And you would normally install those package dependencies with `pip`, for example:
+و معمولاً آن وابستگی‌های بسته را با `pip` نصب می‌کنید، به عنوان مثال:
 
 <div class="termy">
 
@@ -134,15 +134,15 @@ Successfully installed fastapi pydantic
 
 /// info
 
-There are other formats and tools to define and install package dependencies.
+فرمت‌ها و ابزارهای دیگری برای تعریف و نصب وابستگی‌های بسته وجود دارد.
 
 ///
 
-### Create the **FastAPI** Code
+### ایجاد کد **FastAPI**
 
-* Create an `app` directory and enter it.
-* Create an empty file `__init__.py`.
-* Create a `main.py` file with:
+* یک دایرکتوری `app` ایجاد کنید و وارد آن شوید.
+* یک فایل خالی `__init__.py` ایجاد کنید.
+* یک فایل `main.py` با محتوای زیر ایجاد کنید:
 
 ```Python
 from typing import Union
@@ -164,7 +164,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 ### Dockerfile
 
-Now in the same project directory create a file `Dockerfile` with:
+حالا در همان دایرکتوری پروژه یک فایل `Dockerfile` ایجاد کنید با محتوای:
 
 ```{ .dockerfile .annotate }
 # (1)!
@@ -186,141 +186,141 @@ COPY ./app /code/app
 CMD ["fastapi", "run", "app/main.py", "--port", "80"]
 ```
 
-1. Start from the official Python base image.
+1. از ایمیج پایه رسمی Python شروع کنید.
 
-2. Set the current working directory to `/code`.
+2. دایرکتوری کاری فعلی را به `/code` تنظیم کنید.
 
-    This is where we'll put the `requirements.txt` file and the `app` directory.
+    اینجاست که فایل `requirements.txt` و دایرکتوری `app` را قرار خواهیم داد.
 
-3. Copy the file with the requirements to the `/code` directory.
+3. فایل الزامات را به دایرکتوری `/code` کپی کنید.
 
-    Copy **only** the file with the requirements first, not the rest of the code.
+    **فقط** ابتدا فایل الزامات را کپی کنید، نه بقیه کد.
 
-    As this file **doesn't change often**, Docker will detect it and use the **cache** for this step, enabling the cache for the next step too.
+    از آنجا که این فایل **اغلب تغییر نمی‌کند**، Docker آن را تشخیص داده و از **کش** برای این مرحله استفاده می‌کند، که کش مرحله بعدی را نیز فعال می‌کند.
 
-4. Install the package dependencies in the requirements file.
+4. وابستگی‌های بسته را در فایل الزامات نصب کنید.
 
-    The `--no-cache-dir` option tells `pip` to not save the downloaded packages locally, as that is only if `pip` was going to be run again to install the same packages, but that's not the case when working with containers.
+    گزینه `--no-cache-dir` به `pip` می‌گوید بسته‌های دانلودشده را به صورت محلی ذخیره نکند، زیرا فقط اگر `pip` دوباره برای نصب همان بسته‌ها اجرا شود مفید است، اما هنگام کار با کانتینرها این مورد نیست.
 
     /// note
 
-    The `--no-cache-dir` is only related to `pip`, it has nothing to do with Docker or containers.
+    `--no-cache-dir` فقط مربوط به `pip` است، هیچ ربطی به Docker یا کانتینرها ندارد.
 
     ///
 
-    The `--upgrade` option tells `pip` to upgrade the packages if they are already installed.
+    گزینه `--upgrade` به `pip` می‌گوید اگر بسته‌ها قبلاً نصب شده‌اند آنها را ارتقا دهد.
 
-    Because the previous step copying the file could be detected by the **Docker cache**, this step will also **use the Docker cache** when available.
+    از آنجا که مرحله قبلی کپی فایل می‌تواند توسط **کش Docker** تشخیص داده شود، این مرحله نیز هنگام در دسترس بودن از **کش Docker استفاده خواهد کرد**.
 
-    Using the cache in this step will **save** you a lot of **time** when building the image again and again during development, instead of **downloading and installing** all the dependencies **every time**.
+    استفاده از کش در این مرحله زمان زیادی را هنگام ساخت مکرر ایمیج در طول توسعه **صرفه‌جویی** خواهد کرد، به جای **دانلود و نصب** تمام وابستگی‌ها **هر بار**.
 
-5. Copy the `./app` directory inside the `/code` directory.
+5. دایرکتوری `./app` را داخل دایرکتوری `/code` کپی کنید.
 
-    As this has all the code which is what **changes most frequently** the Docker **cache** won't be used for this or any **following steps** easily.
+    از آنجا که این تمام کدی است که **بیشتر تغییر می‌کند** **کش** Docker به راحتی برای این یا هر **مرحله بعدی** استفاده نخواهد شد.
 
-    So, it's important to put this **near the end** of the `Dockerfile`, to optimize the container image build times.
+    بنابراین، مهم است که این را **نزدیک به انتها** در `Dockerfile` قرار دهید، تا زمان‌های ساخت ایمیج کانتینر را بهینه کنید.
 
-6. Set the **command** to use `fastapi run`, which uses Uvicorn underneath.
+6. **دستور** را برای استفاده از `fastapi run` تنظیم کنید، که از Uvicorn در زیر استفاده می‌کند.
 
-    `CMD` takes a list of strings, each of these strings is what you would type in the command line separated by spaces.
+    `CMD` یک لیست از رشته‌ها می‌گیرد، هر کدام از این رشته‌ها همان چیزی است که در خط فرمان با فاصله جدا شده تایپ می‌کنید.
 
-    This command will be run from the **current working directory**, the same `/code` directory you set above with `WORKDIR /code`.
+    این دستور از **دایرکتوری کاری فعلی**، همان دایرکتوری `/code` که بالا با `WORKDIR /code` تنظیم کردید، اجرا خواهد شد.
 
 /// tip
 
-Review what each line does by clicking each number bubble in the code. 👆
+با کلیک روی هر حباب شماره در کد، هر خط چه کاری انجام می‌دهد را مرور کنید. 👆
 
 ///
 
 /// warning
 
-Make sure to **always** use the **exec form** of the `CMD` instruction, as explained below.
+مطمئن شوید **همیشه** از **فرم exec** دستور `CMD` استفاده کنید، همانطور که در زیر توضیح داده شده.
 
 ///
 
-#### Use `CMD` - Exec Form
+#### استفاده از `CMD` - فرم Exec
 
-The <a href="https://docs.docker.com/reference/dockerfile/#cmd" class="external-link" target="_blank">`CMD`</a> Docker instruction can be written using two forms:
+دستور <a href="https://docs.docker.com/reference/dockerfile/#cmd" class="external-link" target="_blank">`CMD`</a> Docker می‌تواند به دو صورت نوشته شود:
 
-✅ **Exec** form:
+✅ فرم **Exec**:
 
 ```Dockerfile
 # ✅ Do this
 CMD ["fastapi", "run", "app/main.py", "--port", "80"]
 ```
 
-⛔️ **Shell** form:
+⛔️ فرم **Shell**:
 
 ```Dockerfile
 # ⛔️ Don't do this
 CMD fastapi run app/main.py --port 80
 ```
 
-Make sure to always use the **exec** form to ensure that FastAPI can shutdown gracefully and [lifespan events](../advanced/events.md){.internal-link target=_blank} are triggered.
+مطمئن شوید همیشه از فرم **exec** استفاده کنید تا اطمینان حاصل شود که FastAPI می‌تواند به درستی خاتمه یابد و [رویدادهای چرخه عمر](../advanced/events.md){.internal-link target=_blank} فعال شوند.
 
-You can read more about it in the <a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form" class="external-link" target="_blank">Docker docs for shell and exec form</a>.
+می‌توانید بیشتر درباره آن در <a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form" class="external-link" target="_blank">مستندات Docker برای فرم shell و exec</a> بخوانید.
 
-This can be quite noticeable when using `docker compose`. See this Docker Compose FAQ section for more technical details: <a href="https://docs.docker.com/compose/faq/#why-do-my-services-take-10-seconds-to-recreate-or-stop" class="external-link" target="_blank">Why do my services take 10 seconds to recreate or stop?</a>.
+این می‌تواند هنگام استفاده از `docker compose` کاملاً قابل توجه باشد. بخش سؤالات متداول Docker Compose را برای جزئیات فنی بیشتر ببینید: <a href="https://docs.docker.com/compose/faq/#why-do-my-services-take-10-seconds-to-recreate-or-stop" class="external-link" target="_blank">Why do my services take 10 seconds to recreate or stop?</a>.
 
-#### Directory Structure
+#### ساختار دایرکتوری
 
-You should now have a directory structure like:
+اکنون باید ساختار دایرکتوری مانند زیر داشته باشید:
 
 ```
 .
 ├── app
-│   ├── __init__.py
+│   ├── __init__.py
 │   └── main.py
 ├── Dockerfile
 └── requirements.txt
 ```
 
-#### Behind a TLS Termination Proxy
+#### پشت یک پروکسی خاتمه TLS
 
-If you are running your container behind a TLS Termination Proxy (load balancer) like Nginx or Traefik, add the option `--proxy-headers`, this will tell Uvicorn (through the FastAPI CLI) to trust the headers sent by that proxy telling it that the application is running behind HTTPS, etc.
+اگر کانتینر خود را پشت یک پروکسی خاتمه TLS (متعادل‌کننده بار) مانند Nginx یا Traefik اجرا می‌کنید، گزینه `--proxy-headers` را اضافه کنید، این به Uvicorn (از طریق FastAPI CLI) می‌گوید به هدرهای ارسال‌شده توسط آن پروکسی اعتماد کند که به آن می‌گوید برنامه پشت HTTPS اجرا می‌شود و غیره.
 
 ```Dockerfile
 CMD ["fastapi", "run", "app/main.py", "--proxy-headers", "--port", "80"]
 ```
 
-#### Docker Cache
+#### کش Docker
 
-There's an important trick in this `Dockerfile`, we first copy the **file with the dependencies alone**, not the rest of the code. Let me tell you why is that.
+یک ترفند مهم در این `Dockerfile` وجود دارد، ابتدا **فایل وابستگی‌ها را به تنهایی** کپی می‌کنیم، نه بقیه کد. بگذارید بگویم چرا.
 
 ```Dockerfile
 COPY ./requirements.txt /code/requirements.txt
 ```
 
-Docker and other tools **build** these container images **incrementally**, adding **one layer on top of the other**, starting from the top of the `Dockerfile` and adding any files created by each of the instructions of the `Dockerfile`.
+Docker و سایر ابزارها این ایمیج‌های کانتینر را **به صورت تدریجی** **می‌سازند**، یک **لایه روی دیگری** اضافه می‌کنند، از بالای `Dockerfile` شروع کرده و هر فایلی که توسط هر یک از دستورالعمل‌های `Dockerfile` ایجاد شده را اضافه می‌کنند.
 
-Docker and similar tools also use an **internal cache** when building the image, if a file hasn't changed since the last time building the container image, then it will **reuse the same layer** created the last time, instead of copying the file again and creating a new layer from scratch.
+Docker و ابزارهای مشابه همچنین از یک **کش داخلی** هنگام ساخت ایمیج استفاده می‌کنند، اگر فایلی از آخرین بار ساخت ایمیج کانتینر تغییر نکرده باشد، **همان لایه** ایجادشده آخرین بار را **دوباره استفاده** می‌کند، به جای کپی مجدد فایل و ایجاد لایه جدید از صفر.
 
-Just avoiding the copy of files doesn't necessarily improve things too much, but because it used the cache for that step, it can **use the cache for the next step**. For example, it could use the cache for the instruction that installs dependencies with:
+فقط اجتناب از کپی فایل‌ها لزوماً چیزها را خیلی بهبود نمی‌دهد، اما چون از کش برای آن مرحله استفاده کرده، می‌تواند **از کش برای مرحله بعدی استفاده کند**. به عنوان مثال، می‌تواند از کش برای دستورالعملی که وابستگی‌ها را نصب می‌کند استفاده کند:
 
 ```Dockerfile
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 ```
 
-The file with the package requirements **won't change frequently**. So, by copying only that file, Docker will be able to **use the cache** for that step.
+فایل الزامات بسته **اغلب تغییر نمی‌کند**. بنابراین، با کپی فقط آن فایل، Docker قادر خواهد بود **از کش** برای آن مرحله استفاده کند.
 
-And then, Docker will be able to **use the cache for the next step** that downloads and install those dependencies. And here's where we **save a lot of time**. ✨ ...and avoid boredom waiting. 😪😆
+و سپس، Docker قادر خواهد بود **از کش برای مرحله بعدی** که آن وابستگی‌ها را دانلود و نصب می‌کند استفاده کند. و اینجاست که **زمان زیادی صرفه‌جویی** می‌کنیم. ✨ ...و از کسالت جلوگیری می‌کنیم. 😪😆
 
-Downloading and installing the package dependencies **could take minutes**, but using the **cache** would **take seconds** at most.
+دانلود و نصب وابستگی‌های بسته **می‌تواند دقایقی طول بکشد**، اما استفاده از **کش** حداکثر **ثانیه‌هایی** طول خواهد کشید.
 
-And as you would be building the container image again and again during development to check that your code changes are working, there's a lot of accumulated time this would save.
+و از آنجا که ایمیج کانتینر را بارها و بارها در طول توسعه برای بررسی اینکه تغییرات کد شما کار می‌کنند دوباره می‌سازید، زمان انباشته‌شده زیادی صرفه‌جویی خواهد شد.
 
-Then, near the end of the `Dockerfile`, we copy all the code. As this is what **changes most frequently**, we put it near the end, because almost always, anything after this step will not be able to use the cache.
+سپس، نزدیک به انتهای `Dockerfile`، تمام کد را کپی می‌کنیم. از آنجا که این چیزی است که **بیشتر تغییر می‌کند**، آن را نزدیک به انتها قرار می‌دهیم، زیرا تقریباً همیشه، هر چیزی بعد از این مرحله نخواهد توانست از کش استفاده کند.
 
 ```Dockerfile
 COPY ./app /code/app
 ```
 
-### Build the Docker Image
+### ساخت ایمیج Docker
 
-Now that all the files are in place, let's build the container image.
+اکنون که تمام فایل‌ها در جای خود هستند، بیایید ایمیج کانتینر را بسازیم.
 
-* Go to the project directory (in where your `Dockerfile` is, containing your `app` directory).
-* Build your FastAPI image:
+* به دایرکتوری پروژه بروید (جایی که `Dockerfile` شما قرار دارد، حاوی دایرکتوری `app`).
+* ایمیج FastAPI خود را بسازید:
 
 <div class="termy">
 
@@ -334,15 +334,15 @@ $ docker build -t myimage .
 
 /// tip
 
-Notice the `.` at the end, it's equivalent to `./`, it tells Docker the directory to use to build the container image.
+به `.` در انتها توجه کنید، معادل `./` است، به Docker می‌گوید از کدام دایرکتوری برای ساخت ایمیج کانتینر استفاده کند.
 
-In this case, it's the same current directory (`.`).
+در این مورد، همان دایرکتوری فعلی (`.`) است.
 
 ///
 
-### Start the Docker Container
+### شروع کانتینر Docker
 
-* Run a container based on your image:
+* یک کانتینر بر اساس ایمیج خود اجرا کنید:
 
 <div class="termy">
 
@@ -352,35 +352,35 @@ $ docker run -d --name mycontainer -p 80:80 myimage
 
 </div>
 
-## Check it
+## بررسی
 
-You should be able to check it in your Docker container's URL, for example: <a href="http://192.168.99.100/items/5?q=somequery" class="external-link" target="_blank">http://192.168.99.100/items/5?q=somequery</a> or <a href="http://127.0.0.1/items/5?q=somequery" class="external-link" target="_blank">http://127.0.0.1/items/5?q=somequery</a> (or equivalent, using your Docker host).
+باید بتوانید آن را در URL کانتینر Docker خود بررسی کنید، به عنوان مثال: <a href="http://192.168.99.100/items/5?q=somequery" class="external-link" target="_blank">http://192.168.99.100/items/5?q=somequery</a> یا <a href="http://127.0.0.1/items/5?q=somequery" class="external-link" target="_blank">http://127.0.0.1/items/5?q=somequery</a> (یا معادل آن، با استفاده از میزبان Docker شما).
 
-You will see something like:
+چیزی شبیه به این خواهید دید:
 
 ```JSON
 {"item_id": 5, "q": "somequery"}
 ```
 
-## Interactive API docs
+## مستندات تعاملی API
 
-Now you can go to <a href="http://192.168.99.100/docs" class="external-link" target="_blank">http://192.168.99.100/docs</a> or <a href="http://127.0.0.1/docs" class="external-link" target="_blank">http://127.0.0.1/docs</a> (or equivalent, using your Docker host).
+اکنون می‌توانید به <a href="http://192.168.99.100/docs" class="external-link" target="_blank">http://192.168.99.100/docs</a> یا <a href="http://127.0.0.1/docs" class="external-link" target="_blank">http://127.0.0.1/docs</a> بروید (یا معادل آن، با استفاده از میزبان Docker شما).
 
-You will see the automatic interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>):
+مستندات تعاملی خودکار API را خواهید دید (ارائه‌شده توسط <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>):
 
 ![Swagger UI](https://fastapi.tiangolo.com/img/index/index-01-swagger-ui-simple.png)
 
-## Alternative API docs
+## مستندات جایگزین API
 
-And you can also go to <a href="http://192.168.99.100/redoc" class="external-link" target="_blank">http://192.168.99.100/redoc</a> or <a href="http://127.0.0.1/redoc" class="external-link" target="_blank">http://127.0.0.1/redoc</a> (or equivalent, using your Docker host).
+و همچنین می‌توانید به <a href="http://192.168.99.100/redoc" class="external-link" target="_blank">http://192.168.99.100/redoc</a> یا <a href="http://127.0.0.1/redoc" class="external-link" target="_blank">http://127.0.0.1/redoc</a> بروید (یا معادل آن، با استفاده از میزبان Docker شما).
 
-You will see the alternative automatic documentation (provided by <a href="https://github.com/Rebilly/ReDoc" class="external-link" target="_blank">ReDoc</a>):
+مستندات خودکار جایگزین را خواهید دید (ارائه‌شده توسط <a href="https://github.com/Rebilly/ReDoc" class="external-link" target="_blank">ReDoc</a>):
 
 ![ReDoc](https://fastapi.tiangolo.com/img/index/index-02-redoc-simple.png)
 
-## Build a Docker Image with a Single-File FastAPI
+## ساخت ایمیج Docker با FastAPI تک‌فایلی
 
-If your FastAPI is a single file, for example, `main.py` without an `./app` directory, your file structure could look like this:
+اگر FastAPI شما یک فایل واحد است، به عنوان مثال، `main.py` بدون دایرکتوری `./app`، ساختار فایل شما می‌تواند مانند زیر باشد:
 
 ```
 .
@@ -389,7 +389,7 @@ If your FastAPI is a single file, for example, `main.py` without an `./app` dire
 └── requirements.txt
 ```
 
-Then you would just have to change the corresponding paths to copy the file inside the `Dockerfile`:
+سپس فقط باید مسیرهای مربوطه را برای کپی فایل داخل `Dockerfile` تغییر دهید:
 
 ```{ .dockerfile .annotate hl_lines="10  13" }
 FROM python:3.9
@@ -407,98 +407,98 @@ COPY ./main.py /code/
 CMD ["fastapi", "run", "main.py", "--port", "80"]
 ```
 
-1. Copy the `main.py` file to the `/code` directory directly (without any `./app` directory).
+1. فایل `main.py` را مستقیماً به دایرکتوری `/code` کپی کنید (بدون هیچ دایرکتوری `./app`).
 
-2. Use `fastapi run` to serve your application in the single file `main.py`.
+2. از `fastapi run` برای سرویس‌دهی برنامه خود در فایل واحد `main.py` استفاده کنید.
 
-When you pass the file to `fastapi run` it will detect automatically that it is a single file and not part of a package and will know how to import it and serve your FastAPI app. 😎
+وقتی فایل را به `fastapi run` پاس می‌دهید، به طور خودکار تشخیص می‌دهد که یک فایل واحد است و بخشی از یک بسته نیست و می‌داند چگونه آن را ایمپورت و برنامه FastAPI شما را سرویس‌دهی کند. 😎
 
-## Deployment Concepts
+## مفاهیم استقرار
 
-Let's talk again about some of the same [Deployment Concepts](concepts.md){.internal-link target=_blank} in terms of containers.
+بیایید دوباره درباره برخی از همان [مفاهیم استقرار](concepts.md){.internal-link target=_blank} از نظر کانتینرها صحبت کنیم.
 
-Containers are mainly a tool to simplify the process of **building and deploying** an application, but they don't enforce a particular approach to handle these **deployment concepts**, and there are several possible strategies.
+کانتینرها عمدتاً ابزاری برای ساده‌سازی فرآیند **ساخت و استقرار** یک برنامه هستند، اما رویکرد خاصی را برای مدیریت این **مفاهیم استقرار** اجبار نمی‌کنند، و چندین استراتژی ممکن وجود دارد.
 
-The **good news** is that with each different strategy there's a way to cover all of the deployment concepts. 🎉
+**خبر خوب** این است که با هر استراتژی متفاوتی راهی برای پوشش تمام مفاهیم استقرار وجود دارد. 🎉
 
-Let's review these **deployment concepts** in terms of containers:
+بیایید این **مفاهیم استقرار** را از نظر کانتینرها مرور کنیم:
 
 * HTTPS
-* Running on startup
-* Restarts
-* Replication (the number of processes running)
-* Memory
-* Previous steps before starting
+* اجرا در هنگام راه‌اندازی
+* راه‌اندازی مجدد
+* تکرار (تعداد فرآیندهای در حال اجرا)
+* حافظه
+* مراحل قبلی پیش از شروع
 
 ## HTTPS
 
-If we focus just on the **container image** for a FastAPI application (and later the running **container**), HTTPS normally would be handled **externally** by another tool.
+اگر فقط روی **ایمیج کانتینر** برای یک برنامه FastAPI تمرکز کنیم (و بعداً **کانتینر** در حال اجرا)، HTTPS معمولاً به صورت **خارجی** توسط ابزار دیگری مدیریت خواهد شد.
 
-It could be another container, for example with <a href="https://traefik.io/" class="external-link" target="_blank">Traefik</a>, handling **HTTPS** and **automatic** acquisition of **certificates**.
-
-/// tip
-
-Traefik has integrations with Docker, Kubernetes, and others, so it's very easy to set up and configure HTTPS for your containers with it.
-
-///
-
-Alternatively, HTTPS could be handled by a cloud provider as one of their services (while still running the application in a container).
-
-## Running on Startup and Restarts
-
-There is normally another tool in charge of **starting and running** your container.
-
-It could be **Docker** directly, **Docker Compose**, **Kubernetes**, a **cloud service**, etc.
-
-In most (or all) cases, there's a simple option to enable running the container on startup and enabling restarts on failures. For example, in Docker, it's the command line option `--restart`.
-
-Without using containers, making applications run on startup and with restarts can be cumbersome and difficult. But when **working with containers** in most cases that functionality is included by default. ✨
-
-## Replication - Number of Processes
-
-If you have a <abbr title="A group of machines that are configured to be connected and work together in some way.">cluster</abbr> of machines with **Kubernetes**, Docker Swarm Mode, Nomad, or another similar complex system to manage distributed containers on multiple machines, then you will probably want to **handle replication** at the **cluster level** instead of using a **process manager** (like Uvicorn with workers) in each container.
-
-One of those distributed container management systems like Kubernetes normally has some integrated way of handling **replication of containers** while still supporting **load balancing** for the incoming requests. All at the **cluster level**.
-
-In those cases, you would probably want to build a **Docker image from scratch** as [explained above](#dockerfile), installing your dependencies, and running **a single Uvicorn process** instead of using multiple Uvicorn workers.
-
-### Load Balancer
-
-When using containers, you would normally have some component **listening on the main port**. It could possibly be another container that is also a **TLS Termination Proxy** to handle **HTTPS** or some similar tool.
-
-As this component would take the **load** of requests and distribute that among the workers in a (hopefully) **balanced** way, it is also commonly called a **Load Balancer**.
+می‌تواند کانتینر دیگری باشد، به عنوان مثال با <a href="https://traefik.io/" class="external-link" target="_blank">Traefik</a>، که **HTTPS** و تهیه **خودکار** **گواهینامه‌ها** را مدیریت کند.
 
 /// tip
 
-The same **TLS Termination Proxy** component used for HTTPS would probably also be a **Load Balancer**.
+Traefik ادغام‌هایی با Docker، Kubernetes و سایرین دارد، بنابراین تنظیم و پیکربندی HTTPS برای کانتینرهای شما با آن بسیار آسان است.
 
 ///
 
-And when working with containers, the same system you use to start and manage them would already have internal tools to transmit the **network communication** (e.g. HTTP requests) from that **load balancer** (that could also be a **TLS Termination Proxy**) to the container(s) with your app.
+به عنوان جایگزین، HTTPS می‌تواند توسط یک ارائه‌دهنده ابری به عنوان یکی از سرویس‌هایشان مدیریت شود (در حالی که همچنان برنامه را در یک کانتینر اجرا می‌کند).
 
-### One Load Balancer - Multiple Worker Containers
+## اجرا در هنگام راه‌اندازی و راه‌اندازی مجدد
 
-When working with **Kubernetes** or similar distributed container management systems, using their internal networking mechanisms would allow the single **load balancer** that is listening on the main **port** to transmit communication (requests) to possibly **multiple containers** running your app.
+معمولاً ابزار دیگری مسئول **شروع و اجرای** کانتینر شما است.
 
-Each of these containers running your app would normally have **just one process** (e.g. a Uvicorn process running your FastAPI application). They would all be **identical containers**, running the same thing, but each with its own process, memory, etc. That way you would take advantage of **parallelization** in **different cores** of the CPU, or even in **different machines**.
+می‌تواند **Docker** مستقیماً، **Docker Compose**، **Kubernetes**، یک **سرویس ابری** و غیره باشد.
 
-And the distributed container system with the **load balancer** would **distribute the requests** to each one of the containers with your app **in turns**. So, each request could be handled by one of the multiple **replicated containers** running your app.
+در اکثر (یا تمام) موارد، یک گزینه ساده برای فعال کردن اجرای کانتینر در هنگام راه‌اندازی و فعال کردن راه‌اندازی مجدد در صورت خرابی وجود دارد. به عنوان مثال، در Docker، گزینه خط فرمان `--restart` است.
 
-And normally this **load balancer** would be able to handle requests that go to *other* apps in your cluster (e.g. to a different domain, or under a different URL path prefix), and would transmit that communication to the right containers for *that other* application running in your cluster.
+بدون استفاده از کانتینرها، اجرای برنامه‌ها در هنگام راه‌اندازی و با راه‌اندازی مجدد می‌تواند دشوار و پیچیده باشد. اما هنگام **کار با کانتینرها** در اکثر موارد آن عملکرد به طور پیش‌فرض شامل می‌شود. ✨
 
-### One Process per Container
+## تکرار - تعداد فرآیندها
 
-In this type of scenario, you probably would want to have **a single (Uvicorn) process per container**, as you would already be handling replication at the cluster level.
+اگر یک <abbr title="گروهی از ماشین‌ها که پیکربندی شده‌اند تا به هم متصل شوند و به نحوی با هم کار کنند.">خوشه</abbr> ماشین با **Kubernetes**، Docker Swarm Mode، Nomad یا سیستم پیچیده مشابه دیگری برای مدیریت کانتینرهای توزیع‌شده روی چندین ماشین دارید، احتمالاً می‌خواهید **تکرار را** در **سطح خوشه** مدیریت کنید به جای استفاده از **مدیر فرآیند** (مانند Uvicorn با کارگرها) در هر کانتینر.
 
-So, in this case, you **would not** want to have a multiple workers in the container, for example with the `--workers` command line option.You would want to have just a **single Uvicorn process** per container (but probably multiple containers).
+یکی از آن سیستم‌های مدیریت کانتینر توزیع‌شده مانند Kubernetes معمولاً راهی یکپارچه برای مدیریت **تکرار کانتینرها** در حالی که هنوز **متعادل‌سازی بار** برای درخواست‌های ورودی را پشتیبانی می‌کند دارد. همه در **سطح خوشه**.
 
-Having another process manager inside the container (as would be with multiple workers) would only add **unnecessary complexity** that you are most probably already taking care of with your cluster system.
+در آن موارد، احتمالاً می‌خواهید یک **ایمیج Docker از صفر** همانطور که [بالا توضیح داده شد](#build-a-docker-image-for-fastapi) بسازید، وابستگی‌های خود را نصب کنید و **یک فرآیند واحد Uvicorn** اجرا کنید به جای استفاده از چندین کارگر Uvicorn.
 
-### Containers with Multiple Processes and Special Cases
+### متعادل‌کننده بار
 
-Of course, there are **special cases** where you could want to have **a container** with several **Uvicorn worker processes** inside.
+هنگام استفاده از کانتینرها، معمولاً جزئی خواهید داشت که **روی پورت اصلی گوش می‌دهد**. ممکن است کانتینر دیگری باشد که همچنین یک **پروکسی خاتمه TLS** برای مدیریت **HTTPS** یا ابزار مشابهی است.
 
-In those cases, you can use the `--workers` command line option to set the number of workers that you want to run:
+از آنجا که این جزء **بار** درخواست‌ها را می‌گیرد و آن را بین کارگرها به روشی (امیدواریم) **متعادل** توزیع می‌کند، معمولاً **متعادل‌کننده بار** نیز نامیده می‌شود.
+
+/// tip
+
+همان جزء **پروکسی خاتمه TLS** مورد استفاده برای HTTPS احتمالاً همچنین یک **متعادل‌کننده بار** خواهد بود.
+
+///
+
+و هنگام کار با کانتینرها، همان سیستمی که برای شروع و مدیریت آنها استفاده می‌کنید از قبل ابزارهای داخلی برای انتقال **ارتباطات شبکه** (مثلاً درخواست‌های HTTP) از آن **متعادل‌کننده بار** (که می‌تواند یک **پروکسی خاتمه TLS** نیز باشد) به کانتینر(های) برنامه شما خواهد داشت.
+
+### یک متعادل‌کننده بار - چندین کانتینر کارگر
+
+هنگام کار با **Kubernetes** یا سیستم‌های مدیریت کانتینر توزیع‌شده مشابه، استفاده از مکانیسم‌های شبکه داخلی آنها به **متعادل‌کننده بار** واحد که روی **پورت** اصلی گوش می‌دهد اجازه می‌دهد ارتباط (درخواست‌ها) را به احتمالاً **چندین کانتینر** در حال اجرای برنامه شما منتقل کند.
+
+هر کدام از این کانتینرهای در حال اجرای برنامه شما معمولاً **فقط یک فرآیند** دارند (مثلاً یک فرآیند Uvicorn که برنامه FastAPI شما را اجرا می‌کند). همه آنها **کانتینرهای یکسان** خواهند بود، همان چیز را اجرا می‌کنند، اما هر کدام با فرآیند، حافظه و غیره خودش. به این ترتیب از **موازی‌سازی** در **هسته‌های مختلف** CPU، یا حتی در **ماشین‌های مختلف** بهره خواهید برد.
+
+و سیستم مدیریت کانتینر توزیع‌شده با **متعادل‌کننده بار** **درخواست‌ها را** به هر یک از کانتینرهای برنامه شما **به نوبت توزیع** خواهد کرد. بنابراین، هر درخواست می‌تواند توسط یکی از **کانتینرهای تکراری** متعدد در حال اجرای برنامه شما مدیریت شود.
+
+و معمولاً این **متعادل‌کننده بار** قادر خواهد بود درخواست‌هایی که به *سایر* برنامه‌ها در خوشه شما می‌روند (مثلاً به دامنه متفاوت، یا زیر پیشوند مسیر URL متفاوت) را مدیریت کند و آن ارتباط را به کانتینرهای صحیح برای *آن برنامه دیگر* در حال اجرا در خوشه شما منتقل کند.
+
+### یک فرآیند به ازای هر کانتینر
+
+در این نوع سناریو، احتمالاً می‌خواهید **یک فرآیند (Uvicorn) واحد به ازای هر کانتینر** داشته باشید، زیرا از قبل تکرار را در سطح خوشه مدیریت می‌کنید.
+
+بنابراین، در این مورد، **نمی‌خواهید** چندین کارگر در کانتینر داشته باشید، به عنوان مثال با گزینه خط فرمان `--workers`. می‌خواهید فقط **یک فرآیند واحد Uvicorn** به ازای هر کانتینر داشته باشید (اما احتمالاً چندین کانتینر).
+
+داشتن مدیر فرآیند دیگری داخل کانتینر (همانطور که با چندین کارگر خواهد بود) فقط **پیچیدگی غیرضروری** اضافه خواهد کرد که احتمالاً از قبل با سیستم خوشه خود مدیریت می‌کنید.
+
+### کانتینرها با چندین فرآیند و موارد خاص
+
+البته، **موارد خاصی** وجود دارد که ممکن است بخواهید **یک کانتینر** با چندین **فرآیند کارگر Uvicorn** داخل آن داشته باشید.
+
+در آن موارد، می‌توانید از گزینه خط فرمان `--workers` برای تنظیم تعداد کارگرهایی که می‌خواهید اجرا شوند استفاده کنید:
 
 ```{ .dockerfile .annotate }
 FROM python:3.9
@@ -515,106 +515,106 @@ COPY ./app /code/app
 CMD ["fastapi", "run", "app/main.py", "--port", "80", "--workers", "4"]
 ```
 
-1. Here we use the `--workers` command line option to set the number of workers to 4.
+1. اینجا از گزینه خط فرمان `--workers` برای تنظیم تعداد کارگرها به ۴ استفاده می‌کنیم.
 
-Here are some examples of when that could make sense:
+در اینجا چند مثال از مواردی که می‌تواند منطقی باشد آمده است:
 
-#### A Simple App
+#### یک برنامه ساده
 
-You could want a process manager in the container if your application is **simple enough** that can run it on a **single server**, not a cluster.
+ممکن است بخواهید یک مدیر فرآیند در کانتینر داشته باشید اگر برنامه شما **به اندازه کافی ساده** است که بتوانید آن را روی **یک سرور واحد** اجرا کنید، نه یک خوشه.
 
 #### Docker Compose
 
-You could be deploying to a **single server** (not a cluster) with **Docker Compose**, so you wouldn't have an easy way to manage replication of containers (with Docker Compose) while preserving the shared network and **load balancing**.
+ممکن است روی **یک سرور واحد** (نه یک خوشه) با **Docker Compose** مستقر شوید، بنابراین راه آسانی برای مدیریت تکرار کانتینرها (با Docker Compose) در حالی که شبکه مشترک و **متعادل‌سازی بار** حفظ می‌شود نخواهید داشت.
 
-Then you could want to have **a single container** with a **process manager** starting **several worker processes** inside.
+سپس ممکن است بخواهید **یک کانتینر واحد** با **مدیر فرآیند** داشته باشید که **چندین فرآیند کارگر** را داخل آن شروع کند.
 
 ---
 
-The main point is, **none** of these are **rules written in stone** that you have to blindly follow. You can use these ideas to **evaluate your own use case** and decide what is the best approach for your system, checking out how to manage the concepts of:
+نکته اصلی این است که **هیچ‌کدام** از اینها **قوانین قطعی** نیستند که باید کورکورانه پیروی کنید. می‌توانید از این ایده‌ها برای **ارزیابی مورد استفاده خود** استفاده کنید و تصمیم بگیرید بهترین رویکرد برای سیستم شما چیست، با بررسی نحوه مدیریت مفاهیم:
 
-* Security - HTTPS
-* Running on startup
-* Restarts
-* Replication (the number of processes running)
-* Memory
-* Previous steps before starting
+* امنیت - HTTPS
+* اجرا در هنگام راه‌اندازی
+* راه‌اندازی مجدد
+* تکرار (تعداد فرآیندهای در حال اجرا)
+* حافظه
+* مراحل قبلی پیش از شروع
 
-## Memory
+## حافظه
 
-If you run **a single process per container** you will have a more or less well-defined, stable, and limited amount of memory consumed by each of those containers (more than one if they are replicated).
+اگر **یک فرآیند واحد به ازای هر کانتینر** اجرا کنید، مقدار کم و بیش مشخص، پایدار و محدودی از حافظه مصرف‌شده توسط هر یک از آن کانتینرها خواهید داشت (بیشتر از یکی اگر تکرار شوند).
 
-And then you can set those same memory limits and requirements in your configurations for your container management system (for example in **Kubernetes**). That way it will be able to **replicate the containers** in the **available machines** taking into account the amount of memory needed by them, and the amount available in the machines in the cluster.
+و سپس می‌توانید همان محدودیت‌ها و الزامات حافظه را در پیکربندی‌های خود برای سیستم مدیریت کانتینر خود تنظیم کنید (به عنوان مثال در **Kubernetes**). به این ترتیب قادر خواهد بود **کانتینرها را** در **ماشین‌های موجود** با در نظر گرفتن مقدار حافظه مورد نیاز آنها و مقدار موجود در ماشین‌های خوشه **تکرار** کند.
 
-If your application is **simple**, this will probably **not be a problem**, and you might not need to specify hard memory limits. But if you are **using a lot of memory** (for example with **machine learning** models), you should check how much memory you are consuming and adjust the **number of containers** that runs in **each machine** (and maybe add more machines to your cluster).
+اگر برنامه شما **ساده** است، احتمالاً **مشکلی نخواهد بود** و ممکن است نیازی به مشخص کردن محدودیت‌های سخت حافظه نداشته باشید. اما اگر **حافظه زیادی استفاده می‌کنید** (به عنوان مثال با مدل‌های **یادگیری ماشین**)، باید بررسی کنید چقدر حافظه مصرف می‌کنید و **تعداد کانتینرهایی** که در **هر ماشین** اجرا می‌شوند را تنظیم کنید (و شاید ماشین‌های بیشتری به خوشه خود اضافه کنید).
 
-If you run **multiple processes per container** you will have to make sure that the number of processes started doesn't **consume more memory** than what is available.
+اگر **چندین فرآیند به ازای هر کانتینر** اجرا کنید باید مطمئن شوید تعداد فرآیندهای شروع‌شده **حافظه بیشتری** از آنچه موجود است **مصرف نکند**.
 
-## Previous Steps Before Starting and Containers
+## مراحل قبلی پیش از شروع و کانتینرها
 
-If you are using containers (e.g. Docker, Kubernetes), then there are two main approaches you can use.
+اگر از کانتینرها (مثلاً Docker، Kubernetes) استفاده می‌کنید، دو رویکرد اصلی وجود دارد.
 
-### Multiple Containers
+### چندین کانتینر
 
-If you have **multiple containers**, probably each one running a **single process** (for example, in a **Kubernetes** cluster), then you would probably want to have a **separate container** doing the work of the **previous steps** in a single container, running a single process, **before** running the replicated worker containers.
+اگر **چندین کانتینر** دارید، احتمالاً هر کدام یک **فرآیند واحد** اجرا می‌کنند (به عنوان مثال، در یک خوشه **Kubernetes**)، احتمالاً می‌خواهید یک **کانتینر جداگانه** داشته باشید که کار **مراحل قبلی** را در یک کانتینر واحد، یک فرآیند واحد اجرا کند، **قبل** از اجرای کانتینرهای کارگر تکراری.
 
 /// info
 
-If you are using Kubernetes, this would probably be an <a href="https://kubernetes.io/docs/concepts/workloads/pods/init-containers/" class="external-link" target="_blank">Init Container</a>.
+اگر از Kubernetes استفاده می‌کنید، این احتمالاً یک <a href="https://kubernetes.io/docs/concepts/workloads/pods/init-containers/" class="external-link" target="_blank">Init Container</a> خواهد بود.
 
 ///
 
-If in your use case there's no problem in running those previous steps **multiple times in parallel** (for example if you are not running database migrations, but just checking if the database is ready yet), then you could also just put them in each container right before starting the main process.
+اگر در مورد استفاده شما مشکلی در اجرای آن مراحل قبلی **چندین بار به صورت موازی** وجود ندارد (به عنوان مثال اگر مهاجرت پایگاه داده اجرا نمی‌کنید، بلکه فقط بررسی می‌کنید آیا پایگاه داده آماده است)، می‌توانید آنها را نیز در هر کانتینر درست قبل از شروع فرآیند اصلی قرار دهید.
 
-### Single Container
+### کانتینر واحد
 
-If you have a simple setup, with a **single container** that then starts multiple **worker processes** (or also just one process), then you could run those previous steps in the same container, right before starting the process with the app.
+اگر تنظیمات ساده‌ای دارید، با **یک کانتینر واحد** که سپس چندین **فرآیند کارگر** (یا همچنین فقط یک فرآیند) شروع می‌کند، می‌توانید آن مراحل قبلی را در همان کانتینر، درست قبل از شروع فرآیند با برنامه اجرا کنید.
 
-### Base Docker Image
+### ایمیج پایه Docker
 
-There used to be an official FastAPI Docker image: <a href="https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker" class="external-link" target="_blank">tiangolo/uvicorn-gunicorn-fastapi</a>. But it is now deprecated. ⛔️
+یک ایمیج Docker رسمی FastAPI وجود داشت: <a href="https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker" class="external-link" target="_blank">tiangolo/uvicorn-gunicorn-fastapi</a>. اما اکنون منسوخ شده است. ⛔️
 
-You should probably **not** use this base Docker image (or any other similar one).
+احتمالاً **نباید** از این ایمیج پایه Docker (یا هر مورد مشابه دیگری) استفاده کنید.
 
-If you are using **Kubernetes** (or others) and you are already setting **replication** at the cluster level, with multiple **containers**. In those cases, you are better off **building an image from scratch** as described above: [Build a Docker Image for FastAPI](#build-a-docker-image-for-fastapi).
+اگر از **Kubernetes** (یا سایرین) استفاده می‌کنید و از قبل **تکرار** را در سطح خوشه، با چندین **کانتینر** تنظیم کرده‌اید. در آن موارد، بهتر است **یک ایمیج از صفر بسازید** همانطور که بالا توضیح داده شد: [ساخت ایمیج Docker برای FastAPI](#build-a-docker-image-for-fastapi).
 
-And if you need to have multiple workers, you can simply use the `--workers` command line option.
+و اگر نیاز به داشتن چندین کارگر دارید، به سادگی می‌توانید از گزینه خط فرمان `--workers` استفاده کنید.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-The Docker image was created when Uvicorn didn't support managing and restarting dead workers, so it was needed to use Gunicorn with Uvicorn, which added quite some complexity, just to have Gunicorn manage and restart the Uvicorn worker processes.
+ایمیج Docker زمانی ایجاد شد که Uvicorn از مدیریت و راه‌اندازی مجدد کارگرهای مرده پشتیبانی نمی‌کرد، بنابراین لازم بود از Gunicorn با Uvicorn استفاده شود، که پیچیدگی زیادی اضافه می‌کرد، فقط برای اینکه Gunicorn فرآیندهای کارگر Uvicorn را مدیریت و راه‌اندازی مجدد کند.
 
-But now that Uvicorn (and the `fastapi` command) support using `--workers`, there's no reason to use a base Docker image instead of building your own (it's pretty much the same amount of code 😅).
+اما اکنون که Uvicorn (و دستور `fastapi`) از استفاده از `--workers` پشتیبانی می‌کنند، دلیلی برای استفاده از ایمیج پایه Docker به جای ساخت خودتان وجود ندارد (تقریباً همان مقدار کد است 😅).
 
 ///
 
-## Deploy the Container Image
+## استقرار ایمیج کانتینر
 
-After having a Container (Docker) Image there are several ways to deploy it.
+بعد از داشتن یک ایمیج کانتینر (Docker) چندین روش برای استقرار آن وجود دارد.
 
-For example:
+به عنوان مثال:
 
-* With **Docker Compose** in a single server
-* With a **Kubernetes** cluster
-* With a Docker Swarm Mode cluster
-* With another tool like Nomad
-* With a cloud service that takes your container image and deploys it
+* با **Docker Compose** روی یک سرور واحد
+* با یک خوشه **Kubernetes**
+* با یک خوشه Docker Swarm Mode
+* با ابزار دیگری مانند Nomad
+* با یک سرویس ابری که ایمیج کانتینر شما را می‌گیرد و مستقر می‌کند
 
-## Docker Image with `uv`
+## ایمیج Docker با `uv`
 
-If you are using <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">uv</a> to install and manage your project, you can follow their <a href="https://docs.astral.sh/uv/guides/integration/docker/" class="external-link" target="_blank">uv Docker guide</a>.
+اگر از <a href="https://github.com/astral-sh/uv" class="external-link" target="_blank">uv</a> برای نصب و مدیریت پروژه خود استفاده می‌کنید، می‌توانید <a href="https://docs.astral.sh/uv/guides/integration/docker/" class="external-link" target="_blank">راهنمای Docker uv</a> آنها را دنبال کنید.
 
-## Recap
+## جمع‌بندی
 
-Using container systems (e.g. with **Docker** and **Kubernetes**) it becomes fairly straightforward to handle all the **deployment concepts**:
+استفاده از سیستم‌های کانتینر (مثلاً با **Docker** و **Kubernetes**) مدیریت تمام **مفاهیم استقرار** را نسبتاً ساده می‌کند:
 
 * HTTPS
-* Running on startup
-* Restarts
-* Replication (the number of processes running)
-* Memory
-* Previous steps before starting
+* اجرا در هنگام راه‌اندازی
+* راه‌اندازی مجدد
+* تکرار (تعداد فرآیندهای در حال اجرا)
+* حافظه
+* مراحل قبلی پیش از شروع
 
-In most cases, you probably won't want to use any base image, and instead **build a container image from scratch** based on the official Python Docker image.
+در اکثر موارد، احتمالاً نمی‌خواهید از هیچ ایمیج پایه‌ای استفاده کنید و در عوض **یک ایمیج کانتینر از صفر بسازید** بر اساس ایمیج Docker رسمی Python.
 
-Taking care of the **order** of instructions in the `Dockerfile` and the **Docker cache** you can **minimize build times**, to maximize your productivity (and avoid boredom). 😎
+با رعایت **ترتیب** دستورالعمل‌ها در `Dockerfile` و **کش Docker** می‌توانید **زمان‌های ساخت را به حداقل برسانید**، تا بهره‌وری خود را به حداکثر برسانید (و از کسالت جلوگیری کنید). 😎

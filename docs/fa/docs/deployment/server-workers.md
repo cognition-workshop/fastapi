@@ -1,37 +1,37 @@
-# Server Workers - Uvicorn with Workers
+# کارگرهای سرور - Uvicorn با کارگرها
 
-Let's check back those deployment concepts from before:
+بیایید مفاهیم استقرار قبلی را مرور کنیم:
 
-* Security - HTTPS
-* Running on startup
-* Restarts
-* **Replication (the number of processes running)**
-* Memory
-* Previous steps before starting
+* امنیت - HTTPS
+* اجرا در هنگام راه‌اندازی
+* راه‌اندازی مجدد
+* **تکرار (تعداد فرآیندهای در حال اجرا)**
+* حافظه
+* مراحل قبلی پیش از شروع
 
-Up to this point, with all the tutorials in the docs, you have probably been running a **server program**, for example, using the `fastapi` command, that runs Uvicorn, running a **single process**.
+تا این مرحله، با تمام آموزش‌های موجود در مستندات، احتمالاً یک **برنامه سرور** اجرا کرده‌اید، به عنوان مثال، با استفاده از دستور `fastapi`، که Uvicorn را اجرا می‌کند و یک **فرآیند واحد** اجرا می‌کند.
 
-When deploying applications you will probably want to have some **replication of processes** to take advantage of **multiple cores** and to be able to handle more requests.
+هنگام استقرار برنامه‌ها احتمالاً می‌خواهید مقداری **تکرار فرآیندها** داشته باشید تا از **هسته‌های متعدد** بهره ببرید و بتوانید درخواست‌های بیشتری را مدیریت کنید.
 
-As you saw in the previous chapter about [Deployment Concepts](concepts.md){.internal-link target=_blank}, there are multiple strategies you can use.
+همانطور که در فصل قبلی درباره [مفاهیم استقرار](concepts.md){.internal-link target=_blank} دیدید، چندین استراتژی وجود دارد که می‌توانید استفاده کنید.
 
-Here I'll show you how to use **Uvicorn** with **worker processes** using the `fastapi` command or the `uvicorn` command directly.
+اینجا به شما نشان خواهم داد چگونه از **Uvicorn** با **فرآیندهای کارگر** با استفاده از دستور `fastapi` یا دستور `uvicorn` مستقیماً استفاده کنید.
 
 /// info
 
-If you are using containers, for example with Docker or Kubernetes, I'll tell you more about that in the next chapter: [FastAPI in Containers - Docker](docker.md){.internal-link target=_blank}.
+اگر از کانتینرها استفاده می‌کنید، به عنوان مثال با Docker یا Kubernetes، در فصل بعدی بیشتر درباره آن خواهم گفت: [FastAPI در کانتینرها - Docker](docker.md){.internal-link target=_blank}.
 
-In particular, when running on **Kubernetes** you will probably **not** want to use workers and instead run **a single Uvicorn process per container**, but I'll tell you about it later in that chapter.
+به طور خاص، هنگام اجرا روی **Kubernetes** احتمالاً **نمی‌خواهید** از کارگرها استفاده کنید و در عوض **یک فرآیند واحد Uvicorn به ازای هر کانتینر** اجرا کنید، اما در آن فصل درباره آن خواهم گفت.
 
 ///
 
-## Multiple Workers
+## چندین کارگر
 
-You can start multiple workers with the `--workers` command line option:
+می‌توانید چندین کارگر را با گزینه خط فرمان `--workers` شروع کنید:
 
 //// tab | `fastapi`
 
-If you use the `fastapi` command:
+اگر از دستور `fastapi` استفاده می‌کنید:
 
 <div class="termy">
 
@@ -81,7 +81,7 @@ $ <font color="#4E9A06">fastapi</font> run --workers 4 <u style="text-decoration
 
 //// tab | `uvicorn`
 
-If you prefer to use the `uvicorn` command directly:
+اگر ترجیح می‌دهید مستقیماً از دستور `uvicorn` استفاده کنید:
 
 <div class="termy">
 
@@ -107,33 +107,33 @@ $ uvicorn main:app --host 0.0.0.0 --port 8080 --workers 4
 
 ////
 
-The only new option here is `--workers` telling Uvicorn to start 4 worker processes.
+تنها گزینه جدید اینجا `--workers` است که به Uvicorn می‌گوید ۴ فرآیند کارگر شروع کند.
 
-You can also see that it shows the **PID** of each process, `27365` for the parent process (this is the **process manager**) and one for each worker process: `27368`, `27369`, `27370`, and `27367`.
+همچنین می‌توانید ببینید که **PID** هر فرآیند را نشان می‌دهد، `27365` برای فرآیند والد (این **مدیر فرآیند** است) و یکی برای هر فرآیند کارگر: `27368`، `27369`، `27370` و `27367`.
 
-## Deployment Concepts
+## مفاهیم استقرار
 
-Here you saw how to use multiple **workers** to **parallelize** the execution of the application, take advantage of **multiple cores** in the CPU, and be able to serve **more requests**.
+اینجا دیدید چگونه از چندین **کارگر** برای **موازی‌سازی** اجرای برنامه استفاده کنید، از **هسته‌های متعدد** CPU بهره ببرید و بتوانید **درخواست‌های بیشتری** سرویس دهید.
 
-From the list of deployment concepts from above, using workers would mainly help with the **replication** part, and a little bit with the **restarts**, but you still need to take care of the others:
+از لیست مفاهیم استقرار بالا، استفاده از کارگرها عمدتاً به بخش **تکرار** کمک می‌کند، و کمی به **راه‌اندازی مجدد**، اما همچنان باید موارد دیگر را مدیریت کنید:
 
-* **Security - HTTPS**
-* **Running on startup**
-* ***Restarts***
-* Replication (the number of processes running)
-* **Memory**
-* **Previous steps before starting**
+* **امنیت - HTTPS**
+* **اجرا در هنگام راه‌اندازی**
+* ***راه‌اندازی مجدد***
+* تکرار (تعداد فرآیندهای در حال اجرا)
+* **حافظه**
+* **مراحل قبلی پیش از شروع**
 
-## Containers and Docker
+## کانتینرها و Docker
 
-In the next chapter about [FastAPI in Containers - Docker](docker.md){.internal-link target=_blank} I'll explain some strategies you could use to handle the other **deployment concepts**.
+در فصل بعدی درباره [FastAPI در کانتینرها - Docker](docker.md){.internal-link target=_blank} برخی استراتژی‌هایی را توضیح خواهم داد که می‌توانید برای مدیریت سایر **مفاهیم استقرار** استفاده کنید.
 
-I'll show you how to **build your own image from scratch** to run a single Uvicorn process. It is a simple process and is probably what you would want to do when using a distributed container management system like **Kubernetes**.
+به شما نشان خواهم داد چگونه **ایمیج خود را از صفر بسازید** تا یک فرآیند واحد Uvicorn اجرا کنید. یک فرآیند ساده است و احتمالاً همان چیزی است که می‌خواهید هنگام استفاده از یک سیستم مدیریت کانتینر توزیع‌شده مانند **Kubernetes** انجام دهید.
 
-## Recap
+## جمع‌بندی
 
-You can use multiple worker processes with the `--workers` CLI option with the `fastapi` or `uvicorn` commands to take advantage of **multi-core CPUs**, to run **multiple processes in parallel**.
+می‌توانید از چندین فرآیند کارگر با گزینه CLI `--workers` با دستورات `fastapi` یا `uvicorn` برای بهره‌برداری از **CPUهای چند هسته‌ای** و اجرای **چندین فرآیند به صورت موازی** استفاده کنید.
 
-You could use these tools and ideas if you are setting up **your own deployment system** while taking care of the other deployment concepts yourself.
+اگر در حال تنظیم **سیستم استقرار خود** هستید و خودتان مفاهیم استقرار دیگر را مدیریت می‌کنید، می‌توانید از این ابزارها و ایده‌ها استفاده کنید.
 
-Check out the next chapter to learn about **FastAPI** with containers (e.g. Docker and Kubernetes). You will see that those tools have simple ways to solve the other **deployment concepts** as well. ✨
+فصل بعدی را بررسی کنید تا درباره **FastAPI** با کانتینرها (مثلاً Docker و Kubernetes) بیاموزید. خواهید دید که آن ابزارها راه‌های ساده‌ای برای حل سایر **مفاهیم استقرار** نیز دارند. ✨
