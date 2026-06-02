@@ -1,21 +1,21 @@
-# Deployment (Yayınlama)
+# Yayınlama (Deployment)
 
-**FastAPI** uygulamasını deploy etmek oldukça kolaydır.
+Bir **FastAPI** uygulamasını yayınlamak oldukça kolaydır.
 
-## Deployment Ne Anlama Gelir?
+## Yayınlama Ne Demektir
 
-Bir uygulamayı **deploy** etmek (yayınlamak), uygulamayı **kullanıcılara erişilebilir hale getirmek** için gerekli adımları gerçekleştirmek anlamına gelir.
+Bir uygulamayı **yayınlamak**, uygulamayı **kullanıcıların erişimine sunmak** için gerekli adımları gerçekleştirmek anlamına gelir.
 
-Bir **Web API** için bu süreç normalde uygulamayı **uzak bir makineye** yerleştirmeyi, iyi performans, kararlılık vb. özellikler sağlayan bir **sunucu programı** ile **kullanıcılarınızın** uygulamaya etkili ve kesintisiz bir şekilde **erişebilmesini** kapsar.
+Bir **web API** için bu, normalde onu **uzak bir makineye** koymayı, iyi performans, kararlılık vb. sağlayan bir **sunucu programı** ile birlikte yerleştirmeyi içerir, böylece **kullanıcılarınız** uygulamaya kesintisiz ve sorunsuz bir şekilde **erişebilir**.
 
-Bu, kodu sürekli olarak değiştirdiğiniz, hata alıp hata giderdiğiniz, geliştirme sunucusunu durdurup yeniden başlattığınız vb. **geliştirme** aşamalarının tam tersidir.
+Bu, kodu sürekli değiştirdiğiniz, bozup düzelttiğiniz, geliştirme sunucusunu durdurup yeniden başlattığınız vb. **geliştirme** aşamalarının aksine bir durumdur.
 
-## Deployment Stratejileri
+## Yayınlama Stratejileri
 
-Kullanım durumunuza ve kullandığınız araçlara bağlı olarak bir kaç farklı yol izleyebilirsiniz.
+Kullandığınız araçlara ve özel kullanım durumunuza bağlı olarak bunu yapmanın birkaç yolu vardır.
 
-Bir dizi araç kombinasyonunu kullanarak kendiniz **bir sunucu yayınlayabilirsiniz**, yayınlama sürecinin bir kısmını sizin için gerçekleştiren bir **bulut hizmeti** veya diğer olası seçenekleri kullanabilirsiniz.
+Bir araç kombinasyonu kullanarak bir **sunucuyu kendiniz yayınlayabilir**, işin bir kısmını sizin için yapan bir **bulut hizmeti** kullanabilir veya başka olası seçeneklere başvurabilirsiniz.
 
-**FastAPI** uygulamasını yayınlarken aklınızda bulundurmanız gereken ana kavramlardan bazılarını size göstereceğim (ancak bunların çoğu diğer web uygulamaları için de geçerlidir).
+Bir **FastAPI** uygulamasını yayınlarken muhtemelen aklınızda bulundurmanız gereken bazı ana kavramları göstereceğim (bu kavramların çoğu herhangi bir web uygulaması türü için de geçerlidir).
 
-Sonraki bölümlerde akılda tutulması gereken diğer ayrıntıları ve yayınlama tekniklerinden bazılarını göreceksiniz. ✨
+Akılda tutulması gereken daha fazla ayrıntıyı ve bunu yapmanın bazı tekniklerini sonraki bölümlerde göreceksiniz. ✨
