@@ -1,94 +1,94 @@
-# Alternatives, Inspiration and Comparisons
+# جایگزین‌ها، الهام‌بخش‌ها و مقایسه‌ها
 
-What inspired **FastAPI**, how it compares to alternatives and what it learned from them.
+چه چیزی **FastAPI** را الهام‌بخشید، چگونه با جایگزین‌ها مقایسه می‌شود و چه چیزی از آنها آموخت.
 
-## Intro
+## مقدمه
 
-**FastAPI** wouldn't exist if not for the previous work of others.
+**FastAPI** بدون کارهای قبلی دیگران وجود نداشت.
 
-There have been many tools created before that have helped inspire its creation.
+ابزارهای بسیاری قبلاً ایجاد شده‌اند که به الهام‌بخشی ایجاد آن کمک کرده‌اند.
 
-I have been avoiding the creation of a new framework for several years. First I tried to solve all the features covered by **FastAPI** using many different frameworks, plug-ins, and tools.
+من سال‌ها از ایجاد یک فریمورک جدید اجتناب می‌کردم. ابتدا سعی کردم تمام ویژگی‌های پوشش داده شده توسط **FastAPI** را با استفاده از فریمورک‌ها، پلاگین‌ها و ابزارهای مختلف حل کنم.
 
-But at some point, there was no other option than creating something that provided all these features, taking the best ideas from previous tools, and combining them in the best way possible, using language features that weren't even available before (Python 3.6+ type hints).
+اما در نقطه‌ای، گزینه دیگری جز ایجاد چیزی که تمام این ویژگی‌ها را فراهم کند وجود نداشت، با گرفتن بهترین ایده‌ها از ابزارهای قبلی و ترکیب آنها به بهترین شکل ممکن، با استفاده از ویژگی‌های زبانی که قبلاً حتی در دسترس نبودند (type hintهای Python 3.6+).
 
-## Previous tools
+## ابزارهای قبلی
 
 ### <a href="https://www.djangoproject.com/" class="external-link" target="_blank">Django</a>
 
-It's the most popular Python framework and is widely trusted. It is used to build systems like Instagram.
+محبوب‌ترین فریمورک پایتون است و به طور گسترده‌ای مورد اعتماد قرار دارد. برای ساخت سیستم‌هایی مانند Instagram استفاده می‌شود.
 
-It's relatively tightly coupled with relational databases (like MySQL or PostgreSQL), so, having a NoSQL database (like Couchbase, MongoDB, Cassandra, etc) as the main store engine is not very easy.
+نسبتاً به شدت با پایگاه‌داده‌های رابطه‌ای (مانند MySQL یا PostgreSQL) جفت شده است، بنابراین داشتن یک پایگاه‌داده NoSQL (مانند Couchbase، MongoDB، Cassandra و غیره) به عنوان موتور ذخیره‌سازی اصلی خیلی آسان نیست.
 
-It was created to generate the HTML in the backend, not to create APIs used by a modern frontend (like React, Vue.js and Angular) or by other systems (like <abbr title="Internet of Things">IoT</abbr> devices) communicating with it.
+برای تولید HTML در بک‌اند ایجاد شده بود، نه برای ایجاد APIهایی که توسط فرانت‌اند مدرن (مانند React، Vue.js و Angular) یا توسط سیستم‌های دیگر (مانند دستگاه‌های <abbr title="Internet of Things">IoT</abbr>) استفاده شوند.
 
 ### <a href="https://www.django-rest-framework.org/" class="external-link" target="_blank">Django REST Framework</a>
 
-Django REST framework was created to be a flexible toolkit for building Web APIs using Django underneath, to improve its API capabilities.
+Django REST framework برای ساخت یک مجموعه ابزار انعطاف‌پذیر جهت ایجاد Web APIها با استفاده از Django ایجاد شد تا قابلیت‌های API آن را بهبود بخشد.
 
-It is used by many companies including Mozilla, Red Hat and Eventbrite.
+توسط شرکت‌های بسیاری از جمله Mozilla، Red Hat و Eventbrite استفاده می‌شود.
 
-It was one of the first examples of **automatic API documentation**, and this was specifically one of the first ideas that inspired "the search for" **FastAPI**.
+یکی از اولین نمونه‌های **مستندسازی خودکار API** بود و این به طور خاص یکی از اولین ایده‌هایی بود که "جستجو برای" **FastAPI** را الهام‌بخشید.
 
 /// note
 
-Django REST Framework was created by Tom Christie. The same creator of Starlette and Uvicorn, on which **FastAPI** is based.
+Django REST Framework توسط Tom Christie ایجاد شد. همان سازنده Starlette و Uvicorn که **FastAPI** بر اساس آنها ساخته شده است.
 
 ///
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Have an automatic API documentation web user interface.
+یک رابط کاربری وب مستندسازی خودکار API داشته باشد.
 
 ///
 
 ### <a href="https://flask.palletsprojects.com" class="external-link" target="_blank">Flask</a>
 
-Flask is a "microframework", it doesn't include database integrations nor many of the things that come by default in Django.
+Flask یک "میکروفریمورک" است، شامل یکپارچگی پایگاه‌داده و بسیاری از چیزهایی که به طور پیش‌فرض در Django وجود دارند نیست.
 
-This simplicity and flexibility allow doing things like using NoSQL databases as the main data storage system.
+این سادگی و انعطاف‌پذیری امکان انجام کارهایی مانند استفاده از پایگاه‌داده‌های NoSQL به عنوان سیستم ذخیره‌سازی داده اصلی را فراهم می‌کند.
 
-As it is very simple, it's relatively intuitive to learn, although the documentation gets somewhat technical at some points.
+از آنجا که بسیار ساده است، یادگیری آن نسبتاً شهودی است، اگرچه مستندات در برخی نقاط تا حدی فنی می‌شوند.
 
-It is also commonly used for other applications that don't necessarily need a database, user management, or any of the many features that come pre-built in Django. Although many of these features can be added with plug-ins.
+همچنین معمولاً برای برنامه‌های دیگری که لزوماً به پایگاه‌داده، مدیریت کاربر یا هیچ یک از ویژگی‌های بسیاری که از پیش در Django ساخته شده‌اند نیاز ندارند استفاده می‌شود. اگرچه بسیاری از این ویژگی‌ها می‌توانند با پلاگین‌ها اضافه شوند.
 
-This decoupling of parts, and being a "microframework" that could be extended to cover exactly what is needed was a key feature that I wanted to keep.
+این جداسازی بخش‌ها و بودن یک "میکروفریمورک" که می‌تواند برای پوشش دقیقاً آنچه مورد نیاز است گسترش یابد، ویژگی کلیدی بود که می‌خواستم حفظ کنم.
 
-Given the simplicity of Flask, it seemed like a good match for building APIs. The next thing to find was a "Django REST Framework" for Flask.
+با توجه به سادگی Flask، به نظر می‌رسید گزینه خوبی برای ساخت APIها باشد. چیز بعدی برای یافتن، یک "Django REST Framework" برای Flask بود.
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Be a micro-framework. Making it easy to mix and match the tools and parts needed.
+یک میکروفریمورک باشد. ترکیب و تطبیق ابزارها و بخش‌های مورد نیاز را آسان کند.
 
-Have a simple and easy to use routing system.
+یک سیستم مسیریابی ساده و آسان برای استفاده داشته باشد.
 
 ///
 
 ### <a href="https://requests.readthedocs.io" class="external-link" target="_blank">Requests</a>
 
-**FastAPI** is not actually an alternative to **Requests**. Their scope is very different.
+**FastAPI** در واقع جایگزینی برای **Requests** نیست. دامنه آنها بسیار متفاوت است.
 
-It would actually be common to use Requests *inside* of a FastAPI application.
+در واقع استفاده از Requests *درون* یک برنامه FastAPI رایج خواهد بود.
 
-But still, FastAPI got quite some inspiration from Requests.
+اما باز هم، FastAPI الهام زیادی از Requests گرفت.
 
-**Requests** is a library to *interact* with APIs (as a client), while **FastAPI** is a library to *build* APIs (as a server).
+**Requests** یک کتابخانه برای *تعامل* با APIها (به عنوان کلاینت) است، در حالی که **FastAPI** یک کتابخانه برای *ساخت* APIها (به عنوان سرور) است.
 
-They are, more or less, at opposite ends, complementing each other.
+آنها کم‌وبیش در دو سر متضاد قرار دارند و مکمل یکدیگر هستند.
 
-Requests has a very simple and intuitive design, it's very easy to use, with sensible defaults. But at the same time, it's very powerful and customizable.
+Requests طراحی بسیار ساده و شهودی دارد، استفاده از آن بسیار آسان است، با پیش‌فرض‌های منطقی. اما در عین حال، بسیار قدرتمند و قابل سفارشی‌سازی است.
 
-That's why, as said in the official website:
+به همین دلیل، همانطور که در وب‌سایت رسمی گفته شده:
 
-> Requests is one of the most downloaded Python packages of all time
+> Requests یکی از پردانلودترین پکیج‌های پایتون در تمام دوران است
 
-The way you use it is very simple. For example, to do a `GET` request, you would write:
+نحوه استفاده بسیار ساده است. به عنوان مثال، برای انجام یک درخواست `GET`:
 
 ```Python
 response = requests.get("http://example.com/some/url")
 ```
 
-The FastAPI counterpart API *path operation* could look like:
+معادل FastAPI در *عملیات مسیر* API می‌تواند مانند زیر باشد:
 
 ```Python hl_lines="1"
 @app.get("/some/url")
@@ -96,390 +96,390 @@ def read_url():
     return {"message": "Hello World"}
 ```
 
-See the similarities in `requests.get(...)` and `@app.get(...)`.
+شباهت‌ها را در `requests.get(...)` و `@app.get(...)` ببینید.
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-* Have a simple and intuitive API.
-* Use HTTP method names (operations) directly, in a straightforward and intuitive way.
-* Have sensible defaults, but powerful customizations.
+* یک API ساده و شهودی داشته باشد.
+* از نام‌های متد HTTP (عملیات‌ها) مستقیماً، به شکلی ساده و شهودی استفاده کند.
+* پیش‌فرض‌های منطقی، اما سفارشی‌سازی‌های قدرتمند داشته باشد.
 
 ///
 
 ### <a href="https://swagger.io/" class="external-link" target="_blank">Swagger</a> / <a href="https://github.com/OAI/OpenAPI-Specification/" class="external-link" target="_blank">OpenAPI</a>
 
-The main feature I wanted from Django REST Framework was the automatic API documentation.
+ویژگی اصلی‌ای که از Django REST Framework می‌خواستم، مستندسازی خودکار API بود.
 
-Then I found that there was a standard to document APIs, using JSON (or YAML, an extension of JSON) called Swagger.
+سپس متوجه شدم که استانداردی برای مستندسازی APIها وجود دارد، با استفاده از JSON (یا YAML، یک افزونه JSON) به نام Swagger.
 
-And there was a web user interface for Swagger APIs already created. So, being able to generate Swagger documentation for an API would allow using this web user interface automatically.
+و یک رابط کاربری وب برای APIهای Swagger از قبل ایجاد شده بود. بنابراین، قابلیت تولید مستندسازی Swagger برای یک API امکان استفاده خودکار از این رابط کاربری وب را فراهم می‌کرد.
 
-At some point, Swagger was given to the Linux Foundation, to be renamed OpenAPI.
+در نقطه‌ای، Swagger به بنیاد لینوکس داده شد تا به OpenAPI تغییر نام یابد.
 
-That's why when talking about version 2.0 it's common to say "Swagger", and for version 3+ "OpenAPI".
+به همین دلیل وقتی درباره نسخه 2.0 صحبت می‌شود، معمولاً "Swagger" و برای نسخه 3+ "OpenAPI" گفته می‌شود.
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Adopt and use an open standard for API specifications, instead of a custom schema.
+یک استاندارد باز برای مشخصات API به جای یک اسکیمای سفارشی اتخاذ و استفاده کند.
 
-And integrate standards-based user interface tools:
+و ابزارهای رابط کاربری مبتنی بر استاندارد را یکپارچه کند:
 
 * <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>
 * <a href="https://github.com/Rebilly/ReDoc" class="external-link" target="_blank">ReDoc</a>
 
-These two were chosen for being fairly popular and stable, but doing a quick search, you could find dozens of alternative user interfaces for OpenAPI (that you can use with **FastAPI**).
+این دو به دلیل نسبتاً محبوب و پایدار بودن انتخاب شدند، اما با جستجوی سریع، می‌توانید ده‌ها رابط کاربری جایگزین برای OpenAPI پیدا کنید (که می‌توانید با **FastAPI** استفاده کنید).
 
 ///
 
-### Flask REST frameworks
+### فریمورک‌های REST برای Flask
 
-There are several Flask REST frameworks, but after investing the time and work into investigating them, I found that many are discontinued or abandoned, with several standing issues that made them unfit.
+چندین فریمورک REST برای Flask وجود دارد، اما پس از صرف زمان و تلاش برای بررسی آنها، متوجه شدم بسیاری از آنها متوقف یا رها شده‌اند، با چندین مشکل باقی‌مانده که آنها را نامناسب می‌ساخت.
 
 ### <a href="https://marshmallow.readthedocs.io/en/stable/" class="external-link" target="_blank">Marshmallow</a>
 
-One of the main features needed by API systems is data "<abbr title="also called marshalling, conversion">serialization</abbr>" which is taking data from the code (Python) and converting it into something that can be sent through the network. For example, converting an object containing data from a database into a JSON object. Converting `datetime` objects into strings, etc.
+یکی از ویژگی‌های اصلی مورد نیاز سیستم‌های API، "<abbr title="همچنین marshalling، تبدیل نامیده می‌شود">سریالایزیشن</abbr>" داده است که گرفتن داده از کد (پایتون) و تبدیل آن به چیزی است که بتواند از طریق شبکه ارسال شود. به عنوان مثال، تبدیل یک شیء حاوی داده از پایگاه‌داده به یک شیء JSON. تبدیل اشیاء `datetime` به رشته‌ها و غیره.
 
-Another big feature needed by APIs is data validation, making sure that the data is valid, given certain parameters. For example, that some field is an `int`, and not some random string. This is especially useful for incoming data.
+ویژگی بزرگ دیگری که APIها به آن نیاز دارند اعتبارسنجی داده است، اطمینان از اینکه داده معتبر است، با توجه به پارامترهای خاص. به عنوان مثال، اینکه یک فیلد `int` است و نه یک رشته تصادفی. این به ویژه برای داده‌های ورودی مفید است.
 
-Without a data validation system, you would have to do all the checks by hand, in code.
+بدون سیستم اعتبارسنجی داده، باید تمام بررسی‌ها را به صورت دستی در کد انجام دهید.
 
-These features are what Marshmallow was built to provide. It is a great library, and I have used it a lot before.
+این‌ها ویژگی‌هایی هستند که Marshmallow برای ارائه آنها ساخته شده بود. یک کتابخانه عالی است و من قبلاً زیاد از آن استفاده کرده‌ام.
 
-But it was created before there existed Python type hints. So, to define every <abbr title="the definition of how data should be formed">schema</abbr> you need to use specific utils and classes provided by Marshmallow.
+اما قبل از وجود type hintهای پایتون ایجاد شده بود. بنابراین، برای تعریف هر <abbr title="تعریف نحوه شکل‌گیری داده">اسکیما</abbr> باید از ابزارها و کلاس‌های خاص ارائه شده توسط Marshmallow استفاده کنید.
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Use code to define "schemas" that provide data types and validation, automatically.
+از کد برای تعریف "اسکیماها"یی استفاده کند که انواع داده و اعتبارسنجی را به صورت خودکار ارائه می‌دهند.
 
 ///
 
 ### <a href="https://webargs.readthedocs.io/en/latest/" class="external-link" target="_blank">Webargs</a>
 
-Another big feature required by APIs is <abbr title="reading and converting to Python data">parsing</abbr> data from incoming requests.
+ویژگی بزرگ دیگری که APIها به آن نیاز دارند <abbr title="خواندن و تبدیل به داده پایتون">تجزیه</abbr> داده از درخواست‌های ورودی است.
 
-Webargs is a tool that was made to provide that on top of several frameworks, including Flask.
+Webargs ابزاری بود که برای ارائه این قابلیت بر روی چندین فریمورک، از جمله Flask ساخته شد.
 
-It uses Marshmallow underneath to do the data validation. And it was created by the same developers.
+از Marshmallow در زیرساخت برای اعتبارسنجی داده استفاده می‌کند. و توسط همان توسعه‌دهندگان ایجاد شده بود.
 
-It's a great tool and I have used it a lot too, before having **FastAPI**.
+ابزار عالی‌ای است و من قبل از **FastAPI** زیاد از آن استفاده کرده‌ام.
 
 /// info
 
-Webargs was created by the same Marshmallow developers.
+Webargs توسط همان توسعه‌دهندگان Marshmallow ایجاد شده بود.
 
 ///
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Have automatic validation of incoming request data.
+اعتبارسنجی خودکار داده‌های درخواست ورودی داشته باشد.
 
 ///
 
 ### <a href="https://apispec.readthedocs.io/en/stable/" class="external-link" target="_blank">APISpec</a>
 
-Marshmallow and Webargs provide validation, parsing and serialization as plug-ins.
+Marshmallow و Webargs اعتبارسنجی، تجزیه و سریالایزیشن را به عنوان پلاگین ارائه می‌دهند.
 
-But documentation is still missing. Then APISpec was created.
+اما مستندسازی هنوز کم بود. سپس APISpec ایجاد شد.
 
-It is a plug-in for many frameworks (and there's a plug-in for Starlette too).
+این یک پلاگین برای بسیاری از فریمورک‌ها است (و پلاگینی برای Starlette نیز وجود دارد).
 
-The way it works is that you write the definition of the schema using YAML format inside the docstring of each function handling a route.
+نحوه کار آن این است که تعریف اسکیما را با استفاده از فرمت YAML درون docstring هر تابعی که یک مسیر را مدیریت می‌کند می‌نویسید.
 
-And it generates OpenAPI schemas.
+و اسکیماهای OpenAPI تولید می‌کند.
 
-That's how it works in Flask, Starlette, Responder, etc.
+اینگونه در Flask، Starlette، Responder و غیره کار می‌کند.
 
-But then, we have again the problem of having a micro-syntax, inside of a Python string (a big YAML).
+اما بعد، دوباره مشکل داشتن یک میکروسینتکس درون یک رشته پایتون (یک YAML بزرگ) را داریم.
 
-The editor can't help much with that. And if we modify parameters or Marshmallow schemas and forget to also modify that YAML docstring, the generated schema would be obsolete.
+ویرایشگر نمی‌تواند کمک زیادی در آن بکند. و اگر پارامترها یا اسکیماهای Marshmallow را تغییر دهیم و فراموش کنیم آن docstring YAML را نیز تغییر دهیم، اسکیمای تولید شده قدیمی خواهد بود.
 
 /// info
 
-APISpec was created by the same Marshmallow developers.
+APISpec توسط همان توسعه‌دهندگان Marshmallow ایجاد شده بود.
 
 ///
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Support the open standard for APIs, OpenAPI.
+از استاندارد باز برای APIها، OpenAPI پشتیبانی کند.
 
 ///
 
 ### <a href="https://flask-apispec.readthedocs.io/en/latest/" class="external-link" target="_blank">Flask-apispec</a>
 
-It's a Flask plug-in, that ties together Webargs, Marshmallow and APISpec.
+یک پلاگین Flask است که Webargs، Marshmallow و APISpec را به هم متصل می‌کند.
 
-It uses the information from Webargs and Marshmallow to automatically generate OpenAPI schemas, using APISpec.
+از اطلاعات Webargs و Marshmallow برای تولید خودکار اسکیماهای OpenAPI با استفاده از APISpec استفاده می‌کند.
 
-It's a great tool, very underrated. It should be way more popular than many Flask plug-ins out there. It might be due to its documentation being too concise and abstract.
+ابزار عالی و بسیار کم‌ارزش‌گذاری شده‌ای است. باید بسیار محبوب‌تر از بسیاری از پلاگین‌های Flask باشد. شاید به دلیل مختصر و انتزاعی بودن مستندات آن باشد.
 
-This solved having to write YAML (another syntax) inside of Python docstrings.
+این مشکل نوشتن YAML (سینتکس دیگر) درون docstringهای پایتون را حل کرد.
 
-This combination of Flask, Flask-apispec with Marshmallow and Webargs was my favorite backend stack until building **FastAPI**.
+این ترکیب Flask، Flask-apispec با Marshmallow و Webargs، استک بک‌اند مورد علاقه من تا ساخت **FastAPI** بود.
 
-Using it led to the creation of several Flask full-stack generators. These are the main stacks I (and several external teams) have been using up to now:
+استفاده از آن منجر به ایجاد چندین تولیدکننده full-stack Flask شد. اینها استک‌های اصلی هستند که من (و چندین تیم خارجی) تا الان استفاده کرده‌ایم:
 
 * <a href="https://github.com/tiangolo/full-stack" class="external-link" target="_blank">https://github.com/tiangolo/full-stack</a>
 * <a href="https://github.com/tiangolo/full-stack-flask-couchbase" class="external-link" target="_blank">https://github.com/tiangolo/full-stack-flask-couchbase</a>
 * <a href="https://github.com/tiangolo/full-stack-flask-couchdb" class="external-link" target="_blank">https://github.com/tiangolo/full-stack-flask-couchdb</a>
 
-And these same full-stack generators were the base of the [**FastAPI** Project Generators](project-generation.md){.internal-link target=_blank}.
+و همین تولیدکننده‌های full-stack پایه [تولیدکننده‌های پروژه **FastAPI**](project-generation.md){.internal-link target=_blank} بودند.
 
 /// info
 
-Flask-apispec was created by the same Marshmallow developers.
+Flask-apispec توسط همان توسعه‌دهندگان Marshmallow ایجاد شده بود.
 
 ///
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Generate the OpenAPI schema automatically, from the same code that defines serialization and validation.
+اسکیمای OpenAPI را به صورت خودکار از همان کدی که سریالایزیشن و اعتبارسنجی را تعریف می‌کند تولید کند.
 
 ///
 
-### <a href="https://nestjs.com/" class="external-link" target="_blank">NestJS</a> (and <a href="https://angular.io/" class="external-link" target="_blank">Angular</a>)
+### <a href="https://nestjs.com/" class="external-link" target="_blank">NestJS</a> (و <a href="https://angular.io/" class="external-link" target="_blank">Angular</a>)
 
-This isn't even Python, NestJS is a JavaScript (TypeScript) NodeJS framework inspired by Angular.
+این حتی پایتون نیست، NestJS یک فریمورک جاوااسکریپت (TypeScript) NodeJS است که از Angular الهام گرفته شده است.
 
-It achieves something somewhat similar to what can be done with Flask-apispec.
+چیزی تا حدی مشابه آنچه با Flask-apispec انجام می‌شود را به دست می‌آورد.
 
-It has an integrated dependency injection system, inspired by Angular 2. It requires pre-registering the "injectables" (like all the other dependency injection systems I know), so, it adds to the verbosity and code repetition.
+یک سیستم تزریق وابستگی یکپارچه دارد، الهام گرفته از Angular 2. نیاز به ثبت پیش‌نیاز "injectableها" دارد (مانند تمام سیستم‌های تزریق وابستگی دیگری که می‌شناسم)، بنابراین به پرحرفی و تکرار کد اضافه می‌کند.
 
-As the parameters are described with TypeScript types (similar to Python type hints), editor support is quite good.
+از آنجا که پارامترها با انواع TypeScript توصیف می‌شوند (مشابه type hintهای پایتون)، پشتیبانی ویرایشگر کاملاً خوب است.
 
-But as TypeScript data is not preserved after compilation to JavaScript, it cannot rely on the types to define validation, serialization and documentation at the same time. Due to this and some design decisions, to get validation, serialization and automatic schema generation, it's needed to add decorators in many places. So, it becomes quite verbose.
+اما چون داده‌های TypeScript پس از کامپایل به جاوااسکریپت حفظ نمی‌شوند، نمی‌تواند بر انواع برای تعریف اعتبارسنجی، سریالایزیشن و مستندسازی به طور همزمان تکیه کند. به همین دلیل و برخی تصمیمات طراحی، برای دریافت اعتبارسنجی، سریالایزیشن و تولید خودکار اسکیما، لازم است در بسیاری از مکان‌ها دکوراتور اضافه شود. بنابراین، کاملاً پرحرف می‌شود.
 
-It can't handle nested models very well. So, if the JSON body in the request is a JSON object that has inner fields that in turn are nested JSON objects, it cannot be properly documented and validated.
+نمی‌تواند مدل‌های تو در تو را خیلی خوب مدیریت کند. بنابراین، اگر بدنه JSON در درخواست یک شیء JSON باشد که فیلدهای داخلی دارد که به نوبه خود اشیاء JSON تو در تو هستند، نمی‌تواند به درستی مستند و اعتبارسنجی شود.
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Use Python types to have great editor support.
+از انواع پایتون برای داشتن پشتیبانی عالی ویرایشگر استفاده کند.
 
-Have a powerful dependency injection system. Find a way to minimize code repetition.
+یک سیستم تزریق وابستگی قدرتمند داشته باشد. راهی برای به حداقل رساندن تکرار کد پیدا کند.
 
 ///
 
 ### <a href="https://sanic.readthedocs.io/en/latest/" class="external-link" target="_blank">Sanic</a>
 
-It was one of the first extremely fast Python frameworks based on `asyncio`. It was made to be very similar to Flask.
+یکی از اولین فریمورک‌های بسیار سریع پایتون مبتنی بر `asyncio` بود. برای شباهت زیاد به Flask ساخته شده بود.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-It used <a href="https://github.com/MagicStack/uvloop" class="external-link" target="_blank">`uvloop`</a> instead of the default Python `asyncio` loop. That's what made it so fast.
+از <a href="https://github.com/MagicStack/uvloop" class="external-link" target="_blank">`uvloop`</a> به جای حلقه `asyncio` پیش‌فرض پایتون استفاده کرد. این چیزی بود که آن را بسیار سریع کرد.
 
-It clearly inspired Uvicorn and Starlette, that are currently faster than Sanic in open benchmarks.
+به وضوح Uvicorn و Starlette را الهام‌بخشید که در حال حاضر در بنچمارک‌های باز سریع‌تر از Sanic هستند.
 
 ///
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Find a way to have a crazy performance.
+راهی برای داشتن عملکرد فوق‌العاده پیدا کند.
 
-That's why **FastAPI** is based on Starlette, as it is the fastest framework available (tested by third-party benchmarks).
+به همین دلیل **FastAPI** مبتنی بر Starlette است، زیرا سریع‌ترین فریمورک موجود (تست شده توسط بنچمارک‌های شخص ثالث) است.
 
 ///
 
 ### <a href="https://falconframework.org/" class="external-link" target="_blank">Falcon</a>
 
-Falcon is another high performance Python framework, it is designed to be minimal, and work as the foundation of other frameworks like Hug.
+Falcon یک فریمورک پایتون با عملکرد بالای دیگر است، برای حداقلی بودن طراحی شده و به عنوان پایه فریمورک‌های دیگر مانند Hug کار می‌کند.
 
-It is designed to have functions that receive two parameters, one "request" and one "response". Then you "read" parts from the request, and "write" parts to the response. Because of this design, it is not possible to declare request parameters and bodies with standard Python type hints as function parameters.
+طوری طراحی شده که توابعی دارد که دو پارامتر دریافت می‌کنند، یکی "request" و یکی "response". سپس بخش‌هایی از request را "می‌خوانید" و بخش‌هایی را به response "می‌نویسید". به دلیل این طراحی، امکان اعلان پارامترهای درخواست و بدنه‌ها با type hintهای استاندارد پایتون به عنوان پارامترهای تابع وجود ندارد.
 
-So, data validation, serialization, and documentation, have to be done in code, not automatically. Or they have to be implemented as a framework on top of Falcon, like Hug. This same distinction happens in other frameworks that are inspired by Falcon's design, of having one request object and one response object as parameters.
+بنابراین، اعتبارسنجی داده، سریالایزیشن و مستندسازی باید در کد انجام شود، نه به صورت خودکار. یا باید به عنوان فریمورکی بر روی Falcon پیاده‌سازی شوند، مانند Hug. همین تمایز در فریمورک‌های دیگری که از طراحی Falcon الهام گرفته‌اند رخ می‌دهد، یعنی داشتن یک شیء request و یک شیء response به عنوان پارامترها.
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Find ways to get great performance.
+راه‌هایی برای دستیابی به عملکرد عالی پیدا کند.
 
-Along with Hug (as Hug is based on Falcon) inspired **FastAPI** to declare a `response` parameter in functions.
+همراه با Hug (از آنجا که Hug مبتنی بر Falcon است) **FastAPI** را الهام‌بخشید تا یک پارامتر `response` در توابع اعلان کند.
 
-Although in FastAPI it's optional, and is used mainly to set headers, cookies, and alternative status codes.
+اگرچه در FastAPI اختیاری است و عمدتاً برای تنظیم هدرها، کوکی‌ها و کدهای وضعیت جایگزین استفاده می‌شود.
 
 ///
 
 ### <a href="https://moltenframework.com/" class="external-link" target="_blank">Molten</a>
 
-I discovered Molten in the first stages of building **FastAPI**. And it has quite similar ideas:
+من Molten را در مراحل اولیه ساخت **FastAPI** کشف کردم. و ایده‌های کاملاً مشابهی دارد:
 
-* Based on Python type hints.
-* Validation and documentation from these types.
-* Dependency Injection system.
+* مبتنی بر type hintهای پایتون.
+* اعتبارسنجی و مستندسازی از این انواع.
+* سیستم تزریق وابستگی.
 
-It doesn't use a data validation, serialization and documentation third-party library like Pydantic, it has its own. So, these data type definitions would not be reusable as easily.
+از کتابخانه شخص ثالث اعتبارسنجی، سریالایزیشن و مستندسازی داده مانند Pydantic استفاده نمی‌کند، خودش را دارد. بنابراین، این تعاریف نوع داده به راحتی قابل استفاده مجدد نخواهند بود.
 
-It requires a little bit more verbose configurations. And as it is based on WSGI (instead of ASGI), it is not designed to take advantage of the high performance provided by tools like Uvicorn, Starlette and Sanic.
+پیکربندی‌های کمی پرحرف‌تری نیاز دارد. و از آنجا که مبتنی بر WSGI (به جای ASGI) است، برای بهره‌برداری از عملکرد بالای ارائه شده توسط ابزارهایی مانند Uvicorn، Starlette و Sanic طراحی نشده است.
 
-The dependency injection system requires pre-registration of the dependencies and the dependencies are solved based on the declared types. So, it's not possible to declare more than one "component" that provides a certain type.
+سیستم تزریق وابستگی نیاز به ثبت پیش‌نیاز وابستگی‌ها دارد و وابستگی‌ها بر اساس انواع اعلان شده حل می‌شوند. بنابراین، امکان اعلان بیش از یک "کامپوننت" که یک نوع خاص ارائه می‌دهد وجود ندارد.
 
-Routes are declared in a single place, using functions declared in other places (instead of using decorators that can be placed right on top of the function that handles the endpoint). This is closer to how Django does it than to how Flask (and Starlette) does it. It separates in the code things that are relatively tightly coupled.
+مسیرها در یک مکان واحد اعلان می‌شوند، با استفاده از توابعی که در مکان‌های دیگر اعلان شده‌اند (به جای استفاده از دکوراتورهایی که می‌توانند درست بالای تابع مدیریت‌کننده endpoint قرار گیرند). این بیشتر به نحوه Django نزدیک است تا Flask (و Starlette). چیزهایی را در کد جدا می‌کند که نسبتاً به شدت به هم مرتبط هستند.
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Define extra validations for data types using the "default" value of model attributes. This improves editor support, and it was not available in Pydantic before.
+اعتبارسنجی‌های اضافی برای انواع داده را با استفاده از مقدار "پیش‌فرض" ویژگی‌های مدل تعریف کند. این پشتیبانی ویرایشگر را بهبود می‌بخشد و قبلاً در Pydantic در دسترس نبود.
 
-This actually inspired updating parts of Pydantic, to support the same validation declaration style (all this functionality is now already available in Pydantic).
+این در واقع به‌روزرسانی بخش‌هایی از Pydantic را الهام‌بخشید تا از همان سبک اعلان اعتبارسنجی پشتیبانی کند (تمام این قابلیت‌ها اکنون در Pydantic در دسترس هستند).
 
 ///
 
 ### <a href="https://github.com/hugapi/hug" class="external-link" target="_blank">Hug</a>
 
-Hug was one of the first frameworks to implement the declaration of API parameter types using Python type hints. This was a great idea that inspired other tools to do the same.
+Hug یکی از اولین فریمورک‌هایی بود که اعلان انواع پارامترهای API با استفاده از type hintهای پایتون را پیاده‌سازی کرد. این ایده عالی بود و ابزارهای دیگر را برای انجام همین کار الهام‌بخشید.
 
-It used custom types in its declarations instead of standard Python types, but it was still a huge step forward.
+در اعلانات خود از انواع سفارشی به جای انواع استاندارد پایتون استفاده می‌کرد، اما همچنان گام بزرگی به جلو بود.
 
-It also was one of the first frameworks to generate a custom schema declaring the whole API in JSON.
+همچنین یکی از اولین فریمورک‌هایی بود که یک اسکیمای سفارشی برای اعلان کل API در JSON تولید می‌کرد.
 
-It was not based on a standard like OpenAPI and JSON Schema. So it wouldn't be straightforward to integrate it with other tools, like Swagger UI. But again, it was a very innovative idea.
+مبتنی بر استانداردی مانند OpenAPI و JSON Schema نبود. بنابراین یکپارچه‌سازی آن با ابزارهای دیگر مانند Swagger UI ساده نبود. اما باز هم، ایده بسیار نوآورانه‌ای بود.
 
-It has an interesting, uncommon feature: using the same framework, it's possible to create APIs and also CLIs.
+ویژگی جالب و نادری دارد: با استفاده از همان فریمورک، امکان ایجاد APIها و همچنین CLIها وجود دارد.
 
-As it is based on the previous standard for synchronous Python web frameworks (WSGI), it can't handle Websockets and other things, although it still has high performance too.
+از آنجا که مبتنی بر استاندارد قبلی برای فریمورک‌های وب همزمان پایتون (WSGI) است، نمی‌تواند Websocketها و موارد دیگر را مدیریت کند، اگرچه همچنان عملکرد بالایی دارد.
 
 /// info
 
-Hug was created by Timothy Crosley, the same creator of <a href="https://github.com/timothycrosley/isort" class="external-link" target="_blank">`isort`</a>, a great tool to automatically sort imports in Python files.
+Hug توسط Timothy Crosley، همان سازنده <a href="https://github.com/timothycrosley/isort" class="external-link" target="_blank">`isort`</a>، ابزار عالی برای مرتب‌سازی خودکار importها در فایل‌های پایتون ایجاد شد.
 
 ///
 
-/// check | Ideas inspiring **FastAPI**
+/// check | ایده‌های الهام‌بخش **FastAPI**
 
-Hug inspired parts of APIStar, and was one of the tools I found most promising, alongside APIStar.
+Hug بخش‌هایی از APIStar را الهام‌بخشید و یکی از ابزارهایی بود که بیشترین امیدواری را در کنار APIStar یافتم.
 
-Hug helped inspiring **FastAPI** to use Python type hints to declare parameters, and to generate a schema defining the API automatically.
+Hug الهام‌بخش **FastAPI** شد تا از type hintهای پایتون برای اعلان پارامترها و تولید خودکار اسکیمای تعریف‌کننده API استفاده کند.
 
-Hug inspired **FastAPI** to declare a `response` parameter in functions to set headers and cookies.
+Hug الهام‌بخش **FastAPI** شد تا یک پارامتر `response` در توابع برای تنظیم هدرها و کوکی‌ها اعلان کند.
 
 ///
 
 ### <a href="https://github.com/encode/apistar" class="external-link" target="_blank">APIStar</a> (<= 0.5)
 
-Right before deciding to build **FastAPI** I found **APIStar** server. It had almost everything I was looking for and had a great design.
+درست قبل از تصمیم به ساخت **FastAPI**، سرور **APIStar** را پیدا کردم. تقریباً همه چیزهایی که به دنبالشان بودم داشت و طراحی عالی‌ای داشت.
 
-It was one of the first implementations of a framework using Python type hints to declare parameters and requests that I ever saw (before NestJS and Molten). I found it more or less at the same time as Hug. But APIStar used the OpenAPI standard.
+یکی از اولین پیاده‌سازی‌های فریمورکی بود که از type hintهای پایتون برای اعلان پارامترها و درخواست‌ها استفاده می‌کرد که تا آن زمان دیده بودم (قبل از NestJS و Molten). آن را تقریباً همزمان با Hug پیدا کردم. اما APIStar از استاندارد OpenAPI استفاده می‌کرد.
 
-It had automatic data validation, data serialization and OpenAPI schema generation based on the same type hints in several places.
+اعتبارسنجی خودکار داده، سریالایزیشن داده و تولید اسکیمای OpenAPI مبتنی بر همان type hintها در چندین مکان داشت.
 
-Body schema definitions didn't use the same Python type hints like Pydantic, it was a bit more similar to Marshmallow, so, editor support wouldn't be as good, but still, APIStar was the best available option.
+تعاریف اسکیمای بدنه از همان type hintهای پایتون مانند Pydantic استفاده نمی‌کرد، کمی بیشتر شبیه Marshmallow بود، بنابراین پشتیبانی ویرایشگر به خوبی نبود، اما همچنان APIStar بهترین گزینه موجود بود.
 
-It had the best performance benchmarks at the time (only surpassed by Starlette).
+بهترین بنچمارک‌های عملکرد را در آن زمان داشت (فقط توسط Starlette پیشی گرفته شده بود).
 
-At first, it didn't have an automatic API documentation web UI, but I knew I could add Swagger UI to it.
+در ابتدا، رابط کاربری وب مستندسازی خودکار API نداشت، اما می‌دانستم می‌توانم Swagger UI را به آن اضافه کنم.
 
-It had a dependency injection system. It required pre-registration of components, as other tools discussed above. But still, it was a great feature.
+سیستم تزریق وابستگی داشت. نیاز به ثبت پیش‌نیاز کامپوننت‌ها داشت، مانند سایر ابزارهای بحث شده در بالا. اما همچنان ویژگی عالی بود.
 
-I was never able to use it in a full project, as it didn't have security integration, so, I couldn't replace all the features I was having with the full-stack generators based on Flask-apispec. I had in my backlog of projects to create a pull request adding that functionality.
+هرگز نتوانستم آن را در یک پروژه کامل استفاده کنم، زیرا یکپارچگی امنیتی نداشت، بنابراین نمی‌توانستم تمام ویژگی‌هایی که با تولیدکننده‌های full-stack مبتنی بر Flask-apispec داشتم را جایگزین کنم. یک pull request برای افزودن آن قابلیت در لیست پروژه‌هایم داشتم.
 
-But then, the project's focus shifted.
+اما بعد، تمرکز پروژه تغییر کرد.
 
-It was no longer an API web framework, as the creator needed to focus on Starlette.
+دیگر یک فریمورک وب API نبود، زیرا سازنده نیاز داشت روی Starlette تمرکز کند.
 
-Now APIStar is a set of tools to validate OpenAPI specifications, not a web framework.
+اکنون APIStar مجموعه‌ای از ابزارها برای اعتبارسنجی مشخصات OpenAPI است، نه یک فریمورک وب.
 
 /// info
 
-APIStar was created by Tom Christie. The same guy that created:
+APIStar توسط Tom Christie ایجاد شد. همان فردی که ایجاد کرد:
 
 * Django REST Framework
-* Starlette (in which **FastAPI** is based)
-* Uvicorn (used by Starlette and **FastAPI**)
+* Starlette (که **FastAPI** بر اساس آن ساخته شده است)
+* Uvicorn (که توسط Starlette و **FastAPI** استفاده می‌شود)
 
 ///
 
-/// check | Inspired **FastAPI** to
+/// check | **FastAPI** را الهام‌بخشید تا
 
-Exist.
+وجود داشته باشد.
 
-The idea of declaring multiple things (data validation, serialization and documentation) with the same Python types, that at the same time provided great editor support, was something I considered a brilliant idea.
+ایده اعلان چندین چیز (اعتبارسنجی داده، سریالایزیشن و مستندسازی) با همان انواع پایتون، که در عین حال پشتیبانی عالی ویرایشگر فراهم می‌کرد، چیزی بود که آن را ایده درخشانی می‌دانستم.
 
-And after searching for a long time for a similar framework and testing many different alternatives, APIStar was the best option available.
+و پس از جستجوی طولانی برای فریمورک مشابه و آزمایش بسیاری از جایگزین‌های مختلف، APIStar بهترین گزینه موجود بود.
 
-Then APIStar stopped to exist as a server and Starlette was created, and was a new better foundation for such a system. That was the final inspiration to build **FastAPI**.
+سپس APIStar به عنوان یک سرور متوقف شد و Starlette ایجاد شد و پایه بهتر جدیدی برای چنین سیستمی بود. این الهام نهایی برای ساخت **FastAPI** بود.
 
-I consider **FastAPI** a "spiritual successor" to APIStar, while improving and increasing the features, typing system, and other parts, based on the learnings from all these previous tools.
+من **FastAPI** را "جانشین معنوی" APIStar می‌دانم، در حالی که ویژگی‌ها، سیستم تایپینگ و سایر بخش‌ها را بر اساس آموخته‌ها از تمام این ابزارهای قبلی بهبود بخشیده و افزایش داده است.
 
 ///
 
-## Used by **FastAPI**
+## استفاده شده توسط **FastAPI**
 
 ### <a href="https://docs.pydantic.dev/" class="external-link" target="_blank">Pydantic</a>
 
-Pydantic is a library to define data validation, serialization and documentation (using JSON Schema) based on Python type hints.
+Pydantic کتابخانه‌ای برای تعریف اعتبارسنجی، سریالایزیشن و مستندسازی داده (با استفاده از JSON Schema) مبتنی بر type hintهای پایتون است.
 
-That makes it extremely intuitive.
+این آن را بسیار شهودی می‌کند.
 
-It is comparable to Marshmallow. Although it's faster than Marshmallow in benchmarks. And as it is based on the same Python type hints, the editor support is great.
+با Marshmallow قابل مقایسه است. اگرچه در بنچمارک‌ها سریع‌تر از Marshmallow است. و از آنجا که مبتنی بر همان type hintهای پایتون است، پشتیبانی ویرایشگر عالی است.
 
-/// check | **FastAPI** uses it to
+/// check | **FastAPI** از آن استفاده می‌کند برای
 
-Handle all the data validation, data serialization and automatic model documentation (based on JSON Schema).
+مدیریت تمام اعتبارسنجی داده، سریالایزیشن داده و مستندسازی خودکار مدل (مبتنی بر JSON Schema).
 
-**FastAPI** then takes that JSON Schema data and puts it in OpenAPI, apart from all the other things it does.
+**FastAPI** سپس آن داده JSON Schema را در OpenAPI قرار می‌دهد، جدا از تمام کارهای دیگری که انجام می‌دهد.
 
 ///
 
 ### <a href="https://www.starlette.io/" class="external-link" target="_blank">Starlette</a>
 
-Starlette is a lightweight <abbr title="The new standard for building asynchronous Python web applications">ASGI</abbr> framework/toolkit, which is ideal for building high-performance asyncio services.
+Starlette یک فریمورک/مجموعه‌ابزار سبک <abbr title="استاندارد جدید برای ساخت برنامه‌های وب ناهمزمان پایتون">ASGI</abbr> است که برای ساخت سرویس‌های asyncio با عملکرد بالا ایده‌آل است.
 
-It is very simple and intuitive. It's designed to be easily extensible, and have modular components.
+بسیار ساده و شهودی است. برای گسترش آسان و داشتن کامپوننت‌های ماژولار طراحی شده است.
 
-It has:
+دارای:
 
-* Seriously impressive performance.
-* WebSocket support.
-* In-process background tasks.
-* Startup and shutdown events.
-* Test client built on HTTPX.
-* CORS, GZip, Static Files, Streaming responses.
-* Session and Cookie support.
-* 100% test coverage.
-* 100% type annotated codebase.
-* Few hard dependencies.
+* عملکرد بسیار چشمگیر.
+* پشتیبانی از WebSocket.
+* وظایف پس‌زمینه درون‌فرآیند.
+* رویدادهای شروع و خاموشی.
+* کلاینت تست ساخته شده بر HTTPX.
+* CORS، GZip، فایل‌های استاتیک، پاسخ‌های جریانی.
+* پشتیبانی از Session و Cookie.
+* ۱۰۰٪ پوشش تست.
+* ۱۰۰٪ کدبیس با حاشیه‌نویسی نوع.
+* وابستگی‌های سخت کم.
 
-Starlette is currently the fastest Python framework tested. Only surpassed by Uvicorn, which is not a framework, but a server.
+Starlette در حال حاضر سریع‌ترین فریمورک پایتون تست‌شده است. فقط توسط Uvicorn پیشی گرفته شده که فریمورک نیست، بلکه سرور است.
 
-Starlette provides all the basic web microframework functionality.
+Starlette تمام قابلیت‌های پایه میکروفریمورک وب را فراهم می‌کند.
 
-But it doesn't provide automatic data validation, serialization or documentation.
+اما اعتبارسنجی خودکار داده، سریالایزیشن یا مستندسازی ارائه نمی‌دهد.
 
-That's one of the main things that **FastAPI** adds on top, all based on Python type hints (using Pydantic). That, plus the dependency injection system, security utilities, OpenAPI schema generation, etc.
+این یکی از چیزهای اصلی‌ای است که **FastAPI** بر روی آن اضافه می‌کند، همه مبتنی بر type hintهای پایتون (با استفاده از Pydantic). آن، به علاوه سیستم تزریق وابستگی، ابزارهای امنیتی، تولید اسکیمای OpenAPI و غیره.
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-ASGI is a new "standard" being developed by Django core team members. It is still not a "Python standard" (a PEP), although they are in the process of doing that.
+ASGI یک "استاندارد" جدید است که توسط اعضای تیم اصلی Django در حال توسعه است. هنوز یک "استاندارد پایتون" (PEP) نیست، اگرچه در حال انجام آن هستند.
 
-Nevertheless, it is already being used as a "standard" by several tools. This greatly improves interoperability, as you could switch Uvicorn for any other ASGI server (like Daphne or Hypercorn), or you could add ASGI compatible tools, like `python-socketio`.
+با این وجود، در حال حاضر توسط چندین ابزار به عنوان "استاندارد" استفاده می‌شود. این به طور قابل توجهی قابلیت تعامل را بهبود می‌بخشد، زیرا می‌توانید Uvicorn را با هر سرور ASGI دیگری (مانند Daphne یا Hypercorn) جایگزین کنید، یا ابزارهای سازگار با ASGI مانند `python-socketio` اضافه کنید.
 
 ///
 
-/// check | **FastAPI** uses it to
+/// check | **FastAPI** از آن استفاده می‌کند برای
 
-Handle all the core web parts. Adding features on top.
+مدیریت تمام بخش‌های اصلی وب. افزودن ویژگی‌ها بر روی آن.
 
-The class `FastAPI` itself inherits directly from the class `Starlette`.
+کلاس `FastAPI` خود مستقیماً از کلاس `Starlette` ارث‌بری می‌کند.
 
-So, anything that you can do with Starlette, you can do it directly with **FastAPI**, as it is basically Starlette on steroids.
+بنابراین، هر چیزی که با Starlette انجام دهید، می‌توانید مستقیماً با **FastAPI** انجام دهید، زیرا اساساً Starlette با قابلیت‌های بیشتر است.
 
 ///
 
 ### <a href="https://www.uvicorn.org/" class="external-link" target="_blank">Uvicorn</a>
 
-Uvicorn is a lightning-fast ASGI server, built on uvloop and httptools.
+Uvicorn یک سرور ASGI فوق‌العاده سریع است، ساخته شده بر uvloop و httptools.
 
-It is not a web framework, but a server. For example, it doesn't provide tools for routing by paths. That's something that a framework like Starlette (or **FastAPI**) would provide on top.
+یک فریمورک وب نیست، بلکه یک سرور است. به عنوان مثال، ابزارهایی برای مسیریابی بر اساس مسیرها ارائه نمی‌دهد. این چیزی است که فریمورکی مانند Starlette (یا **FastAPI**) بر روی آن ارائه می‌دهد.
 
-It is the recommended server for Starlette and **FastAPI**.
+سرور توصیه‌شده برای Starlette و **FastAPI** است.
 
-/// check | **FastAPI** recommends it as
+/// check | **FastAPI** آن را توصیه می‌کند به عنوان
 
-The main web server to run **FastAPI** applications.
+سرور وب اصلی برای اجرای برنامه‌های **FastAPI**.
 
-You can also use the `--workers` command line option to have an asynchronous multi-process server.
+همچنین می‌توانید از گزینه خط فرمان `--workers` برای داشتن یک سرور چندفرآیندی ناهمزمان استفاده کنید.
 
-Check more details in the [Deployment](deployment/index.md){.internal-link target=_blank} section.
+جزئیات بیشتر را در بخش [استقرار](deployment/index.md){.internal-link target=_blank} بررسی کنید.
 
 ///
 
-## Benchmarks and speed
+## بنچمارک‌ها و سرعت
 
-To understand, compare, and see the difference between Uvicorn, Starlette and FastAPI, check the section about [Benchmarks](benchmarks.md){.internal-link target=_blank}.
+برای درک، مقایسه و دیدن تفاوت بین Uvicorn، Starlette و FastAPI، بخش [بنچمارک‌ها](benchmarks.md){.internal-link target=_blank} را بررسی کنید.

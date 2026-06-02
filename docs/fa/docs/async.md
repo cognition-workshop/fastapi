@@ -1,18 +1,18 @@
-# Concurrency and async / await
+# همزمانی و async / await
 
-Details about the `async def` syntax for *path operation functions* and some background about asynchronous code, concurrency, and parallelism.
+جزئیات درباره سینتکس `async def` برای *توابع عملیات مسیر* و برخی پس‌زمینه درباره کد ناهمزمان، همزمانی و موازی‌سازی.
 
-## In a hurry?
+## عجله دارید؟
 
 <abbr title="too long; didn't read"><strong>TL;DR:</strong></abbr>
 
-If you are using third party libraries that tell you to call them with `await`, like:
+اگر از کتابخانه‌های شخص ثالثی استفاده می‌کنید که به شما می‌گویند با `await` آنها را فراخوانی کنید، مانند:
 
 ```Python
 results = await some_library()
 ```
 
-Then, declare your *path operation functions* with `async def` like:
+سپس، *توابع عملیات مسیر* خود را با `async def` اعلان کنید مانند:
 
 ```Python hl_lines="2"
 @app.get('/')
@@ -23,13 +23,13 @@ async def read_results():
 
 /// note
 
-You can only use `await` inside of functions created with `async def`.
+فقط می‌توانید `await` را درون توابعی که با `async def` ایجاد شده‌اند استفاده کنید.
 
 ///
 
 ---
 
-If you are using a third party library that communicates with something (a database, an API, the file system, etc.) and doesn't have support for using `await`, (this is currently the case for most database libraries), then declare your *path operation functions* as normally, with just `def`, like:
+اگر از کتابخانه شخص ثالثی استفاده می‌کنید که با چیزی ارتباط برقرار می‌کند (پایگاه‌داده، API، فایل سیستم و غیره) و از `await` پشتیبانی نمی‌کند (این در حال حاضر برای اکثر کتابخانه‌های پایگاه‌داده صدق می‌کند)، سپس *توابع عملیات مسیر* خود را به صورت عادی، فقط با `def` اعلان کنید، مانند:
 
 ```Python hl_lines="2"
 @app.get('/')
@@ -40,279 +40,279 @@ def results():
 
 ---
 
-If your application (somehow) doesn't have to communicate with anything else and wait for it to respond, use `async def`.
+اگر برنامه شما (به هر دلیلی) نیازی به ارتباط با چیز دیگری و انتظار برای پاسخ آن ندارد، از `async def` استفاده کنید.
 
 ---
 
-If you just don't know, use normal `def`.
+اگر فقط نمی‌دانید، از `def` عادی استفاده کنید.
 
 ---
 
-**Note**: You can mix `def` and `async def` in your *path operation functions* as much as you need and define each one using the best option for you. FastAPI will do the right thing with them.
+**نکته**: می‌توانید `def` و `async def` را در *توابع عملیات مسیر* خود هر چقدر که نیاز دارید ترکیب کنید و هر کدام را با بهترین گزینه برای خودتان تعریف کنید. FastAPI کار درست را با آنها انجام خواهد داد.
 
-Anyway, in any of the cases above, FastAPI will still work asynchronously and be extremely fast.
+به هر حال، در هر یک از موارد بالا، FastAPI همچنان به صورت ناهمزمان کار خواهد کرد و بسیار سریع خواهد بود.
 
-But by following the steps above, it will be able to do some performance optimizations.
+اما با دنبال کردن مراحل بالا، قادر به انجام برخی بهینه‌سازی‌های عملکرد خواهد بود.
 
-## Technical Details
+## جزئیات فنی
 
-Modern versions of Python have support for **"asynchronous code"** using something called **"coroutines"**, with **`async` and `await`** syntax.
+نسخه‌های مدرن پایتون از **"کد ناهمزمان"** با استفاده از چیزی به نام **"coroutineها"**، با سینتکس **`async` و `await`** پشتیبانی می‌کنند.
 
-Let's see that phrase by parts in the sections below:
+بیایید آن عبارت را در بخش‌های زیر قسمت به قسمت ببینیم:
 
-* **Asynchronous Code**
-* **`async` and `await`**
-* **Coroutines**
+* **کد ناهمزمان**
+* **`async` و `await`**
+* **Coroutineها**
 
-## Asynchronous Code
+## کد ناهمزمان
 
-Asynchronous code just means that the language 💬 has a way to tell the computer / program 🤖 that at some point in the code, it 🤖 will have to wait for *something else* to finish somewhere else. Let's say that *something else* is called "slow-file" 📝.
+کد ناهمزمان فقط به این معنی است که زبان 💬 راهی دارد تا به کامپیوتر / برنامه 🤖 بگوید که در نقطه‌ای از کد، باید منتظر تمام شدن *چیز دیگری* در جای دیگری باشد. فرض کنیم آن *چیز دیگر* "فایل-کند" 📝 نامیده می‌شود.
 
-So, during that time, the computer can go and do some other work, while "slow-file" 📝 finishes.
+بنابراین، در آن زمان، کامپیوتر می‌تواند برود و کار دیگری انجام دهد، در حالی که "فایل-کند" 📝 تمام می‌شود.
 
-Then the computer / program 🤖 will come back every time it has a chance because it's waiting again, or whenever it 🤖 finished all the work it had at that point. And it 🤖 will see if any of the tasks it was waiting for have already finished, doing whatever it had to do.
+سپس کامپیوتر / برنامه 🤖 هر بار که فرصتی داشته باشد برمی‌گردد زیرا دوباره منتظر است، یا هر زمان که تمام کارهایی که در آن نقطه داشت تمام شد. و بررسی می‌کند آیا هر یک از وظایفی که منتظرشان بود قبلاً تمام شده‌اند، و هر کاری که باید با آنها انجام دهد انجام می‌دهد.
 
-Next, it 🤖 takes the first task to finish (let's say, our "slow-file" 📝) and continues whatever it had to do with it.
+بعد، 🤖 اولین وظیفه‌ای که تمام شده را برمی‌دارد (فرض کنیم، "فایل-کند" 📝 ما) و هر کاری که باید با آن انجام دهد ادامه می‌دهد.
 
-That "wait for something else" normally refers to <abbr title="Input and Output">I/O</abbr> operations that are relatively "slow" (compared to the speed of the processor and the RAM memory), like waiting for:
+آن "انتظار برای چیز دیگر" معمولاً به عملیات‌های <abbr title="Input and Output">I/O</abbr> اشاره دارد که نسبتاً "کند" هستند (در مقایسه با سرعت پردازنده و حافظه RAM)، مانند انتظار برای:
 
-* the data from the client to be sent through the network
-* the data sent by your program to be received by the client through the network
-* the contents of a file in the disk to be read by the system and given to your program
-* the contents your program gave to the system to be written to disk
-* a remote API operation
-* a database operation to finish
-* a database query to return the results
-* etc.
+* ارسال داده از کلاینت از طریق شبکه
+* دریافت داده ارسال شده توسط برنامه شما توسط کلاینت از طریق شبکه
+* خوانده شدن محتوای یک فایل در دیسک توسط سیستم و ارائه به برنامه شما
+* نوشتن محتوایی که برنامه شما به سیستم داده در دیسک
+* یک عملیات API از راه دور
+* تمام شدن یک عملیات پایگاه‌داده
+* برگرداندن نتایج توسط یک کوئری پایگاه‌داده
+* و غیره.
 
-As the execution time is consumed mostly by waiting for <abbr title="Input and Output">I/O</abbr> operations, they call them "I/O bound" operations.
+از آنجا که زمان اجرا عمدتاً توسط انتظار برای عملیات‌های <abbr title="Input and Output">I/O</abbr> مصرف می‌شود، آنها را عملیات‌های "I/O bound" می‌نامند.
 
-It's called "asynchronous" because the computer / program doesn't have to be "synchronized" with the slow task, waiting for the exact moment that the task finishes, while doing nothing, to be able to take the task result and continue the work.
+به آن "ناهمزمان" گفته می‌شود زیرا کامپیوتر / برنامه نباید با وظیفه کند "همزمان" باشد، منتظر لحظه دقیق تمام شدن وظیفه، در حالی که هیچ کاری نمی‌کند، تا بتواند نتیجه وظیفه را بگیرد و کار را ادامه دهد.
 
-Instead of that, by being an "asynchronous" system, once finished, the task can wait in line a little bit (some microseconds) for the computer / program to finish whatever it went to do, and then come back to take the results and continue working with them.
+در عوض، با بودن یک سیستم "ناهمزمان"، پس از تمام شدن، وظیفه می‌تواند کمی در صف منتظر بماند (چند میکروثانیه) تا کامپیوتر / برنامه هر کاری که رفته بود انجام دهد تمام کند و سپس برگردد و نتایج را بگیرد و با آنها کار کند.
 
-For "synchronous" (contrary to "asynchronous") they commonly also use the term "sequential", because the computer / program follows all the steps in sequence before switching to a different task, even if those steps involve waiting.
+برای "همزمان" (برعکس "ناهمزمان") معمولاً از اصطلاح "ترتیبی" نیز استفاده می‌کنند، زیرا کامپیوتر / برنامه تمام مراحل را به ترتیب قبل از تغییر به وظیفه دیگر دنبال می‌کند، حتی اگر آن مراحل شامل انتظار باشند.
 
-### Concurrency and Burgers
+### همزمانی و برگرها
 
-This idea of **asynchronous** code described above is also sometimes called **"concurrency"**. It is different from **"parallelism"**.
+این ایده **کد ناهمزمان** توصیف شده در بالا گاهی اوقات **"همزمانی"** نیز نامیده می‌شود. از **"موازی‌سازی"** متفاوت است.
 
-**Concurrency** and **parallelism** both relate to "different things happening more or less at the same time".
+**همزمانی** و **موازی‌سازی** هر دو مرتبط با "اتفاق‌های مختلف کم‌وبیش در یک زمان" هستند.
 
-But the details between *concurrency* and *parallelism* are quite different.
+اما جزئیات بین *همزمانی* و *موازی‌سازی* کاملاً متفاوت است.
 
-To see the difference, imagine the following story about burgers:
+برای دیدن تفاوت، داستان زیر درباره برگرها را تصور کنید:
 
-### Concurrent Burgers
+### برگرهای همزمان
 
-You go with your crush to get fast food, you stand in line while the cashier takes the orders from the people in front of you. 😍
+با کسی که دوستش دارید برای گرفتن فست‌فود می‌روید، در صف می‌ایستید در حالی که صندوق‌دار سفارش‌های افراد جلوی شما را می‌گیرد. 😍
 
 <img src="/img/async/concurrent-burgers/concurrent-burgers-01.png" class="illustration">
 
-Then it's your turn, you place your order of 2 very fancy burgers for your crush and you. 🍔🍔
+سپس نوبت شما می‌شود، سفارش ۲ برگر بسیار عالی برای خودتان و کسی که دوستش دارید می‌دهید. 🍔🍔
 
 <img src="/img/async/concurrent-burgers/concurrent-burgers-02.png" class="illustration">
 
-The cashier says something to the cook in the kitchen so they know they have to prepare your burgers (even though they are currently preparing the ones for the previous clients).
+صندوق‌دار چیزی به آشپز در آشپزخانه می‌گوید تا بداند باید برگرهای شما را آماده کند (اگرچه در حال حاضر مشغول آماده‌سازی برگرهای مشتریان قبلی است).
 
 <img src="/img/async/concurrent-burgers/concurrent-burgers-03.png" class="illustration">
 
-You pay. 💸
+پرداخت می‌کنید. 💸
 
-The cashier gives you the number of your turn.
+صندوق‌دار شماره نوبت شما را می‌دهد.
 
 <img src="/img/async/concurrent-burgers/concurrent-burgers-04.png" class="illustration">
 
-While you are waiting, you go with your crush and pick a table, you sit and talk with your crush for a long time (as your burgers are very fancy and take some time to prepare).
+در حالی که منتظرید، با کسی که دوستش دارید می‌روید و یک میز انتخاب می‌کنید، می‌نشینید و مدت طولانی صحبت می‌کنید (چون برگرهایتان خیلی عالی هستند و آماده‌سازیشان زمان می‌برد).
 
-As you are sitting at the table with your crush, while you wait for the burgers, you can spend that time admiring how awesome, cute and smart your crush is ✨😍✨.
+وقتی پشت میز با کسی که دوستش دارید نشسته‌اید، در حالی که منتظر برگرها هستید، می‌توانید آن زمان را صرف تحسین کنید که چقدر فوق‌العاده، جذاب و باهوش است ✨😍✨.
 
 <img src="/img/async/concurrent-burgers/concurrent-burgers-05.png" class="illustration">
 
-While waiting and talking to your crush, from time to time, you check the number displayed on the counter to see if it's your turn already.
+در حالی که منتظرید و صحبت می‌کنید، هر از گاهی شماره نمایش داده شده روی پیشخوان را بررسی می‌کنید تا ببینید آیا نوبت شما شده است.
 
-Then at some point, it finally is your turn. You go to the counter, get your burgers and come back to the table.
+سپس در نقطه‌ای، بالاخره نوبت شما می‌شود. به پیشخوان می‌روید، برگرهایتان را می‌گیرید و به میز برمی‌گردید.
 
 <img src="/img/async/concurrent-burgers/concurrent-burgers-06.png" class="illustration">
 
-You and your crush eat the burgers and have a nice time. ✨
+شما و کسی که دوستش دارید برگرها را می‌خورید و اوقات خوبی دارید. ✨
 
 <img src="/img/async/concurrent-burgers/concurrent-burgers-07.png" class="illustration">
 
 /// info
 
-Beautiful illustrations by <a href="https://www.instagram.com/ketrinadrawsalot" class="external-link" target="_blank">Ketrina Thompson</a>. 🎨
+تصاویر زیبا توسط <a href="https://www.instagram.com/ketrinadrawsalot" class="external-link" target="_blank">Ketrina Thompson</a>. 🎨
 
 ///
 
 ---
 
-Imagine you are the computer / program 🤖 in that story.
+تصور کنید شما کامپیوتر / برنامه 🤖 در آن داستان هستید.
 
-While you are at the line, you are just idle 😴, waiting for your turn, not doing anything very "productive". But the line is fast because the cashier is only taking the orders (not preparing them), so that's fine.
+وقتی در صف هستید، فقط بیکارید 😴، منتظر نوبتتان، و کار خیلی "مولدی" انجام نمی‌دهید. اما صف سریع است زیرا صندوق‌دار فقط سفارش‌ها را می‌گیرد (آماده نمی‌کند)، پس اشکالی ندارد.
 
-Then, when it's your turn, you do actual "productive" work, you process the menu, decide what you want, get your crush's choice, pay, check that you give the correct bill or card, check that you are charged correctly, check that the order has the correct items, etc.
+سپس، وقتی نوبتتان می‌شود، کار واقعاً "مولد" انجام می‌دهید، منو را پردازش می‌کنید، تصمیم می‌گیرید چه می‌خواهید، انتخاب کسی که دوستش دارید را می‌گیرید، پرداخت می‌کنید، بررسی می‌کنید اسکناس یا کارت درست را می‌دهید، بررسی می‌کنید درست حساب شده، بررسی می‌کنید سفارش اقلام درستی دارد و غیره.
 
-But then, even though you still don't have your burgers, your work with the cashier is "on pause" ⏸, because you have to wait 🕙 for your burgers to be ready.
+اما بعد، حتی اگر هنوز برگرهایتان را ندارید، کار شما با صندوق‌دار "متوقف" ⏸ شده، زیرا باید منتظر 🕙 آماده شدن برگرهایتان باشید.
 
-But as you go away from the counter and sit at the table with a number for your turn, you can switch 🔀 your attention to your crush, and "work" ⏯ 🤓 on that. Then you are again doing something very "productive" as is flirting with your crush 😍.
+اما وقتی از پیشخوان دور می‌شوید و با شماره نوبت پشت میز می‌نشینید، می‌توانید توجهتان را به کسی که دوستش دارید تغییر 🔀 دهید و روی آن "کار" ⏯ 🤓 کنید. سپس دوباره کار خیلی "مولدی" انجام می‌دهید یعنی تعامل با کسی که دوستش دارید 😍.
 
-Then the cashier 💁 says "I'm finished with doing the burgers" by putting your number on the counter's display, but you don't jump like crazy immediately when the displayed number changes to your turn number. You know no one will steal your burgers because you have the number of your turn, and they have theirs.
+سپس صندوق‌دار 💁 با قرار دادن شماره شما روی نمایشگر پیشخوان می‌گوید "برگرها را تمام کردم"، اما شما فوراً مثل دیوانه‌ها وقتی شماره نمایش داده شده به شماره نوبت شما تغییر می‌کند نمی‌پرید. می‌دانید کسی برگرهایتان را نمی‌دزدد زیرا شماره نوبت خودتان را دارید و آنها هم شماره خودشان را دارند.
 
-So you wait for your crush to finish the story (finish the current work ⏯ / task being processed 🤓), smile gently and say that you are going for the burgers ⏸.
+پس منتظر می‌مانید تا کسی که دوستش دارید داستانش را تمام کند (کار فعلی ⏯ / وظیفه در حال پردازش 🤓 را تمام کند)، لبخند ملایمی می‌زنید و می‌گویید که برای گرفتن برگرها می‌روید ⏸.
 
-Then you go to the counter 🔀, to the initial task that is now finished ⏯, pick the burgers, say thanks and take them to the table. That finishes that step / task of interaction with the counter ⏹. That in turn, creates a new task, of "eating burgers" 🔀 ⏯, but the previous one of "getting burgers" is finished ⏹.
+سپس به پیشخوان 🔀 می‌روید، به وظیفه اولیه که اکنون تمام شده ⏯، برگرها را برمی‌دارید، تشکر می‌کنید و به میز می‌برید. این آن مرحله / وظیفه تعامل با پیشخوان ⏹ را تمام می‌کند. این به نوبه خود، وظیفه جدیدی ایجاد می‌کند، "خوردن برگرها" 🔀 ⏯، اما وظیفه قبلی "گرفتن برگرها" تمام شده ⏹.
 
-### Parallel Burgers
+### برگرهای موازی
 
-Now let's imagine these aren't "Concurrent Burgers", but "Parallel Burgers".
+حالا تصور کنید اینها "برگرهای همزمان" نیستند، بلکه "برگرهای موازی" هستند.
 
-You go with your crush to get parallel fast food.
+با کسی که دوستش دارید برای گرفتن فست‌فود موازی می‌روید.
 
-You stand in line while several (let's say 8) cashiers that at the same time are cooks take the orders from the people in front of you.
+در صف می‌ایستید در حالی که چندین (فرض کنیم ۸) صندوق‌دار که در عین حال آشپز هم هستند سفارش‌های افراد جلوی شما را می‌گیرند.
 
-Everyone before you is waiting for their burgers to be ready before leaving the counter because each of the 8 cashiers goes and prepares the burger right away before getting the next order.
+همه قبل از شما منتظر آماده شدن برگرهایشان قبل از ترک پیشخوان هستند زیرا هر یک از ۸ صندوق‌دار بلافاصله می‌رود و برگر را آماده می‌کند قبل از گرفتن سفارش بعدی.
 
 <img src="/img/async/parallel-burgers/parallel-burgers-01.png" class="illustration">
 
-Then it's finally your turn, you place your order of 2 very fancy burgers for your crush and you.
+سپس بالاخره نوبت شما می‌شود، سفارش ۲ برگر بسیار عالی برای خودتان و کسی که دوستش دارید می‌دهید.
 
-You pay 💸.
+پرداخت می‌کنید 💸.
 
 <img src="/img/async/parallel-burgers/parallel-burgers-02.png" class="illustration">
 
-The cashier goes to the kitchen.
+صندوق‌دار به آشپزخانه می‌رود.
 
-You wait, standing in front of the counter 🕙, so that no one else takes your burgers before you do, as there are no numbers for turns.
+منتظر می‌مانید، جلوی پیشخوان ایستاده 🕙، تا کسی دیگر برگرهای شما را قبل از شما نبرد، زیرا شماره نوبتی وجود ندارد.
 
 <img src="/img/async/parallel-burgers/parallel-burgers-03.png" class="illustration">
 
-As you and your crush are busy not letting anyone get in front of you and take your burgers whenever they arrive, you cannot pay attention to your crush. 😞
+از آنجا که شما و کسی که دوستش دارید مشغول هستید تا کسی جلوتر نرود و برگرهایتان را هر وقت رسیدند نبرد، نمی‌توانید به کسی که دوستش دارید توجه کنید. 😞
 
-This is "synchronous" work, you are "synchronized" with the cashier/cook 👨‍🍳. You have to wait 🕙 and be there at the exact moment that the cashier/cook 👨‍🍳 finishes the burgers and gives them to you, or otherwise, someone else might take them.
+این کار "همزمان" است، شما با صندوق‌دار/آشپز 👨‍🍳 "همزمان" شده‌اید. باید منتظر 🕙 باشید و دقیقاً در لحظه‌ای که صندوق‌دار/آشپز 👨‍🍳 برگرها را تمام می‌کند و آنها را به شما می‌دهد آنجا باشید، وگرنه کس دیگری ممکن است آنها را ببرد.
 
 <img src="/img/async/parallel-burgers/parallel-burgers-04.png" class="illustration">
 
-Then your cashier/cook 👨‍🍳 finally comes back with your burgers, after a long time waiting 🕙 there in front of the counter.
+سپس صندوق‌دار/آشپز 👨‍🍳 شما بالاخره با برگرهایتان برمی‌گردد، پس از مدت طولانی انتظار 🕙 در جلوی پیشخوان.
 
 <img src="/img/async/parallel-burgers/parallel-burgers-05.png" class="illustration">
 
-You take your burgers and go to the table with your crush.
+برگرهایتان را می‌گیرید و با کسی که دوستش دارید به میز می‌روید.
 
-You just eat them, and you are done. ⏹
+فقط آنها را می‌خورید و تمام. ⏹
 
 <img src="/img/async/parallel-burgers/parallel-burgers-06.png" class="illustration">
 
-There was not much talk or flirting as most of the time was spent waiting 🕙 in front of the counter. 😞
+صحبت و تعامل زیادی نبود زیرا بیشتر وقت صرف انتظار 🕙 در جلوی پیشخوان شد. 😞
 
 /// info
 
-Beautiful illustrations by <a href="https://www.instagram.com/ketrinadrawsalot" class="external-link" target="_blank">Ketrina Thompson</a>. 🎨
+تصاویر زیبا توسط <a href="https://www.instagram.com/ketrinadrawsalot" class="external-link" target="_blank">Ketrina Thompson</a>. 🎨
 
 ///
 
 ---
 
-In this scenario of the parallel burgers, you are a computer / program 🤖 with two processors (you and your crush), both waiting 🕙 and dedicating their attention ⏯ to be "waiting on the counter" 🕙 for a long time.
+در این سناریوی برگرهای موازی، شما یک کامپیوتر / برنامه 🤖 با دو پردازنده (شما و کسی که دوستش دارید) هستید، هر دو منتظر 🕙 و توجهشان ⏯ را صرف "انتظار در پیشخوان" 🕙 برای مدت طولانی می‌کنند.
 
-The fast food store has 8 processors (cashiers/cooks). While the concurrent burgers store might have had only 2 (one cashier and one cook).
+فروشگاه فست‌فود ۸ پردازنده (صندوق‌دار/آشپز) دارد. در حالی که فروشگاه برگرهای همزمان ممکن بود فقط ۲ تا داشته باشد (یک صندوق‌دار و یک آشپز).
 
-But still, the final experience is not the best. 😞
-
----
-
-This would be the parallel equivalent story for burgers. 🍔
-
-For a more "real life" example of this, imagine a bank.
-
-Up to recently, most of the banks had multiple cashiers 👨‍💼👨‍💼👨‍💼👨‍💼 and a big line 🕙🕙🕙🕙🕙🕙🕙🕙.
-
-All of the cashiers doing all the work with one client after the other 👨‍💼⏯.
-
-And you have to wait 🕙 in the line for a long time or you lose your turn.
-
-You probably wouldn't want to take your crush 😍 with you to run errands at the bank 🏦.
-
-### Burger Conclusion
-
-In this scenario of "fast food burgers with your crush", as there is a lot of waiting 🕙, it makes a lot more sense to have a concurrent system ⏸🔀⏯.
-
-This is the case for most of the web applications.
-
-Many, many users, but your server is waiting 🕙 for their not-so-good connection to send their requests.
-
-And then waiting 🕙 again for the responses to come back.
-
-This "waiting" 🕙 is measured in microseconds, but still, summing it all, it's a lot of waiting in the end.
-
-That's why it makes a lot of sense to use asynchronous ⏸🔀⏯ code for web APIs.
-
-This kind of asynchronicity is what made NodeJS popular (even though NodeJS is not parallel) and that's the strength of Go as a programming language.
-
-And that's the same level of performance you get with **FastAPI**.
-
-And as you can have parallelism and asynchronicity at the same time, you get higher performance than most of the tested NodeJS frameworks and on par with Go, which is a compiled language closer to C <a href="https://www.techempower.com/benchmarks/#section=data-r17&hw=ph&test=query&l=zijmkf-1" class="external-link" target="_blank">(all thanks to Starlette)</a>.
-
-### Is concurrency better than parallelism?
-
-Nope! That's not the moral of the story.
-
-Concurrency is different than parallelism. And it is better on **specific** scenarios that involve a lot of waiting. Because of that, it generally is a lot better than parallelism for web application development. But not for everything.
-
-So, to balance that out, imagine the following short story:
-
-> You have to clean a big, dirty house.
-
-*Yep, that's the whole story*.
+اما همچنان، تجربه نهایی بهترین نیست. 😞
 
 ---
 
-There's no waiting 🕙 anywhere, just a lot of work to be done, on multiple places of the house.
+این داستان معادل موازی برای برگرها خواهد بود. 🍔
 
-You could have turns as in the burgers example, first the living room, then the kitchen, but as you are not waiting 🕙 for anything, just cleaning and cleaning, the turns wouldn't affect anything.
+برای مثال "زندگی واقعی‌تر"، یک بانک را تصور کنید.
 
-It would take the same amount of time to finish with or without turns (concurrency) and you would have done the same amount of work.
+تا همین اواخر، بیشتر بانک‌ها چندین صندوق‌دار 👨‍💼👨‍💼👨‍💼👨‍💼 و یک صف بزرگ 🕙🕙🕙🕙🕙🕙🕙🕙 داشتند.
 
-But in this case, if you could bring the 8 ex-cashier/cooks/now-cleaners, and each one of them (plus you) could take a zone of the house to clean it, you could do all the work in **parallel**, with the extra help, and finish much sooner.
+همه صندوق‌دارها تمام کار را با یک مشتری پشت سر دیگری انجام می‌دهند 👨‍💼⏯.
 
-In this scenario, each one of the cleaners (including you) would be a processor, doing their part of the job.
+و شما باید مدت طولانی 🕙 در صف منتظر بمانید وگرنه نوبتتان را از دست می‌دهید.
 
-And as most of the execution time is taken by actual work (instead of waiting), and the work in a computer is done by a <abbr title="Central Processing Unit">CPU</abbr>, they call these problems "CPU bound".
+احتمالاً نمی‌خواهید کسی که دوستش دارید 😍 را با خودتان برای انجام کارهای بانکی 🏦 ببرید.
+
+### نتیجه‌گیری برگری
+
+در این سناریوی "برگرهای فست‌فود با کسی که دوستش دارید"، از آنجا که انتظار 🕙 زیادی وجود دارد، داشتن یک سیستم همزمان ⏸🔀⏯ بسیار منطقی‌تر است.
+
+این وضعیت بیشتر برنامه‌های وب است.
+
+کاربران بسیار زیاد، اما سرور شما منتظر 🕙 اتصال نه‌چندان‌خوب آنها برای ارسال درخواست‌هایشان است.
+
+و سپس دوباره منتظر 🕙 برگشتن پاسخ‌ها.
+
+این "انتظار" 🕙 در میکروثانیه اندازه‌گیری می‌شود، اما همچنان، با جمع کردن همه، در نهایت انتظار زیادی می‌شود.
+
+به همین دلیل استفاده از کد ناهمزمان ⏸🔀⏯ برای APIهای وب بسیار منطقی است.
+
+این نوع ناهمزمانی چیزی است که NodeJS را محبوب کرد (حتی اگر NodeJS موازی نیست) و این قدرت Go به عنوان زبان برنامه‌نویسی است.
+
+و این همان سطح عملکردی است که با **FastAPI** به دست می‌آورید.
+
+و از آنجا که می‌توانید موازی‌سازی و ناهمزمانی را به طور همزمان داشته باشید، عملکرد بالاتری نسبت به بیشتر فریمورک‌های تست‌شده NodeJS و هم‌سطح با Go که یک زبان کامپایل‌شده نزدیک‌تر به C است به دست می‌آورید <a href="https://www.techempower.com/benchmarks/#section=data-r17&hw=ph&test=query&l=zijmkf-1" class="external-link" target="_blank">(همه به لطف Starlette)</a>.
+
+### آیا همزمانی بهتر از موازی‌سازی است؟
+
+نه! این اخلاق داستان نیست.
+
+همزمانی متفاوت از موازی‌سازی است. و در سناریوهای **خاصی** که شامل انتظار زیادی هستند بهتر است. به همین دلیل، معمولاً برای توسعه برنامه‌های وب بسیار بهتر از موازی‌سازی است. اما نه برای همه چیز.
+
+بنابراین، برای تعادل، داستان کوتاه زیر را تصور کنید:
+
+> باید یک خانه بزرگ و کثیف را تمیز کنید.
+
+*بله، این کل داستان است*.
 
 ---
 
-Common examples of CPU bound operations are things that require complex math processing.
+هیچ انتظاری 🕙 در هیچ جایی وجود ندارد، فقط کار زیادی برای انجام هست، در چندین مکان خانه.
 
-For example:
+می‌توانستید مانند مثال برگرها نوبت داشته باشید، اول اتاق نشیمن، سپس آشپزخانه، اما از آنجا که منتظر 🕙 هیچ چیزی نیستید، فقط تمیز و تمیز می‌کنید، نوبت‌ها تأثیری نمی‌گذاشتند.
 
-* **Audio** or **image processing**.
-* **Computer vision**: an image is composed of millions of pixels, each pixel has 3 values / colors, processing that normally requires computing something on those pixels, all at the same time.
-* **Machine Learning**: it normally requires lots of "matrix" and "vector" multiplications. Think of a huge spreadsheet with numbers and multiplying all of them together at the same time.
-* **Deep Learning**: this is a sub-field of Machine Learning, so, the same applies. It's just that there is not a single spreadsheet of numbers to multiply, but a huge set of them, and in many cases, you use a special processor to build and / or use those models.
+همان مقدار زمان برای تمام کردن با یا بدون نوبت (همزمانی) طول می‌کشید و همان مقدار کار انجام می‌دادید.
 
-### Concurrency + Parallelism: Web + Machine Learning
+اما در این مورد، اگر می‌توانستید ۸ صندوق‌دار/آشپز/تمیزکار سابق را بیاورید و هر کدام (به علاوه خودتان) یک منطقه از خانه را برای تمیز کردن بگیرند، می‌توانستید تمام کار را **به صورت موازی** با کمک اضافی انجام دهید و خیلی زودتر تمام کنید.
 
-With **FastAPI** you can take advantage of concurrency that is very common for web development (the same main attraction of NodeJS).
+در این سناریو، هر یک از تمیزکارها (از جمله شما) یک پردازنده خواهد بود که بخش خودش از کار را انجام می‌دهد.
 
-But you can also exploit the benefits of parallelism and multiprocessing (having multiple processes running in parallel) for **CPU bound** workloads like those in Machine Learning systems.
+و از آنجا که بیشتر زمان اجرا توسط کار واقعی گرفته می‌شود (به جای انتظار) و کار در کامپیوتر توسط <abbr title="Central Processing Unit">CPU</abbr> انجام می‌شود، به این مشکلات "CPU bound" می‌گویند.
 
-That, plus the simple fact that Python is the main language for **Data Science**, Machine Learning and especially Deep Learning, make FastAPI a very good match for Data Science / Machine Learning web APIs and applications (among many others).
+---
 
-To see how to achieve this parallelism in production see the section about [Deployment](deployment/index.md){.internal-link target=_blank}.
+نمونه‌های رایج عملیات‌های CPU bound چیزهایی هستند که نیاز به پردازش ریاضی پیچیده دارند.
 
-## `async` and `await`
+به عنوان مثال:
 
-Modern versions of Python have a very intuitive way to define asynchronous code. This makes it look just like normal "sequential" code and do the "awaiting" for you at the right moments.
+* پردازش **صوت** یا **تصویر**.
+* **بینایی کامپیوتر**: یک تصویر از میلیون‌ها پیکسل تشکیل شده، هر پیکسل ۳ مقدار / رنگ دارد، پردازش آن معمولاً نیاز به محاسبه چیزی روی آن پیکسل‌ها دارد، همه در یک زمان.
+* **یادگیری ماشین**: معمولاً نیاز به ضرب‌های "ماتریسی" و "برداری" زیادی دارد. یک صفحه گسترده عظیم با اعداد تصور کنید و ضرب همه آنها در یکدیگر در یک زمان.
+* **یادگیری عمیق**: این زیرمجموعه‌ای از یادگیری ماشین است، بنابراین همان موارد صدق می‌کند. فقط یک صفحه گسترده اعداد برای ضرب نیست، بلکه مجموعه عظیمی از آنها و در بسیاری از موارد، از پردازنده خاصی برای ساخت و / یا استفاده از آن مدل‌ها استفاده می‌کنید.
 
-When there is an operation that will require waiting before giving the results and has support for these new Python features, you can code it like:
+### همزمانی + موازی‌سازی: وب + یادگیری ماشین
+
+با **FastAPI** می‌توانید از همزمانی که برای توسعه وب بسیار رایج است (همان جذابیت اصلی NodeJS) بهره ببرید.
+
+اما همچنین می‌توانید از مزایای موازی‌سازی و چندپردازشی (داشتن چندین فرآیند در حال اجرا به صورت موازی) برای بارهای کاری **CPU bound** مانند سیستم‌های یادگیری ماشین بهره‌برداری کنید.
+
+آن، به علاوه این واقعیت ساده که پایتون زبان اصلی برای **علم داده**، یادگیری ماشین و به ویژه یادگیری عمیق است، FastAPI را گزینه بسیار مناسبی برای APIها و برنامه‌های وب علم داده / یادگیری ماشین (در میان بسیاری دیگر) می‌سازد.
+
+برای دیدن نحوه دستیابی به این موازی‌سازی در محیط تولید، بخش [استقرار](deployment/index.md){.internal-link target=_blank} را ببینید.
+
+## `async` و `await`
+
+نسخه‌های مدرن پایتون راه بسیار شهودی برای تعریف کد ناهمزمان دارند. باعث می‌شود دقیقاً مانند کد "ترتیبی" عادی به نظر برسد و "انتظار" را در لحظات درست برای شما انجام دهد.
+
+وقتی عملیاتی وجود دارد که قبل از دادن نتایج نیاز به انتظار دارد و از این ویژگی‌های جدید پایتون پشتیبانی می‌کند، می‌توانید آن را اینگونه کدنویسی کنید:
 
 ```Python
 burgers = await get_burgers(2)
 ```
 
-The key here is the `await`. It tells Python that it has to wait ⏸ for `get_burgers(2)` to finish doing its thing 🕙 before storing the results in `burgers`. With that, Python will know that it can go and do something else 🔀 ⏯ in the meanwhile (like receiving another request).
+کلید اینجا `await` است. به پایتون می‌گوید باید منتظر ⏸ تمام شدن کار `get_burgers(2)` 🕙 قبل از ذخیره نتایج در `burgers` باشد. با آن، پایتون خواهد دانست که می‌تواند برود و در این بین کار دیگری 🔀 ⏯ انجام دهد (مانند دریافت درخواست دیگر).
 
-For `await` to work, it has to be inside a function that supports this asynchronicity. To do that, you just declare it with `async def`:
+برای کار کردن `await`، باید درون تابعی باشد که از این ناهمزمانی پشتیبانی می‌کند. برای آن، فقط آن را با `async def` اعلان کنید:
 
 ```Python hl_lines="1"
 async def get_burgers(number: int):
@@ -320,7 +320,7 @@ async def get_burgers(number: int):
     return burgers
 ```
 
-...instead of `def`:
+...به جای `def`:
 
 ```Python hl_lines="2"
 # This is not asynchronous
@@ -329,9 +329,9 @@ def get_sequential_burgers(number: int):
     return burgers
 ```
 
-With `async def`, Python knows that, inside that function, it has to be aware of `await` expressions, and that it can "pause" ⏸ the execution of that function and go do something else 🔀 before coming back.
+با `async def`، پایتون می‌داند که درون آن تابع باید از عبارات `await` آگاه باشد و می‌تواند اجرای آن تابع را "متوقف" ⏸ کند و قبل از بازگشت کار دیگری 🔀 انجام دهد.
 
-When you want to call an `async def` function, you have to "await" it. So, this won't work:
+وقتی می‌خواهید تابع `async def` را فراخوانی کنید، باید آن را "await" کنید. بنابراین، این کار نمی‌کند:
 
 ```Python
 # This won't work, because get_burgers was defined with: async def
@@ -340,7 +340,7 @@ burgers = get_burgers(2)
 
 ---
 
-So, if you are using a library that tells you that you can call it with `await`, you need to create the *path operation functions* that uses it with `async def`, like in:
+بنابراین، اگر از کتابخانه‌ای استفاده می‌کنید که به شما می‌گوید می‌توانید آن را با `await` فراخوانی کنید، باید *توابع عملیات مسیر* که از آن استفاده می‌کنند را با `async def` ایجاد کنید، مانند:
 
 ```Python hl_lines="2-3"
 @app.get('/burgers')
@@ -349,96 +349,96 @@ async def read_burgers():
     return burgers
 ```
 
-### More technical details
+### جزئیات فنی بیشتر
 
-You might have noticed that `await` can only be used inside of functions defined with `async def`.
+ممکن است متوجه شده باشید که `await` فقط درون توابع تعریف شده با `async def` قابل استفاده است.
 
-But at the same time, functions defined with `async def` have to be "awaited". So, functions with `async def` can only be called inside of functions defined with `async def` too.
+اما در عین حال، توابع تعریف شده با `async def` باید "await" شوند. بنابراین، توابع با `async def` فقط درون توابع تعریف شده با `async def` قابل فراخوانی هستند.
 
-So, about the egg and the chicken, how do you call the first `async` function?
+بنابراین، درباره مرغ و تخم‌مرغ، چگونه اولین تابع `async` را فراخوانی می‌کنید؟
 
-If you are working with **FastAPI** you don't have to worry about that, because that "first" function will be your *path operation function*, and FastAPI will know how to do the right thing.
+اگر با **FastAPI** کار می‌کنید نگران آن نباشید، زیرا آن تابع "اول" *تابع عملیات مسیر* شما خواهد بود و FastAPI خواهد دانست چگونه کار درست را انجام دهد.
 
-But if you want to use `async` / `await` without FastAPI, you can do it as well.
+اما اگر می‌خواهید از `async` / `await` بدون FastAPI استفاده کنید، می‌توانید آن را نیز انجام دهید.
 
-### Write your own async code
+### نوشتن کد ناهمزمان خودتان
 
-Starlette (and **FastAPI**) are based on <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a>, which makes it compatible with both Python's standard library <a href="https://docs.python.org/3/library/asyncio-task.html" class="external-link" target="_blank">asyncio</a> and <a href="https://trio.readthedocs.io/en/stable/" class="external-link" target="_blank">Trio</a>.
+Starlette (و **FastAPI**) مبتنی بر <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a> هستند، که آن را با هر دو <a href="https://docs.python.org/3/library/asyncio-task.html" class="external-link" target="_blank">asyncio</a> کتابخانه استاندارد پایتون و <a href="https://trio.readthedocs.io/en/stable/" class="external-link" target="_blank">Trio</a> سازگار می‌کند.
 
-In particular, you can directly use <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a> for your advanced concurrency use cases that require more advanced patterns in your own code.
+به ویژه، می‌توانید مستقیماً از <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a> برای موارد استفاده پیشرفته همزمانی خود که نیاز به الگوهای پیشرفته‌تر در کد خودتان دارد استفاده کنید.
 
-And even if you were not using FastAPI, you could also write your own async applications with <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a> to be highly compatible and get its benefits (e.g. *structured concurrency*).
+و حتی اگر از FastAPI استفاده نمی‌کردید، می‌توانستید برنامه‌های ناهمزمان خود را با <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a> بنویسید تا بسیار سازگار باشد و از مزایای آن بهره‌مند شوید (مانند *همزمانی ساختارمند*).
 
-I created another library on top of AnyIO, as a thin layer on top, to improve a bit the type annotations and get better **autocompletion**, **inline errors**, etc. It also has a friendly introduction and tutorial to help you **understand** and write **your own async code**: <a href="https://asyncer.tiangolo.com/" class="external-link" target="_blank">Asyncer</a>. It would be particularly useful if you need to **combine async code with regular** (blocking/synchronous) code.
+من کتابخانه دیگری بر روی AnyIO ایجاد کردم، به عنوان یک لایه نازک بر روی آن، برای بهبود کمی حاشیه‌نویسی‌های نوع و دریافت **تکمیل خودکار**، **خطاهای درون‌خطی** و غیره بهتر. همچنین دارای یک معرفی و آموزش دوستانه برای کمک به شما در **درک** و نوشتن **کد ناهمزمان خودتان** است: <a href="https://asyncer.tiangolo.com/" class="external-link" target="_blank">Asyncer</a>. به ویژه اگر نیاز به **ترکیب کد ناهمزمان با کد عادی** (blocking/synchronous) دارید مفید خواهد بود.
 
-### Other forms of asynchronous code
+### اشکال دیگر کد ناهمزمان
 
-This style of using `async` and `await` is relatively new in the language.
+این سبک استفاده از `async` و `await` نسبتاً جدید در زبان است.
 
-But it makes working with asynchronous code a lot easier.
+اما کار با کد ناهمزمان را بسیار آسان‌تر می‌کند.
 
-This same syntax (or almost identical) was also included recently in modern versions of JavaScript (in Browser and NodeJS).
+همین سینتکس (یا تقریباً یکسان) اخیراً در نسخه‌های مدرن جاوااسکریپت (در مرورگر و NodeJS) نیز گنجانده شد.
 
-But before that, handling asynchronous code was quite more complex and difficult.
+اما قبل از آن، مدیریت کد ناهمزمان بسیار پیچیده‌تر و دشوارتر بود.
 
-In previous versions of Python, you could have used threads or <a href="https://www.gevent.org/" class="external-link" target="_blank">Gevent</a>. But the code is way more complex to understand, debug, and think about.
+در نسخه‌های قبلی پایتون، می‌توانستید از threadها یا <a href="https://www.gevent.org/" class="external-link" target="_blank">Gevent</a> استفاده کنید. اما کد بسیار پیچیده‌تر برای درک، اشکال‌زدایی و فکر کردن است.
 
-In previous versions of NodeJS / Browser JavaScript, you would have used "callbacks". Which leads to <a href="http://callbackhell.com/" class="external-link" target="_blank">callback hell</a>.
+در نسخه‌های قبلی NodeJS / جاوااسکریپت مرورگر، از "callbackها" استفاده می‌کردید. که منجر به <a href="http://callbackhell.com/" class="external-link" target="_blank">جهنم callback</a> می‌شود.
 
-## Coroutines
+## Coroutineها
 
-**Coroutine** is just the very fancy term for the thing returned by an `async def` function. Python knows that it is something like a function, that it can start and that it will end at some point, but that it might be paused ⏸ internally too, whenever there is an `await` inside of it.
+**Coroutine** فقط اصطلاح بسیار فانتزی برای چیزی است که توسط تابع `async def` برگردانده می‌شود. پایتون می‌داند که چیزی مانند تابع است، می‌تواند شروع شود و در نقطه‌ای تمام شود، اما ممکن است داخلاً نیز متوقف ⏸ شود، هر زمان که `await` درون آن باشد.
 
-But all this functionality of using asynchronous code with `async` and `await` is many times summarized as using "coroutines". It is comparable to the main key feature of Go, the "Goroutines".
+اما تمام این قابلیت استفاده از کد ناهمزمان با `async` و `await` بسیاری از اوقات با عنوان استفاده از "coroutineها" خلاصه می‌شود. قابل مقایسه با ویژگی کلیدی اصلی Go، یعنی "Goroutineها" است.
 
-## Conclusion
+## نتیجه‌گیری
 
-Let's see the same phrase from above:
+بیایید همان عبارت بالا را ببینیم:
 
-> Modern versions of Python have support for **"asynchronous code"** using something called **"coroutines"**, with **`async` and `await`** syntax.
+> نسخه‌های مدرن پایتون از **"کد ناهمزمان"** با استفاده از چیزی به نام **"coroutineها"**، با سینتکس **`async` و `await`** پشتیبانی می‌کنند.
 
-That should make more sense now. ✨
+اکنون باید معنای بیشتری داشته باشد. ✨
 
-All that is what powers FastAPI (through Starlette) and what makes it have such an impressive performance.
+تمام اینها چیزی است که FastAPI را (از طریق Starlette) قدرت می‌دهد و باعث عملکرد بسیار چشمگیر آن می‌شود.
 
-## Very Technical Details
+## جزئیات بسیار فنی
 
 /// warning
 
-You can probably skip this.
+احتمالاً می‌توانید از این بخش رد شوید.
 
-These are very technical details of how **FastAPI** works underneath.
+اینها جزئیات بسیار فنی نحوه عملکرد **FastAPI** در زیرساخت هستند.
 
-If you have quite some technical knowledge (coroutines, threads, blocking, etc.) and are curious about how FastAPI handles `async def` vs normal `def`, go ahead.
+اگر دانش فنی کافی (coroutineها، threadها، blocking و غیره) دارید و کنجکاوید که FastAPI چگونه `async def` را در مقابل `def` عادی مدیریت می‌کند، ادامه دهید.
 
 ///
 
-### Path operation functions
+### توابع عملیات مسیر
 
-When you declare a *path operation function* with normal `def` instead of `async def`, it is run in an external threadpool that is then awaited, instead of being called directly (as it would block the server).
+وقتی یک *تابع عملیات مسیر* را با `def` عادی به جای `async def` اعلان می‌کنید، در یک threadpool خارجی اجرا می‌شود که سپس await می‌شود، به جای اینکه مستقیماً فراخوانی شود (زیرا سرور را مسدود می‌کرد).
 
-If you are coming from another async framework that does not work in the way described above and you are used to defining trivial compute-only *path operation functions* with plain `def` for a tiny performance gain (about 100 nanoseconds), please note that in **FastAPI** the effect would be quite opposite. In these cases, it's better to use `async def` unless your *path operation functions* use code that performs blocking <abbr title="Input/Output: disk reading or writing, network communications.">I/O</abbr>.
+اگر از فریمورک ناهمزمان دیگری می‌آیید که به شکل توصیف شده در بالا کار نمی‌کند و عادت دارید *توابع عملیات مسیر* ساده محاسباتی را با `def` ساده برای بهره عملکردی کوچک (حدود ۱۰۰ نانوثانیه) تعریف کنید، لطفاً توجه داشته باشید که در **FastAPI** اثر کاملاً برعکس خواهد بود. در این موارد، بهتر است از `async def` استفاده کنید مگر اینکه *توابع عملیات مسیر* شما از کدی استفاده کنند که <abbr title="Input/Output: خواندن یا نوشتن دیسک، ارتباطات شبکه.">I/O</abbr> مسدودکننده انجام می‌دهد.
 
-Still, in both situations, chances are that **FastAPI** will [still be faster](index.md#performance){.internal-link target=_blank} than (or at least comparable to) your previous framework.
+همچنان، در هر دو حالت، احتمالاً **FastAPI** [همچنان سریع‌تر](index.md#performance){.internal-link target=_blank} از (یا حداقل قابل مقایسه با) فریمورک قبلی شما خواهد بود.
 
-### Dependencies
+### وابستگی‌ها
 
-The same applies for [dependencies](tutorial/dependencies/index.md){.internal-link target=_blank}. If a dependency is a standard `def` function instead of `async def`, it is run in the external threadpool.
+همین مورد برای [وابستگی‌ها](tutorial/dependencies/index.md){.internal-link target=_blank} صدق می‌کند. اگر یک وابستگی تابع `def` استاندارد باشد به جای `async def`، در threadpool خارجی اجرا می‌شود.
 
-### Sub-dependencies
+### زیروابستگی‌ها
 
-You can have multiple dependencies and [sub-dependencies](tutorial/dependencies/sub-dependencies.md){.internal-link target=_blank} requiring each other (as parameters of the function definitions), some of them might be created with `async def` and some with normal `def`. It would still work, and the ones created with normal `def` would be called on an external thread (from the threadpool) instead of being "awaited".
+می‌توانید چندین وابستگی و [زیروابستگی](tutorial/dependencies/sub-dependencies.md){.internal-link target=_blank} داشته باشید که به یکدیگر نیاز دارند (به عنوان پارامترهای تعاریف تابع)، برخی ممکن است با `async def` و برخی با `def` عادی ایجاد شده باشند. همچنان کار خواهد کرد و آنهایی که با `def` عادی ایجاد شده‌اند در یک thread خارجی (از threadpool) فراخوانی می‌شوند به جای "await" شدن.
 
-### Other utility functions
+### سایر توابع کمکی
 
-Any other utility function that you call directly can be created with normal `def` or `async def` and FastAPI won't affect the way you call it.
+هر تابع کمکی دیگری که مستقیماً فراخوانی می‌کنید می‌تواند با `def` عادی یا `async def` ایجاد شود و FastAPI بر نحوه فراخوانی آن تأثیری نمی‌گذارد.
 
-This is in contrast to the functions that FastAPI calls for you: *path operation functions* and dependencies.
+این برخلاف توابعی است که FastAPI برای شما فراخوانی می‌کند: *توابع عملیات مسیر* و وابستگی‌ها.
 
-If your utility function is a normal function with `def`, it will be called directly (as you write it in your code), not in a threadpool, if the function is created with `async def` then you should `await` for that function when you call it in your code.
+اگر تابع کمکی شما یک تابع عادی با `def` باشد، مستقیماً فراخوانی می‌شود (همانطور که در کدتان نوشته‌اید)، نه در threadpool، اگر تابع با `async def` ایجاد شده باشد باید وقتی در کدتان فراخوانی می‌کنید آن را `await` کنید.
 
 ---
 
-Again, these are very technical details that would probably be useful if you came searching for them.
+باز هم، اینها جزئیات بسیار فنی هستند که احتمالاً اگر به دنبالشان آمدید مفید خواهند بود.
 
-Otherwise, you should be good with the guidelines from the section above: <a href="#in-a-hurry">In a hurry?</a>.
+در غیر این صورت، با راهنمای بخش بالا مشکلی نخواهید داشت: <a href="#in-a-hurry">عجله دارید؟</a>.
