@@ -1,13 +1,13 @@
-# WebSockets'i Test Etmek
+# WebSocket'leri Test Etme
 
-WebSockets testi yapmak için `TestClient`'ı kullanabilirsiniz.
+WebSocket'leri test etmek için aynı `TestClient`'ı kullanabilirsiniz.
 
-Bu işlem için, `TestClient`'ı bir `with` ifadesinde kullanarak WebSocket'e bağlanabilirsiniz:
+Bunun için, `TestClient`'ı bir `with` ifadesiyle kullanarak WebSocket'e bağlanırsınız:
 
 {* ../../docs_src/app_testing/tutorial002.py hl[27:31] *}
 
-/// note | Not
+/// note
 
-Daha fazla detay için Starlette'in <a href="https://www.starlette.io/staticfiles/" class="external-link" target="_blank">Websockets'i Test Etmek</a> dokümantasyonunu inceleyin.
+Daha fazla ayrıntı için Starlette'in <a href="https://www.starlette.io/testclient/#testing-websocket-sessions" class="external-link" target="_blank">WebSocket'leri test etme</a> belgelerine bakın.
 
 ///
