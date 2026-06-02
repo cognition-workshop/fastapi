@@ -1,45 +1,45 @@
-# Sub-dependencies
+# زیروابستگی‌ها
 
-You can create dependencies that have **sub-dependencies**.
+می‌توانید وابستگی‌هایی ایجاد کنید که **زیروابستگی** دارند.
 
-They can be as **deep** as you need them to be.
+آنها می‌توانند به هر **عمقی** که نیاز دارید باشند.
 
-**FastAPI** will take care of solving them.
+**FastAPI** مراقب حل آنها خواهد بود.
 
-## First dependency "dependable"
+## اولین وابستگی "وابسته‌پذیر"
 
-You could create a first dependency ("dependable") like:
+می‌توانید یک اولین وابستگی ("وابسته‌پذیر") مانند زیر ایجاد کنید:
 
 {* ../../docs_src/dependencies/tutorial005_an_py310.py hl[8:9] *}
 
-It declares an optional query parameter `q` as a `str`, and then it just returns it.
+یک پارامتر پرس‌و‌جوی اختیاری `q` به عنوان `str` اعلام می‌کند و سپس فقط آن را برمی‌گرداند.
 
-This is quite simple (not very useful), but will help us focus on how the sub-dependencies work.
+این کاملاً ساده است (خیلی مفید نیست)، اما به ما کمک می‌کند روی نحوه عملکرد زیروابستگی‌ها تمرکز کنیم.
 
-## Second dependency, "dependable" and "dependant"
+## دومین وابستگی، "وابسته‌پذیر" و "وابسته"
 
-Then you can create another dependency function (a "dependable") that at the same time declares a dependency of its own (so it is a "dependant" too):
+سپس می‌توانید یک تابع وابستگی دیگر ("وابسته‌پذیر") ایجاد کنید که در عین حال وابستگی خودش را نیز اعلام می‌کند (بنابراین یک "وابسته" نیز هست):
 
 {* ../../docs_src/dependencies/tutorial005_an_py310.py hl[13] *}
 
-Let's focus on the parameters declared:
+بیایید روی پارامترهای اعلام‌شده تمرکز کنیم:
 
-* Even though this function is a dependency ("dependable") itself, it also declares another dependency (it "depends" on something else).
-    * It depends on the `query_extractor`, and assigns the value returned by it to the parameter `q`.
-* It also declares an optional `last_query` cookie, as a `str`.
-    * If the user didn't provide any query `q`, we use the last query used, which we saved to a cookie before.
+* حتی اگر این تابع خودش یک وابستگی ("وابسته‌پذیر") باشد، همچنین وابستگی دیگری را اعلام می‌کند (به چیز دیگری "وابسته" است).
+    * به `query_extractor` وابسته است و مقدار بازگشتی آن را به پارامتر `q` اختصاص می‌دهد.
+* همچنین یک کوکی اختیاری `last_query` به عنوان `str` اعلام می‌کند.
+    * اگر کاربر هیچ پرس‌و‌جوی `q` ارائه نداد، از آخرین پرس‌و‌جوی استفاده‌شده که قبلاً در یک کوکی ذخیره کرده بودیم استفاده می‌کنیم.
 
-## Use the dependency
+## استفاده از وابستگی
 
-Then we can use the dependency with:
+سپس می‌توانیم از وابستگی استفاده کنیم:
 
 {* ../../docs_src/dependencies/tutorial005_an_py310.py hl[23] *}
 
 /// info
 
-Notice that we are only declaring one dependency in the *path operation function*, the `query_or_cookie_extractor`.
+توجه کنید که ما فقط یک وابستگی را در *تابع عملیات مسیر* اعلام می‌کنیم، یعنی `query_or_cookie_extractor`.
 
-But **FastAPI** will know that it has to solve `query_extractor` first, to pass the results of that to `query_or_cookie_extractor` while calling it.
+اما **FastAPI** می‌داند که ابتدا باید `query_extractor` را حل کند تا نتایج آن را هنگام صدا زدن به `query_or_cookie_extractor` پاس دهد.
 
 ///
 
@@ -54,13 +54,13 @@ read_query["/items/"]
 query_extractor --> query_or_cookie_extractor --> read_query
 ```
 
-## Using the same dependency multiple times
+## استفاده از یک وابستگی چندین بار
 
-If one of your dependencies is declared multiple times for the same *path operation*, for example, multiple dependencies have a common sub-dependency, **FastAPI** will know to call that sub-dependency only once per request.
+اگر یکی از وابستگی‌های شما چندین بار برای همان *عملیات مسیر* اعلام شود، مثلاً چندین وابستگی یک زیروابستگی مشترک داشته باشند، **FastAPI** می‌داند که آن زیروابستگی را فقط یک بار در هر درخواست صدا بزند.
 
-And it will save the returned value in a <abbr title="A utility/system to store computed/generated values, to reuse them instead of computing them again.">"cache"</abbr> and pass it to all the "dependants" that need it in that specific request, instead of calling the dependency multiple times for the same request.
+و مقدار بازگشتی را در یک <abbr title="یک ابزار/سیستم برای ذخیره مقادیر محاسبه‌شده/تولیدشده، برای استفاده مجدد به جای محاسبه دوباره آنها.">"حافظه پنهان"</abbr> ذخیره می‌کند و آن را به تمام "وابسته‌ها"یی که در آن درخواست خاص به آن نیاز دارند پاس می‌دهد، به جای صدا زدن چندباره وابستگی برای همان درخواست.
 
-In an advanced scenario where you know you need the dependency to be called at every step (possibly multiple times) in the same request instead of using the "cached" value, you can set the parameter `use_cache=False` when using `Depends`:
+در یک سناریوی پیشرفته که می‌دانید نیاز دارید وابستگی در هر مرحله (احتمالاً چندین بار) در همان درخواست صدا زده شود به جای استفاده از مقدار "حافظه پنهان"، می‌توانید پارامتر `use_cache=False` را هنگام استفاده از `Depends` تنظیم کنید:
 
 //// tab | Python 3.8+
 
@@ -75,7 +75,7 @@ async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, use_ca
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -86,20 +86,20 @@ async def needy_dependency(fresh_value: str = Depends(get_value, use_cache=False
 
 ////
 
-## Recap
+## جمع‌بندی
 
-Apart from all the fancy words used here, the **Dependency Injection** system is quite simple.
+جدا از تمام کلمات فانتزی استفاده‌شده اینجا، سیستم **تزریق وابستگی** کاملاً ساده است.
 
-Just functions that look the same as the *path operation functions*.
+فقط توابعی که شبیه *توابع عملیات مسیر* به نظر می‌رسند.
 
-But still, it is very powerful, and allows you to declare arbitrarily deeply nested dependency "graphs" (trees).
+اما با این حال، بسیار قدرتمند است و به شما اجازه می‌دهد "گراف‌های" (درخت‌های) وابستگی با عمق دلخواه و تودرتو اعلام کنید.
 
 /// tip
 
-All this might not seem as useful with these simple examples.
+همه اینها ممکن است با این مثال‌های ساده خیلی مفید به نظر نرسد.
 
-But you will see how useful it is in the chapters about **security**.
+اما خواهید دید که در فصل‌های مربوط به **امنیت** چقدر مفید است.
 
-And you will also see the amounts of code it will save you.
+و همچنین خواهید دید که چه مقدار کد برای شما صرفه‌جویی می‌کند.
 
 ///

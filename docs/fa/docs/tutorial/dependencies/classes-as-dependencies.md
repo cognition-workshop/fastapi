@@ -1,48 +1,48 @@
-# Classes as Dependencies
+# کلاس‌ها به عنوان وابستگی
 
-Before diving deeper into the **Dependency Injection** system, let's upgrade the previous example.
+قبل از عمیق‌تر شدن در سیستم **تزریق وابستگی**، بیایید مثال قبلی را ارتقا دهیم.
 
-## A `dict` from the previous example
+## یک `dict` از مثال قبلی
 
-In the previous example, we were returning a `dict` from our dependency ("dependable"):
+در مثال قبلی، یک `dict` از وابستگی ("وابسته‌پذیر") خود برمی‌گرداندیم:
 
 {* ../../docs_src/dependencies/tutorial001_an_py310.py hl[9] *}
 
-But then we get a `dict` in the parameter `commons` of the *path operation function*.
+اما سپس یک `dict` در پارامتر `commons` *تابع عملیات مسیر* دریافت می‌کنیم.
 
-And we know that editors can't provide a lot of support (like completion) for `dict`s, because they can't know their keys and value types.
+و می‌دانیم که ویرایشگرها نمی‌توانند پشتیبانی زیادی (مانند تکمیل خودکار) برای `dict`ها ارائه دهند، زیرا نمی‌توانند کلیدها و انواع مقادیر آنها را بدانند.
 
-We can do better...
+می‌توانیم بهتر عمل کنیم...
 
-## What makes a dependency
+## چه چیزی یک وابستگی را می‌سازد
 
-Up to now you have seen dependencies declared as functions.
+تا اینجا وابستگی‌هایی را دیده‌اید که به عنوان توابع اعلام شده‌اند.
 
-But that's not the only way to declare dependencies (although it would probably be the more common).
+اما این تنها راه اعلام وابستگی‌ها نیست (اگرچه احتمالاً رایج‌ترین روش خواهد بود).
 
-The key factor is that a dependency should be a "callable".
+عامل کلیدی این است که یک وابستگی باید "قابل صدازدن" باشد.
 
-A "**callable**" in Python is anything that Python can "call" like a function.
+یک "**قابل صدازدن**" در پایتون هر چیزی است که پایتون بتواند آن را مانند یک تابع "صدا بزند".
 
-So, if you have an object `something` (that might _not_ be a function) and you can "call" it (execute it) like:
+بنابراین، اگر یک شیء `something` دارید (که ممکن است یک تابع _نباشد_) و می‌توانید آن را "صدا بزنید" (اجرا کنید) مانند:
 
 ```Python
 something()
 ```
 
-or
+یا
 
 ```Python
 something(some_argument, some_keyword_argument="foo")
 ```
 
-then it is a "callable".
+آنگاه "قابل صدازدن" است.
 
-## Classes as dependencies
+## کلاس‌ها به عنوان وابستگی
 
-You might notice that to create an instance of a Python class, you use that same syntax.
+ممکن است متوجه شوید که برای ایجاد یک نمونه از یک کلاس پایتون، از همان نحو استفاده می‌کنید.
 
-For example:
+به عنوان مثال:
 
 ```Python
 class Cat:
@@ -53,53 +53,53 @@ class Cat:
 fluffy = Cat(name="Mr Fluffy")
 ```
 
-In this case, `fluffy` is an instance of the class `Cat`.
+در این مورد، `fluffy` یک نمونه از کلاس `Cat` است.
 
-And to create `fluffy`, you are "calling" `Cat`.
+و برای ایجاد `fluffy`، شما `Cat` را "صدا می‌زنید".
 
-So, a Python class is also a **callable**.
+بنابراین، یک کلاس پایتون نیز یک **قابل صدازدن** است.
 
-Then, in **FastAPI**, you could use a Python class as a dependency.
+سپس، در **FastAPI**، می‌توانید از یک کلاس پایتون به عنوان وابستگی استفاده کنید.
 
-What FastAPI actually checks is that it is a "callable" (function, class or anything else) and the parameters defined.
+چیزی که FastAPI واقعاً بررسی می‌کند این است که "قابل صدازدن" باشد (تابع، کلاس یا هر چیز دیگری) و پارامترهای تعریف‌شده.
 
-If you pass a "callable" as a dependency in **FastAPI**, it will analyze the parameters for that "callable", and process them in the same way as the parameters for a *path operation function*. Including sub-dependencies.
+اگر یک "قابل صدازدن" را به عنوان وابستگی در **FastAPI** پاس دهید، پارامترهای آن "قابل صدازدن" را تحلیل می‌کند و آنها را به همان روشی پردازش می‌کند که پارامترهای یک *تابع عملیات مسیر* را پردازش می‌کند. از جمله زیروابستگی‌ها.
 
-That also applies to callables with no parameters at all. The same as it would be for *path operation functions* with no parameters.
+این همچنین برای قابل‌صدازدن‌ها بدون هیچ پارامتری نیز صدق می‌کند. همانطور که برای *توابع عملیات مسیر* بدون پارامتر صدق می‌کند.
 
-Then, we can change the dependency "dependable" `common_parameters` from above to the class `CommonQueryParams`:
+سپس، می‌توانیم "وابسته‌پذیر" وابستگی `common_parameters` بالا را به کلاس `CommonQueryParams` تغییر دهیم:
 
 {* ../../docs_src/dependencies/tutorial002_an_py310.py hl[11:15] *}
 
-Pay attention to the `__init__` method used to create the instance of the class:
+به متد `__init__` که برای ایجاد نمونه کلاس استفاده می‌شود توجه کنید:
 
 {* ../../docs_src/dependencies/tutorial002_an_py310.py hl[12] *}
 
-...it has the same parameters as our previous `common_parameters`:
+...همان پارامترهای `common_parameters` قبلی ما را دارد:
 
 {* ../../docs_src/dependencies/tutorial001_an_py310.py hl[8] *}
 
-Those parameters are what **FastAPI** will use to "solve" the dependency.
+آن پارامترها چیزی هستند که **FastAPI** برای "حل" وابستگی استفاده خواهد کرد.
 
-In both cases, it will have:
+در هر دو مورد، خواهد داشت:
 
-* An optional `q` query parameter that is a `str`.
-* A `skip` query parameter that is an `int`, with a default of `0`.
-* A `limit` query parameter that is an `int`, with a default of `100`.
+* یک پارامتر پرس‌و‌جوی اختیاری `q` که یک `str` است.
+* یک پارامتر پرس‌و‌جوی `skip` که یک `int` است، با مقدار پیش‌فرض `0`.
+* یک پارامتر پرس‌و‌جوی `limit` که یک `int` است، با مقدار پیش‌فرض `100`.
 
-In both cases the data will be converted, validated, documented on the OpenAPI schema, etc.
+در هر دو مورد داده تبدیل، اعتبارسنجی، مستند شده در اسکیمای OpenAPI و غیره خواهد شد.
 
-## Use it
+## استفاده از آن
 
-Now you can declare your dependency using this class.
+اکنون می‌توانید وابستگی خود را با استفاده از این کلاس اعلام کنید.
 
 {* ../../docs_src/dependencies/tutorial002_an_py310.py hl[19] *}
 
-**FastAPI** calls the `CommonQueryParams` class. This creates an "instance" of that class and the instance will be passed as the parameter `commons` to your function.
+**FastAPI** کلاس `CommonQueryParams` را صدا می‌زند. این یک "نمونه" از آن کلاس ایجاد می‌کند و نمونه به عنوان پارامتر `commons` به تابع شما پاس داده می‌شود.
 
-## Type annotation vs `Depends`
+## حاشیه‌نویسی نوع در مقابل `Depends`
 
-Notice how we write `CommonQueryParams` twice in the above code:
+توجه کنید که چگونه در کد بالا `CommonQueryParams` را دو بار می‌نویسیم:
 
 //// tab | Python 3.8+
 
@@ -113,7 +113,7 @@ commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -123,19 +123,19 @@ commons: CommonQueryParams = Depends(CommonQueryParams)
 
 ////
 
-The last `CommonQueryParams`, in:
+آخرین `CommonQueryParams`، در:
 
 ```Python
 ... Depends(CommonQueryParams)
 ```
 
-...is what **FastAPI** will actually use to know what is the dependency.
+...چیزی است که **FastAPI** واقعاً برای دانستن اینکه وابستگی چیست استفاده خواهد کرد.
 
-It is from this one that FastAPI will extract the declared parameters and that is what FastAPI will actually call.
+از همین مورد است که FastAPI پارامترهای اعلام‌شده را استخراج می‌کند و همین است که FastAPI واقعاً صدا خواهد زد.
 
 ---
 
-In this case, the first `CommonQueryParams`, in:
+در این مورد، اولین `CommonQueryParams`، در:
 
 //// tab | Python 3.8+
 
@@ -149,7 +149,7 @@ commons: Annotated[CommonQueryParams, ...
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -159,9 +159,9 @@ commons: CommonQueryParams ...
 
 ////
 
-...doesn't have any special meaning for **FastAPI**. FastAPI won't use it for data conversion, validation, etc. (as it is using the `Depends(CommonQueryParams)` for that).
+...هیچ معنای خاصی برای **FastAPI** ندارد. FastAPI از آن برای تبدیل داده، اعتبارسنجی و غیره استفاده نخواهد کرد (زیرا از `Depends(CommonQueryParams)` برای آن استفاده می‌کند).
 
-You could actually write just:
+در واقع می‌توانید فقط بنویسید:
 
 //// tab | Python 3.8+
 
@@ -175,7 +175,7 @@ commons: Annotated[Any, Depends(CommonQueryParams)]
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -185,45 +185,17 @@ commons = Depends(CommonQueryParams)
 
 ////
 
-...as in:
+...مانند:
 
 {* ../../docs_src/dependencies/tutorial003_an_py310.py hl[19] *}
 
-But declaring the type is encouraged as that way your editor will know what will be passed as the parameter `commons`, and then it can help you with code completion, type checks, etc:
+اما اعلام نوع تشویق می‌شود زیرا به این ترتیب ویرایشگر شما خواهد دانست چه چیزی به عنوان پارامتر `commons` پاس داده خواهد شد، و سپس می‌تواند با تکمیل کد، بررسی نوع و غیره کمک کند:
 
 <img src="/img/tutorial/dependencies/image02.png">
 
-## Shortcut
+## میانبر
 
-But you see that we are having some code repetition here, writing `CommonQueryParams` twice:
-
-//// tab | Python 3.8+
-
-```Python
-commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]
-```
-
-////
-
-//// tab | Python 3.8+ non-Annotated
-
-/// tip
-
-Prefer to use the `Annotated` version if possible.
-
-///
-
-```Python
-commons: CommonQueryParams = Depends(CommonQueryParams)
-```
-
-////
-
-**FastAPI** provides a shortcut for these cases, in where the dependency is *specifically* a class that **FastAPI** will "call" to create an instance of the class itself.
-
-For those specific cases, you can do the following:
-
-Instead of writing:
+اما می‌بینید که اینجا مقداری تکرار کد داریم، `CommonQueryParams` را دو بار می‌نویسیم:
 
 //// tab | Python 3.8+
 
@@ -237,7 +209,7 @@ commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -247,7 +219,35 @@ commons: CommonQueryParams = Depends(CommonQueryParams)
 
 ////
 
-...you write:
+**FastAPI** یک میانبر برای این موارد ارائه می‌دهد، در جایی که وابستگی *به طور خاص* یک کلاس است که **FastAPI** آن را "صدا می‌زند" تا یک نمونه از خود کلاس ایجاد کند.
+
+برای آن موارد خاص، می‌توانید موارد زیر را انجام دهید:
+
+به جای نوشتن:
+
+//// tab | Python 3.8+
+
+```Python
+commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]
+```
+
+////
+
+//// tab | Python 3.8+ non-Annotated
+
+/// tip
+
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
+
+///
+
+```Python
+commons: CommonQueryParams = Depends(CommonQueryParams)
+```
+
+////
+
+...بنویسید:
 
 //// tab | Python 3.8+
 
@@ -261,7 +261,7 @@ commons: Annotated[CommonQueryParams, Depends()]
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -271,18 +271,18 @@ commons: CommonQueryParams = Depends()
 
 ////
 
-You declare the dependency as the type of the parameter, and you use `Depends()` without any parameter, instead of having to write the full class *again* inside of `Depends(CommonQueryParams)`.
+وابستگی را به عنوان نوع پارامتر اعلام می‌کنید و از `Depends()` بدون هیچ پارامتری استفاده می‌کنید، به جای اینکه مجبور باشید کلاس کامل را *دوباره* داخل `Depends(CommonQueryParams)` بنویسید.
 
-The same example would then look like:
+همان مثال آنگاه به صورت زیر خواهد بود:
 
 {* ../../docs_src/dependencies/tutorial004_an_py310.py hl[19] *}
 
-...and **FastAPI** will know what to do.
+...و **FastAPI** می‌داند چه کاری انجام دهد.
 
 /// tip
 
-If that seems more confusing than helpful, disregard it, you don't *need* it.
+اگر این گیج‌کننده‌تر از مفید به نظر می‌رسد، آن را نادیده بگیرید، *نیازی* به آن ندارید.
 
-It is just a shortcut. Because **FastAPI** cares about helping you minimize code repetition.
+این فقط یک میانبر است. زیرا **FastAPI** اهمیت می‌دهد به شما کمک کند تکرار کد را به حداقل برسانید.
 
 ///

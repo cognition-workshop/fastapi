@@ -1,69 +1,69 @@
-# Dependencies in path operation decorators
+# وابستگی‌ها در دکوراتورهای عملیات مسیر
 
-In some cases you don't really need the return value of a dependency inside your *path operation function*.
+در بعضی موارد شما واقعاً به مقدار بازگشتی یک وابستگی در داخل *تابع عملیات مسیر* خود نیاز ندارید.
 
-Or the dependency doesn't return a value.
+یا وابستگی مقداری برنمی‌گرداند.
 
-But you still need it to be executed/solved.
+اما همچنان نیاز دارید که اجرا/حل شود.
 
-For those cases, instead of declaring a *path operation function* parameter with `Depends`, you can add a `list` of `dependencies` to the *path operation decorator*.
+برای آن موارد، به جای اعلام یک پارامتر *تابع عملیات مسیر* با `Depends`، می‌توانید یک `list` از `dependencies` را به *دکوراتور عملیات مسیر* اضافه کنید.
 
-## Add `dependencies` to the *path operation decorator*
+## افزودن `dependencies` به *دکوراتور عملیات مسیر*
 
-The *path operation decorator* receives an optional argument `dependencies`.
+*دکوراتور عملیات مسیر* یک آرگومان اختیاری `dependencies` دریافت می‌کند.
 
-It should be a `list` of `Depends()`:
+باید یک `list` از `Depends()` باشد:
 
 {* ../../docs_src/dependencies/tutorial006_an_py39.py hl[19] *}
 
-These dependencies will be executed/solved the same way as normal dependencies. But their value (if they return any) won't be passed to your *path operation function*.
+این وابستگی‌ها به همان روش وابستگی‌های معمولی اجرا/حل خواهند شد. اما مقدار آنها (اگر مقداری برگردانند) به *تابع عملیات مسیر* شما پاس داده نخواهد شد.
 
 /// tip
 
-Some editors check for unused function parameters, and show them as errors.
+بعضی ویرایشگرها پارامترهای استفاده‌نشده تابع را بررسی می‌کنند و آنها را به عنوان خطا نشان می‌دهند.
 
-Using these `dependencies` in the *path operation decorator* you can make sure they are executed while avoiding editor/tooling errors.
+با استفاده از این `dependencies` در *دکوراتور عملیات مسیر* می‌توانید مطمئن شوید که اجرا می‌شوند و در عین حال از خطاهای ویرایشگر/ابزار جلوگیری کنید.
 
-It might also help avoid confusion for new developers that see an unused parameter in your code and could think it's unnecessary.
+همچنین ممکن است به جلوگیری از سردرگمی توسعه‌دهندگان جدیدی کمک کند که پارامتر استفاده‌نشده‌ای را در کد شما می‌بینند و ممکن است فکر کنند غیرضروری است.
 
 ///
 
 /// info
 
-In this example we use invented custom headers `X-Key` and `X-Token`.
+در این مثال از هدرهای سفارشی ساختگی `X-Key` و `X-Token` استفاده می‌کنیم.
 
-But in real cases, when implementing security, you would get more benefits from using the integrated [Security utilities (the next chapter)](../security/index.md){.internal-link target=_blank}.
+اما در موارد واقعی، هنگام پیاده‌سازی امنیت، از استفاده از [ابزارهای امنیتی یکپارچه (فصل بعدی)](../security/index.md){.internal-link target=_blank} سود بیشتری خواهید برد.
 
 ///
 
-## Dependencies errors and return values
+## خطاها و مقادیر بازگشتی وابستگی‌ها
 
-You can use the same dependency *functions* you use normally.
+می‌توانید از همان *توابع* وابستگی که معمولاً استفاده می‌کنید استفاده کنید.
 
-### Dependency requirements
+### نیازمندی‌های وابستگی
 
-They can declare request requirements (like headers) or other sub-dependencies:
+آنها می‌توانند نیازمندی‌های درخواست (مانند هدرها) یا سایر زیروابستگی‌ها را اعلام کنند:
 
 {* ../../docs_src/dependencies/tutorial006_an_py39.py hl[8,13] *}
 
-### Raise exceptions
+### ایجاد استثنا
 
-These dependencies can `raise` exceptions, the same as normal dependencies:
+این وابستگی‌ها می‌توانند استثنا `raise` کنند، همانند وابستگی‌های معمولی:
 
 {* ../../docs_src/dependencies/tutorial006_an_py39.py hl[10,15] *}
 
-### Return values
+### مقادیر بازگشتی
 
-And they can return values or not, the values won't be used.
+و آنها می‌توانند مقادیر برگردانند یا نه، مقادیر استفاده نخواهند شد.
 
-So, you can reuse a normal dependency (that returns a value) you already use somewhere else, and even though the value won't be used, the dependency will be executed:
+بنابراین، می‌توانید یک وابستگی معمولی (که مقدار برمی‌گرداند) که قبلاً جای دیگری استفاده کرده‌اید را دوباره استفاده کنید، و حتی اگر مقدار استفاده نشود، وابستگی اجرا خواهد شد:
 
 {* ../../docs_src/dependencies/tutorial006_an_py39.py hl[11,16] *}
 
-## Dependencies for a group of *path operations*
+## وابستگی‌ها برای گروهی از *عملیات‌های مسیر*
 
-Later, when reading about how to structure bigger applications ([Bigger Applications - Multiple Files](../../tutorial/bigger-applications.md){.internal-link target=_blank}), possibly with multiple files, you will learn how to declare a single `dependencies` parameter for a group of *path operations*.
+بعداً، هنگام مطالعه درباره نحوه ساختاردهی برنامه‌های بزرگ‌تر ([برنامه‌های بزرگ‌تر - چندین فایل](../../tutorial/bigger-applications.md){.internal-link target=_blank})، احتمالاً با چندین فایل، یاد خواهید گرفت که چگونه یک پارامتر `dependencies` واحد را برای گروهی از *عملیات‌های مسیر* اعلام کنید.
 
-## Global Dependencies
+## وابستگی‌های سراسری
 
-Next we will see how to add dependencies to the whole `FastAPI` application, so that they apply to each *path operation*.
+در ادامه خواهیم دید چگونه وابستگی‌ها را به کل برنامه `FastAPI` اضافه کنیم تا روی هر *عملیات مسیر* اعمال شوند.

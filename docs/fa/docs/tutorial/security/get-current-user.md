@@ -1,105 +1,105 @@
-# Get Current User
+# دریافت کاربر فعلی
 
-In the previous chapter the security system (which is based on the dependency injection system) was giving the *path operation function* a `token` as a `str`:
+در فصل قبلی، سیستم امنیتی (که بر اساس سیستم تزریق وابستگی است) یک `token` به صورت `str` به *تابع عملیات مسیر* می‌داد:
 
 {* ../../docs_src/security/tutorial001_an_py39.py hl[12] *}
 
-But that is still not that useful.
+اما این هنوز خیلی مفید نیست.
 
-Let's make it give us the current user.
+بیایید کاری کنیم که کاربر فعلی را به ما بدهد.
 
-## Create a user model
+## ایجاد یک مدل کاربر
 
-First, let's create a Pydantic user model.
+ابتدا، بیایید یک مدل Pydantic کاربر ایجاد کنیم.
 
-The same way we use Pydantic to declare bodies, we can use it anywhere else:
+به همان روشی که از Pydantic برای اعلام بدنه‌ها استفاده می‌کنیم، می‌توانیم از آن در هر جای دیگری استفاده کنیم:
 
 {* ../../docs_src/security/tutorial002_an_py310.py hl[5,12:6] *}
 
-## Create a `get_current_user` dependency
+## ایجاد وابستگی `get_current_user`
 
-Let's create a dependency `get_current_user`.
+بیایید یک وابستگی `get_current_user` ایجاد کنیم.
 
-Remember that dependencies can have sub-dependencies?
+به یاد دارید که وابستگی‌ها می‌توانند زیروابستگی داشته باشند؟
 
-`get_current_user` will have a dependency with the same `oauth2_scheme` we created before.
+`get_current_user` وابستگی با همان `oauth2_scheme` که قبلاً ایجاد کردیم خواهد داشت.
 
-The same as we were doing before in the *path operation* directly, our new dependency `get_current_user` will receive a `token` as a `str` from the sub-dependency `oauth2_scheme`:
+همانطور که قبلاً مستقیماً در *عملیات مسیر* انجام می‌دادیم، وابستگی جدید ما `get_current_user` یک `token` به صورت `str` از زیروابستگی `oauth2_scheme` دریافت خواهد کرد:
 
 {* ../../docs_src/security/tutorial002_an_py310.py hl[25] *}
 
-## Get the user
+## دریافت کاربر
 
-`get_current_user` will use a (fake) utility function we created, that takes a token as a `str` and returns our Pydantic `User` model:
+`get_current_user` از یک تابع کاربردی (جعلی) که ایجاد کردیم استفاده خواهد کرد، که یک token به صورت `str` می‌گیرد و مدل Pydantic `User` ما را برمی‌گرداند:
 
 {* ../../docs_src/security/tutorial002_an_py310.py hl[19:22,26:27] *}
 
-## Inject the current user
+## تزریق کاربر فعلی
 
-So now we can use the same `Depends` with our `get_current_user` in the *path operation*:
+بنابراین اکنون می‌توانیم از همان `Depends` با `get_current_user` ما در *عملیات مسیر* استفاده کنیم:
 
 {* ../../docs_src/security/tutorial002_an_py310.py hl[31] *}
 
-Notice that we declare the type of `current_user` as the Pydantic model `User`.
+توجه کنید که نوع `current_user` را به عنوان مدل Pydantic `User` اعلام می‌کنیم.
 
-This will help us inside of the function with all the completion and type checks.
+این به ما در داخل تابع با تمام تکمیل خودکار و بررسی نوع کمک خواهد کرد.
 
 /// tip
 
-You might remember that request bodies are also declared with Pydantic models.
+ممکن است به یاد داشته باشید که بدنه‌های درخواست نیز با مدل‌های Pydantic اعلام می‌شوند.
 
-Here **FastAPI** won't get confused because you are using `Depends`.
+اینجا **FastAPI** گیج نخواهد شد زیرا شما از `Depends` استفاده می‌کنید.
 
 ///
 
 /// check
 
-The way this dependency system is designed allows us to have different dependencies (different "dependables") that all return a `User` model.
+نحوه طراحی این سیستم وابستگی به ما اجازه می‌دهد وابستگی‌های مختلفی ("وابسته‌پذیرهای" مختلفی) داشته باشیم که همه یک مدل `User` برگردانند.
 
-We are not restricted to having only one dependency that can return that type of data.
+ما محدود به داشتن فقط یک وابستگی که بتواند آن نوع داده را برگرداند نیستیم.
 
 ///
 
-## Other models
+## مدل‌های دیگر
 
-You can now get the current user directly in the *path operation functions* and deal with the security mechanisms at the **Dependency Injection** level, using `Depends`.
+اکنون می‌توانید کاربر فعلی را مستقیماً در *توابع عملیات مسیر* دریافت کنید و با مکانیسم‌های امنیتی در سطح **تزریق وابستگی** با استفاده از `Depends` کار کنید.
 
-And you can use any model or data for the security requirements (in this case, a Pydantic model `User`).
+و می‌توانید از هر مدل یا داده‌ای برای نیازمندی‌های امنیتی استفاده کنید (در این مورد، یک مدل Pydantic `User`).
 
-But you are not restricted to using some specific data model, class or type.
+اما محدود به استفاده از یک مدل داده خاص، کلاس یا نوع نیستید.
 
-Do you want to have an `id` and `email` and not have any `username` in your model? Sure. You can use these same tools.
+آیا می‌خواهید یک `id` و `email` داشته باشید و هیچ `username` در مدل خود نداشته باشید؟ حتماً. می‌توانید از همین ابزارها استفاده کنید.
 
-Do you want to just have a `str`? Or just a `dict`? Or a database class model instance directly? It all works the same way.
+آیا می‌خواهید فقط یک `str` داشته باشید؟ یا فقط یک `dict`؟ یا مستقیماً یک نمونه مدل پایگاه داده؟ همه به همان روش کار می‌کنند.
 
-You actually don't have users that log in to your application but robots, bots, or other systems, that have just an access token? Again, it all works the same.
+شما در واقع کاربرانی ندارید که به برنامه شما وارد شوند بلکه ربات‌ها، بات‌ها یا سیستم‌های دیگری هستند که فقط یک توکن دسترسی دارند؟ باز هم، همه به همان روش کار می‌کنند.
 
-Just use any kind of model, any kind of class, any kind of database that you need for your application. **FastAPI** has you covered with the dependency injection system.
+فقط از هر نوع مدل، هر نوع کلاس، هر نوع پایگاه داده‌ای که برای برنامه خود نیاز دارید استفاده کنید. **FastAPI** با سیستم تزریق وابستگی پشتیبان شماست.
 
-## Code size
+## حجم کد
 
-This example might seem verbose. Keep in mind that we are mixing security, data models, utility functions and *path operations* in the same file.
+این مثال ممکن است طولانی به نظر برسد. به خاطر داشته باشید که ما امنیت، مدل‌های داده، توابع کاربردی و *عملیات‌های مسیر* را در همان فایل ترکیب می‌کنیم.
 
-But here's the key point.
+اما اینجا نکته کلیدی است.
 
-The security and dependency injection stuff is written once.
+امنیت و تزریق وابستگی یک بار نوشته می‌شود.
 
-And you can make it as complex as you want. And still, have it written only once, in a single place. With all the flexibility.
+و می‌توانید آن را به هر اندازه که می‌خواهید پیچیده کنید. و با این حال، فقط یک بار نوشته شود، در یک مکان. با تمام انعطاف‌پذیری.
 
-But you can have thousands of endpoints (*path operations*) using the same security system.
+اما می‌توانید هزاران نقطه پایانی (*عملیات‌های مسیر*) داشته باشید که از همان سیستم امنیتی استفاده کنند.
 
-And all of them (or any portion of them that you want) can take advantage of re-using these dependencies or any other dependencies you create.
+و همه آنها (یا هر بخشی از آنها که بخواهید) می‌توانند از استفاده مجدد از این وابستگی‌ها یا هر وابستگی دیگری که ایجاد کنید بهره ببرند.
 
-And all these thousands of *path operations* can be as small as 3 lines:
+و تمام این هزاران *عملیات مسیر* می‌توانند به کوچکی ۳ خط باشند:
 
 {* ../../docs_src/security/tutorial002_an_py310.py hl[30:32] *}
 
-## Recap
+## جمع‌بندی
 
-You can now get the current user directly in your *path operation function*.
+اکنون می‌توانید کاربر فعلی را مستقیماً در *تابع عملیات مسیر* خود دریافت کنید.
 
-We are already halfway there.
+ما در حال حاضر نیمه راه هستیم.
 
-We just need to add a *path operation* for the user/client to actually send the `username` and `password`.
+فقط باید یک *عملیات مسیر* اضافه کنیم تا کاربر/کلاینت واقعاً `username` و `password` را ارسال کند.
 
-That comes next.
+این در بخش بعدی خواهد آمد.
