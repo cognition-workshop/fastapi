@@ -1,138 +1,138 @@
-# Simple OAuth2 with Password and Bearer
+# OAuth2 ساده با رمز عبور و Bearer
 
-Now let's build from the previous chapter and add the missing parts to have a complete security flow.
+حالا بیایید از فصل قبلی ادامه دهیم و بخش‌های مفقود را اضافه کنیم تا یک جریان امنیتی کامل داشته باشیم.
 
-## Get the `username` and `password`
+## دریافت `username` و `password`
 
-We are going to use **FastAPI** security utilities to get the `username` and `password`.
+ما از ابزارهای امنیتی **FastAPI** برای دریافت `username` و `password` استفاده خواهیم کرد.
 
-OAuth2 specifies that when using the "password flow" (that we are using) the client/user must send a `username` and `password` fields as form data.
+OAuth2 مشخص می‌کند که هنگام استفاده از "جریان رمز عبور" (که ما استفاده می‌کنیم) کلاینت/کاربر باید فیلدهای `username` و `password` را به عنوان داده فرم ارسال کند.
 
-And the spec says that the fields have to be named like that. So `user-name` or `email` wouldn't work.
+و مشخصات می‌گوید که فیلدها باید دقیقاً با همین نام‌ها باشند. بنابراین `user-name` یا `email` کار نخواهد کرد.
 
-But don't worry, you can show it as you wish to your final users in the frontend.
+اما نگران نباشید، می‌توانید آن را به هر شکلی که می‌خواهید به کاربران نهایی در فرانت‌اند نمایش دهید.
 
-And your database models can use any other names you want.
+و مدل‌های پایگاه داده شما می‌توانند از هر نام دیگری که می‌خواهید استفاده کنند.
 
-But for the login *path operation*, we need to use these names to be compatible with the spec (and be able to, for example, use the integrated API documentation system).
+اما برای *عملیات مسیر* ورود، باید از این نام‌ها استفاده کنیم تا با مشخصات سازگار باشیم (و بتوانیم، به عنوان مثال، از سیستم مستندات API یکپارچه استفاده کنیم).
 
-The spec also states that the `username` and `password` must be sent as form data (so, no JSON here).
+مشخصات همچنین بیان می‌کند که `username` و `password` باید به عنوان داده فرم ارسال شوند (بنابراین، اینجا JSON نیست).
 
 ### `scope`
 
-The spec also says that the client can send another form field "`scope`".
+مشخصات همچنین می‌گوید که کلاینت می‌تواند فیلد فرم دیگری "`scope`" ارسال کند.
 
-The form field name is `scope` (in singular), but it is actually a long string with "scopes" separated by spaces.
+نام فیلد فرم `scope` (به صورت مفرد) است، اما در واقع یک رشته طولانی با "scope"ها جدا شده با فاصله است.
 
-Each "scope" is just a string (without spaces).
+هر "scope" فقط یک رشته (بدون فاصله) است.
 
-They are normally used to declare specific security permissions, for example:
+آنها معمولاً برای اعلام مجوزهای امنیتی خاص استفاده می‌شوند، به عنوان مثال:
 
-* `users:read` or `users:write` are common examples.
-* `instagram_basic` is used by Facebook / Instagram.
-* `https://www.googleapis.com/auth/drive` is used by Google.
+* `users:read` یا `users:write` مثال‌های رایجی هستند.
+* `instagram_basic` توسط Facebook / Instagram استفاده می‌شود.
+* `https://www.googleapis.com/auth/drive` توسط Google استفاده می‌شود.
 
 /// info
 
-In OAuth2 a "scope" is just a string that declares a specific permission required.
+در OAuth2 یک "scope" فقط یک رشته است که یک مجوز خاص مورد نیاز را اعلام می‌کند.
 
-It doesn't matter if it has other characters like `:` or if it is a URL.
+فرقی نمی‌کند اگر کاراکترهای دیگری مانند `:` داشته باشد یا یک URL باشد.
 
-Those details are implementation specific.
+آن جزئیات مختص پیاده‌سازی هستند.
 
-For OAuth2 they are just strings.
+برای OAuth2 آنها فقط رشته هستند.
 
 ///
 
-## Code to get the `username` and `password`
+## کد برای دریافت `username` و `password`
 
-Now let's use the utilities provided by **FastAPI** to handle this.
+حالا بیایید از ابزارهای ارائه‌شده توسط **FastAPI** برای مدیریت این استفاده کنیم.
 
 ### `OAuth2PasswordRequestForm`
 
-First, import `OAuth2PasswordRequestForm`, and use it as a dependency with `Depends` in the *path operation* for `/token`:
+ابتدا، `OAuth2PasswordRequestForm` را ایمپورت کنید و آن را به عنوان یک وابستگی با `Depends` در *عملیات مسیر* برای `/token` استفاده کنید:
 
 {* ../../docs_src/security/tutorial003_an_py310.py hl[4,78] *}
 
-`OAuth2PasswordRequestForm` is a class dependency that declares a form body with:
+`OAuth2PasswordRequestForm` یک وابستگی کلاس است که یک بدنه فرم با موارد زیر اعلام می‌کند:
 
-* The `username`.
-* The `password`.
-* An optional `scope` field as a big string, composed of strings separated by spaces.
-* An optional `grant_type`.
+* `username`.
+* `password`.
+* یک فیلد اختیاری `scope` به عنوان رشته بزرگ، متشکل از رشته‌های جدا شده با فاصله.
+* یک `grant_type` اختیاری.
 
 /// tip
 
-The OAuth2 spec actually *requires* a field `grant_type` with a fixed value of `password`, but `OAuth2PasswordRequestForm` doesn't enforce it.
+مشخصات OAuth2 در واقع فیلد `grant_type` با مقدار ثابت `password` را *نیاز* دارد، اما `OAuth2PasswordRequestForm` آن را اجبار نمی‌کند.
 
-If you need to enforce it, use `OAuth2PasswordRequestFormStrict` instead of `OAuth2PasswordRequestForm`.
+اگر نیاز دارید آن را اجبار کنید، از `OAuth2PasswordRequestFormStrict` به جای `OAuth2PasswordRequestForm` استفاده کنید.
 
 ///
 
-* An optional `client_id` (we don't need it for our example).
-* An optional `client_secret` (we don't need it for our example).
+* یک `client_id` اختیاری (برای مثال ما نیازی به آن نداریم).
+* یک `client_secret` اختیاری (برای مثال ما نیازی به آن نداریم).
 
 /// info
 
-The `OAuth2PasswordRequestForm` is not a special class for **FastAPI** as is `OAuth2PasswordBearer`.
+`OAuth2PasswordRequestForm` یک کلاس خاص برای **FastAPI** مانند `OAuth2PasswordBearer` نیست.
 
-`OAuth2PasswordBearer` makes **FastAPI** know that it is a security scheme. So it is added that way to OpenAPI.
+`OAuth2PasswordBearer` به **FastAPI** اطلاع می‌دهد که یک طرح امنیتی است. بنابراین به آن شکل به OpenAPI اضافه می‌شود.
 
-But `OAuth2PasswordRequestForm` is just a class dependency that you could have written yourself, or you could have declared `Form` parameters directly.
+اما `OAuth2PasswordRequestForm` فقط یک وابستگی کلاس است که می‌توانستید خودتان بنویسید، یا می‌توانستید پارامترهای `Form` را مستقیماً اعلام کنید.
 
-But as it's a common use case, it is provided by **FastAPI** directly, just to make it easier.
+اما از آنجا که یک مورد استفاده رایج است، مستقیماً توسط **FastAPI** ارائه شده، فقط برای آسان‌تر کردن کار.
 
 ///
 
-### Use the form data
+### استفاده از داده فرم
 
 /// tip
 
-The instance of the dependency class `OAuth2PasswordRequestForm` won't have an attribute `scope` with the long string separated by spaces, instead, it will have a `scopes` attribute with the actual list of strings for each scope sent.
+نمونه کلاس وابستگی `OAuth2PasswordRequestForm` یک ویژگی `scope` با رشته طولانی جدا شده با فاصله ندارد، در عوض یک ویژگی `scopes` با لیست واقعی رشته‌ها برای هر scope ارسال‌شده دارد.
 
-We are not using `scopes` in this example, but the functionality is there if you need it.
+ما در این مثال از `scopes` استفاده نمی‌کنیم، اما عملکرد آن در صورت نیاز موجود است.
 
 ///
 
-Now, get the user data from the (fake) database, using the `username` from the form field.
+حالا، داده کاربر را از پایگاه داده (جعلی) با استفاده از `username` از فیلد فرم دریافت کنید.
 
-If there is no such user, we return an error saying "Incorrect username or password".
+اگر چنین کاربری وجود نداشته باشد، خطای "نام کاربری یا رمز عبور نادرست" برمی‌گردانیم.
 
-For the error, we use the exception `HTTPException`:
+برای خطا، از استثنای `HTTPException` استفاده می‌کنیم:
 
 {* ../../docs_src/security/tutorial003_an_py310.py hl[3,79:81] *}
 
-### Check the password
+### بررسی رمز عبور
 
-At this point we have the user data from our database, but we haven't checked the password.
+در این مرحله داده کاربر از پایگاه داده خود را داریم، اما هنوز رمز عبور را بررسی نکرده‌ایم.
 
-Let's put that data in the Pydantic `UserInDB` model first.
+بیایید ابتدا آن داده را در مدل Pydantic `UserInDB` قرار دهیم.
 
-You should never save plaintext passwords, so, we'll use the (fake) password hashing system.
+هرگز نباید رمزهای عبور متنی ذخیره کنید، بنابراین از سیستم هش رمز عبور (جعلی) استفاده می‌کنیم.
 
-If the passwords don't match, we return the same error.
+اگر رمزهای عبور مطابقت نداشته باشند، همان خطا را برمی‌گردانیم.
 
-#### Password hashing
+#### هش رمز عبور
 
-"Hashing" means: converting some content (a password in this case) into a sequence of bytes (just a string) that looks like gibberish.
+"هش کردن" به معنای تبدیل مقداری محتوا (در این مورد رمز عبور) به دنباله‌ای از بایت‌ها (فقط یک رشته) است که مثل چیزهای بی‌معنی به نظر می‌رسد.
 
-Whenever you pass exactly the same content (exactly the same password) you get exactly the same gibberish.
+هر وقت دقیقاً همان محتوا (دقیقاً همان رمز عبور) را پاس دهید دقیقاً همان چیز بی‌معنی را دریافت می‌کنید.
 
-But you cannot convert from the gibberish back to the password.
+اما نمی‌توانید از آن چیز بی‌معنی به رمز عبور برگردید.
 
-##### Why use password hashing
+##### چرا از هش رمز عبور استفاده کنیم
 
-If your database is stolen, the thief won't have your users' plaintext passwords, only the hashes.
+اگر پایگاه داده شما دزدیده شود، دزد رمزهای عبور متنی کاربران شما را نخواهد داشت، فقط هش‌ها را.
 
-So, the thief won't be able to try to use those same passwords in another system (as many users use the same password everywhere, this would be dangerous).
+بنابراین، دزد نخواهد توانست همان رمزهای عبور را در سیستم دیگری امتحان کند (زیرا بسیاری از کاربران از همان رمز عبور در همه جا استفاده می‌کنند، این خطرناک خواهد بود).
 
 {* ../../docs_src/security/tutorial003_an_py310.py hl[82:85] *}
 
-#### About `**user_dict`
+#### درباره `**user_dict`
 
-`UserInDB(**user_dict)` means:
+`UserInDB(**user_dict)` به معنای:
 
-*Pass the keys and values of the `user_dict` directly as key-value arguments, equivalent to:*
+*کلیدها و مقادیر `user_dict` را مستقیماً به عنوان آرگومان‌های کلید-مقدار پاس بده، معادل:*
 
 ```Python
 UserInDB(
@@ -146,25 +146,25 @@ UserInDB(
 
 /// info
 
-For a more complete explanation of `**user_dict` check back in [the documentation for **Extra Models**](../extra-models.md#about-user_indict){.internal-link target=_blank}.
+برای توضیح کامل‌تر `**user_dict` به [مستندات **مدل‌های اضافی**](../extra-models.md#about-user_indict){.internal-link target=_blank} مراجعه کنید.
 
 ///
 
-## Return the token
+## برگرداندن توکن
 
-The response of the `token` endpoint must be a JSON object.
+پاسخ نقطه پایانی `token` باید یک شیء JSON باشد.
 
-It should have a `token_type`. In our case, as we are using "Bearer" tokens, the token type should be "`bearer`".
+باید یک `token_type` داشته باشد. در مورد ما، چون از توکن‌های "Bearer" استفاده می‌کنیم، نوع توکن باید "`bearer`" باشد.
 
-And it should have an `access_token`, with a string containing our access token.
+و باید یک `access_token` داشته باشد، با رشته‌ای حاوی توکن دسترسی ما.
 
-For this simple example, we are going to just be completely insecure and return the same `username` as the token.
+برای این مثال ساده، فقط کاملاً ناامن خواهیم بود و همان `username` را به عنوان توکن برمی‌گردانیم.
 
 /// tip
 
-In the next chapter, you will see a real secure implementation, with password hashing and <abbr title="JSON Web Tokens">JWT</abbr> tokens.
+در فصل بعدی، یک پیاده‌سازی واقعی امن، با هش رمز عبور و توکن‌های <abbr title="JSON Web Tokens">JWT</abbr> خواهید دید.
 
-But for now, let's focus on the specific details we need.
+اما فعلاً، بیایید روی جزئیات خاصی که نیاز داریم تمرکز کنیم.
 
 ///
 
@@ -172,57 +172,57 @@ But for now, let's focus on the specific details we need.
 
 /// tip
 
-By the spec, you should return a JSON with an `access_token` and a `token_type`, the same as in this example.
+طبق مشخصات، باید یک JSON با `access_token` و `token_type` برگردانید، همانند این مثال.
 
-This is something that you have to do yourself in your code, and make sure you use those JSON keys.
+این چیزی است که باید خودتان در کد خود انجام دهید و مطمئن شوید از آن کلیدهای JSON استفاده کنید.
 
-It's almost the only thing that you have to remember to do correctly yourself, to be compliant with the specifications.
+تقریباً تنها چیزی است که باید به یاد داشته باشید خودتان به درستی انجام دهید تا با مشخصات سازگار باشید.
 
-For the rest, **FastAPI** handles it for you.
+برای بقیه، **FastAPI** آن را برای شما مدیریت می‌کند.
 
 ///
 
-## Update the dependencies
+## به‌روزرسانی وابستگی‌ها
 
-Now we are going to update our dependencies.
+حالا می‌خواهیم وابستگی‌های خود را به‌روزرسانی کنیم.
 
-We want to get the `current_user` *only* if this user is active.
+می‌خواهیم `current_user` را *فقط* اگر این کاربر فعال باشد دریافت کنیم.
 
-So, we create an additional dependency `get_current_active_user` that in turn uses `get_current_user` as a dependency.
+بنابراین، یک وابستگی اضافی `get_current_active_user` ایجاد می‌کنیم که به نوبه خود از `get_current_user` به عنوان وابستگی استفاده می‌کند.
 
-Both of these dependencies will just return an HTTP error if the user doesn't exist, or if is inactive.
+هر دوی این وابستگی‌ها فقط اگر کاربر وجود نداشته باشد یا غیرفعال باشد یک خطای HTTP برمی‌گردانند.
 
-So, in our endpoint, we will only get a user if the user exists, was correctly authenticated, and is active:
+بنابراین، در نقطه پایانی ما، فقط اگر کاربر وجود داشته باشد، به درستی احراز هویت شده باشد و فعال باشد، یک کاربر دریافت خواهیم کرد:
 
 {* ../../docs_src/security/tutorial003_an_py310.py hl[58:66,69:74,94] *}
 
 /// info
 
-The additional header `WWW-Authenticate` with value `Bearer` we are returning here is also part of the spec.
+هدر اضافی `WWW-Authenticate` با مقدار `Bearer` که اینجا برمی‌گردانیم نیز بخشی از مشخصات است.
 
-Any HTTP (error) status code 401 "UNAUTHORIZED" is supposed to also return a `WWW-Authenticate` header.
+هر کد وضعیت HTTP (خطا) 401 "UNAUTHORIZED" قرار است یک هدر `WWW-Authenticate` نیز برگرداند.
 
-In the case of bearer tokens (our case), the value of that header should be `Bearer`.
+در مورد توکن‌های bearer (مورد ما)، مقدار آن هدر باید `Bearer` باشد.
 
-You can actually skip that extra header and it would still work.
+در واقع می‌توانید آن هدر اضافی را حذف کنید و همچنان کار خواهد کرد.
 
-But it's provided here to be compliant with the specifications.
+اما اینجا برای سازگاری با مشخصات ارائه شده است.
 
-Also, there might be tools that expect and use it (now or in the future) and that might be useful for you or your users, now or in the future.
+همچنین، ممکن است ابزارهایی وجود داشته باشند که آن را انتظار دارند و استفاده کنند (اکنون یا در آینده) و ممکن است برای شما یا کاربرانتان مفید باشد، اکنون یا در آینده.
 
-That's the benefit of standards...
+این مزیت استانداردهاست...
 
 ///
 
-## See it in action
+## مشاهده در عمل
 
-Open the interactive docs: <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>.
+مستندات تعاملی را باز کنید: <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>.
 
-### Authenticate
+### احراز هویت
 
-Click the "Authorize" button.
+دکمه "Authorize" را کلیک کنید.
 
-Use the credentials:
+از اعتبارنامه‌های زیر استفاده کنید:
 
 User: `johndoe`
 
@@ -230,15 +230,15 @@ Password: `secret`
 
 <img src="/img/tutorial/security/image04.png">
 
-After authenticating in the system, you will see it like:
+بعد از احراز هویت در سیستم، آن را به صورت زیر خواهید دید:
 
 <img src="/img/tutorial/security/image05.png">
 
-### Get your own user data
+### دریافت داده‌های کاربر خود
 
-Now use the operation `GET` with the path `/users/me`.
+حالا از عملیات `GET` با مسیر `/users/me` استفاده کنید.
 
-You will get your user's data, like:
+داده‌های کاربر خود را دریافت خواهید کرد، مانند:
 
 ```JSON
 {
@@ -252,7 +252,7 @@ You will get your user's data, like:
 
 <img src="/img/tutorial/security/image06.png">
 
-If you click the lock icon and logout, and then try the same operation again, you will get an HTTP 401 error of:
+اگر آیکون قفل را کلیک کنید و خارج شوید و سپس همان عملیات را دوباره امتحان کنید، یک خطای HTTP 401 دریافت خواهید کرد:
 
 ```JSON
 {
@@ -260,17 +260,17 @@ If you click the lock icon and logout, and then try the same operation again, yo
 }
 ```
 
-### Inactive user
+### کاربر غیرفعال
 
-Now try with an inactive user, authenticate with:
+حالا با یک کاربر غیرفعال امتحان کنید، احراز هویت کنید با:
 
 User: `alice`
 
 Password: `secret2`
 
-And try to use the operation `GET` with the path `/users/me`.
+و سعی کنید از عملیات `GET` با مسیر `/users/me` استفاده کنید.
 
-You will get an "Inactive user" error, like:
+یک خطای "Inactive user" دریافت خواهید کرد، مانند:
 
 ```JSON
 {
@@ -278,12 +278,12 @@ You will get an "Inactive user" error, like:
 }
 ```
 
-## Recap
+## جمع‌بندی
 
-You now have the tools to implement a complete security system based on `username` and `password` for your API.
+اکنون ابزارهای لازم برای پیاده‌سازی یک سیستم امنیتی کامل مبتنی بر `username` و `password` برای API خود را دارید.
 
-Using these tools, you can make the security system compatible with any database and with any user or data model.
+با استفاده از این ابزارها، می‌توانید سیستم امنیتی را با هر پایگاه داده و با هر کاربر یا مدل داده‌ای سازگار کنید.
 
-The only detail missing is that it is not actually "secure" yet.
+تنها جزئیات مفقود این است که هنوز واقعاً "امن" نیست.
 
-In the next chapter you'll see how to use a secure password hashing library and <abbr title="JSON Web Tokens">JWT</abbr> tokens.
+در فصل بعدی خواهید دید که چگونه از یک کتابخانه هش رمز عبور امن و توکن‌های <abbr title="JSON Web Tokens">JWT</abbr> استفاده کنید.

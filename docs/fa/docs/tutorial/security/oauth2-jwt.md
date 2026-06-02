@@ -1,36 +1,36 @@
-# OAuth2 with Password (and hashing), Bearer with JWT tokens
+# OAuth2 با رمز عبور (و هش)، Bearer با توکن‌های JWT
 
-Now that we have all the security flow, let's make the application actually secure, using <abbr title="JSON Web Tokens">JWT</abbr> tokens and secure password hashing.
+اکنون که تمام جریان امنیتی را داریم، بیایید برنامه را واقعاً امن کنیم، با استفاده از توکن‌های <abbr title="JSON Web Tokens">JWT</abbr> و هش رمز عبور امن.
 
-This code is something you can actually use in your application, save the password hashes in your database, etc.
+این کدی است که واقعاً می‌توانید در برنامه خود استفاده کنید، هش‌های رمز عبور را در پایگاه داده خود ذخیره کنید و غیره.
 
-We are going to start from where we left in the previous chapter and increment it.
+ما از جایی که در فصل قبلی رها کردیم شروع می‌کنیم و آن را افزایش می‌دهیم.
 
-## About JWT
+## درباره JWT
 
-JWT means "JSON Web Tokens".
+JWT به معنای "JSON Web Tokens" است.
 
-It's a standard to codify a JSON object in a long dense string without spaces. It looks like this:
+این یک استاندارد برای کدگذاری یک شیء JSON در یک رشته طولانی و فشرده بدون فاصله است. به صورت زیر به نظر می‌رسد:
 
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 ```
 
-It is not encrypted, so, anyone could recover the information from the contents.
+رمزگذاری نشده است، بنابراین هر کسی می‌تواند اطلاعات را از محتوا بازیابی کند.
 
-But it's signed. So, when you receive a token that you emitted, you can verify that you actually emitted it.
+اما امضا شده است. بنابراین، وقتی توکنی که صادر کرده‌اید را دریافت می‌کنید، می‌توانید تأیید کنید که واقعاً خودتان آن را صادر کرده‌اید.
 
-That way, you can create a token with an expiration of, let's say, 1 week. And then when the user comes back the next day with the token, you know that user is still logged in to your system.
+به این ترتیب، می‌توانید یک توکن با انقضای، مثلاً، ۱ هفته ایجاد کنید. و سپس وقتی کاربر روز بعد با توکن برمی‌گردد، می‌دانید که آن کاربر همچنان در سیستم شما وارد شده است.
 
-After a week, the token will be expired and the user will not be authorized and will have to sign in again to get a new token. And if the user (or a third party) tried to modify the token to change the expiration, you would be able to discover it, because the signatures would not match.
+بعد از یک هفته، توکن منقضی خواهد شد و کاربر مجاز نخواهد بود و باید دوباره وارد شود تا توکن جدیدی دریافت کند. و اگر کاربر (یا شخص ثالث) سعی کند توکن را تغییر دهد تا انقضا را عوض کند، می‌توانید آن را کشف کنید، زیرا امضاها مطابقت نخواهند داشت.
 
-If you want to play with JWT tokens and see how they work, check <a href="https://jwt.io/" class="external-link" target="_blank">https://jwt.io</a>.
+اگر می‌خواهید با توکن‌های JWT بازی کنید و ببینید چگونه کار می‌کنند، <a href="https://jwt.io/" class="external-link" target="_blank">https://jwt.io</a> را بررسی کنید.
 
-## Install `PyJWT`
+## نصب `PyJWT`
 
-We need to install `PyJWT` to generate and verify the JWT tokens in Python.
+ما باید `PyJWT` را نصب کنیم تا توکن‌های JWT را در پایتون تولید و تأیید کنیم.
 
-Make sure you create a [virtual environment](../../virtual-environments.md){.internal-link target=_blank}, activate it, and then install `pyjwt`:
+مطمئن شوید که یک [محیط مجازی](../../virtual-environments.md){.internal-link target=_blank} ایجاد کرده‌اید، آن را فعال کنید، و سپس `pyjwt` را نصب کنید:
 
 <div class="termy">
 
@@ -44,35 +44,35 @@ $ pip install pyjwt
 
 /// info
 
-If you are planning to use digital signature algorithms like RSA or ECDSA, you should install the cryptography library dependency `pyjwt[crypto]`.
+اگر قصد دارید از الگوریتم‌های امضای دیجیتال مانند RSA یا ECDSA استفاده کنید، باید وابستگی کتابخانه رمزنگاری `pyjwt[crypto]` را نصب کنید.
 
-You can read more about it in the <a href="https://pyjwt.readthedocs.io/en/latest/installation.html" class="external-link" target="_blank">PyJWT Installation docs</a>.
+می‌توانید اطلاعات بیشتری در <a href="https://pyjwt.readthedocs.io/en/latest/installation.html" class="external-link" target="_blank">مستندات نصب PyJWT</a> بخوانید.
 
 ///
 
-## Password hashing
+## هش رمز عبور
 
-"Hashing" means converting some content (a password in this case) into a sequence of bytes (just a string) that looks like gibberish.
+"هش کردن" به معنای تبدیل مقداری محتوا (در این مورد رمز عبور) به دنباله‌ای از بایت‌ها (فقط یک رشته) است که مثل چیزهای بی‌معنی به نظر می‌رسد.
 
-Whenever you pass exactly the same content (exactly the same password) you get exactly the same gibberish.
+هر وقت دقیقاً همان محتوا (دقیقاً همان رمز عبور) را پاس دهید دقیقاً همان چیز بی‌معنی را دریافت می‌کنید.
 
-But you cannot convert from the gibberish back to the password.
+اما نمی‌توانید از آن چیز بی‌معنی به رمز عبور برگردید.
 
-### Why use password hashing
+### چرا از هش رمز عبور استفاده کنیم
 
-If your database is stolen, the thief won't have your users' plaintext passwords, only the hashes.
+اگر پایگاه داده شما دزدیده شود، دزد رمزهای عبور متنی کاربران شما را نخواهد داشت، فقط هش‌ها را.
 
-So, the thief won't be able to try to use that password in another system (as many users use the same password everywhere, this would be dangerous).
+بنابراین، دزد نخواهد توانست همان رمز عبور را در سیستم دیگری امتحان کند (زیرا بسیاری از کاربران از همان رمز عبور در همه جا استفاده می‌کنند، این خطرناک خواهد بود).
 
-## Install `passlib`
+## نصب `passlib`
 
-PassLib is a great Python package to handle password hashes.
+PassLib یک بسته پایتون عالی برای مدیریت هش‌های رمز عبور است.
 
-It supports many secure hashing algorithms and utilities to work with them.
+از بسیاری از الگوریتم‌های هش امن و ابزارهای کار با آنها پشتیبانی می‌کند.
 
-The recommended algorithm is "Bcrypt".
+الگوریتم توصیه‌شده "Bcrypt" است.
 
-Make sure you create a [virtual environment](../../virtual-environments.md){.internal-link target=_blank}, activate it, and then install PassLib with Bcrypt:
+مطمئن شوید که یک [محیط مجازی](../../virtual-environments.md){.internal-link target=_blank} ایجاد کرده‌اید، آن را فعال کنید، و سپس PassLib با Bcrypt را نصب کنید:
 
 <div class="termy">
 
@@ -86,51 +86,51 @@ $ pip install "passlib[bcrypt]"
 
 /// tip
 
-With `passlib`, you could even configure it to be able to read passwords created by **Django**, a **Flask** security plug-in or many others.
+با `passlib`، حتی می‌توانید آن را پیکربندی کنید تا بتوانید رمزهای عبور ایجاد شده توسط **Django**، یک پلاگین امنیتی **Flask** یا بسیاری دیگر را بخوانید.
 
-So, you would be able to, for example, share the same data from a Django application in a database with a FastAPI application. Or gradually migrate a Django application using the same database.
+بنابراین، می‌توانید، به عنوان مثال، همان داده‌ها از یک برنامه Django در یک پایگاه داده را با یک برنامه FastAPI به اشتراک بگذارید. یا به تدریج یک برنامه Django را با استفاده از همان پایگاه داده مهاجرت دهید.
 
-And your users would be able to login from your Django app or from your **FastAPI** app, at the same time.
+و کاربران شما قادر خواهند بود از برنامه Django یا از برنامه **FastAPI** خود، به طور همزمان وارد شوند.
 
 ///
 
-## Hash and verify the passwords
+## هش و تأیید رمزهای عبور
 
-Import the tools we need from `passlib`.
+ابزارهای مورد نیاز را از `passlib` ایمپورت کنید.
 
-Create a PassLib "context". This is what will be used to hash and verify passwords.
+یک "context" PassLib ایجاد کنید. این همان چیزی است که برای هش و تأیید رمزهای عبور استفاده خواهد شد.
 
 /// tip
 
-The PassLib context also has functionality to use different hashing algorithms, including deprecated old ones only to allow verifying them, etc.
+context PassLib همچنین عملکردی برای استفاده از الگوریتم‌های هش مختلف دارد، از جمله الگوریتم‌های قدیمی منسوخ فقط برای اجازه تأیید آنها و غیره.
 
-For example, you could use it to read and verify passwords generated by another system (like Django) but hash any new passwords with a different algorithm like Bcrypt.
+به عنوان مثال، می‌توانید از آن برای خواندن و تأیید رمزهای عبور تولید‌شده توسط سیستم دیگری (مانند Django) استفاده کنید اما هر رمز عبور جدید را با الگوریتم متفاوتی مانند Bcrypt هش کنید.
 
-And be compatible with all of them at the same time.
+و با همه آنها همزمان سازگار باشید.
 
 ///
 
-Create a utility function to hash a password coming from the user.
+یک تابع کاربردی برای هش کردن رمز عبور آمده از کاربر ایجاد کنید.
 
-And another utility to verify if a received password matches the hash stored.
+و تابع دیگری برای تأیید اینکه آیا رمز عبور دریافت‌شده با هش ذخیره‌شده مطابقت دارد.
 
-And another one to authenticate and return a user.
+و تابع دیگری برای احراز هویت و برگرداندن یک کاربر.
 
 {* ../../docs_src/security/tutorial004_an_py310.py hl[8,49,56:57,60:61,70:76] *}
 
 /// note
 
-If you check the new (fake) database `fake_users_db`, you will see how the hashed password looks like now: `"$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW"`.
+اگر پایگاه داده (جعلی) جدید `fake_users_db` را بررسی کنید، خواهید دید رمز عبور هش‌شده اکنون چگونه به نظر می‌رسد: `"$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW"`.
 
 ///
 
-## Handle JWT tokens
+## مدیریت توکن‌های JWT
 
-Import the modules installed.
+ماژول‌های نصب‌شده را ایمپورت کنید.
 
-Create a random secret key that will be used to sign the JWT tokens.
+یک کلید مخفی تصادفی ایجاد کنید که برای امضای توکن‌های JWT استفاده خواهد شد.
 
-To generate a secure random secret key use the command:
+برای تولید یک کلید مخفی تصادفی امن از دستور زیر استفاده کنید:
 
 <div class="termy">
 
@@ -142,82 +142,82 @@ $ openssl rand -hex 32
 
 </div>
 
-And copy the output to the variable `SECRET_KEY` (don't use the one in the example).
+و خروجی را در متغیر `SECRET_KEY` کپی کنید (از نمونه مثال استفاده نکنید).
 
-Create a variable `ALGORITHM` with the algorithm used to sign the JWT token and set it to `"HS256"`.
+یک متغیر `ALGORITHM` با الگوریتم مورد استفاده برای امضای توکن JWT ایجاد کنید و آن را روی `"HS256"` تنظیم کنید.
 
-Create a variable for the expiration of the token.
+یک متغیر برای انقضای توکن ایجاد کنید.
 
-Define a Pydantic Model that will be used in the token endpoint for the response.
+یک مدل Pydantic تعریف کنید که در نقطه پایانی توکن برای پاسخ استفاده خواهد شد.
 
-Create a utility function to generate a new access token.
+یک تابع کاربردی برای تولید یک توکن دسترسی جدید ایجاد کنید.
 
 {* ../../docs_src/security/tutorial004_an_py310.py hl[4,7,13:15,29:31,79:87] *}
 
-## Update the dependencies
+## به‌روزرسانی وابستگی‌ها
 
-Update `get_current_user` to receive the same token as before, but this time, using JWT tokens.
+`get_current_user` را به‌روزرسانی کنید تا همان توکن قبلی را دریافت کند، اما این بار با استفاده از توکن‌های JWT.
 
-Decode the received token, verify it, and return the current user.
+توکن دریافت‌شده را رمزگشایی کنید، تأیید کنید و کاربر فعلی را برگردانید.
 
-If the token is invalid, return an HTTP error right away.
+اگر توکن نامعتبر باشد، فوراً یک خطای HTTP برگردانید.
 
 {* ../../docs_src/security/tutorial004_an_py310.py hl[90:107] *}
 
-## Update the `/token` *path operation*
+## به‌روزرسانی *عملیات مسیر* `/token`
 
-Create a `timedelta` with the expiration time of the token.
+یک `timedelta` با زمان انقضای توکن ایجاد کنید.
 
-Create a real JWT access token and return it.
+یک توکن دسترسی JWT واقعی ایجاد کنید و آن را برگردانید.
 
 {* ../../docs_src/security/tutorial004_an_py310.py hl[118:133] *}
 
-### Technical details about the JWT "subject" `sub`
+### جزئیات فنی درباره "subject" JWT `sub`
 
-The JWT specification says that there's a key `sub`, with the subject of the token.
+مشخصات JWT می‌گوید که یک کلید `sub` وجود دارد، با موضوع توکن.
 
-It's optional to use it, but that's where you would put the user's identification, so we are using it here.
+استفاده از آن اختیاری است، اما جایی است که شناسایی کاربر را قرار می‌دهید، بنابراین ما اینجا از آن استفاده می‌کنیم.
 
-JWT might be used for other things apart from identifying a user and allowing them to perform operations directly on your API.
+JWT ممکن است برای چیزهای دیگری علاوه بر شناسایی یک کاربر و اجازه دادن به آنها برای انجام عملیات مستقیماً روی API شما استفاده شود.
 
-For example, you could identify a "car" or a "blog post".
+به عنوان مثال، می‌توانید یک "ماشین" یا یک "پست وبلاگ" را شناسایی کنید.
 
-Then you could add permissions about that entity, like "drive" (for the car) or "edit" (for the blog).
+سپس می‌توانید مجوزهایی درباره آن موجودیت اضافه کنید، مانند "رانندگی" (برای ماشین) یا "ویرایش" (برای پست وبلاگ).
 
-And then, you could give that JWT token to a user (or bot), and they could use it to perform those actions (drive the car, or edit the blog post) without even needing to have an account, just with the JWT token your API generated for that.
+و سپس، می‌توانید آن توکن JWT را به یک کاربر (یا ربات) بدهید، و آنها می‌توانند از آن برای انجام آن اقدامات (رانندگی با ماشین، یا ویرایش پست وبلاگ) استفاده کنند بدون اینکه حتی نیاز به داشتن یک حساب کاربری باشد، فقط با توکن JWT که API شما برای آن تولید کرده است.
 
-Using these ideas, JWT can be used for way more sophisticated scenarios.
+با استفاده از این ایده‌ها، JWT می‌تواند برای سناریوهای بسیار پیچیده‌تر استفاده شود.
 
-In those cases, several of those entities could have the same ID, let's say `foo` (a user `foo`, a car `foo`, and a blog post `foo`).
+در آن موارد، چندین مورد از آن موجودیت‌ها می‌توانند همان شناسه را داشته باشند، مثلاً `foo` (یک کاربر `foo`، یک ماشین `foo` و یک پست وبلاگ `foo`).
 
-So, to avoid ID collisions, when creating the JWT token for the user, you could prefix the value of the `sub` key, e.g. with `username:`. So, in this example, the value of `sub` could have been: `username:johndoe`.
+بنابراین، برای جلوگیری از تداخل شناسه‌ها، هنگام ایجاد توکن JWT برای کاربر، می‌توانید مقدار کلید `sub` را پیشوند بزنید، مثلاً با `username:`. بنابراین، در این مثال، مقدار `sub` می‌توانست باشد: `username:johndoe`.
 
-The important thing to keep in mind is that the `sub` key should have a unique identifier across the entire application, and it should be a string.
+نکته مهمی که باید به خاطر داشته باشید این است که کلید `sub` باید یک شناسه منحصر به فرد در کل برنامه داشته باشد و باید یک رشته باشد.
 
-## Check it
+## بررسی
 
-Run the server and go to the docs: <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>.
+سرور را اجرا کنید و به مستندات بروید: <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs</a>.
 
-You'll see the user interface like:
+رابط کاربری را به صورت زیر خواهید دید:
 
 <img src="/img/tutorial/security/image07.png">
 
-Authorize the application the same way as before.
+برنامه را به همان روش قبلی مجاز کنید.
 
-Using the credentials:
+با استفاده از اعتبارنامه‌ها:
 
 Username: `johndoe`
 Password: `secret`
 
 /// check
 
-Notice that nowhere in the code is the plaintext password "`secret`", we only have the hashed version.
+توجه کنید که هیچ جای کد رمز عبور متنی "`secret`" وجود ندارد، ما فقط نسخه هش‌شده را داریم.
 
 ///
 
 <img src="/img/tutorial/security/image08.png">
 
-Call the endpoint `/users/me/`, you will get the response as:
+نقطه پایانی `/users/me/` را صدا بزنید، پاسخ را به صورت زیر دریافت خواهید کرد:
 
 ```JSON
 {
@@ -230,44 +230,42 @@ Call the endpoint `/users/me/`, you will get the response as:
 
 <img src="/img/tutorial/security/image09.png">
 
-If you open the developer tools, you could see how the data sent only includes the token, the password is only sent in the first request to authenticate the user and get that access token, but not afterwards:
+اگر ابزارهای توسعه‌دهنده را باز کنید، می‌توانید ببینید داده‌ای که ارسال می‌شود فقط شامل توکن است، رمز عبور فقط در اولین درخواست برای احراز هویت کاربر و دریافت آن توکن دسترسی ارسال می‌شود، نه بعد از آن:
 
 <img src="/img/tutorial/security/image10.png">
 
 /// note
 
-Notice the header `Authorization`, with a value that starts with `Bearer `.
+به هدر `Authorization` توجه کنید، با مقداری که با `Bearer ` شروع می‌شود.
 
 ///
 
-## Advanced usage with `scopes`
+## استفاده پیشرفته با `scopes`
 
-OAuth2 has the notion of "scopes".
+OAuth2 مفهوم "scopes" را دارد.
 
-You can use them to add a specific set of permissions to a JWT token.
+می‌توانید از آنها برای افزودن مجموعه‌ای خاص از مجوزها به یک توکن JWT استفاده کنید.
 
-Then you can give this token to a user directly or a third party, to interact with your API with a set of restrictions.
+سپس می‌توانید این توکن را مستقیماً به یک کاربر یا شخص ثالث بدهید، تا با API شما با مجموعه‌ای از محدودیت‌ها تعامل داشته باشند.
 
-You can learn how to use them and how they are integrated into **FastAPI** later in the **Advanced User Guide**.
+می‌توانید نحوه استفاده از آنها و نحوه ادغام آنها در **FastAPI** را بعداً در **راهنمای کاربر پیشرفته** بیاموزید.
 
-## Recap
+## جمع‌بندی
 
-With what you have seen up to now, you can set up a secure **FastAPI** application using standards like OAuth2 and JWT.
+با آنچه تاکنون دیده‌اید، می‌توانید یک برنامه **FastAPI** امن با استفاده از استانداردهایی مانند OAuth2 و JWT راه‌اندازی کنید.
 
-In almost any framework handling the security becomes a rather complex subject quite quickly.
+تقریباً در هر فریم‌ورکی مدیریت امنیت به سرعت به موضوعی نسبتاً پیچیده تبدیل می‌شود.
 
-Many packages that simplify it a lot have to make many compromises with the data model, database, and available features. And some of these packages that simplify things too much actually have security flaws underneath.
+بسیاری از بسته‌هایی که آن را بسیار ساده می‌کنند مجبور به مصالحه‌های زیادی با مدل داده، پایگاه داده و ویژگی‌های موجود هستند. و برخی از این بسته‌ها که چیزها را خیلی ساده می‌کنند در واقع دارای نقص‌های امنیتی در زیر هستند.
 
 ---
 
-**FastAPI** doesn't make any compromise with any database, data model or tool.
+**FastAPI** با هیچ پایگاه داده، مدل داده یا ابزاری مصالحه نمی‌کند.
 
-It gives you all the flexibility to choose the ones that fit your project the best.
+تمام انعطاف‌پذیری را به شما می‌دهد تا مواردی را انتخاب کنید که بهتر با پروژه شما سازگار هستند.
 
-And you can use directly many well maintained and widely used packages like `passlib` and `PyJWT`, because **FastAPI** doesn't require any complex mechanisms to integrate external packages.
+و می‌توانید مستقیماً از بسیاری از بسته‌های به خوبی نگهداری شده و پرکاربرد مانند `passlib` و `PyJWT` استفاده کنید، زیرا **FastAPI** به هیچ مکانیسم پیچیده‌ای برای ادغام بسته‌های خارجی نیاز ندارد.
 
-But it provides you the tools to simplify the process as much as possible without compromising flexibility, robustness, or security.
+اما ابزارهایی را در اختیار شما قرار می‌دهد تا فرآیند را تا حد ممکن بدون مصالحه با انعطاف‌پذیری، استحکام یا امنیت ساده کنید.
 
-And you can use and implement secure, standard protocols, like OAuth2 in a relatively simple way.
-
-You can learn more in the **Advanced User Guide** about how to use OAuth2 "scopes", for a more fine-grained permission system, following these same standards. OAuth2 with scopes is the mechanism used by many big authentication providers, like Facebook, Google, GitHub, Microsoft, Twitter, etc. to authorize third party applications to interact with their APIs on behalf of their users.
+و می‌توانید از پروتکل‌های امن و استاندارد مانند OAuth2 به روشی نسبتاً ساده استفاده و پیاده‌سازی کنید.

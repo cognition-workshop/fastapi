@@ -1,18 +1,18 @@
-# Testing
+# تست
 
-Thanks to <a href="https://www.starlette.io/testclient/" class="external-link" target="_blank">Starlette</a>, testing **FastAPI** applications is easy and enjoyable.
+به لطف <a href="https://www.starlette.io/testclient/" class="external-link" target="_blank">Starlette</a>، تست برنامه‌های **FastAPI** آسان و لذت‌بخش است.
 
-It is based on <a href="https://www.python-httpx.org" class="external-link" target="_blank">HTTPX</a>, which in turn is designed based on Requests, so it's very familiar and intuitive.
+بر اساس <a href="https://www.python-httpx.org" class="external-link" target="_blank">HTTPX</a> ساخته شده که به نوبه خود بر اساس Requests طراحی شده، بنابراین بسیار آشنا و شهودی است.
 
-With it, you can use <a href="https://docs.pytest.org/" class="external-link" target="_blank">pytest</a> directly with **FastAPI**.
+با آن، می‌توانید مستقیماً از <a href="https://docs.pytest.org/" class="external-link" target="_blank">pytest</a> با **FastAPI** استفاده کنید.
 
-## Using `TestClient`
+## استفاده از `TestClient`
 
 /// info
 
-To use `TestClient`, first install <a href="https://www.python-httpx.org" class="external-link" target="_blank">`httpx`</a>.
+برای استفاده از `TestClient`، ابتدا <a href="https://www.python-httpx.org" class="external-link" target="_blank">`httpx`</a> را نصب کنید.
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then install it, for example:
+مطمئن شوید که یک [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} ایجاد کرده‌اید، آن را فعال کنید، و سپس آن را نصب کنید، به عنوان مثال:
 
 ```console
 $ pip install httpx
@@ -20,106 +20,104 @@ $ pip install httpx
 
 ///
 
-Import `TestClient`.
+`TestClient` را ایمپورت کنید.
 
-Create a `TestClient` by passing your **FastAPI** application to it.
+یک `TestClient` با پاس دادن برنامه **FastAPI** خود به آن ایجاد کنید.
 
-Create functions with a name that starts with `test_` (this is standard `pytest` conventions).
+توابعی با نامی که با `test_` شروع می‌شود ایجاد کنید (این قراردادهای استاندارد `pytest` است).
 
-Use the `TestClient` object the same way as you do with `httpx`.
+از شیء `TestClient` به همان روشی استفاده کنید که با `httpx` استفاده می‌کنید.
 
-Write simple `assert` statements with the standard Python expressions that you need to check (again, standard `pytest`).
+دستورات `assert` ساده با عبارات استاندارد پایتون بنویسید که باید بررسی کنید (باز هم، `pytest` استاندارد).
 
 {* ../../docs_src/app_testing/tutorial001.py hl[2,12,15:18] *}
 
 /// tip
 
-Notice that the testing functions are normal `def`, not `async def`.
+توجه کنید که توابع تست `def` معمولی هستند، نه `async def`.
 
-And the calls to the client are also normal calls, not using `await`.
+و فراخوانی‌ها به کلاینت نیز فراخوانی‌های معمولی هستند، بدون استفاده از `await`.
 
-This allows you to use `pytest` directly without complications.
+این به شما اجازه می‌دهد از `pytest` مستقیماً و بدون پیچیدگی استفاده کنید.
 
 ///
 
-/// note | Technical Details
+/// note | جزئیات فنی
 
-You could also use `from starlette.testclient import TestClient`.
+همچنین می‌توانید از `from starlette.testclient import TestClient` استفاده کنید.
 
-**FastAPI** provides the same `starlette.testclient` as `fastapi.testclient` just as a convenience for you, the developer. But it comes directly from Starlette.
+**FastAPI** همان `starlette.testclient` را به عنوان `fastapi.testclient` فقط برای راحتی شما، توسعه‌دهنده، ارائه می‌دهد. اما مستقیماً از Starlette می‌آید.
 
 ///
 
 /// tip
 
-If you want to call `async` functions in your tests apart from sending requests to your FastAPI application (e.g. asynchronous database functions), have a look at the [Async Tests](../advanced/async-tests.md){.internal-link target=_blank} in the advanced tutorial.
+اگر می‌خواهید توابع `async` را در تست‌های خود علاوه بر ارسال درخواست‌ها به برنامه FastAPI صدا بزنید (مثلاً توابع پایگاه داده ناهمزمان)، به [تست‌های ناهمزمان](../advanced/async-tests.md){.internal-link target=_blank} در آموزش پیشرفته نگاه کنید.
 
 ///
 
-## Separating tests
+## جداسازی تست‌ها
 
-In a real application, you probably would have your tests in a different file.
+در یک برنامه واقعی، احتمالاً تست‌های خود را در فایل متفاوتی خواهید داشت.
 
-And your **FastAPI** application might also be composed of several files/modules, etc.
+و برنامه **FastAPI** شما نیز ممکن است از چندین فایل/ماژول و غیره تشکیل شده باشد.
 
-### **FastAPI** app file
+### فایل برنامه **FastAPI**
 
-Let's say you have a file structure as described in [Bigger Applications](bigger-applications.md){.internal-link target=_blank}:
+فرض کنید ساختار فایلی مانند آنچه در [برنامه‌های بزرگ‌تر](bigger-applications.md){.internal-link target=_blank} توضیح داده شده دارید:
 
 ```
 .
 ├── app
-│   ├── __init__.py
-│   └── main.py
+│   ├── __init__.py
+│   └── main.py
 ```
 
-In the file `main.py` you have your **FastAPI** app:
-
+در فایل `main.py` برنامه **FastAPI** خود را دارید:
 
 {* ../../docs_src/app_testing/main.py *}
 
-### Testing file
+### فایل تست
 
-Then you could have a file `test_main.py` with your tests. It could live on the same Python package (the same directory with a `__init__.py` file):
+سپس می‌توانید فایل `test_main.py` با تست‌های خود داشته باشید. می‌تواند در همان بسته پایتون (همان دایرکتوری با فایل `__init__.py`) قرار بگیرد:
 
 ``` hl_lines="5"
 .
 ├── app
-│   ├── __init__.py
-│   ├── main.py
-│   └── test_main.py
+│   ├── __init__.py
+│   ├── main.py
+│   └── test_main.py
 ```
 
-Because this file is in the same package, you can use relative imports to import the object `app` from the `main` module (`main.py`):
+چون این فایل در همان بسته است، می‌توانید از ایمپورت‌های نسبی برای ایمپورت شیء `app` از ماژول `main` (`main.py`) استفاده کنید:
 
 {* ../../docs_src/app_testing/test_main.py hl[3] *}
 
+...و کد تست‌ها را درست مانند قبل داشته باشید.
 
-...and have the code for the tests just like before.
+## تست: مثال گسترده
 
-## Testing: extended example
+حالا بیایید این مثال را گسترش دهیم و جزئیات بیشتری اضافه کنیم تا ببینیم چگونه بخش‌های مختلف را تست کنیم.
 
-Now let's extend this example and add more details to see how to test different parts.
+### فایل برنامه گسترده **FastAPI**
 
-### Extended **FastAPI** app file
-
-Let's continue with the same file structure as before:
+بیایید با همان ساختار فایلی قبلی ادامه دهیم:
 
 ```
 .
 ├── app
-│   ├── __init__.py
-│   ├── main.py
-│   └── test_main.py
+│   ├── __init__.py
+│   ├── main.py
+│   └── test_main.py
 ```
 
-Let's say that now the file `main.py` with your **FastAPI** app has some other **path operations**.
+فرض کنید اکنون فایل `main.py` با برنامه **FastAPI** شما دارای *عملیات‌های مسیر* دیگری است.
 
-It has a `GET` operation that could return an error.
+یک عملیات `GET` دارد که می‌تواند خطا برگرداند.
 
-It has a `POST` operation that could return several errors.
+یک عملیات `POST` دارد که می‌تواند چندین خطا برگرداند.
 
-Both *path operations* require an `X-Token` header.
+هر دو *عملیات مسیر* نیاز به هدر `X-Token` دارند.
 
 //// tab | Python 3.10+
 
@@ -149,7 +147,7 @@ Both *path operations* require an `X-Token` header.
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -163,7 +161,7 @@ Prefer to use the `Annotated` version if possible.
 
 /// tip
 
-Prefer to use the `Annotated` version if possible.
+| ترجیحاً از نسخه `Annotated` استفاده کنید اگر امکان‌پذیر است.
 
 ///
 
@@ -173,40 +171,39 @@ Prefer to use the `Annotated` version if possible.
 
 ////
 
-### Extended testing file
+### فایل تست گسترده
 
-You could then update `test_main.py` with the extended tests:
+سپس می‌توانید `test_main.py` را با تست‌های گسترده به‌روزرسانی کنید:
 
 {* ../../docs_src/app_testing/app_b/test_main.py *}
 
+هر وقت نیاز دارید کلاینت اطلاعاتی را در درخواست پاس دهد و نمی‌دانید چگونه، می‌توانید نحوه انجام آن در `httpx` را جستجو کنید (Google)، یا حتی نحوه انجام آن با `requests`، زیرا طراحی HTTPX بر اساس طراحی Requests است.
 
-Whenever you need the client to pass information in the request and you don't know how to, you can search (Google) how to do it in `httpx`, or even how to do it with `requests`, as HTTPX's design is based on Requests' design.
+سپس همان کار را در تست‌های خود انجام دهید.
 
-Then you just do the same in your tests.
+مثلاً:
 
-E.g.:
+* برای پاس دادن یک پارامتر *مسیر* یا *پرس‌و‌جو*، آن را به خود URL اضافه کنید.
+* برای پاس دادن بدنه JSON، یک شیء پایتون (مثلاً یک `dict`) را به پارامتر `json` پاس دهید.
+* اگر نیاز دارید *داده فرم* به جای JSON ارسال کنید، از پارامتر `data` استفاده کنید.
+* برای پاس دادن *هدرها*، از یک `dict` در پارامتر `headers` استفاده کنید.
+* برای *کوکی‌ها*، یک `dict` در پارامتر `cookies`.
 
-* To pass a *path* or *query* parameter, add it to the URL itself.
-* To pass a JSON body, pass a Python object (e.g. a `dict`) to the parameter `json`.
-* If you need to send *Form Data* instead of JSON, use the `data` parameter instead.
-* To pass *headers*, use a `dict` in the `headers` parameter.
-* For *cookies*, a `dict` in the `cookies` parameter.
-
-For more information about how to pass data to the backend (using `httpx` or the `TestClient`) check the <a href="https://www.python-httpx.org" class="external-link" target="_blank">HTTPX documentation</a>.
+برای اطلاعات بیشتر درباره نحوه پاس دادن داده به بک‌اند (با استفاده از `httpx` یا `TestClient`) مستندات <a href="https://www.python-httpx.org" class="external-link" target="_blank">HTTPX</a> را بررسی کنید.
 
 /// info
 
-Note that the `TestClient` receives data that can be converted to JSON, not Pydantic models.
+توجه کنید که `TestClient` داده‌هایی دریافت می‌کند که می‌توان به JSON تبدیل کرد، نه مدل‌های Pydantic.
 
-If you have a Pydantic model in your test and you want to send its data to the application during testing, you can use the `jsonable_encoder` described in [JSON Compatible Encoder](encoder.md){.internal-link target=_blank}.
+اگر یک مدل Pydantic در تست خود دارید و می‌خواهید داده‌های آن را در حین تست به برنامه ارسال کنید، می‌توانید از `jsonable_encoder` توضیح داده شده در [رمزگذار سازگار با JSON](encoder.md){.internal-link target=_blank} استفاده کنید.
 
 ///
 
-## Run it
+## اجرا
 
-After that, you just need to install `pytest`.
+بعد از آن، فقط باید `pytest` را نصب کنید.
 
-Make sure you create a [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then install it, for example:
+مطمئن شوید که یک [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} ایجاد کرده‌اید، آن را فعال کنید، و سپس آن را نصب کنید، به عنوان مثال:
 
 <div class="termy">
 
@@ -218,9 +215,9 @@ $ pip install pytest
 
 </div>
 
-It will detect the files and tests automatically, execute them, and report the results back to you.
+به طور خودکار فایل‌ها و تست‌ها را شناسایی می‌کند، آنها را اجرا می‌کند و نتایج را به شما گزارش می‌دهد.
 
-Run the tests with:
+تست‌ها را با دستور زیر اجرا کنید:
 
 <div class="termy">
 
