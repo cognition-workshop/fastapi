@@ -1,269 +1,269 @@
-# Help FastAPI - Get Help
+# کمک به FastAPI - دریافت کمک
 
-Do you like **FastAPI**?
+آیا **FastAPI** را دوست دارید؟
 
-Would you like to help FastAPI, other users, and the author?
+آیا می‌خواهید به FastAPI، سایر کاربران و نویسنده کمک کنید؟
 
-Or would you like to get help with **FastAPI**?
+یا آیا می‌خواهید درباره **FastAPI** کمک بگیرید؟
 
-There are very simple ways to help (several involve just one or two clicks).
+روش‌های بسیار ساده‌ای برای کمک وجود دارد (چندین مورد فقط شامل یک یا دو کلیک هستند).
 
-And there are several ways to get help too.
+و همچنین چندین روش برای دریافت کمک وجود دارد.
 
-## Subscribe to the newsletter
+## عضویت در خبرنامه
 
-You can subscribe to the (infrequent) [**FastAPI and friends** newsletter](newsletter.md){.internal-link target=_blank} to stay updated about:
+می‌توانید در [خبرنامه **FastAPI و دوستان**](newsletter.md){.internal-link target=_blank} (که به ندرت ارسال می‌شود) عضو شوید تا از موارد زیر مطلع شوید:
 
-* News about FastAPI and friends 🚀
-* Guides 📝
-* Features ✨
-* Breaking changes 🚨
-* Tips and tricks ✅
+* اخبار درباره FastAPI و دوستان 🚀
+* راهنماها 📝
+* ویژگی‌ها ✨
+* تغییرات شکننده 🚨
+* نکات و ترفندها ✅
 
-## Follow FastAPI on Twitter
+## دنبال کردن FastAPI در Twitter
 
-<a href="https://twitter.com/fastapi" class="external-link" target="_blank">Follow @fastapi on **Twitter**</a> to get the latest news about **FastAPI**. 🐦
+<a href="https://twitter.com/fastapi" class="external-link" target="_blank">@fastapi را در **Twitter** دنبال کنید</a> تا آخرین اخبار درباره **FastAPI** را دریافت کنید. 🐦
 
-## Star **FastAPI** in GitHub
+## ستاره دادن به **FastAPI** در GitHub
 
-You can "star" FastAPI in GitHub (clicking the star button at the top right): <a href="https://github.com/fastapi/fastapi" class="external-link" target="_blank">https://github.com/fastapi/fastapi</a>. ⭐️
+می‌توانید به FastAPI در GitHub "ستاره" بدهید (با کلیک روی دکمه ستاره در بالا سمت راست): <a href="https://github.com/fastapi/fastapi" class="external-link" target="_blank">https://github.com/fastapi/fastapi</a>. ⭐️
 
-By adding a star, other users will be able to find it more easily and see that it has been already useful for others.
+با افزودن ستاره، سایر کاربران می‌توانند راحت‌تر آن را پیدا کنند و ببینند که قبلاً برای دیگران مفید بوده است.
 
-## Watch the GitHub repository for releases
+## مشاهده مخزن GitHub برای انتشارها
 
-You can "watch" FastAPI in GitHub (clicking the "watch" button at the top right): <a href="https://github.com/fastapi/fastapi" class="external-link" target="_blank">https://github.com/fastapi/fastapi</a>. 👀
+می‌توانید FastAPI را در GitHub "مشاهده" کنید (با کلیک روی دکمه "watch" در بالا سمت راست): <a href="https://github.com/fastapi/fastapi" class="external-link" target="_blank">https://github.com/fastapi/fastapi</a>. 👀
 
-There you can select "Releases only".
+در آنجا می‌توانید "Releases only" را انتخاب کنید.
 
-By doing it, you will receive notifications (in your email) whenever there's a new release (a new version) of **FastAPI** with bug fixes and new features.
+با این کار، هر زمان که نسخه جدیدی (نسخه جدید) از **FastAPI** با رفع باگ‌ها و ویژگی‌های جدید منتشر شود، اعلان دریافت خواهید کرد (در ایمیل‌تان).
 
-## Connect with the author
+## ارتباط با نویسنده
 
-You can connect with <a href="https://tiangolo.com" class="external-link" target="_blank">me (Sebastián Ramírez / `tiangolo`)</a>, the author.
+می‌توانید با <a href="https://tiangolo.com" class="external-link" target="_blank">من (Sebastián Ramírez / `tiangolo`)</a>، نویسنده، ارتباط برقرار کنید.
 
-You can:
+می‌توانید:
 
-* <a href="https://github.com/tiangolo" class="external-link" target="_blank">Follow me on **GitHub**</a>.
-    * See other Open Source projects I have created that could help you.
-    * Follow me to see when I create a new Open Source project.
-* <a href="https://twitter.com/tiangolo" class="external-link" target="_blank">Follow me on **Twitter**</a> or <a href="https://fosstodon.org/@tiangolo" class="external-link" target="_blank">Mastodon</a>.
-    * Tell me how you use FastAPI (I love to hear that).
-    * Hear when I make announcements or release new tools.
-    * You can also <a href="https://twitter.com/fastapi" class="external-link" target="_blank">follow @fastapi on Twitter</a> (a separate account).
-* <a href="https://www.linkedin.com/in/tiangolo/" class="external-link" target="_blank">Follow me on **LinkedIn**</a>.
-    * Hear when I make announcements or release new tools (although I use Twitter more often 🤷‍♂).
-* Read what I write (or follow me) on <a href="https://dev.to/tiangolo" class="external-link" target="_blank">**Dev.to**</a> or <a href="https://medium.com/@tiangolo" class="external-link" target="_blank">**Medium**</a>.
-    * Read other ideas, articles, and read about tools I have created.
-    * Follow me to read when I publish something new.
+* <a href="https://github.com/tiangolo" class="external-link" target="_blank">من را در **GitHub** دنبال کنید</a>.
+    * سایر پروژه‌های متن‌باز من را ببینید که می‌توانند به شما کمک کنند.
+    * من را دنبال کنید تا وقتی پروژه متن‌باز جدیدی ایجاد می‌کنم ببینید.
+* <a href="https://twitter.com/tiangolo" class="external-link" target="_blank">من را در **Twitter**</a> یا <a href="https://fosstodon.org/@tiangolo" class="external-link" target="_blank">Mastodon</a> دنبال کنید.
+    * به من بگویید چگونه از FastAPI استفاده می‌کنید (دوست دارم بشنوم).
+    * وقتی اعلامیه‌ها یا ابزارهای جدید منتشر می‌کنم بشنوید.
+    * همچنین می‌توانید <a href="https://twitter.com/fastapi" class="external-link" target="_blank">@fastapi را در Twitter دنبال کنید</a> (یک حساب جداگانه).
+* <a href="https://www.linkedin.com/in/tiangolo/" class="external-link" target="_blank">من را در **LinkedIn** دنبال کنید</a>.
+    * وقتی اعلامیه‌ها یا ابزارهای جدید منتشر می‌کنم بشنوید (اگرچه بیشتر از Twitter استفاده می‌کنم 🤷‍♂).
+* آنچه می‌نویسم را بخوانید (یا من را دنبال کنید) در <a href="https://dev.to/tiangolo" class="external-link" target="_blank">**Dev.to**</a> یا <a href="https://medium.com/@tiangolo" class="external-link" target="_blank">**Medium**</a>.
+    * ایده‌ها، مقالات دیگر را بخوانید و درباره ابزارهایی که ایجاد کرده‌ام بخوانید.
+    * من را دنبال کنید تا وقتی چیز جدیدی منتشر می‌کنم بخوانید.
 
-## Tweet about **FastAPI**
+## توییت درباره **FastAPI**
 
-<a href="https://twitter.com/compose/tweet?text=I'm loving @fastapi because... https://github.com/fastapi/fastapi" class="external-link" target="_blank">Tweet about **FastAPI**</a> and let me and others know why you like it. 🎉
+<a href="https://twitter.com/compose/tweet?text=I'm loving @fastapi because... https://github.com/fastapi/fastapi" class="external-link" target="_blank">درباره **FastAPI** توییت کنید</a> و به من و دیگران بگویید چرا آن را دوست دارید. 🎉
 
-I love to hear about how **FastAPI** is being used, what you have liked in it, in which project/company are you using it, etc.
+دوست دارم بشنوم **FastAPI** چگونه استفاده می‌شود، چه چیزی در آن دوست داشته‌اید، در کدام پروژه/شرکت از آن استفاده می‌کنید و غیره.
 
-## Vote for FastAPI
+## رأی دادن به FastAPI
 
-* <a href="https://www.slant.co/options/34241/~fastapi-review" class="external-link" target="_blank">Vote for **FastAPI** in Slant</a>.
-* <a href="https://alternativeto.net/software/fastapi/about/" class="external-link" target="_blank">Vote for **FastAPI** in AlternativeTo</a>.
-* <a href="https://stackshare.io/pypi-fastapi" class="external-link" target="_blank">Say you use **FastAPI** on StackShare</a>.
+* <a href="https://www.slant.co/options/34241/~fastapi-review" class="external-link" target="_blank">به **FastAPI** در Slant رأی دهید</a>.
+* <a href="https://alternativeto.net/software/fastapi/about/" class="external-link" target="_blank">به **FastAPI** در AlternativeTo رأی دهید</a>.
+* <a href="https://stackshare.io/pypi-fastapi" class="external-link" target="_blank">بگویید از **FastAPI** در StackShare استفاده می‌کنید</a>.
 
-## Help others with questions in GitHub
+## کمک به دیگران با سؤالات در GitHub
 
-You can try and help others with their questions in:
+می‌توانید سعی کنید به دیگران با سؤالاتشان کمک کنید در:
 
 * <a href="https://github.com/fastapi/fastapi/discussions/categories/questions?discussions_q=category%3AQuestions+is%3Aunanswered" class="external-link" target="_blank">GitHub Discussions</a>
 * <a href="https://github.com/fastapi/fastapi/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aquestion+-label%3Aanswered+" class="external-link" target="_blank">GitHub Issues</a>
 
-In many cases you might already know the answer for those questions. 🤓
+در بسیاری از موارد ممکن است از قبل پاسخ آن سؤالات را بدانید. 🤓
 
-If you are helping a lot of people with their questions, you will become an official [FastAPI Expert](fastapi-people.md#fastapi-experts){.internal-link target=_blank}. 🎉
+اگر به افراد زیادی با سؤالاتشان کمک کنید، به یک [متخصص رسمی FastAPI](fastapi-people.md#fastapi-experts){.internal-link target=_blank} تبدیل خواهید شد. 🎉
 
-Just remember, the most important point is: try to be kind. People come with their frustrations and in many cases don't ask in the best way, but try as best as you can to be kind. 🤗
+فقط به یاد داشته باشید، مهم‌ترین نکته: سعی کنید مهربان باشید. مردم با ناامیدی‌هایشان می‌آیند و در بسیاری از موارد بهترین شکل سؤال را نمی‌پرسند، اما سعی کنید تا جای ممکن مهربان باشید. 🤗
 
-The idea is for the **FastAPI** community to be kind and welcoming. At the same time, don't accept bullying or disrespectful behavior towards others. We have to take care of each other.
-
----
-
-Here's how to help others with questions (in discussions or issues):
-
-### Understand the question
-
-* Check if you can understand what is the **purpose** and use case of the person asking.
-
-* Then check if the question (the vast majority are questions) is **clear**.
-
-* In many cases the question asked is about an imaginary solution from the user, but there might be a **better** one. If you can understand the problem and use case better, you might be able to suggest a better **alternative solution**.
-
-* If you can't understand the question, ask for more **details**.
-
-### Reproduce the problem
-
-For most of the cases and most of the questions there's something related to the person's **original code**.
-
-In many cases they will only copy a fragment of the code, but that's not enough to **reproduce the problem**.
-
-* You can ask them to provide a <a href="https://stackoverflow.com/help/minimal-reproducible-example" class="external-link" target="_blank">minimal, reproducible, example</a>, that you can **copy-paste** and run locally to see the same error or behavior they are seeing, or to understand their use case better.
-
-* If you are feeling too generous, you can try to **create an example** like that yourself, just based on the description of the problem. Just keep in mind that this might take a lot of time and it might be better to ask them to clarify the problem first.
-
-### Suggest solutions
-
-* After being able to understand the question, you can give them a possible **answer**.
-
-* In many cases, it's better to understand their **underlying problem or use case**, because there might be a better way to solve it than what they are trying to do.
-
-### Ask to close
-
-If they reply, there's a high chance you would have solved their problem, congrats, **you're a hero**! 🦸
-
-* Now, if that solved their problem, you can ask them to:
-
-    * In GitHub Discussions: mark the comment as the **answer**.
-    * In GitHub Issues: **close** the issue.
-
-## Watch the GitHub repository
-
-You can "watch" FastAPI in GitHub (clicking the "watch" button at the top right): <a href="https://github.com/fastapi/fastapi" class="external-link" target="_blank">https://github.com/fastapi/fastapi</a>. 👀
-
-If you select "Watching" instead of "Releases only" you will receive notifications when someone creates a new issue or question. You can also specify that you only want to be notified about new issues, or discussions, or PRs, etc.
-
-Then you can try and help them solve those questions.
-
-## Ask Questions
-
-You can <a href="https://github.com/fastapi/fastapi/discussions/new?category=questions" class="external-link" target="_blank">create a new question</a> in the GitHub repository, for example to:
-
-* Ask a **question** or ask about a **problem**.
-* Suggest a new **feature**.
-
-**Note**: if you do it, then I'm going to ask you to also help others. 😉
-
-## Review Pull Requests
-
-You can help me review pull requests from others.
-
-Again, please try your best to be kind. 🤗
+ایده این است که جامعه **FastAPI** مهربان و خوش‌آمدگو باشد. در عین حال، رفتار قلدرانه یا بی‌احترامی نسبت به دیگران را نپذیرید. باید مراقب یکدیگر باشیم.
 
 ---
 
-Here's what to keep in mind and how to review a pull request:
+در اینجا نحوه کمک به دیگران با سؤالات (در بحث‌ها یا issues) آمده است:
 
-### Understand the problem
+### درک سؤال
 
-* First, make sure you **understand the problem** that the pull request is trying to solve. It might have a longer discussion in a GitHub Discussion or issue.
+* بررسی کنید آیا می‌توانید **هدف** و مورد استفاده فرد سؤال‌کننده را درک کنید.
 
-* There's also a good chance that the pull request is not actually needed because the problem can be solved in a **different way**. Then you can suggest or ask about that.
+* سپس بررسی کنید آیا سؤال (اکثریت بزرگ سؤالات هستند) **واضح** است.
 
-### Don't worry about style
+* در بسیاری از موارد سؤال مطرح‌شده درباره یک راه‌حل خیالی از کاربر است، اما ممکن است راه‌حل **بهتری** وجود داشته باشد. اگر بتوانید مشکل و مورد استفاده را بهتر درک کنید، ممکن است بتوانید **راه‌حل جایگزین** بهتری پیشنهاد دهید.
 
-* Don't worry too much about things like commit message styles, I will squash and merge customizing the commit manually.
+* اگر نمی‌توانید سؤال را درک کنید، **جزئیات بیشتری** بخواهید.
 
-* Also don't worry about style rules, there are already automatized tools checking that.
+### بازتولید مشکل
 
-And if there's any other style or consistency need, I'll ask directly for that, or I'll add commits on top with the needed changes.
+در اکثر موارد و اکثر سؤالات چیزی مرتبط با **کد اصلی** فرد وجود دارد.
 
-### Check the code
+در بسیاری از موارد فقط بخشی از کد را کپی می‌کنند، اما برای **بازتولید مشکل** کافی نیست.
 
-* Check and read the code, see if it makes sense, **run it locally** and see if it actually solves the problem.
+* می‌توانید از آنها بخواهید یک <a href="https://stackoverflow.com/help/minimal-reproducible-example" class="external-link" target="_blank">مثال حداقلی و قابل تکرار</a> ارائه دهند، که بتوانید **کپی-پیست** و به صورت محلی اجرا کنید تا همان خطا یا رفتاری که می‌بینند را ببینید، یا مورد استفاده‌شان را بهتر درک کنید.
 
-* Then **comment** saying that you did that, that's how I will know you really checked it.
+* اگر احساس سخاوت زیادی می‌کنید، می‌توانید سعی کنید خودتان **مثالی ایجاد کنید**، فقط بر اساس توضیح مشکل. فقط به یاد داشته باشید که ممکن است زمان زیادی ببرد و بهتر باشد ابتدا از آنها بخواهید مشکل را روشن کنند.
+
+### پیشنهاد راه‌حل‌ها
+
+* بعد از اینکه توانستید سؤال را درک کنید، می‌توانید یک **پاسخ** ممکن به آنها بدهید.
+
+* در بسیاری از موارد، بهتر است **مشکل یا مورد استفاده اصلی** آنها را درک کنید، زیرا ممکن است راه بهتری برای حل آن نسبت به آنچه سعی در انجامش دارند وجود داشته باشد.
+
+### درخواست بستن
+
+اگر پاسخ دهند، احتمال زیادی وجود دارد که مشکلشان را حل کرده‌اید، تبریک، **شما یک قهرمان هستید**! 🦸
+
+* اکنون، اگر مشکلشان حل شد، می‌توانید از آنها بخواهید:
+
+    * در GitHub Discussions: نظر را به عنوان **پاسخ** علامت‌گذاری کنند.
+    * در GitHub Issues: issue را **ببندند**.
+
+## مشاهده مخزن GitHub
+
+می‌توانید FastAPI را در GitHub "مشاهده" کنید (با کلیک روی دکمه "watch" در بالا سمت راست): <a href="https://github.com/fastapi/fastapi" class="external-link" target="_blank">https://github.com/fastapi/fastapi</a>. 👀
+
+اگر به جای "Releases only" گزینه "Watching" را انتخاب کنید، هر زمان که کسی issue یا سؤال جدیدی ایجاد کند اعلان دریافت خواهید کرد. همچنین می‌توانید مشخص کنید فقط درباره issueها، بحث‌ها، PRها و غیره مطلع شوید.
+
+سپس می‌توانید سعی کنید به حل آن سؤالات کمک کنید.
+
+## پرسیدن سؤالات
+
+می‌توانید <a href="https://github.com/fastapi/fastapi/discussions/new?category=questions" class="external-link" target="_blank">سؤال جدیدی ایجاد کنید</a> در مخزن GitHub، به عنوان مثال برای:
+
+* یک **سؤال** بپرسید یا درباره یک **مشکل** بپرسید.
+* یک **ویژگی** جدید پیشنهاد دهید.
+
+**توجه**: اگر این کار را بکنید، من از شما می‌خواهم به دیگران نیز کمک کنید. 😉
+
+## بررسی Pull Requestها
+
+می‌توانید به من در بررسی pull requestها از دیگران کمک کنید.
+
+باز هم، لطفاً سعی کنید مهربان باشید. 🤗
+
+---
+
+در اینجا نکاتی درباره نحوه بررسی یک pull request آمده است:
+
+### درک مشکل
+
+* ابتدا مطمئن شوید **مشکلی** که pull request سعی در حل آن دارد را **درک می‌کنید**. ممکن است بحث طولانی‌تری در GitHub Discussion یا issue داشته باشد.
+
+* همچنین احتمال خوبی وجود دارد که pull request واقعاً لازم نباشد زیرا مشکل به **روش دیگری** قابل حل است. سپس می‌توانید پیشنهاد دهید یا درباره آن بپرسید.
+
+### نگران سبک نباشید
+
+* زیاد نگران چیزهایی مانند سبک‌های پیام commit نباشید، من squash و merge با سفارشی‌سازی commit به صورت دستی انجام خواهم داد.
+
+* همچنین نگران قوانین سبک نباشید، ابزارهای خودکار از قبل آن را بررسی می‌کنند.
+
+و اگر نیاز سبک یا یکنواختی دیگری باشد، مستقیماً درخواست خواهم کرد، یا commitهایی با تغییرات لازم روی آن اضافه خواهم کرد.
+
+### بررسی کد
+
+* کد را بررسی و بخوانید، ببینید آیا منطقی است، **به صورت محلی اجرایش کنید** و ببینید آیا واقعاً مشکل را حل می‌کند.
+
+* سپس **نظر** بنویسید که این کار را انجام دادید، به این ترتیب من می‌دانم که واقعاً بررسی کردید.
 
 /// info
 
-Unfortunately, I can't simply trust PRs that just have several approvals.
+متأسفانه، نمی‌توانم فقط به PRهایی که چندین تأیید دارند اعتماد کنم.
 
-Several times it has happened that there are PRs with 3, 5 or more approvals, probably because the description is appealing, but when I check the PRs, they are actually broken, have a bug, or don't solve the problem they claim to solve. 😅
+چندین بار اتفاق افتاده که PRهایی با ۳، ۵ یا بیشتر تأیید وجود دارند، احتمالاً به دلیل جذاب بودن توضیحات، اما وقتی PRها را بررسی می‌کنم، در واقع خراب هستند، باگ دارند یا مشکلی که ادعا می‌کنند حل می‌کنند را حل نمی‌کنند. 😅
 
-So, it's really important that you actually read and run the code, and let me know in the comments that you did. 🤓
+بنابراین، واقعاً مهم است که کد را واقعاً بخوانید و اجرا کنید و در نظرات به من بگویید که این کار را انجام دادید. 🤓
 
 ///
 
-* If the PR can be simplified in a way, you can ask for that, but there's no need to be too picky, there might be a lot of subjective points of view (and I will have my own as well 🙈), so it's better if you can focus on the fundamental things.
+* اگر PR می‌تواند به روشی ساده‌تر شود، می‌توانید درخواست کنید، اما نیازی نیست خیلی سختگیر باشید، ممکن است نقاط نظر ذهنی زیادی وجود داشته باشد (و من هم نظر خودم را خواهم داشت 🙈)، بنابراین بهتر است روی موارد اساسی تمرکز کنید.
 
-### Tests
+### تست‌ها
 
-* Help me check that the PR has **tests**.
+* به من کمک کنید بررسی کنم که PR **تست** دارد.
 
-* Check that the tests **fail** before the PR. 🚨
+* بررسی کنید که تست‌ها **قبل** از PR **شکست بخورند**. 🚨
 
-* Then check that the tests **pass** after the PR. ✅
+* سپس بررسی کنید که تست‌ها **بعد** از PR **موفق شوند**. ✅
 
-* Many PRs don't have tests, you can **remind** them to add tests, or you can even **suggest** some tests yourself. That's one of the things that consume most time and you can help a lot with that.
+* بسیاری از PRها تست ندارند، می‌توانید به آنها **یادآوری** کنید تست اضافه کنند، یا حتی می‌توانید خودتان **برخی تست‌ها را پیشنهاد** دهید. این یکی از چیزهایی است که بیشترین زمان را مصرف می‌کند و می‌توانید کمک زیادی در آن کنید.
 
-* Then also comment what you tried, that way I'll know that you checked it. 🤓
+* سپس همچنین نظر بنویسید که چه چیزی امتحان کردید، به این ترتیب من می‌دانم که بررسی کردید. 🤓
 
-## Create a Pull Request
+## ایجاد Pull Request
 
-You can [contribute](contributing.md){.internal-link target=_blank} to the source code with Pull Requests, for example:
+می‌توانید با Pull Requestها به کد منبع [مشارکت](contributing.md){.internal-link target=_blank} کنید، به عنوان مثال:
 
-* To fix a typo you found on the documentation.
-* To share an article, video, or podcast you created or found about FastAPI by <a href="https://github.com/fastapi/fastapi/edit/master/docs/en/data/external_links.yml" class="external-link" target="_blank">editing this file</a>.
-    * Make sure you add your link to the start of the corresponding section.
-* To help [translate the documentation](contributing.md#translations){.internal-link target=_blank} to your language.
-    * You can also help to review the translations created by others.
-* To propose new documentation sections.
-* To fix an existing issue/bug.
-    * Make sure to add tests.
-* To add a new feature.
-    * Make sure to add tests.
-    * Make sure to add documentation if it's relevant.
+* برای رفع یک غلط املایی که در مستندات پیدا کردید.
+* برای به اشتراک گذاشتن مقاله، ویدیو یا پادکستی که درباره FastAPI ایجاد یا پیدا کردید با <a href="https://github.com/fastapi/fastapi/edit/master/docs/en/data/external_links.yml" class="external-link" target="_blank">ویرایش این فایل</a>.
+    * مطمئن شوید لینک خود را به ابتدای بخش مربوطه اضافه کنید.
+* برای کمک به [ترجمه مستندات](contributing.md#translations){.internal-link target=_blank} به زبان شما.
+    * همچنین می‌توانید در بررسی ترجمه‌های ایجادشده توسط دیگران کمک کنید.
+* برای پیشنهاد بخش‌های مستندات جدید.
+* برای رفع issue/باگ موجود.
+    * مطمئن شوید تست اضافه کنید.
+* برای افزودن ویژگی جدید.
+    * مطمئن شوید تست اضافه کنید.
+    * مطمئن شوید مستندات مرتبط اضافه کنید.
 
-## Help Maintain FastAPI
+## کمک به نگهداری FastAPI
 
-Help me maintain **FastAPI**! 🤓
+به من در نگهداری **FastAPI** کمک کنید! 🤓
 
-There's a lot of work to do, and for most of it, **YOU** can do it.
+کارهای زیادی برای انجام وجود دارد و برای بیشتر آن‌ها، **شما** می‌توانید انجام دهید.
 
-The main tasks that you can do right now are:
+کارهای اصلی که الان می‌توانید انجام دهید:
 
-* [Help others with questions in GitHub](#help-others-with-questions-in-github){.internal-link target=_blank} (see the section above).
-* [Review Pull Requests](#review-pull-requests){.internal-link target=_blank} (see the section above).
+* [کمک به دیگران با سؤالات در GitHub](#help-others-with-questions-in-github){.internal-link target=_blank} (بخش بالا را ببینید).
+* [بررسی Pull Requestها](#review-pull-requests){.internal-link target=_blank} (بخش بالا را ببینید).
 
-Those two tasks are what **consume time the most**. That's the main work of maintaining FastAPI.
+این دو کار چیزهایی هستند که **بیشترین زمان را مصرف می‌کنند**. کار اصلی نگهداری FastAPI همین است.
 
-If you can help me with that, **you are helping me maintain FastAPI** and making sure it keeps **advancing faster and better**. 🚀
+اگر بتوانید در این موارد به من کمک کنید، **به نگهداری FastAPI کمک می‌کنید** و مطمئن می‌شوید که **سریع‌تر و بهتر پیشرفت می‌کند**. 🚀
 
-## Join the chat
+## پیوستن به چت
 
-Join the 👥 <a href="https://discord.gg/VQjSZaeJmf" class="external-link" target="_blank">Discord chat server</a> 👥 and hang out with others in the FastAPI community.
+به سرور چت 👥 <a href="https://discord.gg/VQjSZaeJmf" class="external-link" target="_blank">Discord</a> 👥 بپیوندید و با دیگران در جامعه FastAPI معاشرت کنید.
 
 /// tip
 
-For questions, ask them in <a href="https://github.com/fastapi/fastapi/discussions/new?category=questions" class="external-link" target="_blank">GitHub Discussions</a>, there's a much better chance you will receive help by the [FastAPI Experts](fastapi-people.md#fastapi-experts){.internal-link target=_blank}.
+برای سؤالات، آنها را در <a href="https://github.com/fastapi/fastapi/discussions/new?category=questions" class="external-link" target="_blank">GitHub Discussions</a> بپرسید، احتمال بسیار بیشتری وجود دارد که از [متخصصان FastAPI](fastapi-people.md#fastapi-experts){.internal-link target=_blank} کمک دریافت کنید.
 
-Use the chat only for other general conversations.
+از چت فقط برای مکالمات عمومی دیگر استفاده کنید.
 
 ///
 
-### Don't use the chat for questions
+### از چت برای سؤالات استفاده نکنید
 
-Keep in mind that as chats allow more "free conversation", it's easy to ask questions that are too general and more difficult to answer, so, you might not receive answers.
+به یاد داشته باشید که چت‌ها "مکالمه آزادتر" را ممکن می‌سازند، پرسیدن سؤالاتی که خیلی عمومی و پاسخ دادن به آنها دشوارتر هستند آسان است، بنابراین ممکن است پاسخ دریافت نکنید.
 
-In GitHub, the template will guide you to write the right question so that you can more easily get a good answer, or even solve the problem yourself even before asking. And in GitHub I can make sure I always answer everything, even if it takes some time. I can't personally do that with the chat systems. 😅
+در GitHub، الگو شما را راهنمایی می‌کند تا سؤال درستی بنویسید تا راحت‌تر پاسخ خوبی دریافت کنید، یا حتی مشکل را قبل از پرسیدن خودتان حل کنید. و در GitHub مطمئن می‌شوم همیشه به همه چیز پاسخ می‌دهم، حتی اگر کمی زمان ببرد. شخصاً نمی‌توانم این کار را با سیستم‌های چت انجام دهم. 😅
 
-Conversations in the chat systems are also not as easily searchable as in GitHub, so questions and answers might get lost in the conversation. And only the ones in GitHub count to become a [FastAPI Expert](fastapi-people.md#fastapi-experts){.internal-link target=_blank}, so you will most probably receive more attention in GitHub.
+مکالمات در سیستم‌های چت به راحتی قابل جستجو مانند GitHub نیستند، بنابراین سؤالات و پاسخ‌ها ممکن است در مکالمه گم شوند. و فقط موارد GitHub برای تبدیل شدن به [متخصص FastAPI](fastapi-people.md#fastapi-experts){.internal-link target=_blank} حساب می‌شوند، بنابراین احتمالاً در GitHub توجه بیشتری دریافت خواهید کرد.
 
-On the other side, there are thousands of users in the chat systems, so there's a high chance you'll find someone to talk to there, almost all the time. 😄
+از طرف دیگر، هزاران کاربر در سیستم‌های چت وجود دارند، بنابراین احتمال زیادی وجود دارد تقریباً همیشه کسی را برای صحبت پیدا کنید. 😄
 
-## Sponsor the author
+## حمایت مالی از نویسنده
 
-You can also financially support the author (me) through <a href="https://github.com/sponsors/tiangolo" class="external-link" target="_blank">GitHub sponsors</a>.
+همچنین می‌توانید از نویسنده (من) از طریق <a href="https://github.com/sponsors/tiangolo" class="external-link" target="_blank">GitHub sponsors</a> حمایت مالی کنید.
 
-There you could buy me a coffee ☕️ to say thanks. 😄
+در آنجا می‌توانید برای تشکر یک قهوه ☕️ برایم بخرید. 😄
 
-And you can also become a Silver or Gold sponsor for FastAPI. 🏅🎉
+و همچنین می‌توانید حامی نقره‌ای یا طلایی FastAPI شوید. 🏅🎉
 
-## Sponsor the tools that power FastAPI
+## حمایت از ابزارهایی که FastAPI را قدرت می‌دهند
 
-As you have seen in the documentation, FastAPI stands on the shoulders of giants, Starlette and Pydantic.
+همانطور که در مستندات دیده‌اید، FastAPI بر شانه‌های غول‌ها ایستاده است، Starlette و Pydantic.
 
-You can also sponsor:
+همچنین می‌توانید حمایت کنید از:
 
 * <a href="https://github.com/sponsors/samuelcolvin" class="external-link" target="_blank">Samuel Colvin (Pydantic)</a>
 * <a href="https://github.com/sponsors/encode" class="external-link" target="_blank">Encode (Starlette, Uvicorn)</a>
 
 ---
 
-Thanks! 🚀
+ممنون! 🚀

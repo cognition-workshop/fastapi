@@ -1,18 +1,18 @@
-# Environment Variables
+# متغیرهای محیطی
 
 /// tip
 
-If you already know what "environment variables" are and how to use them, feel free to skip this.
+اگر قبلاً می‌دانید "متغیرهای محیطی" چیست و چگونه از آنها استفاده کنید، می‌توانید از این بخش رد شوید.
 
 ///
 
-An environment variable (also known as "**env var**") is a variable that lives **outside** of the Python code, in the **operating system**, and could be read by your Python code (or by other programs as well).
+یک متغیر محیطی (همچنین به عنوان "**env var**" شناخته می‌شود) متغیری است که **خارج** از کد پایتون، در **سیستم عامل** زندگی می‌کند و می‌تواند توسط کد پایتون شما (یا توسط برنامه‌های دیگر نیز) خوانده شود.
 
-Environment variables could be useful for handling application **settings**, as part of the **installation** of Python, etc.
+متغیرهای محیطی می‌توانند برای مدیریت **تنظیمات** برنامه، به عنوان بخشی از **نصب** پایتون و غیره مفید باشند.
 
-## Create and Use Env Vars
+## ایجاد و استفاده از متغیرهای محیطی
 
-You can **create** and use environment variables in the **shell (terminal)**, without needing Python:
+می‌توانید متغیرهای محیطی را در **شل (ترمینال)** ایجاد و استفاده کنید، بدون نیاز به پایتون:
 
 //// tab | Linux, macOS, Windows Bash
 
@@ -50,11 +50,11 @@ Hello Wade Wilson
 
 ////
 
-## Read env vars in Python
+## خواندن متغیرهای محیطی در پایتون
 
-You could also create environment variables **outside** of Python, in the terminal (or with any other method), and then **read them in Python**.
+همچنین می‌توانید متغیرهای محیطی را **خارج** از پایتون، در ترمینال (یا با هر روش دیگری) ایجاد کنید و سپس **آنها را در پایتون بخوانید**.
 
-For example you could have a file `main.py` with:
+به عنوان مثال می‌توانید فایل `main.py` با محتوای زیر داشته باشید:
 
 ```Python hl_lines="3"
 import os
@@ -65,13 +65,13 @@ print(f"Hello {name} from Python")
 
 /// tip
 
-The second argument to <a href="https://docs.python.org/3.8/library/os.html#os.getenv" class="external-link" target="_blank">`os.getenv()`</a> is the default value to return.
+آرگومان دوم <a href="https://docs.python.org/3.8/library/os.html#os.getenv" class="external-link" target="_blank">`os.getenv()`</a> مقدار پیش‌فرض برای برگرداندن است.
 
-If not provided, it's `None` by default, here we provide `"World"` as the default value to use.
+اگر ارائه نشود، به طور پیش‌فرض `None` است، اینجا `"World"` را به عنوان مقدار پیش‌فرض ارائه می‌دهیم.
 
 ///
 
-Then you could call that Python program:
+سپس می‌توانید آن برنامه پایتون را فراخوانی کنید:
 
 //// tab | Linux, macOS, Windows Bash
 
@@ -127,11 +127,11 @@ Hello Wade Wilson from Python
 
 ////
 
-As environment variables can be set outside of the code, but can be read by the code, and don't have to be stored (committed to `git`) with the rest of the files, it's common to use them for configurations or **settings**.
+از آنجا که متغیرهای محیطی می‌توانند خارج از کد تنظیم شوند، اما توسط کد خوانده شوند و نیازی به ذخیره (commit به `git`) همراه با بقیه فایل‌ها ندارند، استفاده از آنها برای پیکربندی‌ها یا **تنظیمات** رایج است.
 
-You can also create an environment variable only for a **specific program invocation**, that is only available to that program, and only for its duration.
+همچنین می‌توانید یک متغیر محیطی فقط برای **فراخوانی خاص یک برنامه** ایجاد کنید، که فقط برای آن برنامه و فقط در طول مدت اجرای آن در دسترس است.
 
-To do that, create it right before the program itself, on the same line:
+برای این کار، آن را درست قبل از خود برنامه، در همان خط ایجاد کنید:
 
 <div class="termy">
 
@@ -153,25 +153,25 @@ Hello World from Python
 
 /// tip
 
-You can read more about it at <a href="https://12factor.net/config" class="external-link" target="_blank">The Twelve-Factor App: Config</a>.
+می‌توانید بیشتر درباره آن در <a href="https://12factor.net/config" class="external-link" target="_blank">The Twelve-Factor App: Config</a> بخوانید.
 
 ///
 
-## Types and Validation
+## انواع و اعتبارسنجی
 
-These environment variables can only handle **text strings**, as they are external to Python and have to be compatible with other programs and the rest of the system (and even with different operating systems, as Linux, Windows, macOS).
+این متغیرهای محیطی فقط می‌توانند **رشته‌های متنی** را مدیریت کنند، زیرا خارجی نسبت به پایتون هستند و باید با برنامه‌های دیگر و بقیه سیستم (و حتی با سیستم‌عامل‌های مختلف مانند Linux، Windows، macOS) سازگار باشند.
 
-That means that **any value** read in Python from an environment variable **will be a `str`**, and any conversion to a different type or any validation has to be done in code.
+این به این معنی است که **هر مقداری** که در پایتون از یک متغیر محیطی خوانده شود **یک `str` خواهد بود** و هر تبدیل به نوع دیگر یا هر اعتبارسنجی باید در کد انجام شود.
 
-You will learn more about using environment variables for handling **application settings** in the [Advanced User Guide - Settings and Environment Variables](./advanced/settings.md){.internal-link target=_blank}.
+بیشتر درباره استفاده از متغیرهای محیطی برای مدیریت **تنظیمات برنامه** در [راهنمای کاربر پیشرفته - تنظیمات و متغیرهای محیطی](./advanced/settings.md){.internal-link target=_blank} خواهید آموخت.
 
-## `PATH` Environment Variable
+## متغیر محیطی `PATH`
 
-There is a **special** environment variable called **`PATH`** that is used by the operating systems (Linux, macOS, Windows) to find programs to run.
+یک متغیر محیطی **خاص** به نام **`PATH`** وجود دارد که توسط سیستم‌عامل‌ها (Linux، macOS، Windows) برای یافتن برنامه‌ها جهت اجرا استفاده می‌شود.
 
-The value of the variable `PATH` is a long string that is made of directories separated by a colon `:` on Linux and macOS, and by a semicolon `;` on Windows.
+مقدار متغیر `PATH` یک رشته طولانی است که از دایرکتوری‌هایی تشکیل شده که با دو نقطه `:` در Linux و macOS و با نقطه ویرگول `;` در Windows جدا شده‌اند.
 
-For example, the `PATH` environment variable could look like this:
+به عنوان مثال، متغیر محیطی `PATH` می‌تواند مانند زیر باشد:
 
 //// tab | Linux, macOS
 
@@ -179,7 +179,7 @@ For example, the `PATH` environment variable could look like this:
 /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 ```
 
-This means that the system should look for programs in the directories:
+این به این معنی است که سیستم باید برنامه‌ها را در دایرکتوری‌های زیر جستجو کند:
 
 * `/usr/local/bin`
 * `/usr/bin`
@@ -195,7 +195,7 @@ This means that the system should look for programs in the directories:
 C:\Program Files\Python312\Scripts;C:\Program Files\Python312;C:\Windows\System32
 ```
 
-This means that the system should look for programs in the directories:
+این به این معنی است که سیستم باید برنامه‌ها را در دایرکتوری‌های زیر جستجو کند:
 
 * `C:\Program Files\Python312\Scripts`
 * `C:\Program Files\Python312`
@@ -203,47 +203,47 @@ This means that the system should look for programs in the directories:
 
 ////
 
-When you type a **command** in the terminal, the operating system **looks for** the program in **each of those directories** listed in the `PATH` environment variable.
+وقتی یک **دستور** را در ترمینال تایپ می‌کنید، سیستم عامل برنامه را در **هر یک از آن دایرکتوری‌ها** لیست‌شده در متغیر محیطی `PATH` **جستجو می‌کند**.
 
-For example, when you type `python` in the terminal, the operating system looks for a program called `python` in the **first directory** in that list.
+به عنوان مثال، وقتی `python` را در ترمینال تایپ می‌کنید، سیستم عامل برنامه‌ای به نام `python` را در **اولین دایرکتوری** آن لیست جستجو می‌کند.
 
-If it finds it, then it will **use it**. Otherwise it keeps looking in the **other directories**.
+اگر آن را پیدا کند، **از آن استفاده می‌کند**. در غیر این صورت به جستجو در **دایرکتوری‌های دیگر** ادامه می‌دهد.
 
-### Installing Python and Updating the `PATH`
+### نصب پایتون و به‌روزرسانی `PATH`
 
-When you install Python, you might be asked if you want to update the `PATH` environment variable.
+هنگام نصب پایتون، ممکن است از شما پرسیده شود آیا می‌خواهید متغیر محیطی `PATH` را به‌روزرسانی کنید.
 
 //// tab | Linux, macOS
 
-Let's say you install Python and it ends up in a directory `/opt/custompython/bin`.
+فرض کنید پایتون را نصب می‌کنید و در دایرکتوری `/opt/custompython/bin` قرار می‌گیرد.
 
-If you say yes to update the `PATH` environment variable, then the installer will add `/opt/custompython/bin` to the `PATH` environment variable.
+اگر بله را برای به‌روزرسانی متغیر محیطی `PATH` بگویید، نصب‌کننده `/opt/custompython/bin` را به متغیر محیطی `PATH` اضافه خواهد کرد.
 
-It could look like this:
+می‌تواند مانند زیر باشد:
 
 ```plaintext
 /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/custompython/bin
 ```
 
-This way, when you type `python` in the terminal, the system will find the Python program in `/opt/custompython/bin` (the last directory) and use that one.
+به این ترتیب، وقتی `python` را در ترمینال تایپ می‌کنید، سیستم برنامه پایتون را در `/opt/custompython/bin` (آخرین دایرکتوری) پیدا و از آن استفاده خواهد کرد.
 
 ////
 
 //// tab | Windows
 
-Let's say you install Python and it ends up in a directory `C:\opt\custompython\bin`.
+فرض کنید پایتون را نصب می‌کنید و در دایرکتوری `C:\opt\custompython\bin` قرار می‌گیرد.
 
-If you say yes to update the `PATH` environment variable, then the installer will add `C:\opt\custompython\bin` to the `PATH` environment variable.
+اگر بله را برای به‌روزرسانی متغیر محیطی `PATH` بگویید، نصب‌کننده `C:\opt\custompython\bin` را به متغیر محیطی `PATH` اضافه خواهد کرد.
 
 ```plaintext
 C:\Program Files\Python312\Scripts;C:\Program Files\Python312;C:\Windows\System32;C:\opt\custompython\bin
 ```
 
-This way, when you type `python` in the terminal, the system will find the Python program in `C:\opt\custompython\bin` (the last directory) and use that one.
+به این ترتیب، وقتی `python` را در ترمینال تایپ می‌کنید، سیستم برنامه پایتون را در `C:\opt\custompython\bin` (آخرین دایرکتوری) پیدا و از آن استفاده خواهد کرد.
 
 ////
 
-So, if you type:
+بنابراین، اگر تایپ کنید:
 
 <div class="termy">
 
@@ -255,9 +255,9 @@ $ python
 
 //// tab | Linux, macOS
 
-The system will **find** the `python` program in `/opt/custompython/bin` and run it.
+سیستم برنامه `python` را در `/opt/custompython/bin` **پیدا** و اجرا خواهد کرد.
 
-It would be roughly equivalent to typing:
+تقریباً معادل تایپ کردن زیر خواهد بود:
 
 <div class="termy">
 
@@ -271,9 +271,9 @@ $ /opt/custompython/bin/python
 
 //// tab | Windows
 
-The system will **find** the `python` program in `C:\opt\custompython\bin\python` and run it.
+سیستم برنامه `python` را در `C:\opt\custompython\bin\python` **پیدا** و اجرا خواهد کرد.
 
-It would be roughly equivalent to typing:
+تقریباً معادل تایپ کردن زیر خواهد بود:
 
 <div class="termy">
 
@@ -285,14 +285,14 @@ $ C:\opt\custompython\bin\python
 
 ////
 
-This information will be useful when learning about [Virtual Environments](virtual-environments.md){.internal-link target=_blank}.
+این اطلاعات هنگام یادگیری درباره [محیط‌های مجازی](virtual-environments.md){.internal-link target=_blank} مفید خواهد بود.
 
-## Conclusion
+## نتیجه‌گیری
 
-With this you should have a basic understanding of what **environment variables** are and how to use them in Python.
+با این مطالب باید درک پایه‌ای از **متغیرهای محیطی** و نحوه استفاده از آنها در پایتون داشته باشید.
 
-You can also read more about them in the <a href="https://en.wikipedia.org/wiki/Environment_variable" class="external-link" target="_blank">Wikipedia for Environment Variable</a>.
+همچنین می‌توانید بیشتر درباره آنها در <a href="https://en.wikipedia.org/wiki/Environment_variable" class="external-link" target="_blank">ویکی‌پدیا برای متغیر محیطی</a> بخوانید.
 
-In many cases it's not very obvious how environment variables would be useful and applicable right away. But they keep showing up in many different scenarios when you are developing, so it's good to know about them.
+در بسیاری از موارد مشخص نیست که متغیرهای محیطی چگونه فوراً مفید و قابل استفاده هستند. اما در بسیاری از سناریوهای مختلف هنگام توسعه ظاهر می‌شوند، بنابراین دانستن درباره آنها خوب است.
 
-For example, you will need this information in the next section, about [Virtual Environments](virtual-environments.md).
+به عنوان مثال، به این اطلاعات در بخش بعدی، درباره [محیط‌های مجازی](virtual-environments.md) نیاز خواهید داشت.
