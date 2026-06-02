@@ -1,40 +1,40 @@
-# SQL (Relational) Databases
+# پایگاه‌های داده SQL (رابطه‌ای)
 
-**FastAPI** doesn't require you to use a SQL (relational) database. But you can use **any database** that you want.
+**FastAPI** شما را ملزم به استفاده از پایگاه داده SQL (رابطه‌ای) نمی‌کند. اما می‌توانید از **هر پایگاه داده‌ای** که بخواهید استفاده کنید.
 
-Here we'll see an example using <a href="https://sqlmodel.tiangolo.com/" class="external-link" target="_blank">SQLModel</a>.
+اینجا مثالی با استفاده از <a href="https://sqlmodel.tiangolo.com/" class="external-link" target="_blank">SQLModel</a> خواهیم دید.
 
-**SQLModel** is built on top of <a href="https://www.sqlalchemy.org/" class="external-link" target="_blank">SQLAlchemy</a> and Pydantic. It was made by the same author of **FastAPI** to be the perfect match for FastAPI applications that need to use **SQL databases**.
+**SQLModel** بر پایه <a href="https://www.sqlalchemy.org/" class="external-link" target="_blank">SQLAlchemy</a> و Pydantic ساخته شده است. توسط همان نویسنده **FastAPI** ساخته شده تا جفت کامل برای برنامه‌های FastAPI باشد که نیاز به استفاده از **پایگاه‌های داده SQL** دارند.
 
 /// tip
 
-You could use any other SQL or NoSQL database library you want (in some cases called <abbr title="Object Relational Mapper, a fancy term for a library where some classes represent SQL tables and instances represent rows in those tables">"ORMs"</abbr>), FastAPI doesn't force you to use anything. 😎
+می‌توانید از هر کتابخانه SQL یا NoSQL دیگری که بخواهید استفاده کنید (در برخی موارد <abbr title="Object Relational Mapper، اصطلاحی فنی برای کتابخانه‌ای که برخی کلاس‌ها نشان‌دهنده جداول SQL و نمونه‌ها نشان‌دهنده ردیف‌ها در آن جداول هستند">"ORM"</abbr> نامیده می‌شوند)، FastAPI شما را مجبور به استفاده از چیزی نمی‌کند. 😎
 
 ///
 
-As SQLModel is based on SQLAlchemy, you can easily use **any database supported** by SQLAlchemy (which makes them also supported by SQLModel), like:
+از آنجا که SQLModel بر پایه SQLAlchemy است، می‌توانید به راحتی از **هر پایگاه داده‌ای که توسط SQLAlchemy پشتیبانی می‌شود** استفاده کنید (که آنها را توسط SQLModel نیز پشتیبانی می‌کند)، مانند:
 
 * PostgreSQL
 * MySQL
 * SQLite
 * Oracle
-* Microsoft SQL Server, etc.
+* Microsoft SQL Server و غیره.
 
-In this example, we'll use **SQLite**, because it uses a single file and Python has integrated support. So, you can copy this example and run it as is.
+در این مثال، از **SQLite** استفاده خواهیم کرد، زیرا از یک فایل واحد استفاده می‌کند و پایتون پشتیبانی یکپارچه‌ای دارد. بنابراین، می‌توانید این مثال را کپی و همانطور که هست اجرا کنید.
 
-Later, for your production application, you might want to use a database server like **PostgreSQL**.
+بعداً، برای برنامه تولیدی خود، ممکن است بخواهید از یک سرور پایگاه داده مانند **PostgreSQL** استفاده کنید.
 
 /// tip
 
-There is an official project generator with **FastAPI** and **PostgreSQL** including a frontend and more tools: <a href="https://github.com/fastapi/full-stack-fastapi-template" class="external-link" target="_blank">https://github.com/fastapi/full-stack-fastapi-template</a>
+یک تولیدکننده پروژه رسمی با **FastAPI** و **PostgreSQL** شامل یک فرانت‌اند و ابزارهای بیشتر وجود دارد: <a href="https://github.com/fastapi/full-stack-fastapi-template" class="external-link" target="_blank">https://github.com/fastapi/full-stack-fastapi-template</a>
 
 ///
 
-This is a very simple and short tutorial, if you want to learn about databases in general, about SQL, or more advanced features, go to the <a href="https://sqlmodel.tiangolo.com/" class="external-link" target="_blank">SQLModel docs</a>.
+این یک آموزش بسیار ساده و کوتاه است، اگر می‌خواهید درباره پایگاه‌های داده به طور کلی، SQL یا ویژگی‌های پیشرفته‌تر بیاموزید، به <a href="https://sqlmodel.tiangolo.com/" class="external-link" target="_blank">مستندات SQLModel</a> مراجعه کنید.
 
-## Install `SQLModel`
+## نصب `SQLModel`
 
-First, make sure you create your [virtual environment](../virtual-environments.md){.internal-link target=_blank}, activate it, and then install `sqlmodel`:
+ابتدا، مطمئن شوید [محیط مجازی](../virtual-environments.md){.internal-link target=_blank} خود را ایجاد کرده‌اید، آن را فعال کنید، و سپس `sqlmodel` را نصب کنید:
 
 <div class="termy">
 
@@ -45,109 +45,109 @@ $ pip install sqlmodel
 
 </div>
 
-## Create the App with a Single Model
+## ایجاد برنامه با یک مدل واحد
 
-We'll create the simplest first version of the app with a single **SQLModel** model first.
+ابتدا ساده‌ترین نسخه اولیه برنامه را با یک مدل واحد **SQLModel** ایجاد خواهیم کرد.
 
-Later we'll improve it increasing security and versatility with **multiple models** below. 🤓
+بعداً آن را با **مدل‌های متعدد** بهبود خواهیم داد تا امنیت و انعطاف‌پذیری را افزایش دهیم. 🤓
 
-### Create Models
+### ایجاد مدل‌ها
 
-Import `SQLModel` and create a database model:
+`SQLModel` را ایمپورت کنید و یک مدل پایگاه داده ایجاد کنید:
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[1:11] hl[7:11] *}
 
-The `Hero` class is very similar to a Pydantic model (in fact, underneath, it actually *is a Pydantic model*).
+کلاس `Hero` بسیار شبیه به یک مدل Pydantic است (در واقع، در زیر پوست، واقعاً *یک مدل Pydantic است*).
 
-There are a few differences:
+چند تفاوت وجود دارد:
 
-* `table=True` tells SQLModel that this is a *table model*, it should represent a **table** in the SQL database, it's not just a *data model* (as would be any other regular Pydantic class).
+* `table=True` به SQLModel می‌گوید که این یک *مدل جدولی* است، باید یک **جدول** در پایگاه داده SQL را نشان دهد، نه فقط یک *مدل داده* (مانند هر کلاس Pydantic معمولی دیگر).
 
-* `Field(primary_key=True)` tells SQLModel that the `id` is the **primary key** in the SQL database (you can learn more about SQL primary keys in the SQLModel docs).
+* `Field(primary_key=True)` به SQLModel می‌گوید که `id` **کلید اصلی** در پایگاه داده SQL است (می‌توانید بیشتر درباره کلیدهای اصلی SQL در مستندات SQLModel بیاموزید).
 
-    By having the type as `int | None`, SQLModel will know that this column should be an `INTEGER` in the SQL database and that it should be `NULLABLE`.
+    با داشتن نوع `int | None`، SQLModel خواهد دانست که این ستون باید یک `INTEGER` در پایگاه داده SQL باشد و باید `NULLABLE` باشد.
 
-* `Field(index=True)` tells SQLModel that it should create a **SQL index** for this column, that would allow faster lookups in the database when reading data filtered by this column.
+* `Field(index=True)` به SQLModel می‌گوید که باید یک **ایندکس SQL** برای این ستون ایجاد کند، که جستجوهای سریع‌تر در پایگاه داده هنگام خواندن داده‌های فیلترشده با این ستون را ممکن می‌سازد.
 
-    SQLModel will know that something declared as `str` will be a SQL column of type `TEXT` (or `VARCHAR`, depending on the database).
+    SQLModel خواهد دانست که چیزی که به عنوان `str` اعلام شده یک ستون SQL از نوع `TEXT` (یا `VARCHAR`، بسته به پایگاه داده) خواهد بود.
 
-### Create an Engine
+### ایجاد یک Engine
 
-A SQLModel `engine` (underneath it's actually a SQLAlchemy `engine`) is what **holds the connections** to the database.
+یک `engine` SQLModel (در زیر پوست در واقع یک `engine` SQLAlchemy است) همان چیزی است که **اتصالات به پایگاه داده را نگه می‌دارد**.
 
-You would have **one single `engine` object** for all your code to connect to the same database.
+شما **یک شیء `engine` واحد** برای تمام کد خود برای اتصال به همان پایگاه داده خواهید داشت.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[14:18] hl[14:15,17:18] *}
 
-Using `check_same_thread=False` allows FastAPI to use the same SQLite database in different threads. This is necessary as **one single request** could use **more than one thread** (for example in dependencies).
+استفاده از `check_same_thread=False` به FastAPI اجازه می‌دهد از همان پایگاه داده SQLite در ریسه‌های مختلف استفاده کند. این لازم است زیرا **یک درخواست واحد** می‌تواند از **بیش از یک ریسه** استفاده کند (به عنوان مثال در وابستگی‌ها).
 
-Don't worry, with the way the code is structured, we'll make sure we use **a single SQLModel *session* per request** later, this is actually what the `check_same_thread` is trying to achieve.
+نگران نباشید، با نحوه ساختار کد، مطمئن خواهیم شد که بعداً از **یک *session* واحد SQLModel به ازای هر درخواست** استفاده کنیم، این در واقع همان چیزی است که `check_same_thread` سعی در تحقق آن دارد.
 
-### Create the Tables
+### ایجاد جداول
 
-We then add a function that uses `SQLModel.metadata.create_all(engine)` to **create the tables** for all the *table models*.
+سپس تابعی اضافه می‌کنیم که از `SQLModel.metadata.create_all(engine)` برای **ایجاد جداول** برای تمام *مدل‌های جدولی* استفاده می‌کند.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[21:22] hl[21:22] *}
 
-### Create a Session Dependency
+### ایجاد وابستگی Session
 
-A **`Session`** is what stores the **objects in memory** and keeps track of any changes needed in the data, then it **uses the `engine`** to communicate with the database.
+یک **`Session`** همان چیزی است که **اشیاء را در حافظه ذخیره** می‌کند و هر تغییر لازم در داده‌ها را پیگیری می‌کند، سپس **از `engine` استفاده** می‌کند تا با پایگاه داده ارتباط برقرار کند.
 
-We will create a FastAPI **dependency** with `yield` that will provide a new `Session` for each request. This is what ensures that we use a single session per request. 🤓
+یک **وابستگی** FastAPI با `yield` ایجاد خواهیم کرد که یک `Session` جدید برای هر درخواست فراهم می‌کند. این همان چیزی است که تضمین می‌کند از یک session واحد به ازای هر درخواست استفاده کنیم. 🤓
 
-Then we create an `Annotated` dependency `SessionDep` to simplify the rest of the code that will use this dependency.
+سپس یک وابستگی `Annotated` به نام `SessionDep` ایجاد می‌کنیم تا بقیه کدی که از این وابستگی استفاده می‌کند ساده‌تر شود.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[25:30]  hl[25:27,30] *}
 
-### Create Database Tables on Startup
+### ایجاد جداول پایگاه داده در هنگام راه‌اندازی
 
-We will create the database tables when the application starts.
+جداول پایگاه داده را هنگام شروع برنامه ایجاد خواهیم کرد.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[32:37] hl[35:37] *}
 
-Here we create the tables on an application startup event.
+اینجا جداول را در یک رویداد راه‌اندازی برنامه ایجاد می‌کنیم.
 
-For production you would probably use a migration script that runs before you start your app. 🤓
+برای تولید احتمالاً از یک اسکریپت مهاجرت استفاده می‌کنید که قبل از شروع برنامه اجرا می‌شود. 🤓
 
 /// tip
 
-SQLModel will have migration utilities wrapping Alembic, but for now, you can use <a href="https://alembic.sqlalchemy.org/en/latest/" class="external-link" target="_blank">Alembic</a> directly.
+SQLModel ابزارهای مهاجرت پوشش‌دهنده Alembic خواهد داشت، اما فعلاً می‌توانید مستقیماً از <a href="https://alembic.sqlalchemy.org/en/latest/" class="external-link" target="_blank">Alembic</a> استفاده کنید.
 
 ///
 
-### Create a Hero
+### ایجاد یک Hero
 
-Because each SQLModel model is also a Pydantic model, you can use it in the same **type annotations** that you could use Pydantic models.
+چون هر مدل SQLModel یک مدل Pydantic نیز هست، می‌توانید از آن در همان **حاشیه‌نویسی نوع** که می‌توانستید از مدل‌های Pydantic استفاده کنید، استفاده کنید.
 
-For example, if you declare a parameter of type `Hero`, it will be read from the **JSON body**.
+به عنوان مثال، اگر پارامتری از نوع `Hero` اعلام کنید، از **بدنه JSON** خوانده خواهد شد.
 
-The same way, you can declare it as the function's **return type**, and then the shape of the data will show up in the automatic API docs UI.
+به همین ترتیب، می‌توانید آن را به عنوان **نوع بازگشتی** تابع اعلام کنید، و سپس شکل داده‌ها در رابط کاربری مستندات خودکار API نمایش داده خواهد شد.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[40:45] hl[40:45] *}
 
-Here we use the `SessionDep` dependency (a `Session`) to add the new `Hero` to the `Session` instance, commit the changes to the database, refresh the data in the `hero`, and then return it.
+اینجا از وابستگی `SessionDep` (یک `Session`) برای افزودن `Hero` جدید به نمونه `Session`، ذخیره تغییرات در پایگاه داده، بازنشانی داده‌ها در `hero` و سپس برگرداندن آن استفاده می‌کنیم.
 
-### Read Heroes
+### خواندن Heroes
 
-We can **read** `Hero`s from the database using a `select()`. We can include a `limit` and `offset` to paginate the results.
+می‌توانیم `Hero`ها را از پایگاه داده با استفاده از `select()` **بخوانیم**. می‌توانیم `limit` و `offset` را برای صفحه‌بندی نتایج اضافه کنیم.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[48:55] hl[51:52,54] *}
 
-### Read One Hero
+### خواندن یک Hero
 
-We can **read** a single `Hero`.
+می‌توانیم یک `Hero` واحد را **بخوانیم**.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[58:63] hl[60] *}
 
-### Delete a Hero
+### حذف یک Hero
 
-We can also **delete** a `Hero`.
+همچنین می‌توانیم یک `Hero` را **حذف** کنیم.
 
 {* ../../docs_src/sql_databases/tutorial001_an_py310.py ln[66:73] hl[71] *}
 
-### Run the App
+### اجرای برنامه
 
-You can run the app:
+می‌توانید برنامه را اجرا کنید:
 
 <div class="termy">
 
@@ -159,49 +159,49 @@ $ fastapi dev main.py
 
 </div>
 
-Then go to the `/docs` UI, you will see that **FastAPI** is using these **models** to **document** the API, and it will use them to **serialize** and **validate** the data too.
+سپس به رابط کاربری `/docs` بروید، خواهید دید که **FastAPI** از این **مدل‌ها** برای **مستندسازی** API استفاده می‌کند و از آنها برای **سریالیزه** و **اعتبارسنجی** داده‌ها نیز استفاده خواهد کرد.
 
 <div class="screenshot">
 <img src="/img/tutorial/sql-databases/image01.png">
 </div>
 
-## Update the App with Multiple Models
+## به‌روزرسانی برنامه با مدل‌های متعدد
 
-Now let's **refactor** this app a bit to increase **security** and **versatility**.
+حالا بیایید این برنامه را کمی **بازسازی** کنیم تا **امنیت** و **انعطاف‌پذیری** را افزایش دهیم.
 
-If you check the previous app, in the UI you can see that, up to now, it lets the client decide the `id` of the `Hero` to create. 😱
+اگر برنامه قبلی را بررسی کنید، در رابط کاربری خواهید دید که تا الان به کلاینت اجازه می‌دهد `id` مربوط به `Hero` برای ایجاد را تعیین کند. 😱
 
-We shouldn't let that happen, they could overwrite an `id` we already have assigned in the DB. Deciding the `id` should be done by the **backend** or the **database**, **not by the client**.
+نباید اجازه دهیم این اتفاق بیفتد، آنها می‌توانند یک `id` که قبلاً در DB اختصاص داده‌ایم را بازنویسی کنند. تعیین `id` باید توسط **بک‌اند** یا **پایگاه داده** انجام شود، **نه توسط کلاینت**.
 
-Additionally, we create a `secret_name` for the hero, but so far, we are returning it everywhere, that's not very **secret**... 😅
+علاوه بر این، یک `secret_name` برای hero ایجاد کرده‌ایم، اما تا الان آن را همه جا برمی‌گردانیم، این خیلی **مخفی** نیست... 😅
 
-We'll fix these things by adding a few **extra models**. Here's where SQLModel will shine. ✨
+این مشکلات را با افزودن چند **مدل اضافی** حل خواهیم کرد. اینجاست که SQLModel درخشش خواهد داشت. ✨
 
-### Create Multiple Models
+### ایجاد مدل‌های متعدد
 
-In **SQLModel**, any model class that has `table=True` is a **table model**.
+در **SQLModel**، هر کلاس مدلی که `table=True` داشته باشد یک **مدل جدولی** است.
 
-And any model class that doesn't have `table=True` is a **data model**, these ones are actually just Pydantic models (with a couple of small extra features). 🤓
+و هر کلاس مدلی که `table=True` نداشته باشد یک **مدل داده** است، اینها در واقع فقط مدل‌های Pydantic هستند (با چند ویژگی اضافی کوچک). 🤓
 
-With SQLModel, we can use **inheritance** to **avoid duplicating** all the fields in all the cases.
+با SQLModel، می‌توانیم از **وراثت** برای **جلوگیری از تکرار** تمام فیلدها در تمام موارد استفاده کنیم.
 
-#### `HeroBase` - the base class
+#### `HeroBase` - کلاس پایه
 
-Let's start with a `HeroBase` model that has all the **fields that are shared** by all the models:
+بیایید با یک مدل `HeroBase` شروع کنیم که تمام **فیلدهای مشترک** بین تمام مدل‌ها را دارد:
 
 * `name`
 * `age`
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[7:9] hl[7:9] *}
 
-#### `Hero` - the *table model*
+#### `Hero` - *مدل جدولی*
 
-Then let's create `Hero`, the actual *table model*, with the **extra fields** that are not always in the other models:
+سپس بیایید `Hero` را ایجاد کنیم، *مدل جدولی* واقعی، با **فیلدهای اضافی** که همیشه در سایر مدل‌ها نیستند:
 
 * `id`
 * `secret_name`
 
-Because `Hero` inherits form `HeroBase`, it **also** has the **fields** declared in `HeroBase`, so all the fields for `Hero` are:
+چون `Hero` از `HeroBase` ارث‌بری می‌کند، **همچنین** **فیلدهای** اعلام‌شده در `HeroBase` را دارد، بنابراین تمام فیلدهای `Hero` عبارتند از:
 
 * `id`
 * `name`
@@ -210,25 +210,25 @@ Because `Hero` inherits form `HeroBase`, it **also** has the **fields** declared
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[7:14] hl[12:14] *}
 
-#### `HeroPublic` - the public *data model*
+#### `HeroPublic` - *مدل داده* عمومی
 
-Next, we create a `HeroPublic` model, this is the one that will be **returned** to the clients of the API.
+سپس، یک مدل `HeroPublic` ایجاد می‌کنیم، این مدلی است که به کلاینت‌های API **برگردانده** خواهد شد.
 
-It has the same fields as `HeroBase`, so it won't include `secret_name`.
+همان فیلدهای `HeroBase` را دارد، بنابراین `secret_name` را شامل نخواهد شد.
 
-Finally, the identity of our heroes is protected! 🥷
+بالاخره، هویت قهرمانان ما محافظت شده است! 🥷
 
-It also re-declares `id: int`. By doing this, we are making a **contract** with the API clients, so that they can always expect the `id` to be there and to be an `int` (it will never be `None`).
+همچنین `id: int` را دوباره اعلام می‌کند. با این کار، یک **قرارداد** با کلاینت‌های API ایجاد می‌کنیم، تا همیشه بتوانند انتظار داشته باشند `id` موجود باشد و `int` باشد (هرگز `None` نخواهد بود).
 
 /// tip
 
-Having the return model ensure that a value is always available and always `int` (not `None`) is very useful for the API clients, they can write much simpler code having this certainty.
+داشتن مدل بازگشتی که تضمین کند یک مقدار همیشه موجود و همیشه `int` (نه `None`) باشد برای کلاینت‌های API بسیار مفید است، آنها می‌توانند با این اطمینان کدهای بسیار ساده‌تری بنویسند.
 
-Also, **automatically generated clients** will have simpler interfaces, so that the developers communicating with your API can have a much better time working with your API. 😎
+همچنین، **کلاینت‌های خودکار تولیدشده** رابط‌های ساده‌تری خواهند داشت، به طوری که توسعه‌دهندگانی که با API شما ارتباط برقرار می‌کنند تجربه بسیار بهتری خواهند داشت. 😎
 
 ///
 
-All the fields in `HeroPublic` are the same as in `HeroBase`, with `id` declared as `int` (not `None`):
+تمام فیلدهای `HeroPublic` همان فیلدهای `HeroBase` هستند، با `id` اعلام‌شده به عنوان `int` (نه `None`):
 
 * `id`
 * `name`
@@ -236,23 +236,23 @@ All the fields in `HeroPublic` are the same as in `HeroBase`, with `id` declared
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[7:18] hl[17:18] *}
 
-#### `HeroCreate` - the *data model* to create a hero
+#### `HeroCreate` - *مدل داده* برای ایجاد hero
 
-Now we create a `HeroCreate` model, this is the one that will **validate** the data from the clients.
+حالا یک مدل `HeroCreate` ایجاد می‌کنیم، این مدلی است که داده‌های کلاینت‌ها را **اعتبارسنجی** خواهد کرد.
 
-It has the same fields as `HeroBase`, and it also has `secret_name`.
+همان فیلدهای `HeroBase` را دارد، و همچنین `secret_name`.
 
-Now, when the clients **create a new hero**, they will send the `secret_name`, it will be stored in the database, but those secret names won't be returned in the API to the clients.
+اکنون، وقتی کلاینت‌ها **یک hero جدید ایجاد** می‌کنند، `secret_name` را ارسال خواهند کرد، در پایگاه داده ذخیره خواهد شد، اما آن نام‌های مخفی در API به کلاینت‌ها برگردانده نخواهند شد.
 
 /// tip
 
-This is how you would handle **passwords**. Receive them, but don't return them in the API.
+این نحوه مدیریت **رمزهای عبور** است. آنها را دریافت کنید، اما در API برنگردانید.
 
-You would also **hash** the values of the passwords before storing them, **never store them in plain text**.
+همچنین مقادیر رمزهای عبور را قبل از ذخیره‌سازی **هش** کنید، **هرگز آنها را به صورت متنی ذخیره نکنید**.
 
 ///
 
-The fields of `HeroCreate` are:
+فیلدهای `HeroCreate` عبارتند از:
 
 * `name`
 * `age`
@@ -260,17 +260,17 @@ The fields of `HeroCreate` are:
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[7:22] hl[21:22] *}
 
-#### `HeroUpdate` - the *data model* to update a hero
+#### `HeroUpdate` - *مدل داده* برای به‌روزرسانی hero
 
-We didn't have a way to **update a hero** in the previous version of the app, but now with **multiple models**, we can do it. 🎉
+در نسخه قبلی برنامه راهی برای **به‌روزرسانی یک hero** نداشتیم، اما اکنون با **مدل‌های متعدد** می‌توانیم این کار را انجام دهیم. 🎉
 
-The `HeroUpdate` *data model* is somewhat special, it has **all the same fields** that would be needed to create a new hero, but all the fields are **optional** (they all have a default value). This way, when you update a hero, you can send just the fields that you want to update.
+*مدل داده* `HeroUpdate` تا حدودی خاص است، تمام **همان فیلدهایی** که برای ایجاد hero جدید لازم هستند را دارد، اما تمام فیلدها **اختیاری** هستند (همه مقدار پیش‌فرض دارند). به این ترتیب، هنگام به‌روزرسانی یک hero، می‌توانید فقط فیلدهایی که می‌خواهید به‌روزرسانی کنید ارسال کنید.
 
-Because all the **fields actually change** (the type now includes `None` and they now have a default value of `None`), we need to **re-declare** them.
+چون تمام **فیلدها واقعاً تغییر می‌کنند** (نوع اکنون شامل `None` می‌شود و اکنون مقدار پیش‌فرض `None` دارند)، باید آنها را **دوباره اعلام** کنیم.
 
-We don't really need to inherit from `HeroBase` because we are re-declaring all the fields. I'll leave it inheriting just for consistency, but this is not necessary. It's more a matter of personal taste. 🤷
+واقعاً لازم نیست از `HeroBase` ارث‌بری کنیم چون تمام فیلدها را دوباره اعلام می‌کنیم. فقط برای یکنواختی ارث‌بری را نگه داشته‌ام، اما این ضروری نیست. بیشتر مسئله سلیقه شخصی است. 🤷
 
-The fields of `HeroUpdate` are:
+فیلدهای `HeroUpdate` عبارتند از:
 
 * `name`
 * `age`
@@ -278,61 +278,61 @@ The fields of `HeroUpdate` are:
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[7:28] hl[25:28] *}
 
-### Create with `HeroCreate` and return a `HeroPublic`
+### ایجاد با `HeroCreate` و برگرداندن `HeroPublic`
 
-Now that we have **multiple models**, we can update the parts of the app that use them.
+اکنون که **مدل‌های متعدد** داریم، می‌توانیم بخش‌هایی از برنامه که از آنها استفاده می‌کنند را به‌روزرسانی کنیم.
 
-We receive in the request a `HeroCreate` *data model*, and from it, we create a `Hero` *table model*.
+در درخواست یک *مدل داده* `HeroCreate` دریافت می‌کنیم و از آن یک *مدل جدولی* `Hero` ایجاد می‌کنیم.
 
-This new *table model* `Hero` will have the fields sent by the client, and will also have an `id` generated by the database.
+این *مدل جدولی* جدید `Hero` فیلدهای ارسال‌شده توسط کلاینت را خواهد داشت و همچنین یک `id` تولیدشده توسط پایگاه داده.
 
-Then we return the same *table model* `Hero` as is from the function. But as we declare the `response_model` with the `HeroPublic` *data model*, **FastAPI** will use `HeroPublic` to validate and serialize the data.
+سپس همان *مدل جدولی* `Hero` را از تابع برمی‌گردانیم. اما از آنجا که `response_model` را با *مدل داده* `HeroPublic` اعلام می‌کنیم، **FastAPI** از `HeroPublic` برای اعتبارسنجی و سریالیزه کردن داده‌ها استفاده خواهد کرد.
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[56:62] hl[56:58] *}
 
 /// tip
 
-Now we use `response_model=HeroPublic` instead of the **return type annotation** `-> HeroPublic` because the value that we are returning is actually *not* a `HeroPublic`.
+اکنون از `response_model=HeroPublic` به جای **حاشیه‌نویسی نوع بازگشت** `-> HeroPublic` استفاده می‌کنیم زیرا مقداری که برمی‌گردانیم در واقع یک `HeroPublic` *نیست*.
 
-If we had declared `-> HeroPublic`, your editor and linter would complain (rightfully so) that you are returning a `Hero` instead of a `HeroPublic`.
+اگر `-> HeroPublic` اعلام کرده بودیم، ویرایشگر و لینتر شما (به حق) شکایت می‌کردند که یک `Hero` به جای `HeroPublic` برمی‌گردانید.
 
-By declaring it in `response_model` we are telling **FastAPI** to do its thing, without interfering with the type annotations and the help from your editor and other tools.
+با اعلام آن در `response_model` به **FastAPI** می‌گوییم کار خود را انجام دهد، بدون دخالت در حاشیه‌نویسی‌های نوع و کمک ویرایشگر و سایر ابزارها.
 
 ///
 
-### Read Heroes with `HeroPublic`
+### خواندن Heroes با `HeroPublic`
 
-We can do the same as before to **read** `Hero`s, again, we use `response_model=list[HeroPublic]` to ensure that the data is validated and serialized correctly.
+می‌توانیم همان کار قبلی را برای **خواندن** `Hero`ها انجام دهیم، باز هم از `response_model=list[HeroPublic]` استفاده می‌کنیم تا مطمئن شویم داده‌ها به درستی اعتبارسنجی و سریالیزه می‌شوند.
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[65:72] hl[65] *}
 
-### Read One Hero with `HeroPublic`
+### خواندن یک Hero با `HeroPublic`
 
-We can **read** a single hero:
+می‌توانیم یک hero واحد را **بخوانیم**:
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[75:80] hl[77] *}
 
-### Update a Hero with `HeroUpdate`
+### به‌روزرسانی یک Hero با `HeroUpdate`
 
-We can **update a hero**. For this we use an HTTP `PATCH` operation.
+می‌توانیم **یک hero را به‌روزرسانی** کنیم. برای این کار از عملیات HTTP `PATCH` استفاده می‌کنیم.
 
-And in the code, we get a `dict` with all the data sent by the client, **only the data sent by the client**, excluding any values that would be there just for being the default values. To do it we use `exclude_unset=True`. This is the main trick. 🪄
+و در کد، یک `dict` با تمام داده‌های ارسال‌شده توسط کلاینت دریافت می‌کنیم، **فقط داده‌های ارسال‌شده توسط کلاینت**، بدون مقادیری که فقط به دلیل مقادیر پیش‌فرض بودن آنجا خواهند بود. برای این کار از `exclude_unset=True` استفاده می‌کنیم. این ترفند اصلی است. 🪄
 
-Then we use `hero_db.sqlmodel_update(hero_data)` to update the `hero_db` with the data from `hero_data`.
+سپس از `hero_db.sqlmodel_update(hero_data)` برای به‌روزرسانی `hero_db` با داده‌های `hero_data` استفاده می‌کنیم.
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[83:93] hl[83:84,88:89] *}
 
-### Delete a Hero Again
+### حذف دوباره یک Hero
 
-**Deleting** a hero stays pretty much the same.
+**حذف** یک hero تقریباً همانند قبل می‌ماند.
 
-We won't satisfy the desire to refactor everything in this one. 😅
+میل به بازسازی همه چیز در این مورد را برآورده نخواهیم کرد. 😅
 
 {* ../../docs_src/sql_databases/tutorial002_an_py310.py ln[96:103] hl[101] *}
 
-### Run the App Again
+### اجرای دوباره برنامه
 
-You can run the app again:
+می‌توانید برنامه را دوباره اجرا کنید:
 
 <div class="termy">
 
@@ -344,14 +344,14 @@ $ fastapi dev main.py
 
 </div>
 
-If you go to the `/docs` API UI, you will see that it is now updated, and it won't expect to receive the `id` from the client when creating a hero, etc.
+اگر به رابط کاربری API `/docs` بروید، خواهید دید که اکنون به‌روزرسانی شده و هنگام ایجاد hero انتظار دریافت `id` از کلاینت را نخواهد داشت و غیره.
 
 <div class="screenshot">
 <img src="/img/tutorial/sql-databases/image02.png">
 </div>
 
-## Recap
+## جمع‌بندی
 
-You can use <a href="https://sqlmodel.tiangolo.com/" class="external-link" target="_blank">**SQLModel**</a> to interact with a SQL database and simplify the code with *data models*  and *table models*.
+می‌توانید از <a href="https://sqlmodel.tiangolo.com/" class="external-link" target="_blank">**SQLModel**</a> برای تعامل با یک پایگاه داده SQL و ساده‌سازی کد با *مدل‌های داده* و *مدل‌های جدولی* استفاده کنید.
 
-You can learn a lot more at the **SQLModel** docs, there's a longer mini <a href="https://sqlmodel.tiangolo.com/tutorial/fastapi/" class="external-link" target="_blank">tutorial on using SQLModel with **FastAPI**</a>. 🚀
+می‌توانید چیزهای بیشتری در مستندات **SQLModel** بیاموزید، یک آموزش کوتاه طولانی‌تر درباره <a href="https://sqlmodel.tiangolo.com/tutorial/fastapi/" class="external-link" target="_blank">استفاده از SQLModel با **FastAPI**</a> وجود دارد. 🚀
